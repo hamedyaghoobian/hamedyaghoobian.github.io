@@ -6,7 +6,7 @@ list_title: " "
 {% include dappled-light.html %}
 
 <div class="bio-container">
-  <div style="display: flex;">
+  <div class="bio-content">
     <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Profile Picture" class="profile-pic">
     <div class="bio-text">
       <h1>Welcome</h1>
@@ -22,8 +22,8 @@ list_title: " "
   </div>
 </div>
 
-<div style="display: flex;">
-  <div style="flex: 1; padding-right: 20px;">
+<div class="info-container">
+  <div class="research-interests">
     <h2>Research Interests</h2>
     <ul>
       <li>Textual analysis</li>
@@ -33,7 +33,7 @@ list_title: " "
     </ul>
   </div>
   
-  <div style="flex: 1;">
+  <div class="education">
     <h2>Education</h2>
     <div class="education-item">
       <i class="fas fa-graduation-cap"></i>
