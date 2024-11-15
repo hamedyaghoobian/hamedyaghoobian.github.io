@@ -101,7 +101,7 @@ h3 { font-size: 1.75em; }
   margin-bottom: 1rem;
   
   i {
-    margin-right: 1rem;
+    margin-right: 1rem; 
     width: 1.5rem;
     text-align: center;
     color: #4a5568;
@@ -110,22 +110,50 @@ h3 { font-size: 1.75em; }
 
 // Footer
 .site-footer {
-  font-family: 'Caveat', cursive;
+  font-family: 'Courier New', Courier, monospace;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #718096;
   padding: 10px 0;
   border-top: 1px solid #e8e8e8;
   text-align: center;
+
+  .footer-content {
+    text-align: center;
+  }
+
+  .copyright-text {
+    margin: 0;
+    line-height: 1.5;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .footer-separator {
+    margin: 0 8px;
+    color: #999;
+  }
+
+  .built-with {
+    color: #777;
+    
+    a {
+      color: #666;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 // Links
 a {
-  color: #2b6cb0;
+  color: #ed8936;
   transition: color 0.2s ease;
   
   &:hover {
-    color: #2c5282;
+    color: #dd6b20;
     text-decoration: none;
   }
 }
@@ -226,9 +254,9 @@ p {
   }
 
   a {
-    color: #63b3ed;
+    color: #fbd38d;
     &:hover {
-      color: #90cdf4;
+      color: #f6ad55;
     }
   }
 }
@@ -432,7 +460,7 @@ p {
   transform-origin: center;
 }
 
-// Update the leaves animation
+// Add leaves animation
 @keyframes leaves-animation {
   0% {
     transform: scale(1) rotate(0deg);
@@ -456,7 +484,7 @@ p {
   }
 }
 
-// Adjust for dark mode
+// Update dark mode leaves
 body.dark #leaves {
   opacity: 0.1;
   background-image: 
@@ -822,13 +850,41 @@ body {
 }
 
 .site-footer {
-  font-family: 'Caveat', cursive;
+  font-family: 'Courier New', Courier, monospace;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #718096;
   padding: 10px 0;
   border-top: 1px solid #e8e8e8;
   text-align: center;
+
+  .footer-content {
+    text-align: center;
+  }
+
+  .copyright-text {
+    margin: 0;
+    line-height: 1.5;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .footer-separator {
+    margin: 0 8px;
+    color: #999;
+  }
+
+  .built-with {
+    color: #777;
+    
+    a {
+      color: #666;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 // Reduce top padding for all pages
@@ -1026,4 +1082,97 @@ body.dark {
   h1 { font-size: 2em; }
   h2 { font-size: 1.75em; }
   h3 { font-size: 1.5em; }
+}
+
+// Update footer styles
+.site-footer {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 300;
+  font-size: 0.9rem;
+  color: #718096;
+  padding: 10px 0;
+  border-top: 1px solid #e8e8e8;
+  text-align: center;
+
+  .footer-content {
+    text-align: center;
+  }
+
+  .copyright-text {
+    margin: 0;
+    line-height: 1.5;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .footer-separator {
+    margin: 0 8px;
+    color: #999;
+  }
+
+  .built-with {
+    color: #777;
+    
+    a {
+      color: #666;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Update dark mode footer
+body.dark .site-footer {
+  color: #718096;
+  border-top-color: rgba(255, 255, 255, 0.1);
+  
+  .built-with a {
+    color: #a0c4ff;
+    
+    &:hover {
+      color: #63b3ed;
+    }
+  }
+}
+
+// Update link styles globally
+a {
+  color: #ed8936; // Warm orange for all links
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: #dd6b20; // Darker orange on hover
+    text-decoration: none;
+  }
+}
+
+// Update dark mode link styles
+body.dark {
+  a {
+    color: #fbd38d !important; // Light orange in dark mode
+    
+    &:hover {
+      color: #f6ad55 !important; // Slightly darker orange on hover
+    }
+  }
+  
+  // Exception for navigation links
+  .site-nav .page-link {
+    color: #a0c4ff !important;
+    
+    &:hover {
+      color: #63b3ed !important;
+    }
+  }
+  
+  // Exception for footer links
+  .site-footer .built-with a {
+    color: #a0c4ff !important;
+    
+    &:hover {
+      color: #63b3ed !important;
+    }
+  }
 }
