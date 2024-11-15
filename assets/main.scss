@@ -401,17 +401,38 @@ p {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url("../images/leaves.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: 
+    radial-gradient(
+      circle at 20% 20%,
+      transparent 45%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 50% 45%,
+      transparent 45%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      transparent 45%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 55%
+    );
+  background-size: 
+    400px 400px,
+    300px 300px,
+    250px 250px;
+  background-position: 0 0;
   opacity: 0.2;
   animation: leaves-animation 20s ease-in-out infinite;
   z-index: 0;
   mix-blend-mode: multiply;
+  transform-origin: center;
 }
 
-// Update the animation
+// Update the leaves animation
 @keyframes leaves-animation {
   0% {
     transform: scale(1) rotate(0deg);
@@ -433,6 +454,30 @@ p {
     transform: scale(1) rotate(0deg);
     background-position: 0% 0%, 0% 0%, 0% 0%;
   }
+}
+
+// Adjust for dark mode
+body.dark #leaves {
+  opacity: 0.1;
+  background-image: 
+    radial-gradient(
+      circle at 20% 20%,
+      transparent 45%,
+      rgba(160, 196, 255, 0.03) 50%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 50% 45%,
+      transparent 45%,
+      rgba(160, 196, 255, 0.03) 50%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      transparent 45%,
+      rgba(160, 196, 255, 0.03) 50%,
+      transparent 55%
+    );
 }
 
 @keyframes windStrength {
@@ -694,20 +739,6 @@ article {
       0.0000, 0.0000, 0.0000, 1.0000);
 }
 
-// Update leaves animation
-#leaves {
-  position: absolute;
-  background-size: cover;
-  background-repeat: no-repeat;
-  bottom: -20px;
-  right: -700px;
-  width: 1600px;
-  height: 1400px;
-  background-image: url("../images/leaves.png");
-  filter: url(#wind);
-  animation: billow 8s ease-in-out infinite;
-}
-
 // Add blinds effect
 #blinds {
   position: relative;
@@ -817,4 +848,182 @@ body {
   flex: 1;
   min-width: 300px;
   padding: 1rem;
+}
+
+// Add these styles for the home page
+.home-container {
+  height: calc(100vh - 120px); // Adjust based on your header/footer height
+  overflow: hidden; // Prevent scrolling
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 2rem;
+  margin: 0;
+}
+
+.bio-content {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto 0;
+}
+
+// Remove scroll line
+.site-header {
+  border-bottom: none;
+}
+
+// Make content fit in viewport
+.page-content {
+  padding: 0;
+  
+  .wrapper {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .bio-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+  
+  .home-container {
+    height: auto;
+    min-height: calc(100vh - 120px);
+  }
+}
+
+// Update mobile menu styles
+.site-nav {
+  @media screen and (max-width: 600px) {
+    position: fixed;
+    top: 9px;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    text-align: right;
+    z-index: 1000;
+
+    label[for="nav-trigger"] {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 36px;
+      z-index: 2;
+      cursor: pointer;
+      position: fixed;
+      right: 15px;
+      top: 9px;
+    }
+
+    .menu-icon {
+      display: block;
+      width: 36px;
+      height: 26px;
+      line-height: 0;
+      padding-top: 10px;
+      text-align: center;
+      background-color: transparent;
+      position: fixed;
+      right: 15px;
+      top: 9px;
+
+      > svg path {
+        fill: var(--text);
+      }
+    }
+
+    input ~ .trigger {
+      clear: both;
+      display: none;
+      position: fixed;
+      top: 60px;
+      right: 15px;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      min-width: 200px;
+    }
+  }
+}
+
+// Add dark mode menu styles
+body.dark {
+  .site-nav {
+    @media screen and (max-width: 600px) {
+      .menu-icon > svg path {
+        fill: #a0c4ff; // Light blue color for hamburger icon
+      }
+
+      input ~ .trigger {
+        background-color: rgba(26, 32, 44, 0.9); // Dark background
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .page-link {
+        color: #a0c4ff !important; // Light blue text
+        
+        &:hover {
+          color: #63b3ed !important; // Lighter blue on hover
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// Update mobile content margins
+@media (max-width: 768px) {
+  .bio-content, 
+  .info-grid,
+  .page-content .wrapper {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .home-container {
+    padding: 1.5rem;
+  }
+
+  .bio-text {
+    text-align: left;
+  }
+
+  .research-interests, 
+  .education {
+    padding: 1rem 0;
+  }
+}
+
+// Add more specific mobile text styles
+@media (max-width: 480px) {
+  p, li {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1 { font-size: 2em; }
+  h2 { font-size: 1.75em; }
+  h3 { font-size: 1.5em; }
 }
