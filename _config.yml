@@ -1,7 +1,7 @@
 title: Hamed Yaghoobian
 email: hamedyaghoobian@muhlenberg.edu
 description: >-
-  Assistant Professor of Computer Science at Muhlenberg College
+  Assistant Professor of Computer Science
 baseurl: ""
 url: "https://hamedyaghoobian.github.io"
 
@@ -24,4 +24,4 @@ header_pages:
   - persian.md
 
 # Custom variables
-google_analytics: UA-195402150-1
+google_analytics: G-R39YNYB88S  # Replace with your Measurement ID
