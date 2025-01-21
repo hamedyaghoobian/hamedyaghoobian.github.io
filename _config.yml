@@ -21,6 +21,7 @@ header_pages:
   - public-interactions.md
   - news.md
   - lab.md
+  - persian.md
 
 # Custom variables
 google_analytics: UA-195402150-1

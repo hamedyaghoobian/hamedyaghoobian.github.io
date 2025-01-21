@@ -92,6 +92,16 @@ h3 { font-size: 1.75em; }
 .site-nav {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
+
+  .page-link {
+    padding: 6px 8px;
+    margin-right: 4px;
+    font-size: 0.85rem;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 // Content Styling
@@ -262,29 +272,45 @@ p {
 }
 
 .site-header {
-  // ... existing styles ...
-
+  min-height: 45px;
+  line-height: 45px;
+  border-bottom: none;
+  
   .wrapper {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
+    padding: 0 8px;
+    max-width: 1400px;
   }
+}
 
-  .site-title {
-    // ... existing styles ...
-    margin-right: auto;
-  }
+.site-title {
+  font-size: 1.2rem;
+  letter-spacing: -0.5px;
+  margin-bottom: 0;
+  padding: 0;
+  line-height: 45px;
+}
 
-  .site-nav {
-    // ... existing styles ...
-    display: flex;
-    align-items: center;
+.site-nav {
+  line-height: 45px;
+  
+  .page-link {
+    padding: 4px 6px;
+    margin-right: 2px;
+    font-size: 0.8rem;
+    color: var(--text);
+    
+    &:last-child {
+      margin-right: 0;
+      padding-right: 0;
+    }
   }
+}
 
-  .theme-toggle {
-    // ... existing styles ...
-    margin-left: 1rem;
-  }
+.theme-toggle {
+  margin-left: 1rem;
 }
 
 // Add these keyframe animations

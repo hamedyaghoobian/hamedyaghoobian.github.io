@@ -4,6 +4,13 @@ title: Pedagogy
 permalink: /pedagogy/
 ---
 {% include dappled-light.html %}
+## Department of Math, CS, and Stat, Muhlenberg College
+
+### Spring 2025
+
+* Computer Organization 
+* Computer Science II
+* CUE Computer Science Seminar
 
 ### Fall 2024
 
