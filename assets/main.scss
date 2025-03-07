@@ -120,7 +120,7 @@ h3 { font-size: 1.75em; }
 
 // Footer
 .site-footer {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Inter', sans-serif;
   font-weight: 300;
   font-size: 0.9rem;
   color: #718096;
@@ -135,7 +135,7 @@ h3 { font-size: 1.75em; }
   .copyright-text {
     margin: 0;
     line-height: 1.5;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Inter', sans-serif;
   }
 
   .footer-separator {
@@ -225,12 +225,13 @@ p {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
 
   input[type="checkbox"] {
     display: none;
   }
-
+  
   .theme-toggle-sr {
     position: absolute;
     width: 1px;
@@ -247,9 +248,9 @@ p {
     width: 18px;
     height: 18px;
     transition: transform 0.3s;
-    margin-top: -4px;
+    margin-top: 0;
   }
-
+  
   input[type="checkbox"]:checked + .theme-toggle__expand {
     transform: rotate(180deg);
   }
@@ -876,7 +877,7 @@ body {
 }
 
 .site-footer {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Inter', sans-serif;
   font-weight: 300;
   font-size: 0.9rem;
   color: #718096;
@@ -891,7 +892,7 @@ body {
   .copyright-text {
     margin: 0;
     line-height: 1.5;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Inter', sans-serif;
   }
 
   .footer-separator {
@@ -1112,7 +1113,7 @@ body.dark {
 
 // Update footer styles
 .site-footer {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Inter', sans-serif;
   font-weight: 300;
   font-size: 0.9rem;
   color: #718096;
@@ -1127,7 +1128,7 @@ body.dark {
   .copyright-text {
     margin: 0;
     line-height: 1.5;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Inter', sans-serif;
   }
 
   .footer-separator {
