@@ -224,59 +224,34 @@ p {
 .theme-toggle {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   cursor: pointer;
-  margin-left: 0.5rem;
-  background: transparent;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  padding: 0;
-  color: var(--text);
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  position: relative;
-  vertical-align: middle;
-  
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    transform: scale(1.1);
-  }
-  
-  .theme-toggle-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.2s ease, transform 0.3s ease;
-  }
-  
-  .sun {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(0);
-  }
-  
-  .moon {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
-}
+  margin-left: 1rem;
 
-body.dark {
-  .theme-toggle {
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-    
-    .sun {
-      opacity: 0;
-      transform: translate(-50%, -50%) rotate(-90deg);
-    }
-    
-    .moon {
-      opacity: 1;
-      transform: translate(-50%, -50%) rotate(0);
-    }
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .theme-toggle-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .theme-toggle__expand {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s;
+    margin-top: -4px;
+  }
+
+  input[type="checkbox"]:checked + .theme-toggle__expand {
+    transform: rotate(180deg);
   }
 }
 
