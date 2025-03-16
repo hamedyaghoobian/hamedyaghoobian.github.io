@@ -5,6 +5,8 @@ permalink: /news/
 ---
 {% include dappled-light.html %}
 
+* **March 2025**: My paper *"Beyond the Loop: Rethinking AI Cycles Through Recursivity and Difference"* has been accepted for presentation at the *[Society for the Social Studies of Science (4S)](https://4sonline.org/)* 2025 Conference in Seattle, to be held in September.
+
 * **February 2025**: Co-presented *"From Java to Python: Revamping CS2 for a Cohesive Curriculum"* with Proyash Podder at *Innovations and Opportunities in Liberal Arts Computing Education*, an affiliated event at *[SIGCSE 2025](https://sigcse2025.sigcse.org/)* in Pittsburgh.
 
 * **December 2024**: Open panel on *"Perforating echos: Cultivating difference in sociotechnical futures"* at the 2025 4S Meeting in Seattle, WA, co-organized with [Rachel Horst](https://www.rachelhorst.ca/).
