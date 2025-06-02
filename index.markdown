@@ -10,18 +10,21 @@ list_title: " "
   position: relative;
   display: inline-block;
   margin-bottom: 1rem;
+  width: 200px;
+  height: 200px;
 }
 
 .profile-pic {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center center;
-  aspect-ratio: 1/1;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
   transition: transform 0.3s ease;
   cursor: pointer;
-  display: block;
+  display: block !important;
+  position: relative;
+  overflow: hidden;
   
   @media screen and (min-width: 768px) {
     margin-right: 2rem;
@@ -59,12 +62,17 @@ list_title: " "
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: white;
+  color: #ffffff !important;
   font-size: 18px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(20px);
-  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+}
+
+.social-btn i {
+  color: #ffffff !important;
+  font-size: 18px;
 }
 
 .profile-container:hover .social-btn {
@@ -80,11 +88,15 @@ list_title: " "
 }
 
 .social-btn:hover {
-  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+  background: linear-gradient(135deg, #4b5563 0%, #374151 100%) !important;
   transform: translateY(-2px) scale(1.1);
-  color: white;
+  color: #ffffff !important;
   text-decoration: none;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.social-btn:hover i {
+  color: #ffffff !important;
 }
 
 @media screen and (max-width: 767px) {
