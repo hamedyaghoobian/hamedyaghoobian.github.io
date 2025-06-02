@@ -3,7 +3,7 @@ layout: page
 # title: Unmasking Bias in LLMs
 
 permalink: /projects/unmask-bias-llms
-header: false
+header: true
 list_title: " "
 
 ---
