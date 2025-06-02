@@ -11,7 +11,7 @@ list_title: " "
     <div class="bio-text">
       <h1>Welcome</h1>
       <p>I am an Assistant Professor of Computer Science at Muhlenberg College. My teaching and research interests lie in the interstices of Natural Language Processing and Human-Computer Interaction, primarily focusing on computer- and AI-mediated practices in everyday life.</p>
-      <p>I was born and raised in Mashhad, Iran's second largest city and the capital of Razavi Khorasan Province. The region, historically part of the ancient Silk Road, is the birthplace of influential figures like the poet <a href="https://en.wikipedia.org/wiki/Ferdowsi">Ferdowsi</a>, mathematician <a href="https://en.wikipedia.org/wiki/Omar_Khayyam">Omar Khayyam</a>, and polymath <a href="https://en.wikipedia.org/wiki/Avicenna">Avicenna</a>. Today, I live in Allentown, Pennsylvania, with my wife.</p>
+      <p>I was born and raised in Mashhad, a culturally significant city in northeastern Iran. I now live in Pennsylvania with my wife. </p>
       <p>For discussions about research, collaborations, or just a friendly chat, drop me an email at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a> or visit me in the Trumbower Science Building, room 125.</p>
     </div>
   </div>
@@ -26,7 +26,6 @@ list_title: " "
         <li>Philosophy of technology</li>
       </ul>
     </div>
-    
     <div class="education">
       <h2>Education</h2>
       <div class="education-item">
