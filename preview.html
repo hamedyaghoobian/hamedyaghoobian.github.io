@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools & Projects - Preview</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -211,125 +210,6 @@
             color: #dd6b20;
             text-decoration: none;
         }
-
-        .preview-container {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .profile-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 2rem;
-            width: 200px;
-            height: 200px;
-        }
-
-        .profile-pic {
-            width: 200px !important;
-            height: 200px !important;
-            border-radius: 50% !important;
-            object-fit: cover !important;
-            object-position: center center !important;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            display: block !important;
-            position: relative;
-            overflow: hidden;
-            border: 3px solid #e2e8f0;
-        }
-
-        .profile-container:hover .profile-pic {
-            transform: translateY(-8px);
-        }
-
-        .social-buttons {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            pointer-events: none;
-        }
-
-        .profile-container:hover .social-buttons {
-            opacity: 1;
-            bottom: -40px;
-            pointer-events: auto;
-        }
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: #ffffff !important;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transform: translateY(20px);
-            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
-        }
-
-        .social-btn i {
-            color: #ffffff !important;
-            font-size: 18px;
-        }
-
-        .profile-container:hover .social-btn {
-            transform: translateY(0);
-        }
-
-        .social-btn:nth-child(1) {
-            transition-delay: 0.1s;
-        }
-
-        .social-btn:nth-child(2) {
-            transition-delay: 0.2s;
-        }
-
-        .social-btn:hover {
-            background: linear-gradient(135deg, #4b5563 0%, #374151 100%) !important;
-            transform: translateY(-2px) scale(1.1);
-            color: #ffffff !important;
-            text-decoration: none;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-        }
-
-        .social-btn:hover i {
-            color: #ffffff !important;
-        }
-
-        .preview-note {
-            background: #e3f2fd;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-            color: #1565c0;
-            font-size: 0.9rem;
-        }
-
-        .demo-image {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 50%;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 4rem;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -383,31 +263,6 @@
         <h2>About These Tools</h2>
 
         <p>These projects represent explorations at the intersection of AI technology and humanistic inquiry. They aim to make complex philosophical and textual content more accessible through innovative interfaces while maintaining the depth and nuance of the original works.</p>
-    </div>
-
-    <div class="preview-container">
-        <h1>Profile Picture Preview</h1>
-        
-        <div class="profile-container">
-            <!-- Using a demo gradient circle since we don't have the actual image -->
-            <div class="profile-pic demo-image">
-                HY
-            </div>
-            <div class="social-buttons">
-                <a href="#" class="social-btn" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="#" class="social-btn" title="Google Scholar">
-                    <i class="fas fa-graduation-cap"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="preview-note">
-            <strong>✅ Fixed:</strong> Profile picture is now perfectly circular<br>
-            <strong>🎨 Updated:</strong> Social buttons are grayscale<br>
-            <strong>🎯 Hover:</strong> Try hovering over the profile picture!
-        </div>
     </div>
 </body>
 </html> 

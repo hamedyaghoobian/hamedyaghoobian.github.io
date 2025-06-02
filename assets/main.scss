@@ -194,19 +194,18 @@ html {
   }
 }
 
-// Commented out - profile-pic styling moved to index.markdown for interactive hover effects
-// .profile-pic {
-//   width: 200px;
-//   height: 200px;
-//   border-radius: 50%;
-//   object-fit: cover;
-//   margin-bottom: 1rem;
-//   
-//   @media screen and (min-width: 768px) {
-//     margin-right: 2rem;
-//     margin-bottom: 0;
-//   }
-// }
+.profile-pic {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  
+  @media screen and (min-width: 768px) {
+    margin-right: 2rem;
+    margin-bottom: 0;
+  }
+}
 
 .bio-text {
   text-align: center;
