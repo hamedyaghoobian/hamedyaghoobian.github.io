@@ -396,6 +396,9 @@ body.dark {
 .page-content {
   background-color: transparent;
   padding: 0;
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 120px);
   
   .wrapper {
     background-color: transparent;
@@ -403,11 +406,26 @@ body.dark {
     margin: 2rem auto;
     max-width: 800px;
     transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
 body.dark .page-content .wrapper {
   background-color: transparent;
+}
+
+// Home page specific overrides
+.home {
+  .page-content {
+    min-height: auto;
+    
+    .wrapper {
+      padding: 0;
+      margin: 0;
+      max-width: 100%;
+    }
+  }
 }
 
 .site-footer {
@@ -456,13 +474,6 @@ body {
   justify-content: center;
   padding: 0 2rem;
   margin: 0;
-  
-  // Override page content wrapper styles for home page only
-  .page-content .wrapper {
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
-  }
 }
 
 .bio-content {
@@ -483,19 +494,42 @@ body {
 
 // Responsive adjustments
 @media (max-width: 768px) {
+  .page-content .wrapper {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+  
   .bio-content {
     flex-direction: column;
     text-align: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
   
   .info-grid {
     grid-template-columns: 1fr;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
-  
+
   .home-container {
     height: auto;
     min-height: calc(100vh - 120px);
+    padding: 1.5rem;
+  }
+  
+  // Home page specific mobile overrides
+  .home .page-content .wrapper {
+    padding: 0;
+    margin: 0;
+  }
+
+  .bio-text {
+    text-align: left;
+  }
+
+  .research-interests, 
+  .education {
+    padding: 1rem 0;
   }
 }
 
@@ -578,29 +612,6 @@ body.dark {
         }
       }
     }
-  }
-}
-
-// Update mobile content margins
-@media (max-width: 768px) {
-  .bio-content, 
-  .info-grid,
-  .page-content .wrapper {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  .home-container {
-    padding: 1.5rem;
-  }
-
-  .bio-text {
-    text-align: left;
-  }
-
-  .research-interests, 
-  .education {
-    padding: 1rem 0;
   }
 }
 
