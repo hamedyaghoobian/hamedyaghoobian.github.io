@@ -1,6 +1,6 @@
 ---
 layout: page
-# title: Unmasking Bias in LLMs
+title: Unmasking Bias in LLMs
 
 permalink: /projects/unmask-bias-llms
 header: true

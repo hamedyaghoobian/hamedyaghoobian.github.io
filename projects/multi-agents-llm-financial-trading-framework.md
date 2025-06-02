@@ -1,9 +1,9 @@
 ---
 layout: page
-# title: Multi-Agents LLM Financial Trading Framework
+title: Multi-Agents LLM Financial Trading Framework
 
 permalink: /projects/multi-agents-llm-financial-trading-framework
-header: false
+header: true
 list_title: " "
 
 ---

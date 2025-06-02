@@ -1,9 +1,9 @@
 ---
 layout: page
-# title: A Peek Into Correspondences of Walter Benjamin Using BERT
+title: A Peek Into Correspondences of Walter Benjamin Using BERT
 
 permalink: /projects/walter-benjamin
-header: false
+header: true
 list_title: " "
 
 ---

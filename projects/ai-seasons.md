@@ -1,9 +1,9 @@
 ---
 layout: page
-# title: AI Seasons
+title: AI Seasons
 
 permalink: /projects/ai-seasons
-header: false
+header: true
 list_title: " "
 
 ---

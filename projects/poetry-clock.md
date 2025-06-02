@@ -1,6 +1,6 @@
 ---
 layout: page
-# title: AI Seasons
+title: Poetry Clock
 
 permalink: /projects/poetry-clock
 header: true
