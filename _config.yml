@@ -18,9 +18,9 @@ plugins:
 # Navigation
 header_pages:
   - pedagogy.md
+  - student-research.md
   - public-interactions.md
   - news.md
-  - lab.md
   - tools.md
 
 # Custom variables
