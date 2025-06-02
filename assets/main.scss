@@ -111,7 +111,7 @@ h3 { font-size: 1.75em; }
 .site-footer {
   font-family: 'Inter', sans-serif;
   font-weight: 300;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: #718096;
   padding: 10px 0;
   border-top: 1px solid #e8e8e8;
@@ -472,7 +472,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 0 3rem;
   margin: 0;
 }
 
@@ -482,6 +482,7 @@ body {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .info-grid {
@@ -490,6 +491,7 @@ body {
   gap: 2rem;
   max-width: 1200px;
   margin: 2rem auto 0;
+  padding: 0 2rem;
 }
 
 // Responsive adjustments
@@ -502,19 +504,19 @@ body {
   .bio-content {
     flex-direction: column;
     text-align: center;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
   
   .info-grid {
     grid-template-columns: 1fr;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
   }
 
   .home-container {
     height: auto;
     min-height: calc(100vh - 120px);
-    padding: 1.5rem;
+    padding: 2rem;
   }
   
   // Home page specific mobile overrides
