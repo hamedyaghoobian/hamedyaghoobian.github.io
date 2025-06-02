@@ -213,8 +213,8 @@ permalink: /tools/
 
 <div class="coming-soon">
 
-## About These Tools
+<h2>About These Tools</h2>
 
-These projects represent explorations at the intersection of AI technology and humanistic inquiry. They aim to make complex philosophical and textual content more accessible through innovative interfaces while maintaining the depth and nuance of the original works.
+<p>These projects represent explorations at the intersection of AI technology and humanistic inquiry. They aim to make complex philosophical and textual content more accessible through innovative interfaces while maintaining the depth and nuance of the original works.</p>
 
 </div> 
