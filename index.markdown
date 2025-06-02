@@ -17,9 +17,11 @@ list_title: " "
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
+  aspect-ratio: 1/1;
   transition: transform 0.3s ease;
   cursor: pointer;
+  display: block;
   
   @media screen and (min-width: 768px) {
     margin-right: 2rem;
