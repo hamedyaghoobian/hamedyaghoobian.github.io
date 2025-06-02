@@ -17,6 +17,7 @@ list_title: " "
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
   cursor: pointer;
   
@@ -61,6 +62,7 @@ list_title: " "
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(20px);
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
 }
 
 .profile-container:hover .social-btn {
@@ -75,26 +77,12 @@ list_title: " "
   transition-delay: 0.2s;
 }
 
-.github-btn {
-  background: linear-gradient(135deg, #333 0%, #24292e 100%);
-}
-
-.github-btn:hover {
-  background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%);
+.social-btn:hover {
+  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
   transform: translateY(-2px) scale(1.1);
   color: white;
   text-decoration: none;
-}
-
-.scholar-btn {
-  background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%);
-}
-
-.scholar-btn:hover {
-  background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
-  transform: translateY(-2px) scale(1.1);
-  color: white;
-  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 @media screen and (max-width: 767px) {
@@ -109,10 +97,10 @@ list_title: " "
     <div class="profile-container">
       <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Profile Picture" class="profile-pic">
       <div class="social-buttons">
-        <a href="https://github.com/hamedyaghoobian" class="social-btn github-btn" target="_blank" title="GitHub">
+        <a href="https://github.com/hamedyaghoobian" class="social-btn" target="_blank" title="GitHub">
           <i class="fab fa-github"></i>
         </a>
-        <a href="https://scholar.google.com/citations?user=6626541213499116714&hl=en" class="social-btn scholar-btn" target="_blank" title="Google Scholar">
+        <a href="https://scholar.google.com/citations?user=6626541213499116714&hl=en" class="social-btn" target="_blank" title="Google Scholar">
           <i class="fas fa-graduation-cap"></i>
         </a>
       </div>
