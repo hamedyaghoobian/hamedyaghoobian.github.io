@@ -197,6 +197,14 @@ body.dark .cta-button {
 body.dark .cta-button:hover {
     background: #dd6b20;
 }
+body.dark .coming-soon {
+    background: #1a202c;
+    border-color: #2d3748;
+}
+body.dark .coming-soon h2,
+body.dark .coming-soon p {
+    color: #e2e8f0;
+}
 </style>
 
 <div class="tools-container">
