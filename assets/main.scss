@@ -467,8 +467,9 @@ body {
 
 // Home page specific styles
 .home-container {
-  height: calc(100vh - 120px);
-  overflow: hidden;
+  min-height: calc(100vh - 120px);
+  height: auto;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   justify-content: center;
