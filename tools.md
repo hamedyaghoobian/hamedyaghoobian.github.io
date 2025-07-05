@@ -170,6 +170,35 @@ permalink: /tools/
 }
 </style>
 
+<style>
+body.dark .tool-card {
+    background: #1a202c;
+    border-color: #2d3748;
+}
+body.dark .tool-title,
+body.dark .tool-subtitle,
+body.dark .tool-description,
+body.dark .feature-list li,
+body.dark .tech-stack,
+body.dark .source-attribution {
+    color: #e2e8f0;
+}
+body.dark .feature-list {
+    background: #2d3748;
+    border-left-color: #ed8936;
+}
+body.dark .tech-tag {
+    background: #4a5568;
+    color: #e2e8f0;
+}
+body.dark .cta-button {
+    background: #ed8936;
+}
+body.dark .cta-button:hover {
+    background: #dd6b20;
+}
+</style>
+
 <div class="tools-container">
 
 <p class="section-intro">This section showcases interactive tools and applications I've developed, exploring innovative ways to engage with textual content using artificial intelligence.</p>
