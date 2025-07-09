@@ -724,12 +724,6 @@ async function translatePoem(button) {
     showLoadingAnimation(poemCard);
     
     try {
-        // Check if API key has been properly injected
-        const apiKey = 'GROQ_API_KEY_PLACEHOLDER';
-        if (apiKey === 'GROQ_API_KEY_PLACEHOLDER') {
-            throw new Error('API key not configured - build system required');
-        }
-        
         // Direct call to Groq API with placeholder (replaced during build)
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
@@ -737,7 +731,7 @@ async function translatePoem(button) {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
+                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -799,13 +793,6 @@ Respond only with the English translation, no explanations.`
         // Handle different types of errors with helpful messages
         if (error.name === 'AbortError') {
             errorMessage = 'درخواست زمان زیادی طول کشید / Request timed out';
-        } else if (error.message.includes('API key not configured')) {
-            errorMessage = 'سرویس ترجمه در حال راه‌اندازی / Translation service starting up';
-            fallbackTranslation = {
-                translation: "Sample translation: This beautiful Persian verse speaks of love, loss, and the human condition. (Translation service initializing - showing demo)",
-                model: 'demo-mode',
-                timestamp: new Date().toISOString()
-            };
         } else if (error.message.includes('Load failed') || error.message.includes('Network request failed') || error.message.includes('Failed to fetch')) {
             errorMessage = 'مشکل اتصال به اینترنت / Network connection issue';
             // Provide a sample translation for mobile users
