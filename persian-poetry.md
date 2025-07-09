@@ -367,6 +367,42 @@ body.dark .translate-btn:hover {
         </div>
     </div>
 
+
+        <div class="poem-card">
+        <div class="date-header">
+            <div class="dynamic-date"></div>
+        </div>
+        
+        <div class="poem-content">
+            <div class="poem-verses">
+                <div class="verse">
+                    زانکه بر ضد جهان گویم سخن
+                </div>
+                <div class="verse">
+                    یا جهان دیوانه باشد یا که من
+                </div>
+            </div>
+            
+            <div class="poet-attribution">
+                <p class="poet-name">نیما یوشیج</p>
+            </div>
+            
+            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
+                <i class="fas fa-language"></i>
+            </button>
+            
+            <div class="translation-container">
+                <p class="translation-text"></p>
+                <div class="translation-meta">
+                    <span class="translation-model"></span>
+                    <span class="translation-time"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="poem-card placeholder-card">
         <div class="date-header">
             <p class="poem-context">می‌خوانم و اضافه می‌کنم.</p>
