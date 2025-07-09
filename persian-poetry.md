@@ -241,47 +241,46 @@ body.dark .placeholder-card {
 }
 
 /* Advanced Loading Animation */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(4px);
+.loading-container {
+    display: none;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #ed8936;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-.loading-container {
-    text-align: center;
-    color: white;
+.loading-container.show {
+    display: block;
+    opacity: 1;
 }
 
 .loading-text {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    font-weight: 500;
-    opacity: 0.9;
+    font-family: 'Vazirmatn', 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #4a5568;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
 }
 
 .loading-bars {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    width: 300px;
+    gap: 6px;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
 }
 
 .loading-bar {
-    height: 6px;
-    border-radius: 3px;
+    height: 4px;
+    border-radius: 2px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(237, 137, 54, 0.15);
 }
 
 .loading-bar:nth-child(1) {
@@ -299,7 +298,7 @@ body.dark .placeholder-card {
 
 .loading-progress {
     height: 100%;
-    border-radius: 3px;
+    border-radius: 2px;
     background: linear-gradient(90deg, 
         #ed8936 0%, 
         #f6ad55 25%, 
@@ -344,8 +343,17 @@ body.dark .placeholder-card {
 }
 
 /* Dark mode adjustments for loading */
-body.dark .loading-overlay {
-    background: rgba(0, 0, 0, 0.9);
+body.dark .loading-container {
+    background: #2d3748;
+    border-left-color: #ed8936;
+}
+
+body.dark .loading-text {
+    color: #e2e8f0;
+}
+
+body.dark .loading-bar {
+    background: rgba(237, 137, 54, 0.2);
 }
 
 body.dark .loading-progress {
@@ -361,11 +369,16 @@ body.dark .loading-progress {
 /* Responsive loading animation */
 @media (max-width: 768px) {
     .loading-bars {
-        width: 250px;
+        max-width: 240px;
     }
     
     .loading-text {
-        font-size: 1rem;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+    
+    .loading-container {
+        padding: 1rem;
     }
 }
 
@@ -451,12 +464,12 @@ body.dark .translate-btn:hover {
         </p>
         <!-- a persian poem post -->
     </div>
-        <div class="poem-card">
+
+    <div class="poem-card">
         <div class="date-header">
             <!-- <p class="occasion-date"> تیر ۱۴۰۴ / جولای ۲۰۲۵</p> -->
             <div class="dynamic-date"></div>
         </div>
-        
         <div class="poem-content">
             <div class="poem-verses">
                 <div class="verse">
@@ -468,19 +481,16 @@ body.dark .translate-btn:hover {
             </div>
         </div>
         <div class="poet-attribution">
-                <p class="poet-name">عراقی</p>
-            </div>
-            
-            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-                <i class="fas fa-language"></i>
-            </button>
-            
-            <div class="translation-container">
-                <p class="translation-text"></p>
-                <div class="translation-meta">
-                    <span class="translation-model"></span>
-                    <span class="translation-time"></span>
-                </div>
+            <p class="poet-name">عراقی</p>
+        </div>
+        <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
+            <i class="fas fa-language"></i>
+        </button>
+        <div class="translation-container">
+            <p class="translation-text"></p>
+            <div class="translation-meta">
+                <span class="translation-model"></span>
+                <span class="translation-time"></span>
             </div>
         </div>
     </div>
@@ -495,7 +505,7 @@ body.dark .translate-btn:hover {
                     سنگی می‌زنند
                 </div>
                 <div class="verse">
-                یکی می‌میرد
+                    یکی می‌میرد
                 </div>
                 <div class="verse">
                     باقی تا آخر عمر همه
@@ -504,15 +514,12 @@ body.dark .translate-btn:hover {
                     قلب‌شان تندتر می‌زند.
                 </div>
             </div>
-            
             <div class="poet-attribution">
                 <p class="poet-name">سعید برآبادی</p>
             </div>
-            
             <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
                 <i class="fas fa-language"></i>
             </button>
-            
             <div class="translation-container">
                 <p class="translation-text"></p>
                 <div class="translation-meta">
@@ -523,12 +530,10 @@ body.dark .translate-btn:hover {
         </div>
     </div>
 
-
-        <div class="poem-card">
+    <div class="poem-card">
         <div class="date-header">
             <div class="dynamic-date"></div>
         </div>
-        
         <div class="poem-content">
             <div class="poem-verses">
                 <div class="verse">
@@ -538,17 +543,15 @@ body.dark .translate-btn:hover {
                     یا جهان دیوانه باشد یا که من
                 </div>
                 <div class="verse">
-                بلکه از دیوانگان هم بدترم
+                    بلکه از دیوانگان هم بدترم
+                </div>
             </div>
-            
             <div class="poet-attribution">
                 <p class="poet-name">نیما یوشیج</p>
             </div>
-            
             <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
                 <i class="fas fa-language"></i>
             </button>
-            
             <div class="translation-container">
                 <p class="translation-text"></p>
                 <div class="translation-meta">
@@ -558,8 +561,6 @@ body.dark .translate-btn:hover {
             </div>
         </div>
     </div>
-
-
 
     <div class="poem-card placeholder-card">
         <div class="date-header">
@@ -618,17 +619,14 @@ function initializeDynamicDates() {
 }
 
 // Loading animation functions
-function showLoadingAnimation() {
-    // Remove any existing overlay
-    hideLoadingAnimation();
+function showLoadingAnimation(poemCard) {
+    // Remove any existing loading animation
+    hideLoadingAnimation(poemCard);
     
-    // Create loading overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'loading-overlay';
-    overlay.id = 'translation-loading';
-    
+    // Create loading container
     const container = document.createElement('div');
     container.className = 'loading-container';
+    container.id = 'translation-loading';
     
     const text = document.createElement('div');
     text.className = 'loading-text';
@@ -651,23 +649,24 @@ function showLoadingAnimation() {
     
     container.appendChild(text);
     container.appendChild(barsContainer);
-    overlay.appendChild(container);
     
-    document.body.appendChild(overlay);
+    // Insert after the translate button
+    const translateBtn = poemCard.querySelector('.translate-btn');
+    translateBtn.parentNode.insertBefore(container, translateBtn.nextSibling);
     
     // Animate in
     requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
+        container.classList.add('show');
     });
 }
 
-function hideLoadingAnimation() {
-    const overlay = document.getElementById('translation-loading');
-    if (overlay) {
-        overlay.style.opacity = '0';
+function hideLoadingAnimation(poemCard) {
+    const container = poemCard.querySelector('#translation-loading');
+    if (container) {
+        container.classList.remove('show');
         setTimeout(() => {
-            if (overlay.parentNode) {
-                overlay.parentNode.removeChild(overlay);
+            if (container.parentNode) {
+                container.parentNode.removeChild(container);
             }
         }, 300);
     }
@@ -719,7 +718,7 @@ async function translatePoem(button) {
     button.title = 'در حال ترجمه...';
     
     // Show advanced loading animation
-    showLoadingAnimation();
+    showLoadingAnimation(poemCard);
     
     try {
         // Direct call to Groq API with placeholder (replaced during build)
@@ -790,7 +789,7 @@ Respond only with the English translation, no explanations.`
     } finally {
         button.classList.remove('loading');
         button.disabled = false;
-        hideLoadingAnimation();
+        hideLoadingAnimation(poemCard);
     }
 }
 
