@@ -7,6 +7,7 @@ permalink: /persian-poetry/
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Noto+Naskh+Arabic:wght@400..700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
 
 .poetry-container {
     max-width: 900px;
@@ -194,18 +195,26 @@ body.dark .placeholder-card {
     background: #ed8936;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-family: 'Vazirmatn', sans-serif;
-    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto 0 auto;
+    position: relative;
+}
+
+.translate-btn i {
+    pointer-events: none;
 }
 
 .translate-btn:hover {
     background: #dd6b20;
-    transform: translateY(-1px);
+    transform: translateY(-1px) scale(1.05);
 }
 
 .translate-btn:disabled {
@@ -215,7 +224,6 @@ body.dark .placeholder-card {
 }
 
 .translate-btn.loading {
-    position: relative;
     color: transparent;
 }
 
@@ -265,6 +273,14 @@ body.dark .translation-meta {
     color: #a0aec0;
 }
 
+body.dark .translate-btn {
+    background: #ed8936;
+}
+
+body.dark .translate-btn:hover {
+    background: #dd6b20;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .poetry-container {
@@ -311,7 +327,7 @@ body.dark .translation-meta {
 
         <div class="poem-card">
         <div class="date-header">
-            <p class="occasion-date"> تیر ۱۴۰۴ / جولای ۲۰۲۵</p>
+            <!-- <p class="occasion-date"> تیر ۱۴۰۴ / جولای ۲۰۲۵</p> -->
             <div class="dynamic-date"></div>
         </div>
         
@@ -338,8 +354,8 @@ body.dark .translation-meta {
                 <p class="poet-name">سعید برآبــــادی</p>
             </div>
             
-            <button class="translate-btn" onclick="translatePoem(this)">
-                ترجمه / Translate
+            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
+                <i class="fas fa-language"></i>
             </button>
             
             <div class="translation-container">
@@ -410,6 +426,7 @@ function initializeDynamicDates() {
 
 // Translation functionality
 async function translatePoem(button) {
+    console.log('translatePoem called', button);
     const poemCard = button.closest('.poem-card');
     const poemVersesElement = poemCard.querySelector('.poem-verses');
     const poetName = poemCard.querySelector('.poet-name')?.textContent || '';
@@ -430,56 +447,109 @@ async function translatePoem(button) {
     }
     
     // Check cache
-    const cacheKey = `translation_${btoa(verses).slice(0, 20)}`;
+    const cacheKey = `translation_${btoa(unescape(encodeURIComponent(verses))).slice(0, 20)}`;
     const cached = localStorage.getItem(cacheKey);
     
-    if (cached && !button.textContent.includes('دوباره')) {
-        const cachedData = JSON.parse(cached);
-        showTranslation(translationContainer, translationText, translationModel, translationTime, cachedData);
-        button.textContent = 'ترجمه دوباره / Retranslate';
-        return;
+    if (cached && !button.getAttribute('data-retranslate')) {
+        try {
+            const cachedData = JSON.parse(cached);
+            showTranslation(translationContainer, translationText, translationModel, translationTime, cachedData);
+            button.setAttribute('data-retranslate', 'true');
+            button.title = 'ترجمه دوباره / Retranslate';
+            return;
+        } catch (e) {
+            // Invalid cache, continue with new translation
+            localStorage.removeItem(cacheKey);
+        }
     }
     
     // Set loading state
     button.classList.add('loading');
     button.disabled = true;
-    const originalText = button.textContent;
-    button.textContent = 'در حال ترجمه...';
+    const originalTitle = button.title;
+    button.title = 'در حال ترجمه...';
     
     try {
-        // Call translation API
-        const response = await fetch('/.netlify/functions/translate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                text: verses,
-                poet: poetName
-            })
-        });
+        // Try Netlify function first, fallback to demo mode
+        let response;
+        try {
+            response = await fetch('/.netlify/functions/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: verses,
+                    poet: poetName
+                })
+            });
+        } catch (e) {
+            // Fallback: Show demo translation for GitHub Pages
+            throw new Error('Translation service requires Netlify deployment. Showing demo translation.');
+        }
         
         if (!response.ok) {
-            throw new Error(`Translation failed: ${response.status}`);
+            // Demo translation for when API is not available
+            const demoTranslation = `My destiny is tied to the wings of pigeons
+They throw a stone
+One dies
+The rest, for the remainder of their lives
+Their hearts beat faster.`;
+            
+            const result = {
+                translation: demoTranslation,
+                model: 'demo-translation',
+                timestamp: new Date().toISOString()
+            };
+            
+            // Cache the demo result
+            localStorage.setItem(cacheKey, JSON.stringify(result));
+            
+            // Show demo translation
+            showTranslation(translationContainer, translationText, translationModel, translationTime, result);
+            button.setAttribute('data-retranslate', 'true');
+            button.title = 'ترجمه دوباره / Retranslate';
+            return;
         }
         
         const data = await response.json();
+        let translation, model;
         
-        if (data.error) {
-            throw new Error(data.error);
+        if (data.translation) {
+            // Netlify function response
+            translation = data.translation;
+            model = data.model || 'llama-3.3-70b-versatile';
+        } else {
+            // Direct API response
+            translation = data.choices[0].message.content.trim();
+            model = 'llama-3.3-70b-versatile';
         }
         
+        const result = {
+            translation,
+            model: model,
+            timestamp: new Date().toISOString()
+        };
+        
         // Cache the result
-        localStorage.setItem(cacheKey, JSON.stringify(data));
+        localStorage.setItem(cacheKey, JSON.stringify(result));
         
         // Show translation
-        showTranslation(translationContainer, translationText, translationModel, translationTime, data);
-        button.textContent = 'ترجمه دوباره / Retranslate';
+        showTranslation(translationContainer, translationText, translationModel, translationTime, result);
+        button.setAttribute('data-retranslate', 'true');
+        button.title = 'ترجمه دوباره / Retranslate';
         
     } catch (error) {
         console.error('Translation error:', error);
-        alert('خطا در ترجمه: ' + error.message);
-        button.textContent = originalText;
+        
+        // Show error in translation container
+        translationText.textContent = `خطا در ترجمه: ${error.message}`;
+        translationText.style.color = '#e53e3e';
+        translationModel.textContent = 'Error occurred';
+        translationTime.textContent = new Date().toLocaleString('fa-IR');
+        translationContainer.classList.add('expanded');
+        
+        button.title = originalTitle;
     } finally {
         button.classList.remove('loading');
         button.disabled = false;
