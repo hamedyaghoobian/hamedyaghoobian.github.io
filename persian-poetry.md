@@ -470,60 +470,45 @@ async function translatePoem(button) {
     button.title = 'در حال ترجمه...';
     
     try {
-        // Try Netlify function first, fallback to demo mode
-        let response;
-        try {
-            response = await fetch('/.netlify/functions/translate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: verses,
-                    poet: poetName
-                })
-            });
-        } catch (e) {
-            // Fallback: Show demo translation for GitHub Pages
-            throw new Error('Translation service requires Netlify deployment. Showing demo translation.');
-        }
+        // Direct call to Groq API with placeholder (replaced during build)
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "llama-3.3-70b-versatile",
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
+1. Preserving the poetic beauty and emotional essence
+2. Maintaining cultural context and metaphors
+3. Keeping the structure readable but poetic
+4. Providing a flowing, literary translation rather than literal word-for-word
+${poetName ? `5. Consider this is by ${poetName} - factor in their style and era` : ''}
+
+Respond only with the English translation, no explanations.`
+                    },
+                    {
+                        role: "user",
+                        content: verses
+                    }
+                ],
+                temperature: 0.7,
+                max_tokens: 1000
+            })
+        });
         
         if (!response.ok) {
-            // Demo translation for when API is not available
-            const demoTranslation = `My destiny is tied to the wings of pigeons
-They throw a stone
-One dies
-The rest, for the remainder of their lives
-Their hearts beat faster.`;
-            
-            const result = {
-                translation: demoTranslation,
-                model: 'demo-translation',
-                timestamp: new Date().toISOString()
-            };
-            
-            // Cache the demo result
-            localStorage.setItem(cacheKey, JSON.stringify(result));
-            
-            // Show demo translation
-            showTranslation(translationContainer, translationText, translationModel, translationTime, result);
-            button.setAttribute('data-retranslate', 'true');
-            button.title = 'ترجمه دوباره / Retranslate';
-            return;
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(`Translation failed: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
         }
         
         const data = await response.json();
-        let translation, model;
-        
-        if (data.translation) {
-            // Netlify function response
-            translation = data.translation;
-            model = data.model || 'llama-3.3-70b-versatile';
-        } else {
-            // Direct API response
-            translation = data.choices[0].message.content.trim();
-            model = 'llama-3.3-70b-versatile';
-        }
+        const translation = data.choices[0].message.content.trim();
+        const model = 'llama-3.3-70b-versatile';
         
         const result = {
             translation,
