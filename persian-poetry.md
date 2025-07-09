@@ -22,7 +22,7 @@ permalink: /persian-poetry/
 
 .poetry-intro {
     font-family: 'Vazirmatn', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #4a5568;
     margin-bottom: 2rem;
     line-height: 1.6;
@@ -56,7 +56,7 @@ permalink: /persian-poetry/
 
 .occasion-date {
     font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #718096;
     margin: 0;
     font-weight: 400;
@@ -68,7 +68,7 @@ permalink: /persian-poetry/
 
 .poem-verses {
     font-family: 'Noto Naskh Arabic', serif;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     line-height: 1.5;
     color: #2c3e50;
     text-align: center;
@@ -90,7 +90,7 @@ permalink: /persian-poetry/
 
 .poet-name {
     font-family: 'Noto Naskh Arabic', serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #ed8936;
     font-weight: 600;
     margin: 0;
@@ -98,7 +98,7 @@ permalink: /persian-poetry/
 
 .poem-context {
     font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #718096;
     margin-top: 0.5rem;
     line-height: 1.5;
@@ -107,7 +107,7 @@ permalink: /persian-poetry/
 
 .english-title {
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #a0aec0;
     margin-top: 0.5rem;
     direction: ltr;
@@ -172,7 +172,7 @@ body.dark .placeholder-card {
 
 .translation-text {
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     line-height: 1.6;
     color: #2c3e50;
     margin: 0;
@@ -183,7 +183,7 @@ body.dark .placeholder-card {
     margin-top: 0.75rem;
     padding-top: 0.75rem;
     border-top: 1px solid #e2e8f0;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #718096;
     display: flex;
     justify-content: space-between;
@@ -259,7 +259,7 @@ body.dark .placeholder-card {
 
 .loading-text {
     font-family: 'Vazirmatn', 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 400;
     color: #4a5568;
     text-align: center;
