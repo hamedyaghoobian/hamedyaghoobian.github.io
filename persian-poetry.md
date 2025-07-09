@@ -323,7 +323,7 @@ body.dark .translate-btn:hover {
         <p>برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p>
         <p class="english-title">For writing down the poems I love.</p>
         <p style="font-size: 0.85rem; color: #718096; margin-top: 1rem; font-style: italic;">
-            📝 AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original Persian verses.
+            📝AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original Persian verses.
         </p>
     </div>
 
@@ -516,7 +516,7 @@ async function translatePoem(button) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "llama-4-maverick-17b-128e-instruct",
+                model: "llama3-70b-8192",
                 messages: [
                     {
                         role: "system",
@@ -546,7 +546,7 @@ Respond only with the English translation, no explanations.`
         
         const data = await response.json();
         const translation = data.choices[0].message.content.trim();
-        const model = 'llama-4-maverick-17b-128e-instruct';
+        const model = 'llama3-70b-8192';
         
         const result = {
             translation,
