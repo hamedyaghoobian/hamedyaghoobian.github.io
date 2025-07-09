@@ -513,7 +513,7 @@ async function translatePoem(button) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "llama-3.3-70b-versatile",
+                model: "llama-4-maverick-17b-128e-instruct",
                 messages: [
                     {
                         role: "system",
@@ -543,7 +543,7 @@ Respond only with the English translation, no explanations.`
         
         const data = await response.json();
         const translation = data.choices[0].message.content.trim();
-        const model = 'llama-3.3-70b-versatile';
+        const model = 'llama-4-maverick-17b-128e-instruct';
         
         const result = {
             translation,
