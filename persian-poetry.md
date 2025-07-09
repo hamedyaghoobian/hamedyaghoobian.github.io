@@ -154,20 +154,19 @@ body.dark .placeholder-card {
 
 /* Translation features */
 .translation-container {
+    display: none;
     margin-top: 1rem;
     padding: 1rem;
     background: #f8f9fa;
     border-radius: 6px;
     border-left: 3px solid #ed8936;
-    max-height: 0;
-    overflow: hidden;
     transition: all 0.3s ease;
     direction: ltr;
     text-align: left;
 }
 
 .translation-container.expanded {
-    max-height: 400px;
+    display: block;
     border: 1px solid #e2e8f0;
 }
 
