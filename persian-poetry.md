@@ -321,7 +321,10 @@ body.dark .translate-btn:hover {
     
     <div class="poetry-intro">
         <p>برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p>
-    <p class="english-title">For writing down the poems I love.</p>
+        <p class="english-title">For writing down the poems I love.</p>
+        <p style="font-size: 0.85rem; color: #718096; margin-top: 1rem; font-style: italic;">
+            📝 AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original Persian verses.
+        </p>
     </div>
 
         <div class="poem-card">
@@ -578,7 +581,7 @@ Respond only with the English translation, no explanations.`
 
 function showTranslation(container, textElement, modelElement, timeElement, data) {
     textElement.textContent = data.translation;
-    modelElement.textContent = `Translated by ${data.model}`;
+    modelElement.textContent = `Translated by ${data.model} • AI translation may lack poetic nuance`;
     
     const translationTime = new Date(data.timestamp);
     timeElement.textContent = translationTime.toLocaleString('fa-IR');
