@@ -1,0 +1,25 @@
+{
+  "name": "hamedyaghoobian-github-io",
+  "version": "1.0.0",
+  "description": "Persian poetry website with Groq-powered translations",
+  "main": "index.js",
+  "scripts": {
+    "build": "bundle exec jekyll build",
+    "serve": "bundle exec jekyll serve",
+    "dev": "bundle exec jekyll serve --livereload"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamedyaghoobian/hamedyaghoobian.github.io.git"
+  },
+  "author": "Hamed Yaghoobian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hamedyaghoobian/hamedyaghoobian.github.io/issues"
+  },
+  "homepage": "https://hamedyaghoobian.github.io"
+} 

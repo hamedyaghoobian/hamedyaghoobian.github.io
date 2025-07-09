@@ -151,6 +151,120 @@ body.dark .placeholder-card {
     background: #2d3748;
 }
 
+/* Translation features */
+.translation-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #ed8936;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    direction: ltr;
+    text-align: left;
+}
+
+.translation-container.expanded {
+    max-height: 400px;
+    border: 1px solid #e2e8f0;
+}
+
+.translation-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #2c3e50;
+    margin: 0;
+    font-style: italic;
+}
+
+.translation-meta {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.8rem;
+    color: #718096;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.translate-btn {
+    background: #ed8936;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Vazirmatn', sans-serif;
+    margin-top: 1rem;
+}
+
+.translate-btn:hover {
+    background: #dd6b20;
+    transform: translateY(-1px);
+}
+
+.translate-btn:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.translate-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.translate-btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dynamic-date {
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.8rem;
+    color: #ed8936;
+    margin-top: 0.25rem;
+    direction: rtl;
+}
+
+/* Dark mode for translation features */
+body.dark .translation-container {
+    background: #2d3748;
+    border-left-color: #ed8936;
+}
+
+body.dark .translation-container.expanded {
+    border-color: #4a5568;
+}
+
+body.dark .translation-text {
+    color: #e2e8f0;
+}
+
+body.dark .translation-meta {
+    border-top-color: #4a5568;
+    color: #a0aec0;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .poetry-container {
@@ -195,11 +309,12 @@ body.dark .placeholder-card {
     <p class="english-title">For writing down the poems I love.</p>
     </div>
 
-    <div class="poem-card">
+        <div class="poem-card">
         <div class="date-header">
             <p class="occasion-date"> تیر ۱۴۰۴ / جولای ۲۰۲۵</p>
+            <div class="dynamic-date"></div>
         </div>
-    
+        
         <div class="poem-content">
             <div class="poem-verses">
                 <div class="verse">
@@ -222,6 +337,18 @@ body.dark .placeholder-card {
             <div class="poet-attribution">
                 <p class="poet-name">سعید برآبــــادی</p>
             </div>
+            
+            <button class="translate-btn" onclick="translatePoem(this)">
+                ترجمه / Translate
+            </button>
+            
+            <div class="translation-container">
+                <p class="translation-text"></p>
+                <div class="translation-meta">
+                    <span class="translation-model"></span>
+                    <span class="translation-time"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -231,4 +358,158 @@ body.dark .placeholder-card {
             <p class="english-title">Reading and adding more.</p>
         </div>
     </div>
-</div> 
+</div>
+
+<script>
+// Persian date utilities
+function toPersianDigits(str) {
+    const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+    return str.replace(/[0-9]/g, (w) => persianDigits[+w]);
+}
+
+function getPersianDate() {
+    const now = new Date();
+    const persianDate = now.toLocaleDateString('fa-IR-u-ca-persian', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    return toPersianDigits(persianDate);
+}
+
+function getRelativeTime() {
+    const now = new Date();
+    const hour = now.getHours();
+    
+    if (hour >= 5 && hour < 12) {
+        return 'صبح امروز خوانده شد';
+    } else if (hour >= 12 && hour < 17) {
+        return 'ظهر امروز خوانده شد';
+    } else if (hour >= 17 && hour < 20) {
+        return 'عصر امروز خوانده شد';
+    } else {
+        return 'شب امروز خوانده شد';
+    }
+}
+
+// Initialize dynamic dates
+function initializeDynamicDates() {
+    const dynamicDates = document.querySelectorAll('.dynamic-date');
+    const persianDate = getPersianDate();
+    const relativeTime = getRelativeTime();
+    
+    dynamicDates.forEach(element => {
+        element.innerHTML = `
+            <div style="font-size: 0.75rem; color: #718096; margin-top: 0.25rem;">
+                ${persianDate}<br>
+                ${relativeTime}
+            </div>
+        `;
+    });
+}
+
+// Translation functionality
+async function translatePoem(button) {
+    const poemCard = button.closest('.poem-card');
+    const poemVersesElement = poemCard.querySelector('.poem-verses');
+    const poetName = poemCard.querySelector('.poet-name')?.textContent || '';
+    const translationContainer = poemCard.querySelector('.translation-container');
+    const translationText = poemCard.querySelector('.translation-text');
+    const translationModel = poemCard.querySelector('.translation-model');
+    const translationTime = poemCard.querySelector('.translation-time');
+    
+    // Get poem text
+    const verses = Array.from(poemVersesElement.querySelectorAll('.verse'))
+        .map(verse => verse.textContent.trim())
+        .filter(text => text.length > 0)
+        .join('\n');
+    
+    if (!verses) {
+        alert('شعری برای ترجمه یافت نشد');
+        return;
+    }
+    
+    // Check cache
+    const cacheKey = `translation_${btoa(verses).slice(0, 20)}`;
+    const cached = localStorage.getItem(cacheKey);
+    
+    if (cached && !button.textContent.includes('دوباره')) {
+        const cachedData = JSON.parse(cached);
+        showTranslation(translationContainer, translationText, translationModel, translationTime, cachedData);
+        button.textContent = 'ترجمه دوباره / Retranslate';
+        return;
+    }
+    
+    // Set loading state
+    button.classList.add('loading');
+    button.disabled = true;
+    const originalText = button.textContent;
+    button.textContent = 'در حال ترجمه...';
+    
+    try {
+        // Call translation API
+        const response = await fetch('/.netlify/functions/translate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: verses,
+                poet: poetName
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Translation failed: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        
+        // Cache the result
+        localStorage.setItem(cacheKey, JSON.stringify(data));
+        
+        // Show translation
+        showTranslation(translationContainer, translationText, translationModel, translationTime, data);
+        button.textContent = 'ترجمه دوباره / Retranslate';
+        
+    } catch (error) {
+        console.error('Translation error:', error);
+        alert('خطا در ترجمه: ' + error.message);
+        button.textContent = originalText;
+    } finally {
+        button.classList.remove('loading');
+        button.disabled = false;
+    }
+}
+
+function showTranslation(container, textElement, modelElement, timeElement, data) {
+    textElement.textContent = data.translation;
+    modelElement.textContent = `Translated by ${data.model}`;
+    
+    const translationTime = new Date(data.timestamp);
+    timeElement.textContent = translationTime.toLocaleString('fa-IR');
+    
+    container.classList.add('expanded');
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDynamicDates();
+    
+    // Update dates every minute
+    setInterval(initializeDynamicDates, 60000);
+});
+
+// Handle theme changes
+const themeToggle = document.querySelector('.theme-toggle input');
+if (themeToggle) {
+    themeToggle.addEventListener('change', function() {
+        // Slight delay to ensure theme has switched
+        setTimeout(initializeDynamicDates, 100);
+    });
+}
+</script> 
