@@ -723,23 +723,33 @@ async function translatePoem(button) {
     // Show advanced loading animation
     showLoadingAnimation(poemCard);
     
-    try {
-        // Direct call to Groq API with placeholder (replaced during build)
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-        
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: "llama3-70b-8192",
-                messages: [
-                    {
-                        role: "system",
-                        content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
+    // Mobile detection for enhanced network handling
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    const maxRetries = isMobile ? 3 : 1;
+    const timeoutDuration = isMobile ? 45000 : 30000; // Longer timeout for mobile
+    
+    let lastError = null;
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            console.log(`Translation attempt ${attempt}/${maxRetries} (${isMobile ? 'mobile' : 'desktop'})`);
+            
+            // Create new controller for each attempt
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
+            
+            const requestConfig = {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: "llama3-70b-8192",
+                    messages: [
+                        {
+                            role: "system",
+                            content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
 1. Preserving the poetic beauty and emotional essence
 2. Maintaining cultural context and metaphors
 3. Keeping the structure readable but poetic
@@ -747,84 +757,103 @@ async function translatePoem(button) {
 ${poetName ? `5. Consider this is by ${poetName} - factor in their style and era` : ''}
 
 Respond only with the English translation, no explanations.`
-                    },
-                    {
-                        role: "user",
-                        content: verses
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 1000
-            }),
-            signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Network request failed'}`);
-        }
-        
-        const data = await response.json();
-        const translation = data.choices[0].message.content.trim();
-        const model = 'llama3-70b-8192';
-        
-        const result = {
-            translation,
-            model: model,
-            timestamp: new Date().toISOString()
-        };
-        
-        // Cache the result
-        localStorage.setItem(cacheKey, JSON.stringify(result));
-        
-        // Show translation
-        showTranslation(translationContainer, translationText, translationModel, translationTime, result);
-        button.setAttribute('data-retranslate', 'true');
-        button.title = 'ترجمه دوباره / Retranslate';
-        
-    } catch (error) {
-        console.error('Translation error:', error);
-        
-        let errorMessage = error.message;
-        let fallbackTranslation = null;
-        
-        // Handle different types of errors with helpful messages
-        if (error.name === 'AbortError') {
-            errorMessage = 'درخواست زمان زیادی طول کشید / Request timed out';
-        } else if (error.message.includes('Load failed') || error.message.includes('Network request failed') || error.message.includes('Failed to fetch')) {
-            errorMessage = 'مشکل اتصال به اینترنت / Network connection issue';
-            // Provide a sample translation for mobile users
-            fallbackTranslation = {
-                translation: "Sample translation: This beautiful Persian verse speaks of love, loss, and the human condition. (Network unavailable - showing demo)",
-                model: 'offline-demo',
+                        },
+                        {
+                            role: "user",
+                            content: verses
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 1000
+                }),
+                signal: controller.signal
+            };
+            
+            // Add mobile-specific fetch options
+            if (isMobile) {
+                requestConfig.cache = 'no-cache';
+                requestConfig.credentials = 'omit';
+            }
+            
+            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', requestConfig);
+            
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Network request failed'}`);
+            }
+            
+            const data = await response.json();
+            const translation = data.choices[0].message.content.trim();
+            const model = 'llama3-70b-8192';
+            
+            const result = {
+                translation,
+                model: model,
                 timestamp: new Date().toISOString()
             };
-        } else if (error.message.includes('API Error')) {
+            
+            // Cache the result
+            localStorage.setItem(cacheKey, JSON.stringify(result));
+            
+            // Show translation
+            showTranslation(translationContainer, translationText, translationModel, translationTime, result);
+            button.setAttribute('data-retranslate', 'true');
+            button.title = 'ترجمه دوباره / Retranslate';
+            
+            // Success - exit retry loop
+            return;
+            
+        } catch (error) {
+            console.error(`Translation attempt ${attempt} failed:`, error);
+            lastError = error;
+            
+            // If not the last attempt, wait before retrying (especially important for mobile)
+            if (attempt < maxRetries) {
+                const retryDelay = attempt * (isMobile ? 2000 : 1000); // Progressive delay, longer for mobile
+                console.log(`Retrying in ${retryDelay}ms...`);
+                await new Promise(resolve => setTimeout(resolve, retryDelay));
+                continue;
+            }
+            
+            // All attempts failed, handle the error
+            break;
+        }
+    }
+    
+    // If we reach here, all retry attempts failed
+    if (lastError) {
+        console.error('All translation attempts failed:', lastError);
+        
+        let errorMessage = lastError.message;
+        let shouldShowError = true;
+        
+        // Handle different types of errors with helpful messages
+        if (lastError.name === 'AbortError') {
+            errorMessage = `درخواست زمان زیادی طول کشید / Request timed out${isMobile ? ' (mobile network)' : ''}`;
+        } else if (lastError.message.includes('Load failed') || lastError.message.includes('Network request failed') || lastError.message.includes('Failed to fetch')) {
+            errorMessage = `مشکل اتصال به اینترنت / Network connection issue${isMobile ? ' (mobile network)' : ''}`;
+        } else if (lastError.message.includes('API Error')) {
             errorMessage = 'خطای سرویس ترجمه / Translation service error';
         }
         
-        if (fallbackTranslation) {
-            // Show fallback translation instead of error
-            showTranslation(translationContainer, translationText, translationModel, translationTime, fallbackTranslation);
-            button.setAttribute('data-retranslate', 'true');
-            button.title = 'ترجمه دوباره / Retranslate';
-        } else {
-            // Show error message
-            translationText.textContent = `خطا در ترجمه: ${errorMessage}`;
-            translationText.style.color = '#e53e3e';
-            translationModel.textContent = 'خطا رخ داده / Error occurred';
-            translationTime.textContent = new Date().toLocaleString('fa-IR');
-            translationContainer.classList.add('expanded');
-        }
+        // Show error message with retry info
+        translationText.innerHTML = `
+            <div style="color: #e53e3e; margin-bottom: 0.5rem;">خطا در ترجمه: ${errorMessage}</div>
+            ${isMobile ? `<div style="color: #718096; font-size: 0.85rem;">تلاش شد ${maxRetries} بار. لطفاً اتصال شبکه‌تان را بررسی کنید.</div>` : ''}
+        `;
+        translationModel.textContent = `Failed after ${maxRetries} attempt${maxRetries > 1 ? 's' : ''} ${isMobile ? '(mobile)' : '(desktop)'}`;
+        translationTime.textContent = new Date().toLocaleString('fa-IR');
+                 translationContainer.classList.add('expanded');
         
         button.title = originalTitle;
-    } finally {
-        button.classList.remove('loading');
-        button.disabled = false;
-        hideLoadingAnimation(poemCard);
     }
+    
+    // Always cleanup, regardless of success or failure
+    button.classList.remove('loading');
+    button.disabled = false;
+    hideLoadingAnimation(poemCard);
 }
 
 function showTranslation(container, textElement, modelElement, timeElement, data) {
