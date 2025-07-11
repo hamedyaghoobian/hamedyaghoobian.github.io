@@ -462,110 +462,14 @@ body.dark .translate-btn:hover {
         <p style="font-size: 0.85rem; color: #718096; margin-top: 1rem; font-style: italic; direction: ltr;">AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original verses.</p>
     </div>
 
-    <div class="poem-card">
-        <div class="date-header">
-            <!-- <p class="occasion-date"> تیر ۱۴۰۴ / جولای ۲۰۲۵</p> -->
-            <div class="dynamic-date"></div>
-        </div>
-        <div class="poem-content">
-            <div class="poem-verses">
-                <div class="verse">
-                    چند گویند مرا: صبر کن از لشکر غم؟
-                </div>
-                <div class="verse">
-                    بر من از گوشهٔ ناگاه بتازد چه کنم؟
-                </div>
+    <!-- Poems will be loaded here dynamically -->
+    <div id="poems-container">
+        <!-- Loading indicator -->
+        <div class="poem-card" id="loading-poems">
+            <div class="date-header">
+                <p class="poem-context">در حال بارگذاری اشعار...</p>
+                <p class="english-title">Loading poems...</p>
             </div>
-        </div>
-        <div class="poet-attribution">
-            <p class="poet-name">عراقی</p>
-        </div>
-        <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-            <i class="fas fa-language"></i>
-        </button>
-        <div class="translation-container">
-            <p class="translation-text"></p>
-            <div class="translation-meta">
-                <span class="translation-model"></span>
-                <span class="translation-time"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="poem-card">
-        <div class="date-header">
-            <div class="dynamic-date"></div>
-        </div>
-        <div class="poem-content">
-            <div class="poem-verses">
-                <div class="verse">
-                    سر‌نوشتم به بال کبوتر‌ها گره خورده
-                </div>
-                <div class="verse">
-                    سنگی می‌زنند
-                </div>
-                <div class="verse">
-                    یکی می‌میرد
-                </div>
-                <div class="verse">
-                    باقی تا آخر عمر همه
-                </div>
-                <div class="verse">
-                    قلب‌شان تندتر می‌زند.
-                </div>
-            </div>
-            <div class="poet-attribution">
-                <p class="poet-name">سعید برآبادی</p>
-            </div>
-            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-                <i class="fas fa-language"></i>
-            </button>
-            <div class="translation-container">
-                <p class="translation-text"></p>
-                <div class="translation-meta">
-                    <span class="translation-model"></span>
-                    <span class="translation-time"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="poem-card">
-        <div class="date-header">
-            <div class="dynamic-date"></div>
-        </div>
-        <div class="poem-content">
-            <div class="poem-verses">
-                <div class="verse">
-                    زان که بر ضد جهان گویم سخن
-                </div>
-                <div class="verse">
-                    یا جهان دیوانه باشد یا که من
-                </div>
-                <div class="verse">
-                    بلکه از دیوانگان هم بدترم
-                </div>
-            </div>
-            <div class="poet-attribution">
-                <p class="poet-name">نیما یوشیج</p>
-            </div>
-            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-                <i class="fas fa-language"></i>
-            </button>
-            <div class="translation-container">
-                <p class="translation-text"></p>
-                <div class="translation-meta">
-                    <span class="translation-model"></span>
-                    <span class="translation-time"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="poem-card placeholder-card">
-        <div class="date-header">
-            <p class="poem-context">می‌خوانم و اضافه می‌کنم.</p>
-            <p class="english-title">Reading and adding more.</p>
         </div>
     </div>
 </div>
@@ -577,18 +481,19 @@ function toPersianDigits(str) {
     return str.replace(/[0-9]/g, (w) => persianDigits[+w]);
 }
 
-function getDualCalendarDate() {
-    const now = new Date();
+function getDualCalendarDate(dateString) {
+    // If no date provided, use today's date
+    const targetDate = dateString ? new Date(dateString) : new Date();
     
     // Get Persian date
-    const persianDate = now.toLocaleDateString('fa-IR-u-ca-persian', {
+    const persianDate = targetDate.toLocaleDateString('fa-IR-u-ca-persian', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
     
     // Get Gregorian date in Persian/English format
-    const gregorianDate = now.toLocaleDateString('en-US', {
+    const gregorianDate = targetDate.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long', 
         day: 'numeric'
@@ -603,15 +508,46 @@ function getDualCalendarDate() {
 // Initialize dynamic dates
 function initializeDynamicDates() {
     const dynamicDates = document.querySelectorAll('.dynamic-date');
-    const dualDate = getDualCalendarDate();
     
     dynamicDates.forEach(element => {
+        // Find the parent poem card and get its date
+        const poemCard = element.closest('.poem-card');
+        let dateString = poemCard ? poemCard.getAttribute('data-date') : null;
+        
+        // If no date attribute exists, auto-assign today's date and store it
+        if (!dateString && poemCard) {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+            const poemKey = `poem_date_${getPoemIdentifier(poemCard)}`;
+            
+            // Check if we've already stored a date for this poem
+            const storedDate = localStorage.getItem(poemKey);
+            if (storedDate) {
+                dateString = storedDate;
+            } else {
+                // First time seeing this poem, store today's date
+                dateString = today;
+                localStorage.setItem(poemKey, dateString);
+            }
+        }
+        
+        // Get the dual calendar date for this specific poem
+        const dualDate = getDualCalendarDate(dateString);
+        
         element.innerHTML = `
             <div style="font-size: 0.75rem; color: #718096; margin-top: 0.25rem;">
                 ${dualDate}
             </div>
         `;
     });
+}
+
+// Generate a unique identifier for a poem based on its content
+function getPoemIdentifier(poemCard) {
+    const poetName = poemCard.querySelector('.poet-name')?.textContent || '';
+    const firstVerse = poemCard.querySelector('.verse')?.textContent || '';
+    // Create a simple hash from poet name and first verse
+    const content = (poetName + firstVerse).replace(/\s+/g, '');
+    return btoa(unescape(encodeURIComponent(content))).slice(0, 16);
 }
 
 // Loading animation functions
@@ -830,12 +766,171 @@ function showTranslation(container, textElement, modelElement, timeElement, data
     container.classList.add('expanded');
 }
 
+// Load poems from JSON and generate HTML
+async function loadPoems() {
+    try {
+        console.log('Loading poems...');
+        
+        // Try multiple paths in case of path issues
+        const paths = ['poems.json', '/poems.json', '../poems.json'];
+        let response;
+        let poems;
+        
+        for (const path of paths) {
+            try {
+                console.log(`Trying path: ${path}`);
+                response = await fetch(path);
+                console.log(`Response status for ${path}:`, response.status);
+                
+                if (response.ok) {
+                    poems = await response.json();
+                    console.log(`Success with path: ${path}`);
+                    break;
+                }
+            } catch (pathError) {
+                console.log(`Failed path ${path}:`, pathError.message);
+            }
+        }
+        
+        if (!poems) {
+            // Fallback to embedded data
+            console.log('Using fallback embedded data');
+            poems = [
+                {
+                    "verses": [
+                        "به شکل رفتن درآمده بود",
+                        "به شکل دور شدن ماه از پنجره",
+                        "به شکل پرواز پرنده",
+                        "از لبه‌ی پاییز",
+                        "به شکل محو شدن رنگ از چهره در وقت ترس."
+                    ],
+                    "poet": "رسول یونان",
+                    "date": "2025-07-10"
+                },
+                {
+                    "verses": [
+                        "چند گویند مرا: صبر کن از لشکر غم؟",
+                        "بر من از گوشهٔ ناگاه بتازد چه کنم؟"
+                    ],
+                    "poet": "عراقی",
+                    "date": "2025-07-09"
+                },
+                {
+                    "verses": [
+                        "سر‌نوشتم به بال کبوتر‌ها گره خورده",
+                        "سنگی می‌زنند",
+                        "یکی می‌میرد",
+                        "باقی تا آخر عمر همه",
+                        "قلب‌شان تندتر می‌زند."
+                    ],
+                    "poet": "سعید برآبادی",
+                    "date": "2025-07-08"
+                },
+                {
+                    "verses": [
+                        "زان که بر ضد جهان گویم سخن",
+                        "یا جهان دیوانه باشد یا که من",
+                        "بلکه از دیوانگان هم بدترم"
+                    ],
+                    "poet": "نیما یوشیج",
+                    "date": "2025-07-08"
+                }
+            ];
+        }
+        
+        console.log('Poems loaded:', poems.length);
+        
+        const container = document.getElementById('poems-container');
+        const loadingElement = document.getElementById('loading-poems');
+        
+        if (!container) {
+            console.error('poems-container not found');
+            return;
+        }
+        
+        // Remove loading indicator
+        if (loadingElement) {
+            loadingElement.remove();
+        }
+        
+        // Generate HTML for each poem
+        poems.forEach((poem, index) => {
+            console.log(`Adding poem ${index + 1}:`, poem.poet);
+            const poemHTML = generatePoemHTML(poem);
+            container.insertAdjacentHTML('beforeend', poemHTML);
+        });
+        
+        // Add the placeholder card at the end
+        const placeholderHTML = `
+            <div class="poem-card placeholder-card">
+                <div class="date-header">
+                    <p class="poem-context">می‌خوانم و اضافه می‌کنم.</p>
+                    <p class="english-title">Reading and adding more.</p>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', placeholderHTML);
+        
+        // Initialize dates after poems are loaded
+        initializeDynamicDates();
+        console.log('Poems loaded successfully');
+        
+    } catch (error) {
+        console.error('Error loading poems:', error);
+        console.error('Error details:', error.message);
+        const container = document.getElementById('poems-container');
+        if (container) {
+            container.innerHTML = `
+                <div class="poem-card">
+                    <div class="date-header">
+                        <p class="poem-context">خطا در بارگذاری اشعار: ${error.message}</p>
+                        <p class="english-title">Error loading poems: ${error.message}</p>
+                    </div>
+                </div>
+            `;
+        }
+    }
+}
+
+// Generate HTML for a single poem
+function generatePoemHTML(poem) {
+    const versesHTML = poem.verses.map(verse => 
+        `<div class="verse">${verse}</div>`
+    ).join('');
+    
+    // Use the date from JSON if provided, otherwise use data attribute for auto-assignment
+    const dateAttribute = poem.date ? `data-date="${poem.date}"` : '';
+    
+    return `
+        <div class="poem-card" ${dateAttribute}>
+            <div class="date-header">
+                <div class="dynamic-date"></div>
+            </div>
+            <div class="poem-content">
+                <div class="poem-verses">
+                    ${versesHTML}
+                </div>
+            </div>
+            <div class="poet-attribution">
+                <p class="poet-name">${poem.poet}</p>
+            </div>
+            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
+                <i class="fas fa-language"></i>
+            </button>
+            <div class="translation-container">
+                <p class="translation-text"></p>
+                <div class="translation-meta">
+                    <span class="translation-model"></span>
+                    <span class="translation-time"></span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    initializeDynamicDates();
-    
-    // Update dates every minute
-    setInterval(initializeDynamicDates, 60000);
+    loadPoems();
 });
 
 // Handle theme changes
