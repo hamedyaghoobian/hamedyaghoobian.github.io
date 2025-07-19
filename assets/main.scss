@@ -330,37 +330,36 @@ p {
   width: 100vw;
   z-index: -1;
   overflow: hidden;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 #glow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg, 
-    var(--bounce-light) 0%,
-    transparent 30%,
-    transparent 70%,
-    var(--bounce-light) 100%
+  background: radial-gradient(
+    ellipse at 20% 80%,
+    rgba(255, 248, 220, 0.8) 0%,
+    rgba(255, 245, 238, 0.6) 30%,
+    rgba(240, 248, 255, 0.4) 60%,
+    rgba(230, 240, 250, 0.2) 100%
   );
   transition: background 0.5s ease;
   height: 100%;
   width: 100%;
-  opacity: 0.2;
 }
 
 #glow-bounce {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    var(--bounce-light) 40%,
-    transparent 60%,
-    var(--bounce-light) 100%
+  background: radial-gradient(
+    ellipse at 80% 20%,
+    rgba(245, 245, 245, 0.3) 0%,
+    rgba(240, 248, 255, 0.2) 40%,
+    rgba(230, 240, 250, 0.1) 70%,
+    transparent 100%
   );
   transition: background 0.5s ease;
-  opacity: 0.2;
+  opacity: 0.3;
   height: 100%;
   width: 100%;
 }
@@ -388,6 +387,26 @@ body.dark {
   
   .site-title {
     color: #e2e8f0;
+  }
+  
+  #glow {
+    background: radial-gradient(
+      ellipse at 20% 80%,
+      rgba(30, 41, 59, 0.8) 0%,
+      rgba(15, 23, 42, 0.6) 30%,
+      rgba(2, 6, 23, 0.4) 60%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+  }
+  
+  #glow-bounce {
+    background: radial-gradient(
+      ellipse at 80% 20%,
+      rgba(51, 65, 85, 0.3) 0%,
+      rgba(30, 41, 59, 0.2) 40%,
+      rgba(15, 23, 42, 0.1) 70%,
+      transparent 100%
+    );
   }
 }
 
