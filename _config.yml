@@ -18,11 +18,9 @@ plugins:
 # Navigation
 header_pages:
   - pedagogy.md
-  - student-research.md
   - public-interactions.md
   - news.md
-  - tools.md
-  - persian-poetry.md
+  - lab.md
 
 # Custom variables
-google_analytics: G-R39YNYB88S  # Replace with your Measurement ID
+google_analytics: G-YWJ7LC7EX8  # Your Google Analytics Measurement ID
