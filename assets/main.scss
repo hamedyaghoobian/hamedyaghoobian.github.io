@@ -146,16 +146,6 @@ h3 { font-size: 1.5em; }
       }
     }
   }
-
-  // Ensure all footer links use the same size as the surrounding text (prevents iOS from enlarging link)
-  a {
-    font-size: inherit !important;
-  }
-
-  // Slightly increase overall footer font size on very small screens so links aren't upscaled independently
-  @media screen and (max-width: 600px) {
-    font-size: 0.75rem;
-  }
 }
 
 // Links
