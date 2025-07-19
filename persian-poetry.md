@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Persian Poetry Journal
+title: Persian Poetry Readings
 permalink: /persian-poetry/
 ---
 {% include dappled-light.html %}
@@ -580,38 +580,42 @@ function toPersianDigits(str) {
     return str.replace(/[0-9]/g, (w) => persianDigits[+w]);
 }
 
-function getDualCalendarDate() {
+function getPersianDate() {
     const now = new Date();
-    
-    // Get Persian date
     const persianDate = now.toLocaleDateString('fa-IR-u-ca-persian', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
+    return toPersianDigits(persianDate);
+}
+
+function getRelativeTime() {
+    const now = new Date();
+    const hour = now.getHours();
     
-    // Get Gregorian date in Persian/English format
-    const gregorianDate = now.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long', 
-        day: 'numeric'
-    });
-    
-    // Convert to Persian digits for Persian date
-    const persianDateFormatted = toPersianDigits(persianDate);
-    
-    return `${persianDateFormatted} / ${gregorianDate}`;
+    if (hour >= 5 && hour < 12) {
+        return 'صبح امروز خوانده شد';
+    } else if (hour >= 12 && hour < 17) {
+        return 'ظهر امروز خوانده شد';
+    } else if (hour >= 17 && hour < 20) {
+        return 'عصر امروز خوانده شد';
+    } else {
+        return 'شب امروز خوانده شد';
+    }
 }
 
 // Initialize dynamic dates
 function initializeDynamicDates() {
     const dynamicDates = document.querySelectorAll('.dynamic-date');
-    const dualDate = getDualCalendarDate();
+    const persianDate = getPersianDate();
+    const relativeTime = getRelativeTime();
     
     dynamicDates.forEach(element => {
         element.innerHTML = `
             <div style="font-size: 0.75rem; color: #718096; margin-top: 0.25rem;">
-                ${dualDate}
+                ${persianDate}<br>
+                ${relativeTime}
             </div>
         `;
     });
