@@ -6,6 +6,12 @@ permalink: /pedagogy/
 {% include dappled-light.html %}
 ## Department of Math, CS, and Stat, Muhlenberg College
 
+### Fall 2025
+
+* Computer Science II
+* Introduction to Data Science
+* Human-AI Interaction
+ 
 ### Spring 2025
 
 * Computer Organization 

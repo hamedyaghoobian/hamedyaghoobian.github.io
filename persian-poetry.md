@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Persian Poetry Readings
+title: Persian Poetry Journal
 permalink: /persian-poetry/
 ---
 {% include dappled-light.html %}
@@ -107,7 +107,7 @@ permalink: /persian-poetry/
 
 .english-title {
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #a0aec0;
     margin-top: 0.5rem;
     direction: ltr;
@@ -172,7 +172,7 @@ body.dark .placeholder-card {
 
 .translation-text {
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     line-height: 1.6;
     color: #2c3e50;
     margin: 0;
@@ -183,7 +183,7 @@ body.dark .placeholder-card {
     margin-top: 0.75rem;
     padding-top: 0.75rem;
     border-top: 1px solid #e2e8f0;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: #718096;
     display: flex;
     justify-content: space-between;
@@ -459,116 +459,17 @@ body.dark .translate-btn:hover {
     <div class="poetry-intro">
         <p>برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p>
         <p class="english-title">For writing down the poems I love.</p>
-        <p style="font-size: 0.85rem; color: #718096; margin-top: 1rem; font-style: italic;">
-            AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original verses.
-        </p>
-        <!-- a persian poem post -->
+        <p style="font-size: 0.85rem; color: #718096; margin-top: 1rem; font-style: italic; direction: ltr;">AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original verses.</p>
     </div>
 
-    <div class="poem-card">
-        <div class="date-header">
-            <!-- <p class="occasion-date"> تیر ۱۴۰۴ / جولای ۲۰۲۵</p> -->
-            <div class="dynamic-date"></div>
-        </div>
-        <div class="poem-content">
-            <div class="poem-verses">
-                <div class="verse">
-                    چند گویند مرا: صبر کن از لشکر غم؟
-                </div>
-                <div class="verse">
-                    بر من از گوشهٔ ناگاه بتازد چه کنم؟
-                </div>
+    <!-- Poems will be loaded here dynamically -->
+    <div id="poems-container">
+        <!-- Loading indicator -->
+        <div class="poem-card" id="loading-poems">
+            <div class="date-header">
+                <p class="poem-context">در حال بارگذاری اشعار...</p>
+                <p class="english-title">Loading poems...</p>
             </div>
-        </div>
-        <div class="poet-attribution">
-            <p class="poet-name">عراقی</p>
-        </div>
-        <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-            <i class="fas fa-language"></i>
-        </button>
-        <div class="translation-container">
-            <p class="translation-text"></p>
-            <div class="translation-meta">
-                <span class="translation-model"></span>
-                <span class="translation-time"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="poem-card">
-        <div class="date-header">
-            <div class="dynamic-date"></div>
-        </div>
-        <div class="poem-content">
-            <div class="poem-verses">
-                <div class="verse">
-                    سر‌نوشتم به بال کبوتر‌ها گره خورده
-                </div>
-                <div class="verse">
-                    سنگی می‌زنند
-                </div>
-                <div class="verse">
-                    یکی می‌میرد
-                </div>
-                <div class="verse">
-                    باقی تا آخر عمر همه
-                </div>
-                <div class="verse">
-                    قلب‌شان تندتر می‌زند.
-                </div>
-            </div>
-            <div class="poet-attribution">
-                <p class="poet-name">سعید برآبادی</p>
-            </div>
-            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-                <i class="fas fa-language"></i>
-            </button>
-            <div class="translation-container">
-                <p class="translation-text"></p>
-                <div class="translation-meta">
-                    <span class="translation-model"></span>
-                    <span class="translation-time"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="poem-card">
-        <div class="date-header">
-            <div class="dynamic-date"></div>
-        </div>
-        <div class="poem-content">
-            <div class="poem-verses">
-                <div class="verse">
-                    زان که بر ضد جهان گویم سخن
-                </div>
-                <div class="verse">
-                    یا جهان دیوانه باشد یا که من
-                </div>
-                <div class="verse">
-                    بلکه از دیوانگان هم بدترم
-                </div>
-            </div>
-            <div class="poet-attribution">
-                <p class="poet-name">نیما یوشیج</p>
-            </div>
-            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-                <i class="fas fa-language"></i>
-            </button>
-            <div class="translation-container">
-                <p class="translation-text"></p>
-                <div class="translation-meta">
-                    <span class="translation-model"></span>
-                    <span class="translation-time"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="poem-card placeholder-card">
-        <div class="date-header">
-            <p class="poem-context">می‌خوانم و اضافه می‌کنم.</p>
-            <p class="english-title">Reading and adding more.</p>
         </div>
     </div>
 </div>
@@ -580,45 +481,73 @@ function toPersianDigits(str) {
     return str.replace(/[0-9]/g, (w) => persianDigits[+w]);
 }
 
-function getPersianDate() {
-    const now = new Date();
-    const persianDate = now.toLocaleDateString('fa-IR-u-ca-persian', {
+function getDualCalendarDate(dateString) {
+    // If no date provided, use today's date
+    const targetDate = dateString ? new Date(dateString) : new Date();
+    
+    // Get Persian date
+    const persianDate = targetDate.toLocaleDateString('fa-IR-u-ca-persian', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
-    return toPersianDigits(persianDate);
-}
-
-function getRelativeTime() {
-    const now = new Date();
-    const hour = now.getHours();
     
-    if (hour >= 5 && hour < 12) {
-        return 'صبح امروز خوانده شد';
-    } else if (hour >= 12 && hour < 17) {
-        return 'ظهر امروز خوانده شد';
-    } else if (hour >= 17 && hour < 20) {
-        return 'عصر امروز خوانده شد';
-    } else {
-        return 'شب امروز خوانده شد';
-    }
+    // Get Gregorian date in Persian/English format
+    const gregorianDate = targetDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+    });
+    
+    // Convert to Persian digits for Persian date
+    const persianDateFormatted = toPersianDigits(persianDate);
+    
+    return `${persianDateFormatted} / ${gregorianDate}`;
 }
 
 // Initialize dynamic dates
 function initializeDynamicDates() {
     const dynamicDates = document.querySelectorAll('.dynamic-date');
-    const persianDate = getPersianDate();
-    const relativeTime = getRelativeTime();
     
     dynamicDates.forEach(element => {
+        // Find the parent poem card and get its date
+        const poemCard = element.closest('.poem-card');
+        let dateString = poemCard ? poemCard.getAttribute('data-date') : null;
+        
+        // If no date attribute exists, auto-assign today's date and store it
+        if (!dateString && poemCard) {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+            const poemKey = `poem_date_${getPoemIdentifier(poemCard)}`;
+            
+            // Check if we've already stored a date for this poem
+            const storedDate = localStorage.getItem(poemKey);
+            if (storedDate) {
+                dateString = storedDate;
+            } else {
+                // First time seeing this poem, store today's date
+                dateString = today;
+                localStorage.setItem(poemKey, dateString);
+            }
+        }
+        
+        // Get the dual calendar date for this specific poem
+        const dualDate = getDualCalendarDate(dateString);
+        
         element.innerHTML = `
             <div style="font-size: 0.75rem; color: #718096; margin-top: 0.25rem;">
-                ${persianDate}<br>
-                ${relativeTime}
+                ${dualDate}
             </div>
         `;
     });
+}
+
+// Generate a unique identifier for a poem based on its content
+function getPoemIdentifier(poemCard) {
+    const poetName = poemCard.querySelector('.poet-name')?.textContent || '';
+    const firstVerse = poemCard.querySelector('.verse')?.textContent || '';
+    // Create a simple hash from poet name and first verse
+    const content = (poetName + firstVerse).replace(/\s+/g, '');
+    return btoa(unescape(encodeURIComponent(content))).slice(0, 16);
 }
 
 // Loading animation functions
@@ -723,33 +652,23 @@ async function translatePoem(button) {
     // Show advanced loading animation
     showLoadingAnimation(poemCard);
     
-    // Mobile detection for enhanced network handling
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
-    const maxRetries = isMobile ? 3 : 1;
-    const timeoutDuration = isMobile ? 45000 : 30000; // Longer timeout for mobile
-    
-    let lastError = null;
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            console.log(`Translation attempt ${attempt}/${maxRetries} (${isMobile ? 'mobile' : 'desktop'})`);
-            
-            // Create new controller for each attempt
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
-            
-            const requestConfig = {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    model: "llama3-70b-8192",
-                    messages: [
-                        {
-                            role: "system",
-                            content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
+    try {
+        // Direct call to Groq API with placeholder (replaced during build)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+        
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "llama3-70b-8192",
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
 1. Preserving the poetic beauty and emotional essence
 2. Maintaining cultural context and metaphors
 3. Keeping the structure readable but poetic
@@ -757,103 +676,84 @@ async function translatePoem(button) {
 ${poetName ? `5. Consider this is by ${poetName} - factor in their style and era` : ''}
 
 Respond only with the English translation, no explanations.`
-                        },
-                        {
-                            role: "user",
-                            content: verses
-                        }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 1000
-                }),
-                signal: controller.signal
-            };
-            
-            // Add mobile-specific fetch options
-            if (isMobile) {
-                requestConfig.cache = 'no-cache';
-                requestConfig.credentials = 'omit';
-            }
-            
-            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', requestConfig);
-            
-            clearTimeout(timeoutId);
-            
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Network request failed'}`);
-            }
-            
-            const data = await response.json();
-            const translation = data.choices[0].message.content.trim();
-            const model = 'llama3-70b-8192';
-            
-            const result = {
-                translation,
-                model: model,
-                timestamp: new Date().toISOString()
-            };
-            
-            // Cache the result
-            localStorage.setItem(cacheKey, JSON.stringify(result));
-            
-            // Show translation
-            showTranslation(translationContainer, translationText, translationModel, translationTime, result);
-            button.setAttribute('data-retranslate', 'true');
-            button.title = 'ترجمه دوباره / Retranslate';
-            
-            // Success - exit retry loop
-            return;
-            
-        } catch (error) {
-            console.error(`Translation attempt ${attempt} failed:`, error);
-            lastError = error;
-            
-            // If not the last attempt, wait before retrying (especially important for mobile)
-            if (attempt < maxRetries) {
-                const retryDelay = attempt * (isMobile ? 2000 : 1000); // Progressive delay, longer for mobile
-                console.log(`Retrying in ${retryDelay}ms...`);
-                await new Promise(resolve => setTimeout(resolve, retryDelay));
-                continue;
-            }
-            
-            // All attempts failed, handle the error
-            break;
-        }
-    }
-    
-    // If we reach here, all retry attempts failed
-    if (lastError) {
-        console.error('All translation attempts failed:', lastError);
+                    },
+                    {
+                        role: "user",
+                        content: verses
+                    }
+                ],
+                temperature: 0.7,
+                max_tokens: 1000
+            }),
+            signal: controller.signal
+        });
         
-        let errorMessage = lastError.message;
-        let shouldShowError = true;
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Network request failed'}`);
+        }
+        
+        const data = await response.json();
+        const translation = data.choices[0].message.content.trim();
+        const model = 'llama3-70b-8192';
+        
+        const result = {
+            translation,
+            model: model,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Cache the result
+        localStorage.setItem(cacheKey, JSON.stringify(result));
+        
+        // Show translation
+        showTranslation(translationContainer, translationText, translationModel, translationTime, result);
+        button.setAttribute('data-retranslate', 'true');
+        button.title = 'ترجمه دوباره / Retranslate';
+        
+    } catch (error) {
+        console.error('Translation error:', error);
+        
+        let errorMessage = error.message;
+        let fallbackTranslation = null;
         
         // Handle different types of errors with helpful messages
-        if (lastError.name === 'AbortError') {
-            errorMessage = `درخواست زمان زیادی طول کشید / Request timed out${isMobile ? ' (mobile network)' : ''}`;
-        } else if (lastError.message.includes('Load failed') || lastError.message.includes('Network request failed') || lastError.message.includes('Failed to fetch')) {
-            errorMessage = `مشکل اتصال به اینترنت / Network connection issue${isMobile ? ' (mobile network)' : ''}`;
-        } else if (lastError.message.includes('API Error')) {
+        if (error.name === 'AbortError') {
+            errorMessage = 'درخواست زمان زیادی طول کشید / Request timed out';
+        } else if (error.message.includes('Load failed') || error.message.includes('Network request failed') || error.message.includes('Failed to fetch')) {
+            errorMessage = 'مشکل اتصال به اینترنت / Network connection issue';
+            // Provide a sample translation for mobile users
+            fallbackTranslation = {
+                translation: "Sample translation: This beautiful Persian verse speaks of love, loss, and the human condition. (Network unavailable - showing demo)",
+                model: 'offline-demo',
+                timestamp: new Date().toISOString()
+            };
+        } else if (error.message.includes('API Error')) {
             errorMessage = 'خطای سرویس ترجمه / Translation service error';
         }
         
-        // Show error message with retry info
-        translationText.innerHTML = `
-            <div style="color: #e53e3e; margin-bottom: 0.5rem;">خطا در ترجمه: ${errorMessage}</div>
-            ${isMobile ? `<div style="color: #718096; font-size: 0.85rem;">تلاش شد ${maxRetries} بار. لطفاً اتصال شبکه‌تان را بررسی کنید.</div>` : ''}
-        `;
-        translationModel.textContent = `Failed after ${maxRetries} attempt${maxRetries > 1 ? 's' : ''} ${isMobile ? '(mobile)' : '(desktop)'}`;
-        translationTime.textContent = new Date().toLocaleString('fa-IR');
-                 translationContainer.classList.add('expanded');
+        if (fallbackTranslation) {
+            // Show fallback translation instead of error
+            showTranslation(translationContainer, translationText, translationModel, translationTime, fallbackTranslation);
+            button.setAttribute('data-retranslate', 'true');
+            button.title = 'ترجمه دوباره / Retranslate';
+        } else {
+            // Show error message
+            translationText.textContent = `خطا در ترجمه: ${errorMessage}`;
+            translationText.style.color = '#e53e3e';
+            translationModel.textContent = 'خطا رخ داده / Error occurred';
+            translationTime.textContent = new Date().toLocaleString('fa-IR');
+            translationContainer.classList.add('expanded');
+        }
         
         button.title = originalTitle;
+    } finally {
+        button.classList.remove('loading');
+        button.disabled = false;
+        hideLoadingAnimation(poemCard);
     }
-    
-    // Always cleanup, regardless of success or failure
-    button.classList.remove('loading');
-    button.disabled = false;
-    hideLoadingAnimation(poemCard);
 }
 
 function showTranslation(container, textElement, modelElement, timeElement, data) {
@@ -866,12 +766,171 @@ function showTranslation(container, textElement, modelElement, timeElement, data
     container.classList.add('expanded');
 }
 
+// Load poems from JSON and generate HTML
+async function loadPoems() {
+    try {
+        console.log('Loading poems...');
+        
+        // Try multiple paths in case of path issues
+        const paths = ['poems.json', '/poems.json', '../poems.json'];
+        let response;
+        let poems;
+        
+        for (const path of paths) {
+            try {
+                console.log(`Trying path: ${path}`);
+                response = await fetch(path);
+                console.log(`Response status for ${path}:`, response.status);
+                
+                if (response.ok) {
+                    poems = await response.json();
+                    console.log(`Success with path: ${path}`);
+                    break;
+                }
+            } catch (pathError) {
+                console.log(`Failed path ${path}:`, pathError.message);
+            }
+        }
+        
+        if (!poems) {
+            // Fallback to embedded data
+            console.log('Using fallback embedded data');
+            poems = [
+                {
+                    "verses": [
+                        "به شکل رفتن درآمده بود",
+                        "به شکل دور شدن ماه از پنجره",
+                        "به شکل پرواز پرنده",
+                        "از لبه‌ی پاییز",
+                        "به شکل محو شدن رنگ از چهره در وقت ترس."
+                    ],
+                    "poet": "رسول یونان",
+                    "date": "2025-07-10"
+                },
+                {
+                    "verses": [
+                        "چند گویند مرا: صبر کن از لشکر غم؟",
+                        "بر من از گوشهٔ ناگاه بتازد چه کنم؟"
+                    ],
+                    "poet": "عراقی",
+                    "date": "2025-07-09"
+                },
+                {
+                    "verses": [
+                        "سر‌نوشتم به بال کبوتر‌ها گره خورده",
+                        "سنگی می‌زنند",
+                        "یکی می‌میرد",
+                        "باقی تا آخر عمر همه",
+                        "قلب‌شان تندتر می‌زند."
+                    ],
+                    "poet": "سعید برآبادی",
+                    "date": "2025-07-08"
+                },
+                {
+                    "verses": [
+                        "زان که بر ضد جهان گویم سخن",
+                        "یا جهان دیوانه باشد یا که من",
+                        "بلکه از دیوانگان هم بدترم"
+                    ],
+                    "poet": "نیما یوشیج",
+                    "date": "2025-07-08"
+                }
+            ];
+        }
+        
+        console.log('Poems loaded:', poems.length);
+        
+        const container = document.getElementById('poems-container');
+        const loadingElement = document.getElementById('loading-poems');
+        
+        if (!container) {
+            console.error('poems-container not found');
+            return;
+        }
+        
+        // Remove loading indicator
+        if (loadingElement) {
+            loadingElement.remove();
+        }
+        
+        // Generate HTML for each poem
+        poems.forEach((poem, index) => {
+            console.log(`Adding poem ${index + 1}:`, poem.poet);
+            const poemHTML = generatePoemHTML(poem);
+            container.insertAdjacentHTML('beforeend', poemHTML);
+        });
+        
+        // Add the placeholder card at the end
+        const placeholderHTML = `
+            <div class="poem-card placeholder-card">
+                <div class="date-header">
+                    <p class="poem-context">می‌خوانم و اضافه می‌کنم.</p>
+                    <p class="english-title">Reading and adding more.</p>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', placeholderHTML);
+        
+        // Initialize dates after poems are loaded
+        initializeDynamicDates();
+        console.log('Poems loaded successfully');
+        
+    } catch (error) {
+        console.error('Error loading poems:', error);
+        console.error('Error details:', error.message);
+        const container = document.getElementById('poems-container');
+        if (container) {
+            container.innerHTML = `
+                <div class="poem-card">
+                    <div class="date-header">
+                        <p class="poem-context">خطا در بارگذاری اشعار: ${error.message}</p>
+                        <p class="english-title">Error loading poems: ${error.message}</p>
+                    </div>
+                </div>
+            `;
+        }
+    }
+}
+
+// Generate HTML for a single poem
+function generatePoemHTML(poem) {
+    const versesHTML = poem.verses.map(verse => 
+        `<div class="verse">${verse}</div>`
+    ).join('');
+    
+    // Use the date from JSON if provided, otherwise use data attribute for auto-assignment
+    const dateAttribute = poem.date ? `data-date="${poem.date}"` : '';
+    
+    return `
+        <div class="poem-card" ${dateAttribute}>
+            <div class="date-header">
+                <div class="dynamic-date"></div>
+            </div>
+            <div class="poem-content">
+                <div class="poem-verses">
+                    ${versesHTML}
+                </div>
+            </div>
+            <div class="poet-attribution">
+                <p class="poet-name">${poem.poet}</p>
+            </div>
+            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
+                <i class="fas fa-language"></i>
+            </button>
+            <div class="translation-container">
+                <p class="translation-text"></p>
+                <div class="translation-meta">
+                    <span class="translation-model"></span>
+                    <span class="translation-time"></span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    initializeDynamicDates();
-    
-    // Update dates every minute
-    setInterval(initializeDynamicDates, 60000);
+    loadPoems();
 });
 
 // Handle theme changes
