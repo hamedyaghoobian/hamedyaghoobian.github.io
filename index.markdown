@@ -10,8 +10,8 @@ list_title: " "
     <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Profile Picture" class="profile-pic">
     <div class="bio-text">
       <h1>Welcome</h1>
-      <p>I am an Assistant Professor of Computer Science at Muhlenberg College. My teaching and research interests lie in the interstices of Natural Language Processing and Human-Computer Interaction, primarily focusing on computer- and AI-mediated practices in everyday life.</p>
-      <p>I was born and raised in Mashhad, a culturally significant city in northeastern Iran. I now live in Pennsylvania with my wife. </p>
+      <p>I am an Assistant Professor and Director of Computer Science at Muhlenberg College. I teach computer science, and my research explores how artificial intelligence shapes social and organizational life, drawing on perspectives from Science and Technology Studies to understand the practices, decisions, and interactions that emerge around AI systems.</p>
+      <p>I grew up in Mashhad, a city in northeastern Iran with a long and storied history. I now live in Pennsylvania's Lehigh Valley with my wife.</p>
       <p>For discussions about research, collaborations, or just a friendly chat, drop me an email at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a> or visit me in the Trumbower Science Building, room 125.</p>
     </div>
   </div>
@@ -21,9 +21,8 @@ list_title: " "
       <h2>Research Interests</h2>
       <ul>
         <li>Textual analysis</li>
-        <li>Computational ethics & explainable AI</li>
         <li>Human-AI interaction</li>
-        <li>Philosophy of technology</li>
+        <li>Philosophy and sociology of technology</li>
       </ul>
     </div>
     <div class="education">

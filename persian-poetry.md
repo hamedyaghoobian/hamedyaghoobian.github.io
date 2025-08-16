@@ -864,8 +864,7 @@ async function loadPoems() {
         const placeholderHTML = `
             <div class="poem-card placeholder-card">
                 <div class="date-header">
-                    <p class="poem-context">می‌خوانم و اضافه می‌کنم.</p>
-                    <p class="english-title">Reading and adding more.</p>
+                    <p class="poem-context">I've built my homeland, I've even founded my state--in my language.<br>— Mahmoud Darwish</p>
                 </div>
             </div>
         `;

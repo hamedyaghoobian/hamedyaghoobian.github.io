@@ -3,7 +3,6 @@
 ---
 
 @import "minima";
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
 // Variables
 $spacing-unit: 30px;
@@ -680,5 +679,74 @@ body.dark {
     &:hover {
       color: #63b3ed !important;
     }
+  }
+}
+
+// Research Figure Styling
+.research-figure {
+  margin: 2rem auto;
+  text-align: center;
+  max-width: 100%;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.4;
+    
+    body.dark & {
+      color: #a0a0a0;
+    }
+  }
+}
+
+// References Section Styling
+.references {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e2e8f0;
+  transition: border-color 0.3s ease;
+
+  body.dark & {
+    border-top-color: #4a5568;
+  }
+
+  p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #4a5568;
+    padding-left: 1rem;
+    text-indent: -1rem;
+    
+    body.dark & {
+      color: #a0c4ff;
+    }
+  }
+}
+
+// Citation Links Styling
+sup a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  
+  &:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
   }
 }
