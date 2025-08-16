@@ -103,6 +103,8 @@ permalink: /persian-poetry/
     margin-top: 0.5rem;
     line-height: 1.5;
     font-style: italic;
+    direction: ltr;
+    text-align: left;
 }
 
 .english-title {
@@ -143,7 +145,8 @@ body.dark .poet-attribution {
 }
 
 .placeholder-card {
-    text-align: center;
+    text-align: left;
+    direction: ltr;
     background: #f7fafc;
     border-style: dashed;
 }
