@@ -667,7 +667,7 @@ async function translatePoem(button) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "llama3-70b-8192",
+                model: "openai/gpt-oss-120b",
                 messages: [
                     {
                         role: "system",
@@ -700,7 +700,7 @@ Respond only with the English translation, no explanations.`
         
         const data = await response.json();
         const translation = data.choices[0].message.content.trim();
-        const model = 'llama3-70b-8192';
+        const model = 'openai/gpt-oss-120b';
         
         const result = {
             translation,
