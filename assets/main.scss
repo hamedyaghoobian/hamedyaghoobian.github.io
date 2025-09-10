@@ -106,15 +106,15 @@ h3 { font-size: 1.5em; }
   }
 }
 
-// Footer
+// Footer - Override Minima theme defaults
 .site-footer {
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  font-size: 0.6rem;
-  color: #718096;
-  padding: 10px 0;
-  border-top: 1px solid #e8e8e8;
-  text-align: center;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 0.6rem !important;
+  color: #718096 !important;
+  padding: 10px 0 !important;
+  border-top: 1px solid #e8e8e8 !important;
+  text-align: center !important;
   transition: border-color 0.3s ease;
 
   .footer-content {
@@ -151,10 +151,10 @@ h3 { font-size: 1.5em; }
     font-size: inherit !important;
   }
 
-  // Make footer much smaller on mobile devices
+  // Make footer much smaller on mobile devices - Override Minima with !important
   @media screen and (max-width: 600px) {
-    font-size: 0.5rem;
-    padding: 5px 0;
+    font-size: 0.5rem !important;
+    padding: 5px 0 !important;
     
     .copyright-text {
       line-height: 1.2;
@@ -167,8 +167,8 @@ h3 { font-size: 1.5em; }
   
   // Even smaller for very small screens
   @media screen and (max-width: 480px) {
-    font-size: 0.45rem;
-    padding: 3px 0;
+    font-size: 0.45rem !important;
+    padding: 3px 0 !important;
     
     .copyright-text {
       line-height: 1.1;
@@ -430,7 +430,7 @@ body.dark {
   padding: 0;
   position: relative;
   z-index: 1;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 90px); // Reduced to account for smaller footer
   
   .wrapper {
     background-color: transparent;
@@ -527,8 +527,9 @@ body {
 
 // Home page specific styles
 .home-container {
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 90px); // Reduced from 120px to account for smaller footer
   height: auto;
+  max-height: calc(100vh - 90px); // Add max-height to prevent overflow
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -576,7 +577,8 @@ body {
 
   .home-container {
     height: auto;
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 70px); // Even smaller on mobile due to compact footer
+    max-height: calc(100vh - 70px);
     padding: 1.5rem;
   }
   
