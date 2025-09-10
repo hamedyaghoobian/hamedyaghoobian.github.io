@@ -153,29 +153,29 @@ h3 { font-size: 1.5em; }
 
   // Make footer much smaller on mobile devices
   @media screen and (max-width: 600px) {
-    font-size: 0.4rem;
-    padding: 2px 0;
+    font-size: 0.5rem;
+    padding: 5px 0;
+    
+    .copyright-text {
+      line-height: 1.2;
+    }
+    
+    .footer-separator {
+      margin: 0 4px;
+    }
+  }
+  
+  // Even smaller for very small screens
+  @media screen and (max-width: 480px) {
+    font-size: 0.45rem;
+    padding: 3px 0;
     
     .copyright-text {
       line-height: 1.1;
     }
     
     .footer-separator {
-      margin: 0 2px;
-    }
-  }
-  
-  // Even smaller for very small screens
-  @media screen and (max-width: 480px) {
-    font-size: 0.35rem;
-    padding: 1px 0;
-    
-    .copyright-text {
-      line-height: 1.0;
-    }
-    
-    .footer-separator {
-      margin: 0 2px;
+      margin: 0 3px;
     }
   }
 }
@@ -466,6 +466,34 @@ body.dark .page-content .wrapper {
   transition: border-color 0.3s ease;
   position: relative;
   z-index: 2;
+  
+  // Make footer much smaller on mobile devices
+  @media screen and (max-width: 600px) {
+    font-size: 0.5rem !important;
+    padding: 5px 0 !important;
+    
+    .copyright-text {
+      line-height: 1.2;
+    }
+    
+    .footer-separator {
+      margin: 0 4px;
+    }
+  }
+  
+  // Even smaller for very small screens
+  @media screen and (max-width: 480px) {
+    font-size: 0.45rem !important;
+    padding: 3px 0 !important;
+    
+    .copyright-text {
+      line-height: 1.1;
+    }
+    
+    .footer-separator {
+      margin: 0 3px;
+    }
+  }
 }
 
 // Ensure the main content fits within the viewport
@@ -537,7 +565,7 @@ body {
   .bio-content {
     flex-direction: column;
     text-align: center;
-    padding-left: 1.5rem;
+    padding-left: 2rem;
     padding-right: 2rem;
   }
   
