@@ -151,9 +151,32 @@ h3 { font-size: 1.5em; }
     font-size: inherit !important;
   }
 
-  // Slightly increase overall footer font size on very small screens so links aren't upscaled independently
+  // Make footer much smaller on mobile devices
   @media screen and (max-width: 600px) {
-    font-size: 0.75rem;
+    font-size: 0.5rem;
+    padding: 5px 0;
+    
+    .copyright-text {
+      line-height: 1.2;
+    }
+    
+    .footer-separator {
+      margin: 0 4px;
+    }
+  }
+  
+  // Even smaller for very small screens
+  @media screen and (max-width: 480px) {
+    font-size: 0.45rem;
+    padding: 3px 0;
+    
+    .copyright-text {
+      line-height: 1.1;
+    }
+    
+    .footer-separator {
+      margin: 0 3px;
+    }
   }
 }
 
