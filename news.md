@@ -5,6 +5,8 @@ permalink: /news/
 ---
 {% include dappled-light.html %}
 
+* **November 2025**: *"MASFIN: A Multi-Agent System for Financial Forecasting,"* with Sebastian Montalvo, has been accepted to NeurIPS 2025 (Generative AI in Finance Workshop).
+
 * **March 2025**: Presenting *"The Recursive Enactment of AI: Beyond the Loop, Beyond the Thing"* at the *[Society for the Social Studies of Science (4S)](https://4sonline.org/)* 2025 Conference in Seattle, to be held in September '25.
 
 * **February 2025**: Co-presented *"From Java to Python: Revamping CS2 for a Cohesive Curriculum"* with [Proyash Podder](https://proyashpodder.github.io/) at *Innovations and Opportunities in Liberal Arts Computing Education*, an affiliated event at *[SIGCSE 2025](https://sigcse2025.sigcse.org/)* in Pittsburgh, PA.
