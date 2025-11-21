@@ -1,13 +1,12 @@
 ---
 layout: page
-title:  MASFIN: A Multi-Agent System for Financial Forecasting
+title: MASFIN: A Multi-Agent System for Financial Forecasting
 
 permalink: /projects/multi-agents-llm-financial-trading-framework
 header: true
 list_title: " "
 
 ---
-{% include dappled-light.html %}
 
 *Note: This research was conducted in Summer 2025 with Muhlenberg undergraduate student researcher, Sebastian Montalvo.*
 
