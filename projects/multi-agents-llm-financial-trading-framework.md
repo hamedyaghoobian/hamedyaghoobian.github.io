@@ -33,13 +33,13 @@ Each stage incorporates human-in-the-loop validation to ensure transparency and 
 Over an **eight-week live evaluation**, MASFIN achieved a **7.33% cumulative return**, outperforming the **S&P 500 (4.92%)**, **NASDAQ-100 (5.36%)**, and **Dow Jones (4.11%)** in six of eight weeks. The system exhibited higher volatility (2.61% weekly) but demonstrated a strong correlation with benchmark indices, suggesting enhanced performance within existing market trends.
 
 <figure class="research-figure">
-    <img src="/assets/images/masfin/improved_annotation_test.jpg" alt="Cumulative Return">
-    <figcaption>Figure 1: Cumulative Return</figcaption>
+  <img src="/assets/images/masfin/improved_annotation_test.jpg" alt="Cumulative Return">
+  <figcaption>Figure 1: Cumulative Return</figcaption>
 </figure>
 
 <figure class="research-figure">
-    <img src="/assets/images/masfin/scipy_enhanced_risk_return.jpg" alt="Risk Return">
-    <figcaption>Figure 2: Risk Return</figcaption>
+  <img src="/assets/images/masfin/scipy_enhanced_risk_return.jpg" alt="Risk Return">
+  <figcaption>Figure 2: Risk Return</figcaption>
 </figure>
 
 These findings highlight the potential of **modular, bias-mitigated generative systems** for financial reasoning—offering improved reproducibility and interpretability compared to monolithic AI approaches.
@@ -49,4 +49,3 @@ These findings highlight the potential of **modular, bias-mitigated generative s
 MASFIN demonstrates how **generative AI** can be harnessed for transparent and reproducible financial analysis. By integrating bias-aware design and modular agent collaboration, this framework provides a foundation for future research in high-stakes, data-intensive domains.
 
 Full paper and code are available at: [`github.com/mmontalvo9/MASFIN`](https://github.com/mmontalvo9/MASFIN)
-
