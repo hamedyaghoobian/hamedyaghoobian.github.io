@@ -1,8 +1,4 @@
----
-# Only the main Sass file needs front matter (the dashes are enough)
----
-
-@import "minima";
+--- # Only the main Sass file needs front matter (the dashes are enough) --- @import "minima";
 
 // Variables
 $spacing-unit: 30px;
@@ -16,13 +12,13 @@ $on-large: 1024px;
   --night: #0f131c;
   --dawn: #16132b;
   --morning: #9fb3bf;
-  
+
   --light: var(--day);
   --dark: var(--night);
   --shadow: #1a1917;
   --bounce-light: #f5d7a6;
   --timing-fn: ease;
-  
+
   --background: var(--light);
   --text: var(--dark);
   --accent: #2b6cb0;
@@ -40,7 +36,7 @@ body {
   background-color: var(--light);
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
-  
+
   &.dark {
     --light: var(--night);
     --dark: var(--day);
@@ -55,7 +51,12 @@ body {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Caveat', 'DM Serif Display', serif !important;
   letter-spacing: 0;
   line-height: 1.4;
@@ -65,9 +66,17 @@ h1, h2, h3, h4, h5, h6 {
   transition: color 0.3s ease;
 }
 
-h1 { font-size: 2.1em; }
-h2 { font-size: 1.7em; }
-h3 { font-size: 1.5em; }
+h1 {
+  font-size: 2.1em;
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
 
 .site-title {
   font-family: 'Caveat', cursive;
@@ -85,7 +94,7 @@ h3 { font-size: 1.5em; }
     margin-right: 4px;
     font-size: 0.75rem;
     transition: color 0.2s ease;
-    
+
     &:last-child {
       margin-right: 0;
     }
@@ -93,13 +102,14 @@ h3 { font-size: 1.5em; }
 }
 
 // Content Styling
-.education-item, .contact-item {
+.education-item,
+.contact-item {
   display: flex;
   align-items: flex-start;
   margin-bottom: 1rem;
-  
+
   i {
-    margin-right: 1rem; 
+    margin-right: 1rem;
     width: 1.5rem;
     text-align: center;
     color: #4a5568;
@@ -134,12 +144,12 @@ h3 { font-size: 1.5em; }
 
   .built-with {
     color: #777;
-    
+
     a {
       color: #666;
       text-decoration: none;
       transition: color 0.2s ease;
-      
+
       &:hover {
         text-decoration: underline;
       }
@@ -157,35 +167,35 @@ h3 { font-size: 1.5em; }
     padding: 5px 0;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    
+
     .wrapper {
       padding-left: 8px;
       padding-right: 8px;
     }
-    
+
     .copyright-text {
       line-height: 1.2;
     }
-    
+
     .footer-separator {
       margin: 0 4px;
     }
   }
-  
+
   // Even smaller for very small screens
   @media screen and (max-width: 480px) {
     font-size: 0.45rem;
     padding: 2px 0;
-    
+
     .wrapper {
       padding-left: 6px;
       padding-right: 6px;
     }
-    
+
     .copyright-text {
       line-height: 1.1;
     }
-    
+
     .footer-separator {
       margin: 0 3px;
     }
@@ -196,7 +206,7 @@ h3 { font-size: 1.5em; }
 a {
   color: #ed8936;
   transition: color 0.2s ease;
-  
+
   &:hover {
     color: #dd6b20;
     text-decoration: none;
@@ -225,7 +235,7 @@ html {
   align-items: center;
   max-width: 800px;
   width: 100%;
-  
+
   @media screen and (min-width: 768px) {
     flex-direction: row;
   }
@@ -237,7 +247,7 @@ html {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
-  
+
   @media screen and (min-width: 768px) {
     margin-right: 2rem;
     margin-bottom: 0;
@@ -246,7 +256,7 @@ html {
 
 .bio-text {
   text-align: center;
-  
+
   @media screen and (min-width: 768px) {
     text-align: left;
   }
@@ -254,7 +264,7 @@ html {
 
 // Text Justification
 p {
-//   text-align: justify
+  //   text-align: justify
 }
 
 // Dark Mode Toggle - Simplified
@@ -268,7 +278,7 @@ p {
   input[type="checkbox"] {
     display: none;
   }
-  
+
   .theme-toggle-sr {
     position: absolute;
     width: 1px;
@@ -287,8 +297,8 @@ p {
     transition: transform 0.2s ease;
     margin-top: 0;
   }
-  
-  input[type="checkbox"]:checked + .theme-toggle__expand {
+
+  input[type="checkbox"]:checked+.theme-toggle__expand {
     transform: rotate(180deg);
   }
 }
@@ -297,12 +307,18 @@ p {
   background-color: var(--night);
   color: #e2e8f0;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: #e2e8f0;
   }
 
   a {
     color: #fbd38d;
+
     &:hover {
       color: #f6ad55;
     }
@@ -318,7 +334,7 @@ p {
   transition: border-color 0.3s ease;
   position: relative;
   z-index: 2;
-  
+
   .wrapper {
     display: flex;
     align-items: center;
@@ -338,13 +354,13 @@ p {
 
 .site-nav {
   line-height: 45px;
-  
+
   .page-link {
     padding: 4px 6px;
     margin-right: 2px;
     font-size: 0.8rem;
     color: var(--text);
-    
+
     &:last-child {
       margin-right: 0;
       padding-right: 0;
@@ -372,13 +388,11 @@ p {
 #glow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg, 
-    var(--bounce-light) 0%,
-    transparent 30%,
-    transparent 70%,
-    var(--bounce-light) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--bounce-light) 0%,
+      transparent 30%,
+      transparent 70%,
+      var(--bounce-light) 100%);
   transition: background 0.5s ease;
   height: 100%;
   width: 100%;
@@ -388,13 +402,11 @@ p {
 #glow-bounce {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    var(--bounce-light) 40%,
-    transparent 60%,
-    var(--bounce-light) 100%
-  );
+  background: linear-gradient(45deg,
+      transparent 0%,
+      var(--bounce-light) 40%,
+      transparent 60%,
+      var(--bounce-light) 100%);
   transition: background 0.5s ease;
   opacity: 0.2;
   height: 100%;
@@ -405,23 +417,28 @@ p {
 body.dark {
   background-color: var(--night);
   color: #e2e8f0;
-  
+
   .site-header {
     border-bottom-color: rgba(255, 255, 255, 0.1);
   }
-  
+
   .site-footer {
     border-top-color: rgba(255, 255, 255, 0.1);
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: #e2e8f0;
   }
-  
+
   .site-nav .page-link {
     color: #e2e8f0;
   }
-  
+
   .site-title {
     color: #e2e8f0;
   }
@@ -444,8 +461,10 @@ body.dark {
   padding: 0;
   position: relative;
   z-index: 1;
-  min-height: calc(100vh - 120px);
-  
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
   .wrapper {
     background-color: transparent;
     padding: 2rem;
@@ -454,6 +473,7 @@ body.dark {
     transition: background-color 0.3s ease;
     width: 100%;
     box-sizing: border-box;
+    flex: 1;
   }
 }
 
@@ -465,7 +485,7 @@ body.dark .page-content .wrapper {
 .home {
   .page-content {
     min-height: auto;
-    
+
     .wrapper {
       padding: 0;
       margin: 0;
@@ -505,7 +525,8 @@ body {
   padding: 1rem;
 }
 
-.research-interests, .education {
+.research-interests,
+.education {
   flex: 1;
   min-width: 300px;
   padding: 1rem;
@@ -513,8 +534,7 @@ body {
 
 // Home page specific styles
 .home-container {
-  min-height: calc(100vh - 120px);
-  height: auto;
+  flex: 1;
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -547,14 +567,14 @@ body {
     padding: 1.5rem;
     margin: 1rem auto;
   }
-  
+
   .bio-content {
     flex-direction: column;
     text-align: center;
     padding-left: 1rem;
     padding-right: 2rem;
   }
-  
+
   .info-grid {
     grid-template-columns: 1fr;
     padding: 0 2rem;
@@ -565,7 +585,7 @@ body {
     min-height: calc(100vh - 120px);
     padding: 0.75rem 1rem;
   }
-  
+
   // Home page specific mobile overrides
   .home .page-content .wrapper {
     padding: 0;
@@ -576,7 +596,7 @@ body {
     text-align: left;
   }
 
-  .research-interests, 
+  .research-interests,
   .education {
     padding: 1rem 0;
   }
@@ -617,13 +637,13 @@ body {
       right: 15px;
       top: 9px;
 
-      > svg path {
+      >svg path {
         fill: var(--text);
         transition: fill 0.3s ease;
       }
     }
 
-    input ~ .trigger {
+    input~.trigger {
       clear: both;
       display: none;
       position: fixed;
@@ -643,18 +663,18 @@ body {
 body.dark {
   .site-nav {
     @media screen and (max-width: 600px) {
-      .menu-icon > svg path {
+      .menu-icon>svg path {
         fill: #a0c4ff;
       }
 
-      input ~ .trigger {
+      input~.trigger {
         background-color: rgba(26, 32, 44, 0.95);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
       }
 
       .page-link {
         color: #a0c4ff !important;
-        
+
         &:hover {
           color: #63b3ed !important;
           background-color: rgba(255, 255, 255, 0.1);
@@ -666,24 +686,34 @@ body.dark {
 
 // Add more specific mobile text styles
 @media (max-width: 480px) {
-  p, li {
+
+  p,
+  li {
     font-size: 16px;
     line-height: 1.6;
   }
 
-  h1 { font-size: 2em; }
-  h2 { font-size: 1.75em; }
-  h3 { font-size: 1.5em; }
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.75em;
+  }
+
+  h3 {
+    font-size: 1.5em;
+  }
 }
 
 // Update dark mode footer
 body.dark .site-footer {
   color: #718096;
   border-top-color: rgba(255, 255, 255, 0.1);
-  
+
   .built-with a {
     color: #a0c4ff;
-    
+
     &:hover {
       color: #63b3ed;
     }
@@ -694,25 +724,25 @@ body.dark .site-footer {
 body.dark {
   a {
     color: #fbd38d !important;
-    
+
     &:hover {
       color: #f6ad55 !important;
     }
   }
-  
+
   // Exception for navigation links
   .site-nav .page-link {
     color: #a0c4ff !important;
-    
+
     &:hover {
       color: #63b3ed !important;
     }
   }
-  
+
   // Exception for footer links
   .site-footer .built-with a {
     color: #a0c4ff !important;
-    
+
     &:hover {
       color: #63b3ed !important;
     }
@@ -744,7 +774,7 @@ body.dark {
     font-style: italic;
     font-family: 'Inter', sans-serif;
     line-height: 1.4;
-    
+
     body.dark & {
       color: #a0a0a0;
     }
@@ -769,7 +799,7 @@ body.dark {
     color: #4a5568;
     padding-left: 1rem;
     text-indent: -1rem;
-    
+
     body.dark & {
       color: #a0c4ff;
     }
@@ -781,7 +811,7 @@ sup a {
   color: var(--accent);
   text-decoration: none;
   font-weight: 500;
-  
+
   &:hover {
     color: var(--accent-hover);
     text-decoration: underline;
