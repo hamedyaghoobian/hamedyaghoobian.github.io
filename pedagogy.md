@@ -6,6 +6,11 @@ permalink: /pedagogy/
 {% include dappled-light.html %}
 ## Department of Math, CS, and Stat, Muhlenberg College
 
+### Spring 2026
+
+* Computer Organization
+* CUE Computer Science Seminar
+
 ### Fall 2025
 
 * Computer Science II
