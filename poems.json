@@ -1,77 +1,164 @@
 [
-    {
-        "verses": [
-            "کشتی تدبیر ما توفانی حکم قضاست",
-            "جز دم تسلیم اینجا لنگری درکار نیست"
-        ],
-        "poet": "بیدل دهلوی",
-        "date": "2025-10-13"
-    },
-    {
-        "verses": [
-        "خیش زمین را می‌شکافد",
-        "و هیچ نمی‌داند گاو",
-        "دلیل دردِ دست و پایش را"
-        ],
-        "poet": "عباس کیارستمی",
-        "date": "2025-09-21"
-    },
-    {
-        "verses": [
-            "خدا را رحمی ای مُنْعِم‌، که درویشِ سرِ کویت",
-            "دری دیگر نمی‌داند، رهی دیگر نمی‌گیرد"
-        ],
-        "poet": "حافظ",
-        "date": "2025-09-09"
-    },
-    {
-        "verses": [
-            "دیر آمدی موسی",
-            "دوره‌ی اعجازها گذشته است",
-            "عصای‌ت را به چارلی چاپلین هدیه کن",
-            "تا کمی بخندیم"
-        ],
-        "poet": "شمس لنگرودی",
-        "date": "2025-08-15"
-    },
-    {
-        "verses": [
-            "به شکل رفتن درآمده بود",
-            "به شکل دور شدن ماه از پنجره",
-            "به شکل پرواز پرنده",
-            "از لبه‌ی پاییز",
-            "به شکل محو شدن رنگ از چهره در وقت ترس."
-        ],
-        "poet": "رسول یونان",
-        "date": "2025-07-10"
-    },
-
-    {
-        "verses": [
-            "چند گویند مرا: صبر کن از لشکر غم؟",
-            "بر من از گوشهٔ ناگاه بتازد چه کنم؟"
-        ],
-        "poet": "عراقی",
-        "date": "2025-07-09"
-    },
-    {
-        "verses": [
-            "سر‌نوشتم به بال کبوتر‌ها گره خورده",
-            "سنگی می‌زنند",
-            "یکی می‌میرد",
-            "باقی تا آخر عمر همه",
-            "قلب‌شان تندتر می‌زند."
-        ],
-        "poet": "سعید برآبادی",
-        "date": "2025-07-08"
-    },
-    {
-        "verses": [
-            "زان که بر ضد جهان گویم سخن",
-            "یا جهان دیوانه باشد یا که من",
-            "بلکه از دیوانگان هم بدترم"
-        ],
-        "poet": "نیما یوشیج",
-        "date": "2025-07-08"
+  {
+    "verses": [
+      "همه شهر ایران جگر خسته‌اند"
+    ],
+    "poet": "فردوسی",
+    "date": "2026-01-30",
+    "theme": {
+      "interpretation": "In this fleeting moment, the very fabric of Iran's cities seems to be exhaling a collective sigh, as if the land itself is weary, its essence suffused with a deep melancholy that resonates through every molecule of existence. The phrase 'جگر خسته‌اند' embodies a visceral, almost palpable sense of exhaustion, as if the heart of the nation is heavy with the weight of its own history. This embodied experience whispers secrets of a profound and abiding sorrow, one that permeates every aspect of being.",
+      "interpretationFa": "در این لحظهٔ گذرای شعر، تمام شهرهای ایران به نظر می‌رسد که با هم یک نفس عمیق می‌کشند، گویا خود سرزمین خسته شده و ذات آن با یک غم عمیق و فراگیر اشباع شده که در هر ذره از هستی منعکس می‌شود. عبارت 'جگر خسته‌اند' حس خستگی را به صورت عینی و تقریباً قابل لمس به تصویر می‌کشد، گویا قلب ملت از وزن تاریخ خود خسته شده. این تجربهٔ عینی و اندامی رازهای یک غم عمیق و پایدار را به گوش جان می‌سراید، غمی که هر 측ی از هستی را دربرگرفته.",
+      "cluster": {
+        "id": "weight-of-silence",
+        "label": "سنگینی سکوت",
+        "labelEn": "The Weight of Silence"
+      }
     }
-] 
+  },
+  {
+    "verses": [
+      "کشتی تدبیر ما توفانی حکم قضاست",
+      "جز دم تسلیم اینجا لنگری درکار نیست"
+    ],
+    "poet": "بیدل دهلوی",
+    "date": "2025-10-13",
+    "theme": {
+      "interpretation": "In the turbulent expanse of existence, the vessel of our deliberation is tossed by the tempests of fate, where the only anchor that holds is the breath of surrender, a fleeting moment of stillness amidst the chaos. The poem embodies the paradox of agency and powerlessness, a fragile dance between the human condition and the unfathomable forces that shape it. In this liminal space, the self is suspended, a droplet of consciousness adrift on the ocean of the unknown.",
+      "interpretationFa": "در پهنه طوفانی هستی، کشتی تدبیر ما توسط توفان‌های سرنوشت به تلاطم درمی‌آید، جایی که تنها لنگر持ار، دم تسلیم است، لحظه‌ای از سکون در میان آشفتگی. این شعر تناقض بین اراده و بی‌ارادگی را به‌تصویر می‌کشد، رقصی نازک بین وضعیت انسانی و نیروهای نامرئی که آن را شکل می‌دهند. در این فضا، خود معلق است، قطره‌ای از آگاهی که بر اقیانوس ناشناخته در حال جنبش است.",
+      "cluster": {
+        "id": "surrender-to-currents",
+        "label": "تسلیم به جریان",
+        "labelEn": "Surrendering to Currents"
+      }
+    }
+  },
+  {
+    "verses": [
+      "خیش زمین را می‌شکافد",
+      "و هیچ نمی‌داند گاو",
+      "دلیل دردِ دست و پایش را"
+    ],
+    "poet": "عباس کیارستمی",
+    "date": "2025-09-21",
+    "theme": {
+      "interpretation": "The plow's slash through the earth unleashes a primal ache, a disquiet that seeps into the ox's limbs, a numbing awareness that dissolves the bounds between self and soil, as the creature's pain becomes an echo of the land's own mute suffering. The ox's ignorance of its own distress is a poignant metaphor for the opacity of our own embodied experiences. In this fleeting moment, the dichotomies of presence and absence, self and world, are momentarily suspended.",
+      "interpretationFa": "برش خاک‌ورز از زمین، درد نخستین را آزاد می‌کند، بی‌قراری که به اندام‌های گاو می‌رخد، آگاهی بی‌حسی که مرزهای بین خود و خاک را از بین می‌برد،既然 درد حیوان به پژواک رنج خاموش زمین تبدیل می‌شود. نادانی گاو از درد خود، استعاره‌ای-poignant برای کدر بودن تجربیات جسمانی ما است. در این لحظهٔ گذرای، دوگانه‌های حضور و غیاب، خود و جهان، به‌طور موقت معلق می‌مانند.",
+      "cluster": {
+        "id": "invisible-thresholds",
+        "label": "آستانه‌های نامرئی",
+        "labelEn": "Invisible Thresholds"
+      }
+    }
+  },
+  {
+    "verses": [
+      "خدا را رحمی ای مُنْعِم‌، که درویشِ سرِ کویت",
+      "دری دیگر نمی‌داند، رهی دیگر نمی‌گیرد"
+    ],
+    "poet": "حافظ",
+    "date": "2025-09-09",
+    "theme": {
+      "interpretation": "In this poem, the speaker's existence is suspended between the threshold of presence and absence, where the only refuge is the mercy of the divine, and the weight of longing is palpable. The poetic voice embodies the paradox of being lost and found, of navigating the invisible borders between the self and the unknown. The texture of meaning unfolds like a tapestry of yearning, woven with the threads of surrender and the whispers of the unseen.",
+      "interpretationFa": "در این شعر، وجود گوینده giữa آستانهٔ حضور و غیبت معلق است، جایی که تنها پناهگاه، رحمت الهی است و سنگینی طلب و تمنا احساس می‌شود. صدای شاعرانه، تناقض گم شدن و پیدا شدن را به‌صورت جسمانی درک می‌کند، و از مرزهای نامرئی بین خود و ناشناخته هدایت می‌کند. بافت معنا مانند یک قالی از تمنا بافته می‌شود، با نخ‌های تسلیم و زمزمه‌های نادیده.",
+      "cluster": {
+        "id": "invisible-thresholds",
+        "label": "آستانه‌های نامرئی",
+        "labelEn": "Invisible Thresholds"
+      }
+    }
+  },
+  {
+    "verses": [
+      "دیر آمدی موسی",
+      "دوره‌ی اعجازها گذشته است",
+      "عصای‌ت را به چارلی چاپلین هدیه کن",
+      "تا کمی بخندیم"
+    ],
+    "poet": "شمس لنگرودی",
+    "date": "2025-08-15",
+    "theme": {
+      "interpretation": "In this poem, the arrival of Moses is met with a sense of belatedness, as if the moment of wonder has already passed, leaving only the faint echo of enchantment. The staff, once a symbol of divine power, is now a prop for comedic relief, highlighting the tension between the sacred and the mundane. The poem invites us to ponder the fragile boundary between the sublime and the absurd, where meaning dissolves and reassembles in unexpected ways.",
+      "interpretationFa": "در این شعر، آمدن موسی با حس دیرآمدگی همراه است، گویی زمان شگفتی گذشته و فقط پژواک ضعیفی از افسون باقی مانده است. عصای موسی که نمادی از قدرت الهی بود، اکنون به یک ابزار برای خنده تبدیل شده، و این در حالی است که شعر ما را به تفکر در مورد مرز شکننده بین زیبایی و ابسورد دعوت می‌کند، جایی که معنی از بین می‌رود و به شکل‌های غیرمنتظره تجدید می‌شود.",
+      "cluster": {
+        "id": "echoes-of-paradox",
+        "label": "پژواک تناقض",
+        "labelEn": "Echoes of Paradox"
+      }
+    }
+  },
+  {
+    "verses": [
+      "به شکل رفتن درآمده بود",
+      "به شکل دور شدن ماه از پنجره",
+      "به شکل پرواز پرنده",
+      "از لبه‌ی پاییز",
+      "به شکل محو شدن رنگ از چهره در وقت ترس."
+    ],
+    "poet": "رسول یونان",
+    "date": "2025-07-10",
+    "theme": {
+      "interpretation": "This poem embodies the ephemeral nature of presence, where the self dissolves into the horizon of absence, like the moon receding from the window, leaving behind a lingering sense of impermanence. The speaker's experience is a testament to the fragile dance between being and non-being, where the boundaries of existence are constantly blurred. In this fleeting moment, the world's texture is woven from the threads of disappearance and emergence.",
+      "interpretationFa": "این شعر ذات ناپایدار بودن حضور را به تصویر می‌کشد، جایی که خود در افق غیاب منحل می‌شود، مانند ماهی که از پنجره دور می‌شود و حس ناپایداری را به جا می‌گذارد. تجربه گوینده گواهی است بر رقص نازک بین بودن و نبودن، جایی که مرزهای وجود不断 در حال محو بودن هستند. در این لحظه گذرا، بافت جهان از نخ‌های ناپدید شدن و ظهور بافته شده است.",
+      "cluster": {
+        "id": "beautiful-impermanence",
+        "label": "ناپایداری زیبا",
+        "labelEn": "Beautiful Impermanence"
+      }
+    }
+  },
+  {
+    "verses": [
+      "چند گویند مرا: صبر کن از لشکر غم؟",
+      "بر من از گوشهٔ ناگاه بتازد چه کنم؟"
+    ],
+    "poet": "عراقی",
+    "date": "2025-07-09",
+    "theme": {
+      "interpretation": "In the depths of sorrow, the self is besieged by an unexpected onslaught, leaving the heart to grapple with the uninvited invasion of grief, as the boundaries between presence and absence dissolve, and the weight of silence hangs like a specter, poised to strike, rendering the soul vulnerable to the unpredictable tides of emotion. The texture of meaning unfolds like a labyrinth, where the search for solace becomes a futile endeavor, and the only constant is the ache of longing. In this desolate landscape, the self is reduced to a mere whisper, a faint echo of a presence that once was.",
+      "interpretationFa": "در ژرفای غم، خود در معرض حمله‌ای ناگهانی قرار می‌گیرد و قلب به مبارزه با یورش ناخواستهٔ اندوه می‌پردازد، مرزهای میان حضور و غیبت از بین می‌روند و سنگینی سکوت مانند یک شبح در انتظار زدن است، و روح را در برابر جزر و مد غیرقابل پیش‌بینی احساسات آسیب‌پذیر می‌کند. بافت معنی مانند یک لابیرنت mở می‌شود، جایی که جستجوی تسلی به یک تلاش بیهوده تبدیل می‌شود و تنها ثابت، درد تمنا است. در این منظر خالی، خود به یک نفس ضعیف، پنداری از حضوری کهเคย بود، کاهش می‌یابد.",
+      "cluster": {
+        "id": "invisible-thresholds",
+        "label": "آستانه‌های نامرئی",
+        "labelEn": "Invisible Thresholds"
+      }
+    }
+  },
+  {
+    "verses": [
+      "سر‌نوشتم به بال کبوتر‌ها گره خورده",
+      "سنگی می‌زنند",
+      "یکی می‌میرد",
+      "باقی تا آخر عمر همه",
+      "قلب‌شان تندتر می‌زند."
+    ],
+    "poet": "سعید برآبادی",
+    "date": "2025-07-08",
+    "theme": {
+      "interpretation": "The poem embodies the fragile dance between life and death, where the heartbeat of existence is forever altered by the presence of mortality, and the gentle rustle of a dove's wings is inextricably tied to the weight of a thrown stone. In this fleeting moment, the boundaries between self and other, presence and absence, become blurred, and the texture of meaning is woven from the threads of impermanence and the unseen. The embodied experience is one of tender vulnerability, where the pulse of life beats in tandem with the silence of death.",
+      "interpretationFa": "این شعر، رقص لطیف بین زندگی و مرگ را به تصویر می‌کشد، جایی که تپش وجود توسط حضور مرگ برای همیشه دگرگون شده است و خیزاب نرم بال کبوتر به سنگی که پرتاب می‌شود، گره خورده است. در این لحظه کوتاه، مرزهای بین خود و غیر، حضور و غیاب، به هم می‌ریزد و بافت معنی از نخ‌های ناپایداری و نادیدنی بافته می‌شود. تجربه جسمانی، یک آسیب‌پذیری لطیف است، جایی که تپش زندگی با سکوت مرگ هم‌آوایی می‌کند.",
+      "cluster": {
+        "id": "beautiful-impermanence",
+        "label": "ناپایداری زیبا",
+        "labelEn": "Beautiful Impermanence"
+      }
+    }
+  },
+  {
+    "verses": [
+      "زان که بر ضد جهان گویم سخن",
+      "یا جهان دیوانه باشد یا که من",
+      "بلکه از دیوانگان هم بدترم"
+    ],
+    "poet": "نیما یوشیج",
+    "date": "2025-07-08",
+    "theme": {
+      "interpretation": "In this poetic whisper, the speaker's voice trembles with the weight of a paradox, as the boundaries between self and world, sanity and madness, blur and dissolve, leaving only the haunting question of who is speaking and what is being spoken, a labyrinthine inquiry into the very fabric of existence. The words themselves become a threshold, a liminal space where meaning is suspended, and the reader is invited to hover between the silence of the unsaid and the cacophony of the world. In this fragile, fleeting moment, the poem embodies the ambiguous, the uncertain, and the unknowable.",
+      "interpretationFa": "در این زمزمه شعری، صداى گوینده با سنگینى یک پارادوکس لرزیده است، زیرا مرزهاى بین خود و جهان، عقل و دیوانگى، مخدوش و از بین رفته است و فقط سوال خنثى باقی مى ماند که چه کسى سخن مى گوید و چه گفته مى شود، یک تحقیق لابیرنتى در بافت وجود. کلمات خود به یک آستانه تبدیل مى شوند، یک فضاى لیمینال که در آن معنا معلق است و خواننده دعوت مى شود که بین سکوت گفتنى و همهمه جهان معلق بماند. در این لحظه نازک و گذرا، شعر تجسمى از مبهم، ناامن و ناشناخته است.",
+      "cluster": {
+        "id": "echoes-of-paradox",
+        "label": "پژواک تناقض",
+        "labelEn": "Echoes of Paradox"
+      }
+    }
+  }
+]
