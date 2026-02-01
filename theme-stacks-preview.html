@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persian Poetry - Theme Stacks Preview</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Noto+Naskh+Arabic:wght@400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #ed8936;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a0aec0;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .theme-stacks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        .theme-stack {
+            position: relative;
+            cursor: pointer;
+            perspective: 1000px;
+            min-height: 220px;
+        }
+
+        .stack-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, rgba(237, 137, 54, 0.15) 0%, rgba(221, 107, 32, 0.08) 100%);
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(237, 137, 54, 0.3);
+        }
+
+        .stack-theme-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ed8936;
+            margin: 0;
+        }
+
+        .stack-theme-label-en {
+            font-size: 0.75rem;
+            color: #718096;
+            margin-top: 0.25rem;
+            direction: ltr;
+        }
+
+        .stack-count {
+            font-size: 0.7rem;
+            color: #a0aec0;
+            margin-top: 0.25rem;
+        }
+
+        .card-stack {
+            position: relative;
+            height: 160px;
+            transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card-stack.expanded {
+            height: auto;
+            min-height: 400px;
+        }
+
+        .stacked-card {
+            position: absolute;
+            width: 100%;
+            background: #1a202c;
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: center bottom;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .stacked-card:nth-child(1) {
+            z-index: 3;
+            transform: translateY(0) scale(1);
+        }
+
+        .stacked-card:nth-child(2) {
+            z-index: 2;
+            transform: translateY(8px) scale(0.96);
+            opacity: 0.9;
+        }
+
+        .stacked-card:nth-child(3) {
+            z-index: 1;
+            transform: translateY(16px) scale(0.92);
+            opacity: 0.75;
+        }
+
+        .stacked-card:nth-child(n+4) {
+            z-index: 0;
+            transform: translateY(20px) scale(0.88);
+            opacity: 0;
+        }
+
+        .theme-stack:hover .stacked-card:nth-child(1) {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .theme-stack:hover .stacked-card:nth-child(2) {
+            transform: translateY(4px) scale(0.98);
+        }
+
+        .theme-stack:hover .stacked-card:nth-child(3) {
+            transform: translateY(14px) scale(0.94);
+            opacity: 0.85;
+        }
+
+        .card-stack.expanded .stacked-card {
+            position: relative;
+            transform: none !important;
+            opacity: 1 !important;
+            margin-bottom: 1rem;
+        }
+
+        .poem-verses {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            max-height: 4.2em;
+            overflow: hidden;
+            text-align: center;
+            color: #e2e8f0;
+        }
+
+        .card-stack.expanded .poem-verses {
+            max-height: none;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .verse {
+            margin: 0.3rem 0;
+        }
+
+        .poet-name {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 0.85rem;
+            color: #ed8936;
+            text-align: center;
+            margin-top: 0.75rem;
+        }
+
+        /* Minimal circular icon button - matching translate button */
+        .reveal-interpretation-btn {
+            display: none;
+            background: #ed8936;
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            align-items: center;
+            justify-content: center;
+            margin: 0.75rem auto 0;
+            position: relative;
+        }
+
+        .card-stack.expanded .reveal-interpretation-btn {
+            display: flex;
+        }
+
+        .reveal-interpretation-btn i {
+            pointer-events: none;
+        }
+
+        .reveal-interpretation-btn:hover {
+            background: #dd6b20;
+            transform: translateY(-1px) scale(1.05);
+        }
+
+        .reveal-interpretation-btn.active {
+            background: #48bb78;
+        }
+
+        .reveal-interpretation-btn.active:hover {
+            background: #38a169;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Interpretation overlay - hidden by default */
+        .interpretation-overlay {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, rgba(237, 137, 54, 0.12) 0%, rgba(26, 32, 44, 0) 100%);
+            border-radius: 8px;
+            border-left: 3px solid #ed8936;
+        }
+
+        .interpretation-overlay.visible {
+            display: block;
+            animation: fadeSlideIn 0.3s ease-out;
+        }
+
+        .interpretation-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            font-style: italic;
+            line-height: 1.5;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .interpretation-text-fa {
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.8rem;
+            color: #a0aec0;
+            margin-top: 0.5rem;
+            direction: rtl;
+            text-align: right;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .collapse-btn {
+            display: none;
+            margin: 1rem auto 0;
+            padding: 0.5rem 1.5rem;
+            background: transparent;
+            border: 1px solid #4a5568;
+            border-radius: 20px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.8rem;
+            color: #a0aec0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card-stack.expanded+.collapse-btn,
+        .card-stack.expanded~.collapse-btn {
+            display: block;
+        }
+
+        .collapse-btn:hover {
+            background: #2d3748;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>رونویسی شعر فارسی</h1>
+        <p class="subtitle">Poems clustered by speculative themes — click 💡 to reveal interpretations</p>
+
+        <div class="theme-stacks-container" id="theme-stacks"></div>
+    </div>
+
+    <script>
+        let stackedCardCounter = 0;
+
+        const poems = [
+            { verses: ["کشتی تدبیر ما توفانی حکم قضاست", "جز دم تسلیم اینجا لنگری درکار نیست"], poet: "بیدل دهلوی", theme: { interpretation: "The surrender of will to fate's storm.", interpretationFa: "تسلیم اراده به طوفان تقدیر", cluster: { id: "surrender-to-currents", label: "تسلیم به جریان", labelEn: "Surrendering to Currents" } } },
+            { verses: ["خیش زمین را می‌شکافد", "و هیچ نمی‌داند گاو"], poet: "عباس کیارستمی", theme: { interpretation: "Labor without comprehension of its meaning.", interpretationFa: "کار بدون درک معنایش", cluster: { id: "weight-of-silence", label: "سنگینی سکوت", labelEn: "The Weight of Silence" } } },
+            { verses: ["خدا را رحمی ای مُنْعِم‌", "که درویشِ سرِ کویت"], poet: "حافظ", theme: { interpretation: "The devotee who knows no other door.", interpretationFa: "درویشی که دری دیگر نمی‌شناسد", cluster: { id: "dissolution-of-self", label: "محو شدن خود", labelEn: "The Dissolution of Self" } } },
+            { verses: ["دیر آمدی موسی", "دوره‌ی اعجازها گذشته است"], poet: "شمس لنگرودی", theme: { interpretation: "The obsolescence of the miraculous in modernity.", interpretationFa: "منسوخ شدن امر خارق‌العاده", cluster: { id: "echoes-of-paradox", label: "پژواک تناقض", labelEn: "Echoes of Paradox" } } },
+            { verses: ["به شکل رفتن درآمده بود", "به شکل دور شدن ماه از پنجره"], poet: "رسول یونان", theme: { interpretation: "Departure as metamorphosis of form.", interpretationFa: "رفتن به مثابه دگردیسی شکل", cluster: { id: "beautiful-impermanence", label: "ناپایداری زیبا", labelEn: "Beautiful Impermanence" } } },
+            { verses: ["چند گویند مرا: صبر کن", "بر من از گوشهٔ ناگاه بتازد چه کنم؟"], poet: "عراقی", theme: { interpretation: "The impossibility of preparing for grief's ambush.", interpretationFa: "ناممکنی آمادگی برای کمین غم", cluster: { id: "weight-of-silence", label: "سنگینی سکوت", labelEn: "The Weight of Silence" } } },
+            { verses: ["سر‌نوشتم به بال کبوتر‌ها گره خورده", "سنگی می‌زنند"], poet: "سعید برآبادی", theme: { interpretation: "The fragile threads connecting fate to innocence.", interpretationFa: "رشته‌های شکننده اتصال سرنوشت به معصومیت", cluster: { id: "invisible-thresholds", label: "آستانه‌های نامرئی", labelEn: "Invisible Thresholds" } } },
+            { verses: ["زان که بر ضد جهان گویم سخن", "یا جهان دیوانه باشد یا که من"], poet: "نیما یوشیج", theme: { interpretation: "The poet as witness to collective unreason.", interpretationFa: "شاعر به عنوان شاهد بی‌خردی جمعی", cluster: { id: "echoes-of-paradox", label: "پژواک تناقض", labelEn: "Echoes of Paradox" } } }
+        ];
+
+        function groupPoemsByTheme(poems) {
+            const groups = {};
+            poems.forEach(poem => {
+                const id = poem.theme?.cluster?.id || 'uncategorized';
+                if (!groups[id]) groups[id] = { id, label: poem.theme?.cluster?.label, labelEn: poem.theme?.cluster?.labelEn, poems: [] };
+                groups[id].poems.push(poem);
+            });
+            return Object.values(groups);
+        }
+
+        function generateStackedCardHTML(poem) {
+            const cardId = `stacked-card-${stackedCardCounter++}`;
+            const versesHTML = poem.verses.slice(0, 2).map(v => `<div class="verse">${v}</div>`).join('');
+            const interpretation = poem.theme?.interpretation || '';
+            const interpretationFa = poem.theme?.interpretationFa || '';
+
+            return `
+                <div class="stacked-card" id="${cardId}">
+                    <div class="poem-verses">${versesHTML}</div>
+                    <div class="poet-name">${poem.poet}</div>
+                    ${interpretation ? `
+                        <button class="reveal-interpretation-btn" onclick="toggleInterpretation('${cardId}', event)" title="تفسیر / Interpretation">
+                            <i class="fas fa-lightbulb"></i>
+                        </button>
+                        <div class="interpretation-overlay" id="${cardId}-interpretation">
+                            <div class="interpretation-text">"${interpretation}"</div>
+                            <div class="interpretation-text-fa">${interpretationFa}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function renderThemeStacks() {
+            const container = document.getElementById('theme-stacks');
+            const groups = groupPoemsByTheme(poems);
+
+            container.innerHTML = groups.map(group => `
+                <div class="theme-stack" data-theme-id="${group.id}">
+                    <div class="stack-header" onclick="toggleStack('${group.id}')">
+                        <div class="stack-theme-label">${group.label}</div>
+                        <div class="stack-theme-label-en">${group.labelEn}</div>
+                        <div class="stack-count">${group.poems.length} شعر</div>
+                    </div>
+                    <div class="card-stack" id="stack-${group.id}">
+                        ${group.poems.map(poem => generateStackedCardHTML(poem)).join('')}
+                    </div>
+                    <button class="collapse-btn" onclick="collapseStack('${group.id}')">
+                        <i class="fas fa-chevron-up"></i> بستن / Collapse
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function toggleInterpretation(cardId, event) {
+            event.stopPropagation();
+            const overlay = document.getElementById(`${cardId}-interpretation`);
+            const btn = event.currentTarget;
+            if (overlay) {
+                overlay.classList.toggle('visible');
+                btn.classList.toggle('active');
+            }
+        }
+
+        function toggleStack(themeId) {
+            const stack = document.getElementById(`stack-${themeId}`);
+            if (stack) {
+                stack.classList.toggle('expanded');
+                if (!stack.classList.contains('expanded')) {
+                    stack.querySelectorAll('.interpretation-overlay.visible').forEach(o => o.classList.remove('visible'));
+                    stack.querySelectorAll('.reveal-interpretation-btn.active').forEach(b => b.classList.remove('active'));
+                }
+            }
+        }
+
+        function collapseStack(themeId) {
+            const stack = document.getElementById(`stack-${themeId}`);
+            if (stack) {
+                stack.classList.remove('expanded');
+                stack.querySelectorAll('.interpretation-overlay.visible').forEach(o => o.classList.remove('visible'));
+                stack.querySelectorAll('.reveal-interpretation-btn.active').forEach(b => b.classList.remove('active'));
+            }
+        }
+
+        renderThemeStacks();
+    </script>
+</body>
+
+</html>

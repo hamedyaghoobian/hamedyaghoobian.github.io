@@ -3,19 +3,20 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YWJ7LC7EX8"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-YWJ7LC7EX8');
   </script>
-  
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- seo -%}
-  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ " /assets/main.css" | relative_url }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;700&display=swap"
+    rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   {%- feed_meta -%}
   <link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}">
@@ -23,31 +24,46 @@
     body {
       font-family: 'Inter', sans-serif;
     }
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-family: 'DM Serif Display', serif;
     }
-    .education-item, .contact-item {
+
+    .education-item,
+    .contact-item {
       display: flex;
       align-items: flex-start;
       margin-bottom: 15px;
     }
-    .education-item i, .contact-item i {
+
+    .education-item i,
+    .contact-item i {
       margin-right: 15px;
       width: 20px;
       text-align: center;
       font-size: 1.2em;
       padding-top: 3px;
     }
-    .education-item div, .contact-item div {
+
+    .education-item div,
+    .contact-item div {
       flex: 1;
     }
+
     .site-title {
       font-family: 'DM Serif Display', serif;
     }
+
     [data-theme="dark"] {
       background-color: #1a202c;
       color: #f7fafc;
     }
+
     [data-theme="dark"] h1,
     [data-theme="dark"] h2,
     [data-theme="dark"] h3,
@@ -56,19 +72,24 @@
     [data-theme="dark"] h6 {
       color: #edf2f7;
     }
+
     [data-theme="dark"] a {
       color: #63b3ed;
     }
+
     [data-theme="dark"] a:hover {
       color: #90cdf4;
     }
+
     [data-theme="dark"] .site-title,
     [data-theme="dark"] .site-nav .page-link {
       color: #f7fafc;
     }
+
     [data-theme="dark"] .site-nav .page-link:hover {
       color: #90cdf4;
     }
+
     [data-theme="dark"] #theme-toggle {
       filter: drop-shadow(0 0 4px rgb(255, 255, 255, .7));
     }
@@ -108,7 +129,7 @@
     });
 
     // Add keyboard shortcut
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
       if (event.keyCode === 32) { // Space key
         event.preventDefault();
         toggle();

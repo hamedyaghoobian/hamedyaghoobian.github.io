@@ -36,6 +36,16 @@ jobs:
       id: pages
       uses: actions/configure-pages@v4
       
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: Classify poem themes
+      run: node scripts/classify-themes.js
+      env:
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      
     - name: Inject API Key
       run: |
         # Replace the placeholder with the actual API key from secrets

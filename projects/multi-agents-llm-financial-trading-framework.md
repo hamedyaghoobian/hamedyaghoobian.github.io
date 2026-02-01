@@ -14,7 +14,7 @@ list_title: " "
 
 Financial forecasting represents one of the most complex challenges in data-driven decision making due to market volatility, non-stationarity, and the integration of quantitative and qualitative signals. Recent advances in **large language models (LLMs)** have renewed interest in this space, particularly through **multi-agent frameworks** that allow modular reasoning, interpretability, and reproducibility.
 
-In this project, we introduce **MASFIN (Multi-Agent System for Decomposed Financial Reasoning and Forecasting)** — a generative, bias-aware framework designed to integrate structured financial data with unstructured news while embedding safeguards against survivorship, hindsight, and overfitting biases.
+In this project, we introduce **MASFIN (Multi-Agent System for Decomposed Financial Reasoning and Forecasting)**, a generative, bias-aware framework designed to integrate structured financial data with unstructured news while embedding safeguards against survivorship, hindsight, and overfitting biases.
 
 # 2. Methods and Approach
 
