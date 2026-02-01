@@ -75,19 +75,19 @@ Respond in this exact JSON format:
 }`;
 
   const response = await callGroq(prompt);
-  
+
   // Parse JSON from response
   const jsonMatch = response.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
     console.error('Failed to parse response:', response);
     return null;
   }
-  
+
   try {
     const parsed = JSON.parse(jsonMatch[0]);
     const themeIndex = Math.max(0, Math.min(THEME_CLUSTERS.length - 1, (parsed.themeIndex || 1) - 1));
     const cluster = THEME_CLUSTERS[themeIndex];
-    
+
     return {
       interpretation: parsed.interpretation || '',
       interpretationFa: parsed.interpretationFa || '',
@@ -105,10 +105,10 @@ Respond in this exact JSON format:
 
 async function classifyPoems() {
   console.log('🎭 Starting speculative theme classification...\n');
-  
+
   if (!GROQ_API_KEY) {
-    console.error('❌ GROQ_API_KEY environment variable not set');
-    process.exit(1);
+    console.warn('⚠️ GROQ_API_KEY environment variable not set. Skipping theme classification.');
+    return;
   }
 
   // Read poems
@@ -119,7 +119,7 @@ async function classifyPoems() {
   for (let i = 0; i < poems.length; i++) {
     const poem = poems[i];
     const firstVerse = poem.verses[0].slice(0, 30) + '...';
-    
+
     // Skip if already has theme data
     if (poem.theme && poem.theme.cluster && poem.theme.interpretation) {
       console.log(`✓ [${i + 1}/${poems.length}] "${firstVerse}" - already classified`);
@@ -127,10 +127,10 @@ async function classifyPoems() {
     }
 
     console.log(`🔮 [${i + 1}/${poems.length}] Interpreting "${firstVerse}"`);
-    
+
     try {
       const themeData = await generateUniqueInterpretation(poem);
-      
+
       if (themeData) {
         poem.theme = themeData;
         console.log(`   → ${themeData.cluster.labelEn}`);
@@ -145,10 +145,10 @@ async function classifyPoems() {
         };
         console.log(`   ⚠ Fallback: ${fallback.labelEn}\n`);
       }
-      
+
       // Rate limiting - wait between requests
       await new Promise(r => setTimeout(r, 1000));
-      
+
     } catch (error) {
       console.error(`   ❌ Error: ${error.message}\n`);
       // Continue with next poem
@@ -159,7 +159,7 @@ async function classifyPoems() {
   fs.writeFileSync(POEMS_PATH, JSON.stringify(poems, null, 2) + '\n');
   console.log('\n✅ Theme classification complete!');
   console.log(`📝 Updated ${POEMS_PATH}`);
-  
+
   // Print theme distribution
   const distribution = {};
   poems.forEach(p => {
@@ -167,7 +167,7 @@ async function classifyPoems() {
       distribution[p.theme.cluster.labelEn] = (distribution[p.theme.cluster.labelEn] || 0) + 1;
     }
   });
-  
+
   console.log('\n📊 Theme distribution:');
   Object.entries(distribution)
     .sort((a, b) => b[1] - a[1])
