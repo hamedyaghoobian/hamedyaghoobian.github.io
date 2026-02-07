@@ -1,6 +1,24 @@
 [
   {
     "verses": [
+      "و کجا باید",
+      "در غیبت ابدی رویا",
+      "پناه گرفت؟"
+    ],
+    "poet": "احمدرضا احمدی",
+    "date": "2026-02-06",
+    "theme": {
+      "interpretation": "The speaker asks where one can seek shelter when dreams have withdrawn into an eternal absence. It is a question about how to live when hope, imagination, and promised futures no longer feel available. The poem holds us in that suspended moment of not knowing, turning the search for refuge into a quiet, existential plea.",
+      "interpretationFa": "گوینده میپرسد در زمانی که رویاها به غیبتی ابدی رفتهاند، کجا میتوان پناه گرفت؟ این پرسش، جستوجوی راه زیستن در وضعیتی است که امید، تخیل و آیندههای وعدهدادهشده دیگر در دسترس نیستند. شعر ما را در لحظهای معلق و بیپاسخ نگه میدارد و عملِ پناهجستن را به خواهشی آرام و وجودی تبدیل میکند.",
+      "cluster": {
+        "id": "weight-of-silence",
+        "label": "سنگینی سکوت",
+        "labelEn": "The Weight of Silence"
+      }
+    }
+  },
+  {
+    "verses": [
       "همه شهر ایران جگر خسته‌اند"
     ],
     "poet": "فردوسی",
@@ -115,7 +133,7 @@
     "date": "2025-07-09",
     "theme": {
       "interpretation": "In the depths of sorrow, the self is besieged by an unexpected onslaught, leaving the heart to grapple with the uninvited invasion of grief, as the boundaries between presence and absence dissolve, and the weight of silence hangs like a specter, poised to strike, rendering the soul vulnerable to the unpredictable tides of emotion. The texture of meaning unfolds like a labyrinth, where the search for solace becomes a futile endeavor, and the only constant is the ache of longing. In this desolate landscape, the self is reduced to a mere whisper, a faint echo of a presence that once was.",
-      "interpretationFa": "در ژرفای غم، خود در معرض حمله‌ای ناگهانی قرار می‌گیرد و قلب به مبارزه با یورش ناخواستهٔ اندوه می‌پردازد، مرزهای میان حضور و غیبت از بین می‌روند و سنگینی سکوت مانند یک شبح در انتظار زدن است، و روح را در برابر جزر و مد غیرقابل پیش‌بینی احساسات آسیب‌پذیر می‌کند. بافت معنی مانند یک لابیرنت mở می‌شود، جایی که جستجوی تسلی به یک تلاش بیهوده تبدیل می‌شود و تنها ثابت، درد تمنا است. در این منظر خالی، خود به یک نفس ضعیف، پنداری از حضوری کهเคย بود، کاهش می‌یابد.",
+      "interpretationFa": "در ژرفای غم، خود در معرض حمله‌ای ناگهانی قرار می‌گیرد و قلب به مبارزه با یورش ناخواستهٔ اندوه می‌پردازد، مرزهای میان حضور و غیبت از بین می‌روند و سنگینی سکوت مانند یک شبح در انتظار زدن است، و روح را در برابر جزر و مد غیرقابل پیش‌بینی احساسات آسیب‌پذیر می‌کند. بافت معنی مانند یک لابیرنت می‌شود، جایی که جستجوی تسلی به یک تلاش بیهوده تبدیل می‌شود و تنها ثابت، درد تمنا است. در این منظر خالی، خود به یک نفس ضعیف، پنداری از حضوری که همانند یک شبح که همانند یک شبح است، کاهش می‌یابد.",
       "cluster": {
         "id": "invisible-thresholds",
         "label": "آستانه‌های نامرئی",

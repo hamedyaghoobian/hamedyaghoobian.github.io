@@ -1224,6 +1224,16 @@ async function loadPoems() {
             console.log('Using fallback embedded data');
             poems = [
                 {
+                    "verses": ["و کجا باید", "در غیبت ابدی رویا", "پناه گرفت؟"],
+                    "poet": "احمدرضا احمدی",
+                    "date": "2026-02-06",
+                    "theme": {
+                        "interpretation": "The speaker asks where one can seek shelter when dreams have withdrawn into an eternal absence. It is a question about how to live when hope, imagination, and promised futures no longer feel available. The poem holds us in that suspended moment of not knowing, turning the search for refuge into a quiet, existential plea.",
+                        "interpretationFa": "گوینده می‌پرسد در زمانی که رویاها به غیبتی ابدی رفتهاند، کجا میتوان پناه گرفت؟ این پرسش، جستوجوی راه زیستن در وضعیتی است که امید، تخیل و آیندههای وعدهدادهشده دیگر در دسترس نیستند. شعر ما را در لحظهای معلق و بیپاسخ نگه میدارد و عملِ پناهجستن را به خواهشی آرام و وجودی تبدیل میکند.",
+                        "cluster": { "id": "weight-of-silence", "label": "سنگینی سکوت", "labelEn": "The Weight of Silence" }
+                    }
+                },
+                {
                     "verses": ["به شکل رفتن درآمده بود", "به شکل دور شدن ماه از پنجره"],
                     "poet": "رسول یونان",
                     "date": "2025-07-10",
