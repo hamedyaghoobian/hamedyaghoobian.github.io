@@ -213,6 +213,37 @@ body.dark .coming-soon p {
 
 <div class="tool-card">
   <div class="tool-header">
+    <h3 class="tool-title">AI Ethics Lab</h3>
+    <p class="tool-subtitle">Computer Science Program at Muhlenberg College</p>
+  </div>
+  
+  <div class="tool-description">
+    A comprehensive digital platform currently under development for the upcoming Spring 2027 AI Ethics course. This tool will serve as a central hub for students to engage with ethical challenges in artificial intelligence through interactive modules and case studies.
+  </div>
+
+  <div class="feature-list">
+    <h4>Project Status</h4>
+    <ul>
+      <li><strong>Work in Progress:</strong> This project is currently in active development.</li>
+      <li><strong>Target Launch:</strong> Spring 2027 (AI Ethics Course)</li>
+      <li><strong>Goal:</strong> Enhancing computer science education with practical ethical frameworks.</li>
+    </ul>
+  </div>
+
+  <div class="tech-stack" style="margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+    <strong style="color: #2d3748;">Community Feedback:</strong>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; color: #4a5568;">
+      We welcome your insights during this development phase. Please share your feedback or suggestions via email at <a href="mailto:hamedyaghoobian@muhlenberg.edu" style="color: #ed8936; text-decoration: none; font-weight: 500;">hamedyaghoobian@muhlenberg.edu</a>.
+    </p>
+  </div>
+
+  <a href="https://aiethics-lab.github.io/" class="cta-button" target="_blank">
+    Visit Development Site
+  </a>
+</div>
+
+<div class="tool-card">
+  <div class="tool-header">
     <h3 class="tool-title">Bot Without Organs</h3>
     <p class="tool-subtitle">Interactive AI Philosophy Companion</p>
   </div>
