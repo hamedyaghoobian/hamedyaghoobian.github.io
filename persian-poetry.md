@@ -446,6 +446,10 @@ body.dark .translate-btn:hover {
     .poetry-intro {
         padding: 0 0.75rem;
     }
+
+    .translation-meta {
+        font-size: 0.6rem;
+    }
 }
 
 /* Print styles */
@@ -1078,37 +1082,18 @@ async function translatePoem(button) {
     showLoadingAnimation(poemCard);
     
     try {
-        // Direct call to Groq API with placeholder (replaced during build)
+        // Call the Netlify serverless function for translation
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
         
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        const response = await fetch('/api/translate', {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "openai/gpt-oss-120b",
-                messages: [
-                    {
-                        role: "system",
-                        content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
-1. Preserving the poetic beauty and emotional essence
-2. Maintaining cultural context and metaphors
-3. Keeping the structure readable but poetic
-4. Providing a flowing, literary translation rather than literal word-for-word
-${poetName ? `5. Consider this is by ${poetName} - factor in their style and era` : ''}
-
-Respond only with the English translation, no explanations.`
-                    },
-                    {
-                        role: "user",
-                        content: verses
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 1000
+                text: verses,
+                poet: poetName
             }),
             signal: controller.signal
         });
@@ -1117,18 +1102,10 @@ Respond only with the English translation, no explanations.`
         
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Network request failed'}`);
+            throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Translation failed'}`);
         }
         
-        const data = await response.json();
-        const translation = data.choices[0].message.content.trim();
-        const model = 'openai/gpt-oss-120b';
-        
-        const result = {
-            translation,
-            model: model,
-            timestamp: new Date().toISOString()
-        };
+        const result = await response.json();
         
         // Cache the result
         localStorage.setItem(cacheKey, JSON.stringify(result));
@@ -1142,36 +1119,22 @@ Respond only with the English translation, no explanations.`
         console.error('Translation error:', error);
         
         let errorMessage = error.message;
-        let fallbackTranslation = null;
         
         // Handle different types of errors with helpful messages
         if (error.name === 'AbortError') {
             errorMessage = 'درخواست زمان زیادی طول کشید / Request timed out';
         } else if (error.message.includes('Load failed') || error.message.includes('Network request failed') || error.message.includes('Failed to fetch')) {
             errorMessage = 'مشکل اتصال به اینترنت / Network connection issue';
-            // Provide a sample translation for mobile users
-            fallbackTranslation = {
-                translation: "Sample translation: This beautiful Persian verse speaks of love, loss, and the human condition. (Network unavailable - showing demo)",
-                model: 'offline-demo',
-                timestamp: new Date().toISOString()
-            };
         } else if (error.message.includes('API Error')) {
             errorMessage = 'خطای سرویس ترجمه / Translation service error';
         }
         
-        if (fallbackTranslation) {
-            // Show fallback translation instead of error
-            showTranslation(translationContainer, translationText, translationModel, translationTime, fallbackTranslation);
-            button.setAttribute('data-retranslate', 'true');
-            button.title = 'ترجمه دوباره / Retranslate';
-        } else {
-            // Show error message
-            translationText.textContent = `خطا در ترجمه: ${errorMessage}`;
-            translationText.style.color = '#e53e3e';
-            translationModel.textContent = 'خطا رخ داده / Error occurred';
-            translationTime.textContent = new Date().toLocaleString('fa-IR');
-            translationContainer.classList.add('expanded');
-        }
+        // Show error message
+        translationText.textContent = `خطا در ترجمه: ${errorMessage}`;
+        translationText.style.color = '#e53e3e';
+        translationModel.textContent = 'خطا رخ داده / Error occurred';
+        translationTime.textContent = new Date().toLocaleString('fa-IR');
+        translationContainer.classList.add('expanded');
         
         button.title = originalTitle;
     } finally {
@@ -1228,8 +1191,6 @@ async function loadPoems() {
                     "poet": "احمدرضا احمدی",
                     "date": "2026-02-06",
                     "theme": {
-                        "interpretation": "The speaker asks where one can seek shelter when dreams have withdrawn into an eternal absence. It is a question about how to live when hope, imagination, and promised futures no longer feel available. The poem holds us in that suspended moment of not knowing, turning the search for refuge into a quiet, existential plea.",
-                        "interpretationFa": "گوینده می‌پرسد در زمانی که رویاها به غیبتی ابدی رفتهاند، کجا میتوان پناه گرفت؟ این پرسش، جستوجوی راه زیستن در وضعیتی است که امید، تخیل و آیندههای وعدهدادهشده دیگر در دسترس نیستند. شعر ما را در لحظهای معلق و بیپاسخ نگه میدارد و عملِ پناهجستن را به خواهشی آرام و وجودی تبدیل میکند.",
                         "cluster": { "id": "weight-of-silence", "label": "سنگینی سکوت", "labelEn": "The Weight of Silence" }
                     }
                 },
@@ -1238,8 +1199,6 @@ async function loadPoems() {
                     "poet": "رسول یونان",
                     "date": "2025-07-10",
                     "theme": {
-                        "interpretation": "A meditation on departure as metamorphosis.",
-                        "interpretationFa": "تأملی بر رفتن به مثابه دگردیسی",
                         "cluster": { "id": "beautiful-impermanence", "label": "ناپایداری زیبا", "labelEn": "Beautiful Impermanence" }
                     }
                 },
@@ -1248,8 +1207,6 @@ async function loadPoems() {
                     "poet": "عراقی",
                     "date": "2025-07-09",
                     "theme": {
-                        "interpretation": "The impossibility of preparing for sorrow's ambush.",
-                        "interpretationFa": "ناممکنی آمادگی برای کمین غم",
                         "cluster": { "id": "weight-of-silence", "label": "سنگینی سکوت", "labelEn": "The Weight of Silence" }
                     }
                 },
@@ -1258,8 +1215,6 @@ async function loadPoems() {
                     "poet": "سعید برآبادی",
                     "date": "2025-07-08",
                     "theme": {
-                        "interpretation": "The fragile threads connecting fate to innocence.",
-                        "interpretationFa": "رشته‌های شکننده اتصال سرنوشت به معصومیت",
                         "cluster": { "id": "invisible-thresholds", "label": "آستانه‌های نامرئی", "labelEn": "Invisible Thresholds" }
                     }
                 },
@@ -1268,8 +1223,6 @@ async function loadPoems() {
                     "poet": "نیما یوشیج",
                     "date": "2025-07-08",
                     "theme": {
-                        "interpretation": "The poet as witness to collective unreason.",
-                        "interpretationFa": "شاعر به عنوان شاهد بی‌خردی جمعی",
                         "cluster": { "id": "echoes-of-paradox", "label": "پژواک تناقض", "labelEn": "Echoes of Paradox" }
                     }
                 }
@@ -1401,37 +1354,105 @@ function generateStackedCardHTML(poem) {
         `<div class="verse">${verse}</div>`
     ).join('');
     
-    const interpretation = poem.theme?.interpretation || '';
-    const interpretationFa = poem.theme?.interpretationFa || '';
+    // Store poem data on the card for dynamic interpretation generation
+    const poemDataAttr = encodeURIComponent(JSON.stringify({ verses: poem.verses, poet: poem.poet }));
     
     return `
-        <div class="stacked-card" id="${cardId}">
+        <div class="stacked-card" id="${cardId}" data-poem="${poemDataAttr}">
             <div class="poem-verses">
                 ${versesHTML}
             </div>
             <div class="poet-name">${poem.poet}</div>
-            ${interpretation ? `
-                <button class="reveal-interpretation-btn" onclick="toggleInterpretation('${cardId}', event)" title="تفسیر / Interpretation">
-                    <i class="fas fa-lightbulb"></i>
-                </button>
-                <div class="interpretation-overlay" id="${cardId}-interpretation">
-                    <div class="interpretation-text">"${interpretation}"</div>
-                    ${interpretationFa ? `<div class="interpretation-text-fa">${interpretationFa}</div>` : ''}
-                </div>
-            ` : ''}
+            <button class="reveal-interpretation-btn" onclick="toggleInterpretation('${cardId}', event)" title="تفسیر / Interpretation">
+                <i class="fas fa-lightbulb"></i>
+            </button>
+            <div class="interpretation-overlay" id="${cardId}-interpretation">
+                <div class="interpretation-text"></div>
+                <div class="interpretation-text-fa"></div>
+            </div>
         </div>
     `;
 }
 
-// Toggle interpretation visibility
-function toggleInterpretation(cardId, event) {
+// Toggle interpretation visibility — generates via LLM on first click
+async function toggleInterpretation(cardId, event) {
     event.stopPropagation();
     const overlay = document.getElementById(`${cardId}-interpretation`);
     const btn = event.currentTarget;
+    const card = document.getElementById(cardId);
     
-    if (overlay) {
-        overlay.classList.toggle('visible');
-        btn.classList.toggle('active');
+    if (!overlay || !card) return;
+    
+    // If already visible, just hide it
+    if (overlay.classList.contains('visible')) {
+        overlay.classList.remove('visible');
+        btn.classList.remove('active');
+        return;
+    }
+    
+    const textEl = overlay.querySelector('.interpretation-text');
+    const textFaEl = overlay.querySelector('.interpretation-text-fa');
+    
+    // Check if we already have content (from a previous LLM call)
+    if (textEl.textContent.trim()) {
+        overlay.classList.add('visible');
+        btn.classList.add('active');
+        return;
+    }
+    
+    // Check localStorage cache
+    const poemDataStr = decodeURIComponent(card.getAttribute('data-poem'));
+    const poemData = JSON.parse(poemDataStr);
+    const cacheKey = `interpretation_${btoa(unescape(encodeURIComponent(poemData.verses.join('')))).slice(0, 20)}`;
+    const cached = localStorage.getItem(cacheKey);
+    
+    if (cached) {
+        try {
+            const cachedData = JSON.parse(cached);
+            textEl.textContent = `"${cachedData.interpretation}"`;
+            textFaEl.textContent = cachedData.interpretationFa || '';
+            overlay.classList.add('visible');
+            btn.classList.add('active');
+            return;
+        } catch (e) {
+            localStorage.removeItem(cacheKey);
+        }
+    }
+    
+    // Call the LLM via Netlify function
+    btn.classList.add('loading');
+    btn.disabled = true;
+    
+    try {
+        const response = await fetch('/api/interpret', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ verses: poemData.verses, poet: poemData.poet })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API Error ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        // Cache the result
+        localStorage.setItem(cacheKey, JSON.stringify(result));
+        
+        textEl.textContent = `"${result.interpretation}"`;
+        textFaEl.textContent = result.interpretationFa || '';
+        overlay.classList.add('visible');
+        btn.classList.add('active');
+        
+    } catch (error) {
+        console.error('Interpretation error:', error);
+        textEl.textContent = 'خطا در تولید تفسیر / Error generating interpretation';
+        textEl.style.color = '#e53e3e';
+        overlay.classList.add('visible');
+        btn.classList.add('active');
+    } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
     }
 }
 
@@ -1514,7 +1535,7 @@ function generatePoemHTML(poem) {
             <div class="poet-attribution">
                 <p class="poet-name">${poem.poet}</p>
             </div>
-            <button class="translate-btn" onclick="translatePoem(this)" ontouchstart="translatePoem(this); event.preventDefault();" title="ترجمه / Translate">
+            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
                 <i class="fas fa-language"></i>
             </button>
             <div class="translation-container">
