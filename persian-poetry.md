@@ -1082,18 +1082,37 @@ async function translatePoem(button) {
     showLoadingAnimation(poemCard);
     
     try {
-        // Call the Netlify serverless function for translation
+        // Direct call to Groq API (key injected at build time by GitHub Actions)
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
         
-        const response = await fetch('/api/translate', {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
+                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                text: verses,
-                poet: poetName
+                model: "openai/gpt-oss-120b",
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
+1. Preserving the poetic beauty and emotional essence
+2. Maintaining cultural context and metaphors
+3. Keeping the structure readable but poetic
+4. Providing a flowing, literary translation rather than literal word-for-word
+${poetName ? `5. Consider this is by ${poetName} - factor in their style and era` : ''}
+
+Respond only with the English translation, no explanations.`
+                    },
+                    {
+                        role: "user",
+                        content: verses
+                    }
+                ],
+                temperature: 0.7,
+                max_tokens: 1000
             }),
             signal: controller.signal
         });
@@ -1105,7 +1124,15 @@ async function translatePoem(button) {
             throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Translation failed'}`);
         }
         
-        const result = await response.json();
+        const data = await response.json();
+        const translation = data.choices[0].message.content.trim();
+        const model = 'openai/gpt-oss-120b';
+        
+        const result = {
+            translation,
+            model: model,
+            timestamp: new Date().toISOString()
+        };
         
         // Cache the result
         localStorage.setItem(cacheKey, JSON.stringify(result));
@@ -1419,22 +1446,75 @@ async function toggleInterpretation(cardId, event) {
         }
     }
     
-    // Call the LLM via Netlify function
+    // Call Groq API directly (key injected at build time by GitHub Actions)
     btn.classList.add('loading');
     btn.disabled = true;
     
+    const themeClusters = [
+        { id: 'dissolution-of-self', label: 'محو شدن خود', labelEn: 'The Dissolution of Self' },
+        { id: 'invisible-thresholds', label: 'آستانه‌های نامرئی', labelEn: 'Invisible Thresholds' },
+        { id: 'weight-of-silence', label: 'سنگینی سکوت', labelEn: 'The Weight of Silence' },
+        { id: 'geography-of-distance', label: 'جغرافیای دوری', labelEn: 'Geography of Distance' },
+        { id: 'surrender-to-currents', label: 'تسلیم به جریان', labelEn: 'Surrendering to Currents' },
+        { id: 'beautiful-impermanence', label: 'ناپایداری زیبا', labelEn: 'Beautiful Impermanence' },
+        { id: 'echoes-of-paradox', label: 'پژواک تناقض', labelEn: 'Echoes of Paradox' },
+        { id: 'intimate-vastness', label: 'وسعت صمیمی', labelEn: 'Intimate Vastness' }
+    ];
+    
+    const versesText = poemData.verses.join('\n');
+    const themesListText = themeClusters.map((t, i) => `${i + 1}. ${t.labelEn} (${t.label})`).join('\n');
+    
+    const prompt = `You are a literary phenomenologist specializing in Persian poetry.
+
+For this poem by ${poemData.poet || 'an unknown poet'}:
+"""
+${versesText}
+"""
+
+Generate a brief, evocative interpretation (2-3 sentences) that captures the phenomenological essence of this poem. Focus on the embodied experience, the play of presence and absence, the texture of meaning. Be speculative and philosophical, not explanatory.
+
+Then, choose which of these speculative themes best resonates with the poem's essence:
+${themesListText}
+
+Respond in this exact JSON format:
+{
+  "interpretation": "Your evocative interpretation here",
+  "interpretationFa": "تفسیر فارسی شما",
+  "themeIndex": 1
+}`;
+    
     try {
-        const response = await fetch('/api/interpret', {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ verses: poemData.verses, poet: poemData.poet })
+            headers: {
+                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'openai/gpt-oss-120b',
+                messages: [{ role: 'user', content: prompt }],
+                temperature: 0.8,
+                max_tokens: 500
+            })
         });
         
         if (!response.ok) {
             throw new Error(`API Error ${response.status}`);
         }
         
-        const result = await response.json();
+        const data = await response.json();
+        const content = data.choices[0].message.content.trim();
+        
+        // Parse JSON from response
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error('Failed to parse LLM response');
+        
+        const parsed = JSON.parse(jsonMatch[0]);
+        
+        const result = {
+            interpretation: parsed.interpretation || '',
+            interpretationFa: parsed.interpretationFa || ''
+        };
         
         // Cache the result
         localStorage.setItem(cacheKey, JSON.stringify(result));
