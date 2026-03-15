@@ -519,7 +519,8 @@ body.dark .view-toggle-btn.active {
 .theme-stacks-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    row-gap: 3.5rem;
+    column-gap: 2rem;
     padding: 1rem 0;
 }
 
