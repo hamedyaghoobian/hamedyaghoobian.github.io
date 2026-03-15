@@ -641,7 +641,7 @@ body.dark .stack-count {
     position: relative;
     transform: none !important;
     opacity: 1 !important;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 /* Card content in stack */
@@ -1483,57 +1483,80 @@ Respond in this exact JSON format:
   "themeIndex": 1
 }`;
     
-    try {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: 'openai/gpt-oss-120b',
-                messages: [{ role: 'user', content: prompt }],
-                temperature: 0.8,
-                max_tokens: 500
-            })
-        });
-        
-        if (!response.ok) {
-            throw new Error(`API Error ${response.status}`);
+    // Retry up to 2 times for intermittent failures
+    const maxRetries = 2;
+    let lastError;
+    
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000);
+            
+            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'openai/gpt-oss-120b',
+                    messages: [{ role: 'user', content: prompt }],
+                    temperature: 0.8,
+                    max_tokens: 500
+                }),
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                const errBody = await response.text().catch(() => '');
+                throw new Error(`API Error ${response.status}: ${errBody}`);
+            }
+            
+            const data = await response.json();
+            const content = data.choices[0].message.content.trim();
+            
+            // Parse JSON from response
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error('Failed to parse LLM response');
+            
+            const parsed = JSON.parse(jsonMatch[0]);
+            
+            const result = {
+                interpretation: parsed.interpretation || '',
+                interpretationFa: parsed.interpretationFa || ''
+            };
+            
+            // Cache the result
+            localStorage.setItem(cacheKey, JSON.stringify(result));
+            
+            textEl.textContent = `"${result.interpretation}"`;
+            textFaEl.textContent = result.interpretationFa || '';
+            overlay.classList.add('visible');
+            btn.classList.add('active');
+            
+            btn.classList.remove('loading');
+            btn.disabled = false;
+            return; // Success — exit
+            
+        } catch (error) {
+            lastError = error;
+            console.warn(`Interpretation attempt ${attempt + 1} failed:`, error.message);
+            if (attempt < maxRetries) {
+                await new Promise(r => setTimeout(r, 1000 * (attempt + 1))); // Wait 1s, then 2s
+            }
         }
-        
-        const data = await response.json();
-        const content = data.choices[0].message.content.trim();
-        
-        // Parse JSON from response
-        const jsonMatch = content.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error('Failed to parse LLM response');
-        
-        const parsed = JSON.parse(jsonMatch[0]);
-        
-        const result = {
-            interpretation: parsed.interpretation || '',
-            interpretationFa: parsed.interpretationFa || ''
-        };
-        
-        // Cache the result
-        localStorage.setItem(cacheKey, JSON.stringify(result));
-        
-        textEl.textContent = `"${result.interpretation}"`;
-        textFaEl.textContent = result.interpretationFa || '';
-        overlay.classList.add('visible');
-        btn.classList.add('active');
-        
-    } catch (error) {
-        console.error('Interpretation error:', error);
-        textEl.textContent = 'خطا در تولید تفسیر / Error generating interpretation';
-        textEl.style.color = '#e53e3e';
-        overlay.classList.add('visible');
-        btn.classList.add('active');
-    } finally {
-        btn.classList.remove('loading');
-        btn.disabled = false;
     }
+    
+    // All retries exhausted
+    console.error('Interpretation failed after retries:', lastError);
+    textEl.textContent = 'خطا در تولید تفسیر / Error generating interpretation — لطفاً دوباره امتحان کنید';
+    textEl.style.color = '#e53e3e';
+    overlay.classList.add('visible');
+    btn.classList.add('active');
+    btn.classList.remove('loading');
+    btn.disabled = false;
 }
 
 // Toggle stack expansion
