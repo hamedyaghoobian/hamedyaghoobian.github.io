@@ -637,6 +637,14 @@ body.dark .stack-count {
     opacity: 0.85;
 }
 
+/* Hide content of cards behind the front card (prevent text bleed-through) */
+.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .poem-verses,
+.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .poet-name,
+.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .reveal-interpretation-btn,
+.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .interpretation-overlay {
+    visibility: hidden;
+}
+
 /* Expanded state - fan out */
 .card-stack.expanded .stacked-card {
     position: relative;
