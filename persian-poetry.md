@@ -529,7 +529,7 @@ body.dark .view-toggle-btn.active {
     position: relative;
     cursor: pointer;
     perspective: 1000px;
-    min-height: 220px;
+    min-height: 310px;
 }
 
 .stack-header {
@@ -578,7 +578,7 @@ body.dark .stack-count {
 /* Card Stack Container */
 .card-stack {
     position: relative;
-    height: 160px;
+    height: 200px;
     transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -841,7 +841,7 @@ body.dark .collapse-btn:hover {
     }
     
     .theme-stack {
-        min-height: 180px;
+        min-height: 280px;
     }
     
     .stacked-card {
