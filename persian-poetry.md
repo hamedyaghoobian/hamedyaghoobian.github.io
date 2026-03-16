@@ -519,22 +519,21 @@ body.dark .view-toggle-btn.active {
 .theme-stacks-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    row-gap: 3.5rem;
-    column-gap: 4rem;
-    padding: 1rem 0;
+    gap: 2.5rem;
+    padding: 1.5rem 0;
 }
 
-/* Individual Theme Stack */
+/* Individual Theme Stack — min-height = header (~82px) + gap (0.75rem) + card-stack (170px) + bottom buffer */
 .theme-stack {
     position: relative;
     cursor: pointer;
     perspective: 1000px;
-    min-height: 310px;
+    min-height: 270px;
 }
 
 .stack-header {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     padding: 0.75rem 1rem;
     background: linear-gradient(135deg, rgba(237, 137, 54, 0.1) 0%, rgba(221, 107, 32, 0.05) 100%);
     border-radius: 12px;
@@ -578,13 +577,13 @@ body.dark .stack-count {
 /* Card Stack Container */
 .card-stack {
     position: relative;
-    height: 200px;
+    height: 170px;
     transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .card-stack.expanded {
     height: auto;
-    min-height: 400px;
+    min-height: 0;
 }
 
 /* Stacked Cards */
@@ -608,33 +607,34 @@ body.dark .stack-count {
 }
 .stacked-card:nth-child(2) { 
     z-index: 2; 
-    transform: translateY(8px) scale(0.96);
-    opacity: 0.9;
+    transform: translateY(5px) scale(0.97);
+    opacity: 0.7;
 }
 .stacked-card:nth-child(3) { 
     z-index: 1; 
-    transform: translateY(16px) scale(0.92);
-    opacity: 0.75;
+    transform: translateY(10px) scale(0.94);
+    opacity: 0.4;
 }
 .stacked-card:nth-child(n+4) { 
     z-index: 0; 
-    transform: translateY(20px) scale(0.88);
+    transform: translateY(14px) scale(0.91);
     opacity: 0;
 }
 
 /* Hover effect on stack */
 .theme-stack:hover .stacked-card:nth-child(1) {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-3px) scale(1.01);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .theme-stack:hover .stacked-card:nth-child(2) {
-    transform: translateY(4px) scale(0.98);
+    transform: translateY(8px) scale(0.97);
+    opacity: 0.8;
 }
 
 .theme-stack:hover .stacked-card:nth-child(3) {
-    transform: translateY(14px) scale(0.94);
-    opacity: 0.85;
+    transform: translateY(16px) scale(0.94);
+    opacity: 0.55;
 }
 
 /* Hide content of cards behind the front card (prevent text bleed-through) */
@@ -650,7 +650,11 @@ body.dark .stack-count {
     position: relative;
     transform: none !important;
     opacity: 1 !important;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-stack.expanded .stacked-card:last-child {
+    margin-bottom: 0;
 }
 
 /* Card content in stack */
@@ -845,11 +849,11 @@ body.dark .collapse-btn:hover {
 @media (max-width: 768px) {
     .theme-stacks-container {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2rem;
     }
     
     .theme-stack {
-        min-height: 280px;
+        min-height: 250px;
     }
     
     .stacked-card {
