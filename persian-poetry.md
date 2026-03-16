@@ -520,7 +520,7 @@ body.dark .view-toggle-btn.active {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     row-gap: 3.5rem;
-    column-gap: 2rem;
+    column-gap: 4rem;
     padding: 1rem 0;
 }
 
