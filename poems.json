@@ -1,6 +1,26 @@
 [
   {
     "verses": [
+      "گل به تنهایی گلدان گریید",
+      "اشک خون شد، خون چرک",
+      "عاج انگشت پیانو را دستی نفشرد",
+      "دستها معیار فاصله‌اند",
+      "اشک‌ها پرپر زد!"
+    ],
+    "poet": "نصرت رحمانی",
+    "date": "2026-03-17",
+    "theme": {
+      "interpretation": "In this poignant poem, the solitary flower's cry echoes through the desolate landscape of the soul, where tears congeal into a bloody stasis, and the unplayed piano stands as a haunting testament to the absence of touch, leaving only the measure of distant hands and the fluttering remnants of shattered sorrow. The very fabric of being seems to unravel, thread by thread, as the weight of silence presses upon the heart. In this eerie stillness, the contours of presence and absence blur, like the indistinct borders of a geography of distance.",
+      "interpretationFa": "در این شعر دل‌انگیز، فریاد گل تنها در منظر خالی روح طنین‌انداز می‌شود، جایی که اشک‌ها به سکونی خونی منجمد شده‌اند و پیانو بدون نوازنده به عنوان گواهی تلخ از نبود لمس ایستاده است، و فقط اندازه دست‌های دور و تکه‌های پَرپَر شکستهٔ غم باقی می‌ماند. بافت وجود به نظر می‌رسد که نخ به نخ از هم گسیخته می‌شود،當 وزن سکوت بر دل فشار می‌آورد. در این سکوت مهیب، خطوط وجود و نیستی مانند مرزهای نامشخص جغرافیای دوری محو می‌شوند.",
+      "cluster": {
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
+      }
+    }
+  },
+  {
+    "verses": [
       "و کجا باید",
       "در غیبت ابدی رویا",
       "پناه گرفت؟"
@@ -8,10 +28,12 @@
     "poet": "احمدرضا احمدی",
     "date": "2026-02-06",
     "theme": {
+      "interpretation": "In the abyss of eternal absence, the self becomes a fleeting refuge, seeking solace in the ephemeral whispers of the imagination, where the boundaries of reality are blurred and the cartography of the soul is rewritten. The poem embodies the existential longing for a sanctuary, a place to anchor the self amidst the turbulent waves of the infinite. In this liminal space, the presence of absence becomes the only constant, a haunting reminder of the fragility of human existence.",
+      "interpretationFa": "در عمق غیبت ابدی، خود به یک پناهگاه گذرا تبدیل می‌شود، که در حال búsqueda آرامش در شبانة گذرا و زمزمه‌های خیال است، جایی که مرزهای واقعیت محو می‌شود و جغرافیای روح بازنویسی می‌گردد. این شعر خاستگاه اندیشه‌ای وجودی را تجسم می‌کند، که در آن انسان به جستجوی一個 پناهگاه است، جایی برای لنگر انداختن خود در میان امواج متلاطم بی‌نهایت. در این فضا، حضور غیبت به تنها ثبات تبدیل می‌شود، یادآوری وحشتناک از لطافت وجود انسانی.",
       "cluster": {
-        "id": "weight-of-silence",
-        "label": "سنگینی سکوت",
-        "labelEn": "The Weight of Silence"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
     }
   },
@@ -22,10 +44,12 @@
     "poet": "فردوسی",
     "date": "2026-01-30",
     "theme": {
+      "interpretation": "In the whispered lament of a nation, the city's heart beats with a wearied soul, as if the very fabric of existence is heavy with the weight of longing, and the ache of absence echoes through the desolate landscapes of the self. The poem's sparse yet potent language conjures a sense of embodied exhaustion, where the boundaries between self and city, presence and absence, blur and dissolve. In this haunting melody, the invisible thresholds between inner and outer worlds tremble with the sorrow of a collective heart.",
+      "interpretationFa": "در نالهٔ آهستهٔ یک ملت، قلب شهر با روحی خسته می‌زند، گویی که خود هستی با وزن تمنا nặng شده است و درد غیاب در مناظر荒ِ خود طنین‌انداز می‌شود. زبان کم‌کلمه却 پربها của شعر، حس خستگیِ جسمی را تداعی می‌کند، جایی که مرزهای بین خود و شهر، حضور و غیاب، محو و از بین می‌روند. در این نغمهٔ دل‌آزار، آستانه‌های نامرئی بین جهان درونی و بیرونی با درد قلب جمعی می‌لرزد.",
       "cluster": {
-        "id": "weight-of-silence",
-        "label": "سنگینی سکوت",
-        "labelEn": "The Weight of Silence"
+        "id": "invisible-thresholds",
+        "label": "آستانه‌های نامرئی",
+        "labelEn": "Invisible Thresholds"
       }
     }
   },
@@ -37,6 +61,8 @@
     "poet": "بیدل دهلوی",
     "date": "2025-10-13",
     "theme": {
+      "interpretation": "In this poem, the turbulent waters of fate envelop the fragile vessel of human deliberation, rendering all anchors of control futile, except for the whispered promise of surrender, which dissolves the boundaries of self and merges the individual with the unfathomable expanse of destiny. The texture of meaning here is akin to the gentle lapping of waves against the hull of existence, a soothing melody that belies the turmoil beneath. As the self succumbs to the undertow of the unknown, it finds an eerie solace in the depths of the abyss.",
+      "interpretationFa": "در این شعر، آب‌های طوفانی سرنوشت، کشتی لطیف تدبیر انسانی را در بر می‌گیرد و همه لنگرهای控制 را بی‌فایده می‌کند، مگر وعدهٔ شепیده شده تسلیم که مرزهای خود را از بین می‌برد و فرد را با گاهی ناشناخته سرنوشت در هم امیختگی می‌کند. بافت معنی در اینجا شبیه به لمس ملایم امواج علیه بدنه هستی است،一种 ملودی خنثی که آشفتگی زیرین را پنهان می‌کند.當 خود در برابر جریانات ناشناخته تسلیم می‌شود، آن را در عمق تهوع找到 یک آرامش عجیب.",
       "cluster": {
         "id": "surrender-to-currents",
         "label": "تسلیم به جریان",
@@ -53,6 +79,8 @@
     "poet": "عباس کیارستمی",
     "date": "2025-09-21",
     "theme": {
+      "interpretation": "In this poem, the plow's slow violence against the earth's skin unfolds as a meditation on the intertwined fates of creature and land, where the ox's suffering becomes a cipher for the unspoken, the unseen, and the unrelenting passage of time. The gentle, rustic scene belies a profound reckoning with the textures of presence and absence, where the ox's ignorance of its own pain serves as a poignant reminder of the mysteries that shroud our own embodied experiences. As the earth yields to the plow, the poem whispers secrets of a geography that is at once intimate and unfathomable.",
+      "interpretationFa": "در این شعر، خشونت آهستهٔ گاوآهن علیه پوست زمین به عنوان یک مراقبه بر سرنوشت درهم‌تنیدهٔ موجود و سرزمین، باز می‌شود، جایی که رنج گاو به عنوان یک رمز برای ناگفته‌ها، نادیده‌ها و گذر بی‌امان زمان به کار می‌رود. صحنهٔ روستایی آرام، یک计算 عمیق با بافت‌های حضور و غیاب پنهان می‌کند، جایی که نادانی گاو از درد خود به عنوان یک یادآوری پوچ از رازهایی که تجربه‌های مادی ما را پوشانده‌اند، عمل می‌کند.當 زمین به گاوآهن تسلیم می‌شود، شعر به ارمغان帶 secrets的地理‌ای که هم صمیمی و هم نامتناهی است.",
       "cluster": {
         "id": "invisible-thresholds",
         "label": "آستانه‌های نامرئی",
@@ -68,10 +96,12 @@
     "poet": "حافظ",
     "date": "2025-09-09",
     "theme": {
+      "interpretation": "In this fleeting moment, the poet's existence is suspended between the weight of longing and the abyss of the unknown, as the boundaries of self and world blur like the edges of a whispered secret. The gaze of the divine, a benevolent gaze, beckons the poet to surrender to the mystery, to let go of the need for control, and to succumb to the vast expanse of the unseen. In this surrender, the poet finds an intimate vastness that dissolves the certainties of the self.",
+      "interpretationFa": "در این لحظه گذرا، وجود شاعر giữa وزن تمنا و هاویه ناشناخته معلق است، همانطور که مرزهای خود و جهان مانند لبه‌های یک راز آهسته‌گفته مخدوش می‌شود. نگاه الهی، نگاهی بخشنده، شاعر را به تسلیم در برابر رمز و راز فرامی‌خواند، به رها کردن نیاز به کنترل، و به تسلیم در برابر وسعت نامرئی. در این تسلیم، شاعر یک وسعت صمیمی می‌یابد که یقینی‌های خود را از بین می‌برد.",
       "cluster": {
-        "id": "invisible-thresholds",
-        "label": "آستانه‌های نامرئی",
-        "labelEn": "Invisible Thresholds"
+        "id": "intimate-vastness",
+        "label": "وسعت صمیمی",
+        "labelEn": "Intimate Vastness"
       }
     }
   },
@@ -85,10 +115,12 @@
     "poet": "شمس لنگرودی",
     "date": "2025-08-15",
     "theme": {
+      "interpretation": "In this poem, the arrival of Moses is deferred, and the era of miracles has passed, leaving only the faint echo of wonder, a longing to laugh and find solace in the ephemeral magic of Charlie Chaplin's antics, where the boundaries of time and space dissolve. The embodied experience of the reader is one of wistful nostalgia, a yearning for a bygone era of enchantment. The texture of meaning is woven from the intricate play of presence and absence, where the past and present converge in a delicate dance of irretrievable loss and fleeting joy.",
+      "interpretationFa": "در این شعر، آمدن موسی به تاخیر افتاده و دوره‌ی اعجازها گذشته است و تنها پژواک ضعیف شگفتی باقی مانده، یک خستگی برای خندیدن و找到 آرامش در جادوی گذرا و افسانه‌ای چارلی چاپلین، جایی که مرزهای زمان و فضا از بین می‌روند. تجربه‌ی بدنی خواننده، یک نوستالژی افسوس‌بار است، یک مشتاق بودن برای یک عصر گذشته از افسون. بافت معنا از بازی پیچیده‌ی حضور و غیاب بافته شده، جایی که گذشته و حال در یک رقص ظریف از از دست دادن غیرقابل بازگشت و شادی گذرا همگرا می‌شوند.",
       "cluster": {
-        "id": "echoes-of-paradox",
-        "label": "پژواک تناقض",
-        "labelEn": "Echoes of Paradox"
+        "id": "beautiful-impermanence",
+        "label": "ناپایداری زیبا",
+        "labelEn": "Beautiful Impermanence"
       }
     }
   },
@@ -103,6 +135,8 @@
     "poet": "رسول یونان",
     "date": "2025-07-10",
     "theme": {
+      "interpretation": "The poem embodies a fleeting moment of departure, where the self dissolves into the landscape, leaving behind only the whispers of absence, as the boundaries between presence and distance become increasingly tenuous, and the texture of reality begins to unravel. The experience is one of quiet surrender, where the individual is enveloped by the vastness of the universe, and the distinctions between self and world, near and far, begin to blur. In this moment, the beauty of impermanence is revealed, and the weight of silence is palpable.",
+      "interpretationFa": "این شعر لحظه‌ای فرار از خود را به تصویر می‌کشد، جایی که فرد در منظر нату دور می‌شود و تنها صدای خفیف غیاب به جای می‌ماند، مرزهای بین حضور و دوری تenuous می‌شود و بافت واقعیت شروع به از هم گسیختگی می‌کند. این تجربه یکی از تسلیم سکوت است، جایی که فرد توسط وسعت هستی احاطه شده است و تمایزات بین خود و جهان، نزدیک و دور شروع به محو شدن می‌کنند. در این لحظه، زیبایی ناپایداری آشکار می‌شود و سنگینی سکوت قابل لمس است.",
       "cluster": {
         "id": "beautiful-impermanence",
         "label": "ناپایداری زیبا",
@@ -118,6 +152,8 @@
     "poet": "عراقی",
     "date": "2025-07-09",
     "theme": {
+      "interpretation": "In the depths of this poem, the speaker's existence is pierced by the sudden, unseen assault of sorrow, rendering the notion of patience or endurance futile, and inviting an introspection into the fragile, ephemeral nature of self. The texture of meaning unfolds like a wounded landscape, where the whispers of absence and the ache of presence intertwine. The poem beckons us to contemplate the paradox of being simultaneously vulnerable and resilient.",
+      "interpretationFa": "در عمق این شعر، وجود گوینده توسط تازش ناگهانی و نامرئی غم زخمی می‌شود، مفهوم صبر و استقامت را بی‌ nghĩa می‌کند و ما را به اندیشه‌ای در مورد طبیعت شکننده و گذرا خود فرا می‌خواند. بافت معنا مثل یک چشم‌انداز زخمی گشوده می‌شود، جایی که نجواهای نبود و درد بودن با هم درهم تنیده می‌شوند. این شعر ما را دعوت می‌کند تا به پارادوکس بودن همزمان آسیب‌پذیر و مقاوم بیندیشیم.",
       "cluster": {
         "id": "invisible-thresholds",
         "label": "آستانه‌های نامرئی",
@@ -136,10 +172,12 @@
     "poet": "سعید برآبادی",
     "date": "2025-07-08",
     "theme": {
+      "interpretation": "In this poem, the fragile dance between life and death is palpable, as the tender heartbeats of the surviving doves quicken in response to the loss of one, evoking an embodied sense of vulnerability and the haunting presence of absence. The stone cast into the flock becomes a catalyst for a cascade of existential reverberations, where the boundaries between self and other, presence and absence, begin to blur. The poem thus inhabits the liminal space where the weight of silence and the ache of longing converge.",
+      "interpretationFa": "در این شعر، رقص نازک زندگی و مرگ محسوس است، به طوری که ضربان قلب پرنده‌های باقیمانده در پاسخ به از دست دادن یکی از آنها شتاب می‌گیرد و حس آسیب‌پذیری جسمانی و حضور خیمه شب بازی را به ارمغان می‌آورد. سنگی که به پرندگان پرتاب می‌شود، کاتالیزوری برای یک آبشار از reverberations هستی‌شناسانه می‌شود، جایی که مرزهای بین خود و دیگر، حضور و غیاب، شروع به محو شدن می‌کنند. این شعر因此 فضا لیمینال را که سنگینی سکوت و درد طنین انداز می‌شود، اشغال می‌کند.",
       "cluster": {
-        "id": "beautiful-impermanence",
-        "label": "ناپایداری زیبا",
-        "labelEn": "Beautiful Impermanence"
+        "id": "weight-of-silence",
+        "label": "سنگینی سکوت",
+        "labelEn": "The Weight of Silence"
       }
     }
   },
@@ -152,6 +190,8 @@
     "poet": "نیما یوشیج",
     "date": "2025-07-08",
     "theme": {
+      "interpretation": "In this poem, the speaker's words hang in the balance between the world's madness and their own, embodying the fragile dance of presence and absence, where the texture of meaning unravels like a thread pulled from a tapestry, leaving the speaker suspended in a liminal space of uncertainty. The play of language weaves a web of paradox, where the speaker's voice becomes the echo chamber of the world's contradictions. In this space, the speaker's identity dissolves, and the boundaries between self and world blur, like the whispered secrets of the wind.",
+      "interpretationFa": "در این شعر، کلمات گوینده درتعادل بین دیوانگی جهان و دیوانگی خود به سر می‌برند، و نمایانگر رقص نازک حضور و غیاب هستند، جایی که بافت معنای کلمات مانند نخی از بافتی کشیده می‌شود و گوینده را در فضایی از عدم قطعیت معلق می‌کند. بازی زبان، پدیده‌ای از تناقض به وجود می‌آورد، جایی که صدای گوینده به اتاق پژواک تناقض‌های جهان تبدیل می‌شود. در این فضا، هویت گوینده محو می‌شود و مرزهای بین خود و جهان مانند زمزمه‌های باد محو می‌گردند.",
       "cluster": {
         "id": "echoes-of-paradox",
         "label": "پژواک تناقض",
