@@ -1,6 +1,23 @@
 [
   {
     "verses": [
+      "هوایِ کویِ تو از سر نمیرود آری",
+      "غریب را دلِ سرگشته با وطن باشد"
+    ],
+    "poet": "حافظ",
+    "date": "2026-03-26",
+    "theme": {
+      "interpretation": "In this couplet, the longing for the beloved's quarter never leaves the mind — a truth the poet affirms with 'āri' (yes, indeed) — for the wanderer's bewildered heart always finds its way back to where it calls home. The poem holds the exile's paradox: the more one drifts, the more the soul tethers itself to an absent place. Homeland here is not merely geography but the gravitational pull of a lost belonging, a wound that orients.",
+      "interpretationFa": "در این بیت، هوای کوی یار از سر نمی‌رود — و شاعر این را با «آری» تأیید می‌کند — چرا که دل سرگشتهٔ غریب همیشه راهش را به وطن بازمی‌یابد. شعر پارادوکس غربت را در خود دارد: هر چه بیشتر آواره می‌شوی، روح بیشتر به جایی که وطن می‌نامد وابسته می‌ماند. وطن اینجا صرفاً جغرافیا نیست، بلکه کشش گرانشی یک تعلق از دست رفته است، زخمی که جهت می‌دهد.",
+      "cluster": {
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
+      }
+    }
+  },
+  {
+    "verses": [
       "گل به تنهایی گلدان گریید",
       "اشک خون شد، خون چرک",
       "عاج انگشت پیانو را دستی نفشرد",
@@ -97,7 +114,7 @@
     "date": "2025-09-09",
     "theme": {
       "interpretation": "In this fleeting moment, the poet's existence is suspended between the weight of longing and the abyss of the unknown, as the boundaries of self and world blur like the edges of a whispered secret. The gaze of the divine, a benevolent gaze, beckons the poet to surrender to the mystery, to let go of the need for control, and to succumb to the vast expanse of the unseen. In this surrender, the poet finds an intimate vastness that dissolves the certainties of the self.",
-      "interpretationFa": "در این لحظه گذرا، وجود شاعر giữa وزن تمنا و هاویه ناشناخته معلق است، همانطور که مرزهای خود و جهان مانند لبه‌های یک راز آهسته‌گفته مخدوش می‌شود. نگاه الهی، نگاهی بخشنده، شاعر را به تسلیم در برابر رمز و راز فرامی‌خواند، به رها کردن نیاز به کنترل، و به تسلیم در برابر وسعت نامرئی. در این تسلیم، شاعر یک وسعت صمیمی می‌یابد که یقینی‌های خود را از بین می‌برد.",
+      "interpretationFa": "در این لحظه گذرا، وجود شاعر میان وزن تمنا و هاویه ناشناخته معلق است، همانطور که مرزهای خود و جهان مانند لبه‌های یک راز آهسته‌گفته مخدوش می‌شود. نگاه الهی، نگاهی بخشنده، شاعر را به تسلیم در برابر رمز و راز فرامی‌خواند، به رها کردن نیاز به کنترل، و به تسلیم در برابر وسعت نامرئی. در این تسلیم، شاعر یک وسعت صمیمی می‌یابد که یقینی‌های خود را از بین می‌برد.",
       "cluster": {
         "id": "intimate-vastness",
         "label": "وسعت صمیمی",
