@@ -45,6 +45,16 @@ jobs:
       run: node scripts/classify-themes.js
       env:
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        
+    - name: Commit classified themes to repo
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        if [[ -n $(git status -s poems.json) ]]; then
+          git add poems.json
+          git commit -m "Auto-generate themes and translations [skip ci]"
+          git push
+        fi
       
     - name: Inject API Key
       run: |

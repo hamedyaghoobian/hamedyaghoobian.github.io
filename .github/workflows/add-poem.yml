@@ -1,0 +1,91 @@
+name: Process Poem Submissions
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  add-poem:
+    if: contains(github.event.issue.labels.*.name, 'poem')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Parse Issue and Add Poem
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            const body = context.payload.issue.body;
+            
+            // Basic markdown section parser
+            const extractSection = (sectionName) => {
+              const regex = new RegExp(`### ${sectionName}\\s+([^#]+)`);
+              const match = body.match(regex);
+              return match ? match[1].trim() : '';
+            };
+            
+            const versesText = extractSection('Poem Verses');
+            const poet = extractSection('Poet');
+            let date = extractSection('Date \\(Optional\\)');
+            
+            if (!date || date === '_No response_') {
+              date = new Date().toISOString().split('T')[0];
+            }
+            
+            const verses = versesText.split('\n').map(v => v.trim()).filter(v => v.length > 0);
+            
+            if (verses.length === 0 || !poet) {
+              console.log('Missing required fields.');
+              return;
+            }
+            
+            const newPoem = {
+              verses,
+              poet,
+              date
+            };
+            
+            const poemsPath = 'poems.json';
+            let poems = [];
+            if (fs.existsSync(poemsPath)) {
+              poems = JSON.parse(fs.readFileSync(poemsPath, 'utf8'));
+            }
+            
+            // Add to the beginning of the list
+            poems.unshift(newPoem);
+            
+            fs.writeFileSync(poemsPath, JSON.stringify(poems, null, 2) + '\\n');
+            console.log('Poem appended successfully.');
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add poems.json
+          git commit -m "Auto-add poem from issue #${{ github.event.issue.number }}"
+          git push
+
+      - name: Close Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+              state_reason: 'completed'
+            });
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: 'Poem added successfully! The deployment pipeline will now translate it and publish it to the website.'
+            });

@@ -31,7 +31,7 @@ async function callGroq(prompt, retries = 3) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'openai/gpt-oss-120b',
           messages: [{ role: 'user', content: prompt }],
           temperature: 0.8,
           max_tokens: 500
@@ -55,20 +55,21 @@ async function callGroq(prompt, retries = 3) {
 
 async function generateUniqueInterpretation(poem) {
   const verses = poem.verses.join('\n');
-  const prompt = `You are a literary phenomenologist specializing in Persian poetry.
+  const prompt = `You are a literary phenomenologist specializing in Persian poetry, and an expert translator.
 
 For this poem by ${poem.poet}:
 """
 ${verses}
 """
 
-Generate a brief, evocative interpretation (2-3 sentences) that captures the phenomenological essence of this poem. Focus on the embodied experience, the play of presence and absence, the texture of meaning. Be speculative and philosophical, not explanatory.
-
-Then, choose which of these speculative themes best resonates with the poem's essence:
+First, translate the poem into English. Preserve the poetic beauty and emotional essence, maintain cultural context, and provide a flowing, literary translation.
+Then, generate a brief, evocative interpretation (2-3 sentences) that captures the phenomenological essence of this poem. Focus on the embodied experience, the play of presence and absence, the texture of meaning. Be speculative and philosophical, not explanatory.
+Finally, choose which of these speculative themes best resonates with the poem's essence:
 ${THEME_CLUSTERS.map((t, i) => `${i + 1}. ${t.labelEn} (${t.label})`).join('\n')}
 
 Respond in this exact JSON format:
 {
+  "translation": "The English translation of the poem",
   "interpretation": "Your evocative interpretation here",
   "interpretationFa": "تفسیر فارسی شما",
   "themeIndex": 1
@@ -89,6 +90,7 @@ Respond in this exact JSON format:
     const cluster = THEME_CLUSTERS[themeIndex];
 
     return {
+      translation: parsed.translation || '',
       interpretation: parsed.interpretation || '',
       interpretationFa: parsed.interpretationFa || '',
       cluster: {
@@ -120,20 +122,25 @@ async function classifyPoems() {
     const poem = poems[i];
     const firstVerse = poem.verses[0].slice(0, 30) + '...';
 
-    // Skip if already has theme data
-    if (poem.theme && poem.theme.cluster && poem.theme.interpretation) {
-      console.log(`✓ [${i + 1}/${poems.length}] "${firstVerse}" - already classified`);
+    // Skip if already has theme data AND a translation
+    if (poem.theme && poem.theme.cluster && poem.theme.interpretation && poem.translation) {
+      console.log(`✓ [${i + 1}/${poems.length}] "${firstVerse}" - already processed`);
       continue;
     }
 
-    console.log(`🔮 [${i + 1}/${poems.length}] Interpreting "${firstVerse}"`);
+    console.log(`🔮 [${i + 1}/${poems.length}] Processing "${firstVerse}"`);
 
     try {
       const themeData = await generateUniqueInterpretation(poem);
 
       if (themeData) {
-        poem.theme = themeData;
-        console.log(`   → ${themeData.cluster.labelEn}`);
+        poem.translation = themeData.translation;
+        poem.theme = {
+          interpretation: themeData.interpretation,
+          interpretationFa: themeData.interpretationFa,
+          cluster: themeData.cluster
+        };
+        console.log(`   → Translated & ${themeData.cluster.labelEn}`);
         console.log(`   "${themeData.interpretation.slice(0, 60)}..."\n`);
       } else {
         // Fallback to a default theme

@@ -5,7 +5,9 @@ permalink: /news/
 ---
 {% include dappled-light.html %}
 
-* **November 2025**: *"MASFIN: A Multi-Agent System for Financial Forecasting,"* with Sebastian Montalvo, has been accepted to NeurIPS 2025 (Generative AI in Finance Workshop), PDF available [here](https://openreview.net/pdf/94fa21379d714ca22656f2809d378820ba1111a2.pdf).
+* **April 2026**: *"The Wooden Telephone: Generative Hallucination as a Method for Historical Sensemaking,"* with student researcher Hayk Grigorian (Class of '26), has been accepted to [ACM Creativity & Cognition 2026](https://cc.acm.org/2026/).
+
+* **November 2025**: *"MASFIN: A Multi-Agent System for Financial Forecasting,"* with Sebastian Montalvo (Class of '28), has been accepted to NeurIPS 2025 (Generative AI in Finance Workshop), PDF available [here](https://openreview.net/pdf/94fa21379d714ca22656f2809d378820ba1111a2.pdf).
 
 * **March 2025**: Presenting *"The Recursive Enactment of AI: Beyond the Loop, Beyond the Thing"* at the *[Society for the Social Studies of Science (4S)](https://4sonline.org/)* 2025 Conference in Seattle, to be held in September '25.
 

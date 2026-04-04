@@ -1,0 +1,31 @@
+name: Add Persian Poem
+description: Submit a new Persian poem to automatically add it to the website.
+title: "Poem: [Poet Name]"
+labels: ["poem"]
+body:
+  - type: textarea
+    id: verses
+    attributes:
+      label: Poem Verses
+      description: Enter the verses of the poem, one line per verse.
+      placeholder: |
+        هوایِ کویِ تو از سر نمیرود آری
+        غریب را دلِ سرگشته با وطن باشد
+    validations:
+      required: true
+  - type: input
+    id: poet
+    attributes:
+      label: Poet
+      description: Enter the name of the poet in Persian.
+      placeholder: حافظ
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Date (Optional)
+      description: Optionally provide a date for the entry in YYYY-MM-DD format. Defaults to today.
+      placeholder: 2026-04-15
+    validations:
+      required: false

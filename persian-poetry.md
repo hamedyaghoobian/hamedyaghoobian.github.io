@@ -992,206 +992,45 @@ function getPoemIdentifier(poemCard) {
     return btoa(unescape(encodeURIComponent(content))).slice(0, 16);
 }
 
-// Loading animation functions
-function showLoadingAnimation(poemCard) {
-    // Remove any existing loading animation
-    hideLoadingAnimation(poemCard);
-    
-    // Create loading container
-    const container = document.createElement('div');
-    container.className = 'loading-container';
-    container.id = 'translation-loading';
-    
-    const text = document.createElement('div');
-    text.className = 'loading-text';
-    text.textContent = 'ترجمه در حال انجام... / Translating...';
-    
-    const barsContainer = document.createElement('div');
-    barsContainer.className = 'loading-bars';
-    
-    // Create three loading bars
-    for (let i = 0; i < 3; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'loading-bar';
-        
-        const progress = document.createElement('div');
-        progress.className = 'loading-progress';
-        
-        bar.appendChild(progress);
-        barsContainer.appendChild(bar);
-    }
-    
-    container.appendChild(text);
-    container.appendChild(barsContainer);
-    
-    // Insert after the translate button
-    const translateBtn = poemCard.querySelector('.translate-btn');
-    translateBtn.parentNode.insertBefore(container, translateBtn.nextSibling);
-    
-    // Animate in
-    requestAnimationFrame(() => {
-        container.classList.add('show');
-    });
-}
+// Removed loading animation functions (now instantaneous)
 
-function hideLoadingAnimation(poemCard) {
-    const container = poemCard.querySelector('#translation-loading');
-    if (container) {
-        container.classList.remove('show');
-        setTimeout(() => {
-            if (container.parentNode) {
-                container.parentNode.removeChild(container);
-            }
-        }, 300);
-    }
-}
-
-// Translation functionality
-async function translatePoem(button) {
-    console.log('translatePoem called', button);
+// Translation functionality (Instant Offline Mode)
+function translatePoem(button) {
     const poemCard = button.closest('.poem-card');
-    const poemVersesElement = poemCard.querySelector('.poem-verses');
-    const poetName = poemCard.querySelector('.poet-name')?.textContent || '';
     const translationContainer = poemCard.querySelector('.translation-container');
     const translationText = poemCard.querySelector('.translation-text');
     const translationModel = poemCard.querySelector('.translation-model');
     const translationTime = poemCard.querySelector('.translation-time');
     
-    // Get poem text
-    const verses = Array.from(poemVersesElement.querySelectorAll('.verse'))
-        .map(verse => verse.textContent.trim())
-        .filter(text => text.length > 0)
-        .join('\n');
-    
-    if (!verses) {
-        alert('شعری برای ترجمه یافت نشد');
+    // Check if it's already expanded
+    if (translationContainer.classList.contains('expanded')) {
+        translationContainer.classList.remove('expanded');
         return;
     }
     
-    // Check cache
-    const cacheKey = `translation_${btoa(unescape(encodeURIComponent(verses))).slice(0, 20)}`;
-    const cached = localStorage.getItem(cacheKey);
-    
-    if (cached && !button.getAttribute('data-retranslate')) {
-        try {
-            const cachedData = JSON.parse(cached);
-            showTranslation(translationContainer, translationText, translationModel, translationTime, cachedData);
-            button.setAttribute('data-retranslate', 'true');
-            button.title = 'ترجمه دوباره / Retranslate';
-            return;
-        } catch (e) {
-            // Invalid cache, continue with new translation
-            localStorage.removeItem(cacheKey);
-        }
-    }
-    
-    // Set loading state
-    button.classList.add('loading');
-    button.disabled = true;
-    const originalTitle = button.title;
-    button.title = 'در حال ترجمه...';
-    
-    // Show advanced loading animation
-    showLoadingAnimation(poemCard);
-    
     try {
-        // Direct call to Groq API (key injected at build time by GitHub Actions)
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-        
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: "openai/gpt-oss-120b",
-                messages: [
-                    {
-                        role: "system",
-                        content: `You are a Persian poetry expert and translator. Translate the following Persian poem into English while:
-1. Preserving the poetic beauty and emotional essence
-2. Maintaining cultural context and metaphors
-3. Keeping the structure readable but poetic
-4. Providing a flowing, literary translation rather than literal word-for-word
-${poetName ? `5. Consider this is by ${poetName} - factor in their style and era` : ''}
+        const poemDataStr = decodeURIComponent(poemCard.getAttribute('data-poem'));
+        const poemData = JSON.parse(poemDataStr);
 
-Respond only with the English translation, no explanations.`
-                    },
-                    {
-                        role: "user",
-                        content: verses
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 1000
-            }),
-            signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(`API Error ${response.status}: ${errorData.error?.message || 'Translation failed'}`);
+        if (poemData.translation) {
+            translationText.textContent = poemData.translation;
+            translationModel.textContent = `Translated by GPT-OSS-120b (Offline Mode)`;
+            // Provide an approximate date if timestamp isn't explicitly held
+            translationTime.textContent = new Date(poemData.date || Date.now()).toLocaleDateString('fa-IR');
+            translationContainer.classList.add('expanded');
+        } else {
+            translationText.textContent = 'ترجمه یافت نشد / Translation not found. Try refreshing after build.';
+            translationText.style.color = '#e53e3e';
+            translationModel.textContent = '';
+            translationTime.textContent = '';
+            translationContainer.classList.add('expanded');
         }
-        
-        const data = await response.json();
-        const translation = data.choices[0].message.content.trim();
-        const model = 'openai/gpt-oss-120b';
-        
-        const result = {
-            translation,
-            model: model,
-            timestamp: new Date().toISOString()
-        };
-        
-        // Cache the result
-        localStorage.setItem(cacheKey, JSON.stringify(result));
-        
-        // Show translation
-        showTranslation(translationContainer, translationText, translationModel, translationTime, result);
-        button.setAttribute('data-retranslate', 'true');
-        button.title = 'ترجمه دوباره / Retranslate';
-        
-    } catch (error) {
-        console.error('Translation error:', error);
-        
-        let errorMessage = error.message;
-        
-        // Handle different types of errors with helpful messages
-        if (error.name === 'AbortError') {
-            errorMessage = 'درخواست زمان زیادی طول کشید / Request timed out';
-        } else if (error.message.includes('Load failed') || error.message.includes('Network request failed') || error.message.includes('Failed to fetch')) {
-            errorMessage = 'مشکل اتصال به اینترنت / Network connection issue';
-        } else if (error.message.includes('API Error')) {
-            errorMessage = 'خطای سرویس ترجمه / Translation service error';
-        }
-        
-        // Show error message
-        translationText.textContent = `خطا در ترجمه: ${errorMessage}`;
+    } catch(err) {
+        console.error(err);
+        translationText.textContent = 'خطا در بارگزاری ترجمه / Error loading translation';
         translationText.style.color = '#e53e3e';
-        translationModel.textContent = 'خطا رخ داده / Error occurred';
-        translationTime.textContent = new Date().toLocaleString('fa-IR');
         translationContainer.classList.add('expanded');
-        
-        button.title = originalTitle;
-    } finally {
-        button.classList.remove('loading');
-        button.disabled = false;
-        hideLoadingAnimation(poemCard);
     }
-}
-
-function showTranslation(container, textElement, modelElement, timeElement, data) {
-    textElement.textContent = data.translation;
-    modelElement.textContent = `Translated by ${data.model} • AI translation may lack poetic nuance`;
-    
-    const translationTime = new Date(data.timestamp);
-    timeElement.textContent = translationTime.toLocaleString('fa-IR');
-    
-    container.classList.add('expanded');
 }
 
 // Load poems from JSON and generate HTML
@@ -1394,8 +1233,8 @@ function generateStackedCardHTML(poem) {
         `<div class="verse">${verse}</div>`
     ).join('');
     
-    // Store poem data on the card for dynamic interpretation generation
-    const poemDataAttr = encodeURIComponent(JSON.stringify({ verses: poem.verses, poet: poem.poet }));
+    // Store entire poem data on the card for instantaneous offline interpretation/translation
+    const poemDataAttr = encodeURIComponent(JSON.stringify(poem));
     
     return `
         <div class="stacked-card" id="${cardId}" data-poem="${poemDataAttr}">
@@ -1414,8 +1253,8 @@ function generateStackedCardHTML(poem) {
     `;
 }
 
-// Toggle interpretation visibility — generates via LLM on first click
-async function toggleInterpretation(cardId, event) {
+// Toggle interpretation visibility (Instant Offline Mode)
+function toggleInterpretation(cardId, event) {
     event.stopPropagation();
     const overlay = document.getElementById(`${cardId}-interpretation`);
     const btn = event.currentTarget;
@@ -1433,143 +1272,28 @@ async function toggleInterpretation(cardId, event) {
     const textEl = overlay.querySelector('.interpretation-text');
     const textFaEl = overlay.querySelector('.interpretation-text-fa');
     
-    // Check if we already have content (from a previous LLM call)
-    if (textEl.textContent.trim()) {
+    try {
+        const poemDataStr = decodeURIComponent(card.getAttribute('data-poem'));
+        const poemData = JSON.parse(poemDataStr);
+        
+        if (poemData.theme && poemData.theme.interpretation) {
+            textEl.textContent = `"${poemData.theme.interpretation}"`;
+            textFaEl.textContent = poemData.theme.interpretationFa || '';
+            overlay.classList.add('visible');
+            btn.classList.add('active');
+        } else {
+            textEl.textContent = 'تفسیر یافت نشد / Interpretation not found. Try refreshing after build.';
+            textEl.style.color = '#e53e3e';
+            overlay.classList.add('visible');
+            btn.classList.add('active');
+        }
+    } catch(err) {
+        console.error(err);
+        textEl.textContent = 'خطا در بارگزاری تفسیر / Error loading interpretation';
+        textEl.style.color = '#e53e3e';
         overlay.classList.add('visible');
         btn.classList.add('active');
-        return;
     }
-    
-    // Check localStorage cache
-    const poemDataStr = decodeURIComponent(card.getAttribute('data-poem'));
-    const poemData = JSON.parse(poemDataStr);
-    const cacheKey = `interpretation_${btoa(unescape(encodeURIComponent(poemData.verses.join('')))).slice(0, 20)}`;
-    const cached = localStorage.getItem(cacheKey);
-    
-    if (cached) {
-        try {
-            const cachedData = JSON.parse(cached);
-            textEl.textContent = `"${cachedData.interpretation}"`;
-            textFaEl.textContent = cachedData.interpretationFa || '';
-            overlay.classList.add('visible');
-            btn.classList.add('active');
-            return;
-        } catch (e) {
-            localStorage.removeItem(cacheKey);
-        }
-    }
-    
-    // Call Groq API directly (key injected at build time by GitHub Actions)
-    btn.classList.add('loading');
-    btn.disabled = true;
-    
-    const themeClusters = [
-        { id: 'dissolution-of-self', label: 'محو شدن خود', labelEn: 'The Dissolution of Self' },
-        { id: 'invisible-thresholds', label: 'آستانه‌های نامرئی', labelEn: 'Invisible Thresholds' },
-        { id: 'weight-of-silence', label: 'سنگینی سکوت', labelEn: 'The Weight of Silence' },
-        { id: 'geography-of-distance', label: 'جغرافیای دوری', labelEn: 'Geography of Distance' },
-        { id: 'surrender-to-currents', label: 'تسلیم به جریان', labelEn: 'Surrendering to Currents' },
-        { id: 'beautiful-impermanence', label: 'ناپایداری زیبا', labelEn: 'Beautiful Impermanence' },
-        { id: 'echoes-of-paradox', label: 'پژواک تناقض', labelEn: 'Echoes of Paradox' },
-        { id: 'intimate-vastness', label: 'وسعت صمیمی', labelEn: 'Intimate Vastness' }
-    ];
-    
-    const versesText = poemData.verses.join('\n');
-    const themesListText = themeClusters.map((t, i) => `${i + 1}. ${t.labelEn} (${t.label})`).join('\n');
-    
-    const prompt = `You are a literary phenomenologist specializing in Persian poetry.
-
-For this poem by ${poemData.poet || 'an unknown poet'}:
-"""
-${versesText}
-"""
-
-Generate a brief, evocative interpretation (2-3 sentences) that captures the phenomenological essence of this poem. Focus on the embodied experience, the play of presence and absence, the texture of meaning. Be speculative and philosophical, not explanatory.
-
-Then, choose which of these speculative themes best resonates with the poem's essence:
-${themesListText}
-
-Respond in this exact JSON format:
-{
-  "interpretation": "Your evocative interpretation here",
-  "interpretationFa": "تفسیر فارسی شما",
-  "themeIndex": 1
-}`;
-    
-    // Retry up to 2 times for intermittent failures
-    const maxRetries = 2;
-    let lastError;
-    
-    for (let attempt = 0; attempt <= maxRetries; attempt++) {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 30000);
-            
-            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer GROQ_API_KEY_PLACEHOLDER',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    model: 'openai/gpt-oss-120b',
-                    messages: [{ role: 'user', content: prompt }],
-                    temperature: 0.8,
-                    max_tokens: 500
-                }),
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            
-            if (!response.ok) {
-                const errBody = await response.text().catch(() => '');
-                throw new Error(`API Error ${response.status}: ${errBody}`);
-            }
-            
-            const data = await response.json();
-            const content = data.choices[0].message.content.trim();
-            
-            // Parse JSON from response
-            const jsonMatch = content.match(/\{[\s\S]*\}/);
-            if (!jsonMatch) throw new Error('Failed to parse LLM response');
-            
-            const parsed = JSON.parse(jsonMatch[0]);
-            
-            const result = {
-                interpretation: parsed.interpretation || '',
-                interpretationFa: parsed.interpretationFa || ''
-            };
-            
-            // Cache the result
-            localStorage.setItem(cacheKey, JSON.stringify(result));
-            
-            textEl.textContent = `"${result.interpretation}"`;
-            textFaEl.textContent = result.interpretationFa || '';
-            overlay.classList.add('visible');
-            btn.classList.add('active');
-            
-            btn.classList.remove('loading');
-            btn.disabled = false;
-            return; // Success — exit
-            
-        } catch (error) {
-            lastError = error;
-            console.warn(`Interpretation attempt ${attempt + 1} failed:`, error.message);
-            if (attempt < maxRetries) {
-                await new Promise(r => setTimeout(r, 1000 * (attempt + 1))); // Wait 1s, then 2s
-            }
-        }
-    }
-    
-    // All retries exhausted
-    console.error('Interpretation failed after retries:', lastError);
-    textEl.textContent = 'خطا در تولید تفسیر / Error generating interpretation — لطفاً دوباره امتحان کنید';
-    textEl.style.color = '#e53e3e';
-    overlay.classList.add('visible');
-    btn.classList.add('active');
-    btn.classList.remove('loading');
-    btn.disabled = false;
 }
 
 // Toggle stack expansion
@@ -1635,11 +1359,12 @@ function generatePoemHTML(poem) {
         `<div class="verse">${verse}</div>`
     ).join('');
     
-    // Use the date from JSON if provided, otherwise use data attribute for auto-assignment
+    // Store entire poem data for instantaneous offline access
+    const poemDataAttr = encodeURIComponent(JSON.stringify(poem));
     const dateAttribute = poem.date ? `data-date="${poem.date}"` : '';
     
     return `
-        <div class="poem-card" ${dateAttribute}>
+        <div class="poem-card" ${dateAttribute} data-poem="${poemDataAttr}">
             <div class="date-header">
                 <div class="dynamic-date"></div>
             </div>
