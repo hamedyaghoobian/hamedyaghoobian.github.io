@@ -7,14 +7,15 @@
     "poet": "حافظ",
     "date": "2026-03-26",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "In the whispers of longing, the boundary between presence and absence dissolves, as the heart embodies the ache of distance, suspending time in an eternal yearning. The poem inhabits the space where the self is tenderly undone by the gentle cruelty of memory. The intimacy of longing becomes a geography that defies physical borders.",
+      "interpretationFa": "در شایعات شهوت، مرز между حضور و غیاب حل می شود، زیرا قلب درد دوری را به خود می‌گیرد و زمان را در یک اشتیاق ابدی معلق می‌کند. شعر در فضایی سکونت می‌کند که در آن خود به нежesti توسط ظلم نرمی حافظه از بین می‌رود. صمیمیت شهوت به یک جغرافیا تبدیل می شود که مرزهای فیزیکی را نقض می کند.",
       "cluster": {
         "id": "geography-of-distance",
         "label": "جغرافیای دوری",
         "labelEn": "Geography of Distance"
       }
-    }
+    },
+    "translation": "The breeze of your street will never leave my mind, indeed, for a wanderer, a restless heart remains with homeland"
   },
   {
     "verses": [
@@ -27,14 +28,15 @@
     "poet": "نصرت رحمانی",
     "date": "2026-03-17",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "In this poem, the embodied experience of sorrow is palpable, as the boundaries between presence and absence blur, and the texture of meaning unfolds like a wounded landscape. The silence is a heavy, palpable thing, punctuated by the faint, fading sound of tears. The distance between self and world yawns open, a chasm of longing and loss.",
+      "interpretationFa": "در این شعر، تجربه بدنی غم، قابل لمس است، زیرا مرزهای میان حضور و غیاب محو می‌شود و بافت معنی مثل یک منظر زخمی باز می‌شود. سکوت چیزی سنگین و قابل لمس است، که با صداى ضعیف و کم رنگ اشک‌ها قطع می‌شود. فاصله میان خود و جهان، یک دره-longing و از دست دادن را باز می‌کند.",
       "cluster": {
-        "id": "echoes-of-paradox",
-        "label": "پژواک تناقض",
-        "labelEn": "Echoes of Paradox"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
-    }
+    },
+    "translation": "The flower wept in solitude, its tears turned to blood, blood to pus. No hand pressed the piano keys, fingers stilled. Hands are the measure of distance. Tears fluttered, then fell!"
   },
   {
     "verses": [
@@ -99,14 +101,15 @@
     "poet": "عباس کیارستمی",
     "date": "2025-09-21",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "In the somatic reverberations of labor, the threshold between instinct and awareness blurs, as the ox embodies the paradox of suffering and ignorance, its presence a testament to the unseen forces that shape its existence. The earth yields to the plow, yet the ox remains opaque to its own pain, suspended in a realm of primal, unreflected experience. In this tableau, the interplay of presence and absence, of knowledge and ignorance, unfolds like a palimpsest of embodied meaning",
+      "interpretationFa": "در انعکاسات جسمانی کار، آستانه بین غریزه و آگاهی کدر می‌شود، گاو پارادوکس رنج و بی‌خبری را به 身 می‌آورد، حضورش گواهی است بر نیروهای نادیدنی که وجودش را شکل می‌دهند. زمین در برابر شخم برهنه می‌شود، اما گاو نسبت به درد خود کور باقی می‌ماند، در قلمرویی از تجربه بدوی و انعکاس‌نشده معلق می‌ماند. در این نگاره، بازی حضور و غیبت، دانش و نادانی، مانند یک پالیمپست معنا به نمایش درمی‌آید",
       "cluster": {
-        "id": "dissolution-of-self",
-        "label": "محو شدن خود",
-        "labelEn": "The Dissolution of Self"
+        "id": "invisible-thresholds",
+        "label": "آستانه‌های نامرئی",
+        "labelEn": "Invisible Thresholds"
       }
-    }
+    },
+    "translation": "The plow cleaves the earth, and the ox knows not the reason for the ache in its hands and feet"
   },
   {
     "verses": [
@@ -116,14 +119,15 @@
     "poet": "حافظ",
     "date": "2025-09-09",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "In the depths of devotion, the Self dissolves into the vast expanse of the unknown, where the only solace is the ache of longing, and the only refuge is the whisper of the unseen. The boundaries of existence blur, and the seeker becomes one with the silence. In this liminal space, the distinctions between presence and absence, self and other, begin to fade",
+      "interpretationFa": "در عمق عرفان، خود در عظمت ناشناخته溶 می‌شود، جایی که تنها تسلی، درد اشتیاق است و تنها پناه، صدای آهسته نادیدنی است. مرزهای وجود محو می‌شوند و جستجوگر با سکوت به يکی می‌گردد. در اين فضا، تمايزات بين حضور و غياب، خود و ديگران از بين می‌رود",
       "cluster": {
-        "id": "invisible-thresholds",
-        "label": "آستانه‌های نامرئی",
-        "labelEn": "Invisible Thresholds"
+        "id": "dissolution-of-self",
+        "label": "محو شدن خود",
+        "labelEn": "The Dissolution of Self"
       }
-    }
+    },
+    "translation": "Have mercy, O Benevolent One, for the dervish at your doorstep knows no other door, and takes no other path"
   },
   {
     "verses": [
@@ -135,14 +139,15 @@
     "poet": "شمس لنگرودی",
     "date": "2025-08-15",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "In this poem, the boundaries between presence and absence blur, as the speaker invokes a figure from a bygone era, only to redirect their symbolic power towards a modern icon of comedy, revealing the intricate dance between the weight of tradition and the longing for transcendence",
+      "interpretationFa": "در این شعر، مرزهای بین حضور و غیاب محو می‌شود، زیرا گوینده یک شخصیت از دوران گذشته را احضار می‌کند، فقط برای هدایت قدرت 符olic او به سمت یک نماد مدرن کمدی، که نشان‌دهنده舞 رقص پیچیده بین وزن سنت و اشتیاق به فرا رفتن است",
       "cluster": {
-        "id": "geography-of-distance",
-        "label": "جغرافیای دوری",
-        "labelEn": "Geography of Distance"
+        "id": "echoes-of-paradox",
+        "label": "پژواک تناقض",
+        "labelEn": "Echoes of Paradox"
       }
-    }
+    },
+    "translation": "You arrived late, Moses, the era of miracles has passed, give your staff to Charlie Chaplin as a gift, so we can laugh a little"
   },
   {
     "verses": [
@@ -173,14 +178,15 @@
     "poet": "عراقی",
     "date": "2025-07-09",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "In the depths of this poem, the fragile boundaries between self and sorrow are revealed, as the speaker's presence is disrupted by the unpredictable onslaught of grief, leaving the reader to ponder the porous nature of being. The sudden ambush of sorrow evokes a sense of embodied vulnerability, where the distinction between inner and outer worlds becomes increasingly tenuous. The poem thus invites us to contemplate the intricate dance between presence and absence, where the self is constantly negotiating the precarious terrain of emotional experience.",
+      "interpretationFa": "در عمق این شعر، مرزهای شکننده بین خود و غم آشکار می‌شود، زیرا حضور گوینده توسط یورش پیش‌بینی‌نشده غم به چالش کشیده می‌شود و خواننده را وادار به تفکر در مورد ماهیت متخلخل بودن می‌کند. یورش ناگهانی غم حس آسیب‌پذیری جسمانی را به‌وجود می‌آورد، όπου تمایز بین جهان‌های درونی و بیرونی更加 نازک می‌شود. این شعر因此 ما را دعوت می‌کند تا به تفکر در مورد رقص پیچیده بین حضور و غیاب بپردازیم، جایی که خود مدام سرزمین खतरناک تجربه‌های عاطفی را_NEGOTIATE می‌کند.",
       "cluster": {
-        "id": "surrender-to-currents",
-        "label": "تسلیم به جریان",
-        "labelEn": "Surrendering to Currents"
+        "id": "invisible-thresholds",
+        "label": "آستانه‌های نامرئی",
+        "labelEn": "Invisible Thresholds"
       }
-    }
+    },
+    "translation": "How many tell me to be patient with the army of sorrow? What can I do when it suddenly ambushes me from an unexpected corner?"
   },
   {
     "verses": [
@@ -193,14 +199,15 @@
     "poet": "سعید برآبادی",
     "date": "2025-07-08",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "In the fleeting moment of a stone's throw, the fragile boundaries between life and death are traversed, leaving an indelible mark on the heartbeat of existence. The poem embodies the visceral experience of mortality, where the threshold between presence and absence is momentarily lifted. The reverberations of this event ripple through the fabric of being, a haunting reminder of the impermanence that underlies all life.",
+      "interpretationFa": "در لحظه‌ای گذرا از پرتاب یک سنگ، مرزهای لطیف میان زندگی و مرگ درنوردیده می‌شود و اثری ناپذیر بر ضربان وجود باقی می‌گذارد. این شعر تجربه جسمانی مرگ را به 身ه می‌کشد، جایی که آستانه میان حضور و غیاب به‌طور موقت برطرف می‌شود. پژواک‌های این واقعه در بافت هستی به‌اوج می‌رسد، یادآوری غم‌بار از ناپایداری که در زیر所有 زندگی‌ها نهفته است.",
       "cluster": {
-        "id": "weight-of-silence",
-        "label": "سنگینی سکوت",
-        "labelEn": "The Weight of Silence"
+        "id": "beautiful-impermanence",
+        "label": "ناپایداری زیبا",
+        "labelEn": "Beautiful Impermanence"
       }
-    }
+    },
+    "translation": "My destiny is tied to the wings of doves, a stone is thrown, one dies, the rest, for the rest of their lives, their hearts beat faster."
   },
   {
     "verses": [
