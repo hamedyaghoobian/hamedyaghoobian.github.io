@@ -10,9 +10,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "dissolution-of-self",
-        "label": "محو شدن خود",
-        "labelEn": "The Dissolution of Self"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
     }
   },
@@ -30,9 +30,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "beautiful-impermanence",
-        "label": "ناپایداری زیبا",
-        "labelEn": "Beautiful Impermanence"
+        "id": "echoes-of-paradox",
+        "label": "پژواک تناقض",
+        "labelEn": "Echoes of Paradox"
       }
     }
   },
@@ -102,9 +102,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "intimate-vastness",
-        "label": "وسعت صمیمی",
-        "labelEn": "Intimate Vastness"
+        "id": "dissolution-of-self",
+        "label": "محو شدن خود",
+        "labelEn": "The Dissolution of Self"
       }
     }
   },
@@ -119,9 +119,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "geography-of-distance",
-        "label": "جغرافیای دوری",
-        "labelEn": "Geography of Distance"
+        "id": "invisible-thresholds",
+        "label": "آستانه‌های نامرئی",
+        "labelEn": "Invisible Thresholds"
       }
     }
   },
@@ -138,9 +138,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "intimate-vastness",
-        "label": "وسعت صمیمی",
-        "labelEn": "Intimate Vastness"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
     }
   },
@@ -176,9 +176,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "geography-of-distance",
-        "label": "جغرافیای دوری",
-        "labelEn": "Geography of Distance"
+        "id": "surrender-to-currents",
+        "label": "تسلیم به جریان",
+        "labelEn": "Surrendering to Currents"
       }
     }
   },
@@ -196,9 +196,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "geography-of-distance",
-        "label": "جغرافیای دوری",
-        "labelEn": "Geography of Distance"
+        "id": "weight-of-silence",
+        "label": "سنگینی سکوت",
+        "labelEn": "The Weight of Silence"
       }
     }
   },
@@ -211,13 +211,14 @@
     "poet": "نیما یوشیج",
     "date": "2025-07-08",
     "theme": {
-      "interpretation": "A meditation on the ineffable.",
-      "interpretationFa": "تأملی بر ناگفتنی‌ها",
+      "interpretation": "The poem lives in the trembling space where the self and the cosmos clash, each accusing the other of madness. In that instant the speaker feels both present and absent, a thin veil of consciousness that shivers with the paradox of being more insane than the world that surrounds it.",
+      "interpretationFa": "شعر در فضای لرزان برخورد خود با جهان می‌زیند، جایی که هر یک دیگری را دیوانه می‌خوانند. در همان لحظه گوینده هم حضور دارد و هم غیاب، لایه‌ای نازک آگاهی که در تضاد پارادوکسیکال بیشتر از دیوانگی جهان می‌لرزد.",
       "cluster": {
-        "id": "geography-of-distance",
-        "label": "جغرافیای دوری",
-        "labelEn": "Geography of Distance"
+        "id": "echoes-of-paradox",
+        "label": "پژواک تناقض",
+        "labelEn": "Echoes of Paradox"
       }
-    }
+    },
+    "translation": "Since I dare to speak against the world,\nEither the world is mad, or I am—\nPerhaps I am even madder than the mad."
   }
 ]
