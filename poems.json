@@ -10,9 +10,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "echoes-of-paradox",
-        "label": "پژواک تناقض",
-        "labelEn": "Echoes of Paradox"
+        "id": "dissolution-of-self",
+        "label": "محو شدن خود",
+        "labelEn": "The Dissolution of Self"
       }
     }
   },
@@ -30,9 +30,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "dissolution-of-self",
-        "label": "محو شدن خود",
-        "labelEn": "The Dissolution of Self"
+        "id": "beautiful-impermanence",
+        "label": "ناپایداری زیبا",
+        "labelEn": "Beautiful Impermanence"
       }
     }
   },
@@ -102,9 +102,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "dissolution-of-self",
-        "label": "محو شدن خود",
-        "labelEn": "The Dissolution of Self"
+        "id": "intimate-vastness",
+        "label": "وسعت صمیمی",
+        "labelEn": "Intimate Vastness"
       }
     }
   },
@@ -119,9 +119,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "intimate-vastness",
-        "label": "وسعت صمیمی",
-        "labelEn": "Intimate Vastness"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
     }
   },
@@ -138,9 +138,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "dissolution-of-self",
-        "label": "محو شدن خود",
-        "labelEn": "The Dissolution of Self"
+        "id": "intimate-vastness",
+        "label": "وسعت صمیمی",
+        "labelEn": "Intimate Vastness"
       }
     }
   },
@@ -176,9 +176,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "weight-of-silence",
-        "label": "سنگینی سکوت",
-        "labelEn": "The Weight of Silence"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
     }
   },
@@ -193,12 +193,12 @@
     "poet": "سعید برآبادی",
     "date": "2025-07-08",
     "theme": {
-      "interpretation": "In this poem, the fragile dance between life and death is palpable, as the tender heartbeats of the surviving doves quicken in response to the loss of one, evoking an embodied sense of vulnerability and the haunting presence of absence. The stone cast into the flock becomes a catalyst for a cascade of existential reverberations, where the boundaries between self and other, presence and absence, begin to blur. The poem thus inhabits the liminal space where the weight of silence and the ache of longing converge.",
-      "interpretationFa": "در این شعر، رقص نازک زندگی و مرگ محسوس است، به طوری که ضربان قلب پرنده‌های باقیمانده در پاسخ به از دست دادن یکی از آنها شتاب می‌گیرد و حس آسیب‌پذیری جسمانی و حضور خیمه شب بازی را به ارمغان می‌آورد. سنگی که به پرندگان پرتاب می‌شود، کاتالیزوری برای یک آبشار از reverberations هستی‌شناسانه می‌شود، جایی که مرزهای بین خود و دیگر، حضور و غیاب، شروع به محو شدن می‌کنند. این شعر因此 فضا لیمینال را که سنگینی سکوت و درد طنین انداز می‌شود، اشغال می‌کند.",
+      "interpretation": "A meditation on the ineffable.",
+      "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "weight-of-silence",
-        "label": "سنگینی سکوت",
-        "labelEn": "The Weight of Silence"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
     }
   },
@@ -214,9 +214,9 @@
       "interpretation": "A meditation on the ineffable.",
       "interpretationFa": "تأملی بر ناگفتنی‌ها",
       "cluster": {
-        "id": "intimate-vastness",
-        "label": "وسعت صمیمی",
-        "labelEn": "Intimate Vastness"
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
       }
     }
   }
