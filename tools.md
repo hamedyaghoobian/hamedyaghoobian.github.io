@@ -168,6 +168,40 @@ permalink: /tools/
     margin-bottom: 2rem;
     line-height: 1.6;
 }
+
+.tools-filter {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 0.5rem 1.25rem;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #4a5568;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    background: #edf2f7;
+}
+
+.filter-btn.active {
+    background: #ed8936;
+    color: white;
+    border-color: #ed8936;
+}
+
+.tool-card.hidden {
+    display: none;
+}
 </style>
 
 <style>
@@ -205,13 +239,32 @@ body.dark .coming-soon h2,
 body.dark .coming-soon p {
     color: #e2e8f0;
 }
+body.dark .filter-btn {
+    background: #1a202c;
+    border-color: #2d3748;
+    color: #e2e8f0;
+}
+body.dark .filter-btn:hover {
+    background: #2d3748;
+}
+body.dark .filter-btn.active {
+    background: #ed8936;
+    color: white;
+    border-color: #ed8936;
+}
 </style>
 
 <div class="tools-container">
 
 <p class="section-intro">This section showcases interactive tools and applications I've developed, exploring innovative ways to engage with textual content using artificial intelligence.</p>
 
-<div class="tool-card">
+<div class="tools-filter">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="educational">Educational</button>
+  <button class="filter-btn" data-filter="experimental">Experimental</button>
+</div>
+
+<div class="tool-card" data-category="educational">
   <div class="tool-header">
     <h3 class="tool-title">AI Ethics Lab</h3>
     <p class="tool-subtitle">Computer Science Program at Muhlenberg College</p>
@@ -242,7 +295,7 @@ body.dark .coming-soon p {
   </a>
 </div>
 
-<div class="tool-card">
+<div class="tool-card" data-category="experimental">
   <div class="tool-header">
     <h3 class="tool-title">Bot Without Organs</h3>
     <p class="tool-subtitle">Interactive AI Philosophy Companion</p>
@@ -275,11 +328,11 @@ body.dark .coming-soon p {
   </a>
   
   <div class="source-attribution">
-    <strong>Source Material:</strong> Based on the comprehensive <a href="https://archive.org/details/2nz_20200124" target="_blank">Deleuze A-Z documentary</a> covering Russian literature, film philosophy, and deep insights into Deleuze's life and philosophical framework.
+    <strong>Source Material:</strong> Based on the comprehensive <a href="https://www.imdb.com/title/tt0408472/" target="_blank">Deleuze A-Z documentary</a> covering Russian literature, film philosophy, and deep insights into Deleuze's life and philosophical framework.
   </div>
 </div>
 
-<div class="tool-card">
+<div class="tool-card" data-category="educational">
   <div class="tool-header">
     <h3 class="tool-title">Teach The Machine</h3>
     <p class="tool-subtitle">Learn Machine Learning by Doing</p>
@@ -319,3 +372,27 @@ body.dark .coming-soon p {
 <p>These projects represent explorations at the intersection of AI technology and humanistic inquiry. They aim to make complex philosophical and textual content more accessible through innovative interfaces while maintaining the depth and nuance of the original works.</p>
 
 </div> 
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const toolCards = document.querySelectorAll('.tool-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            toolCards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+});
+</script>
