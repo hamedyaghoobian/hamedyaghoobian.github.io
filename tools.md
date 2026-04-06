@@ -279,6 +279,39 @@ body.dark .coming-soon p {
   </div>
 </div>
 
+<div class="tool-card">
+  <div class="tool-header">
+    <h3 class="tool-title">Teach The Machine</h3>
+    <p class="tool-subtitle">Learn Machine Learning by Doing</p>
+  </div>
+  
+  <div class="tool-description">
+    An interactive educational tool inspired by Google's Teachable Machine, specifically designed for early-stage AI enthusiasts in junior high and high school. This platform provides students with hands-on activities to intuitively explore and understand core machine learning concepts.
+  </div>
+
+  <div class="feature-list">
+    <h4>Key Features</h4>
+    <ul>
+      <li>Interactive, hands-on machine learning activities</li>
+      <li>Designed specifically for junior high and high school students</li>
+      <li>Provides intuitive visualizations of AI training processes</li>
+      <li>Accessible entry point for early-stage AI enthusiasts</li>
+    </ul>
+  </div>
+
+  <div class="tech-stack">
+    <strong>Focus Area:</strong><br>
+    <span class="tech-tag">AI Education</span>
+    <span class="tech-tag">Machine Learning</span>
+    <span class="tech-tag">Interactive Learning</span>
+    <span class="tech-tag">STEM</span>
+  </div>
+
+  <a href="https://teachthemachine.github.io/" class="cta-button" target="_blank">
+    Launch Tool
+  </a>
+</div>
+
 <div class="coming-soon">
 
 <h2>About These Tools</h2>
