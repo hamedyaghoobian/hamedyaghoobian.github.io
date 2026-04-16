@@ -5,7 +5,7 @@ permalink: /news/
 ---
 {% include dappled-light.html %}
 
-* **April 2026**: *"The Wooden Telephone: Generative Hallucination as a Method for Historical Sensemaking,"* with student researcher Hayk Grigorian (Class of '26), has been accepted to [ACM Creativity & Cognition 2026](https://cc.acm.org/2026/).
+* **April 2026**: *"<span style="font-variant: small-caps;">TimeCapsule</span>: Generative Hallucination as a Method for Historical Sensemaking,"* with student researcher Hayk Grigorian (Class of '26), has been accepted to [ACM Creativity & Cognition 2026](https://cc.acm.org/2026/).
 
 * **November 2025**: *"MASFIN: A Multi-Agent System for Financial Forecasting,"* with Sebastian Montalvo (Class of '28), has been accepted to NeurIPS 2025 (Generative AI in Finance Workshop), PDF available [here](https://openreview.net/pdf/94fa21379d714ca22656f2809d378820ba1111a2.pdf).
 
