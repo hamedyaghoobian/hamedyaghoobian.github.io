@@ -821,3 +821,11 @@ sup a {
     text-decoration: underline;
   }
 }
+
+// Improved Small Caps Styling
+.small-caps {
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
