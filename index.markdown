@@ -68,11 +68,13 @@ list_title: " "
     <div class="bio-text">
       <h1>Welcome</h1>
       <p>I am an Assistant Professor and Director of Computer Science at Muhlenberg College. I teach computer science, and my research explores how artificial intelligence shapes social and organizational life, drawing on perspectives from Science and Technology Studies to understand the practices, decisions, and interactions that emerge around AI systems.</p>
-      <p>I grew up in Mashhad, a city in northeastern Iran with a long and storied history. I now live in Pennsylvania's Lehigh Valley with my wife.</p>
-      <p>For discussions about research, collaborations, or just a friendly chat, drop me an email at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a> or visit me in the Trumbower Science Building, room 125.</p>
+      <p>I grew up in Mashhad, a city in the Khorasan region on the eastern edge of the Iranian Plateau, a name whose meaning I learned before I understood its weight. Khorasan, from <em>khor</em>, sun, and <em>san</em>, rising, names a place by an event rather than a boundary. As a child, it was simply where I was from. Over time, it has come to feel less like a location and more like a vector, something oriented toward becoming. The older I get, the more the word gathers meanings around it, geographical, historical, and something more elusive, the sense that home is not a fixed point in space but a continuing alignment, a way of being turned. The places that shape us do not remain behind us; they persist as a kind of internal grammar, structuring how we move, how we remember, how we begin again. I now live in eastern Pennsylvania with my wife, which is east in name but not in origin. And yet I find that I am still oriented toward that earlier east, as if the act of rising were not something the sun alone performs.</p>
+      <p>For discussions about research, collaborations, or just a friendly chat, you can reach me at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a> or visit me in the Trumbower Science Building, room 125.</p>
     </div>
-  </div>
+  </div><!-- /.bio-content -->
+</div><!-- /.home-container -->
 
+<div class="info-section">
   <div class="info-grid">
     <div class="research-interests">
       <h2>Research Interests</h2>
@@ -88,14 +90,14 @@ list_title: " "
         <i class="fas fa-graduation-cap"></i>
         <div>
           <strong>Ph.D. in Computer Science, 2021</strong><br>
-          University of Georgia
+          University of Georgia, USA
         </div>
       </div>
       <div class="education-item">
         <i class="fas fa-university"></i>
         <div>
           <strong>B.Sc. in Electrical Engineering, 2011</strong><br>
-          Azad University of Mashhad
+          Azad University of Mashhad, Iran
         </div>
       </div>
     </div>

@@ -394,40 +394,82 @@ p {
   //   text-align: justify
 }
 
-// Dark Mode Toggle - Simplified
-.theme-toggle {
+// ─── Sliding pill theme toggle ───────────────────────────────────────────────
+.theme-pill {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  margin-left: 0.5rem;
-  vertical-align: middle;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: auto;   // push to right of site-title
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+  order: 2;            // sits between title and hamburger
 
-  input[type="checkbox"] {
-    display: none;
+  &:focus-visible {
+    outline: 2px solid #ed8936;
+    outline-offset: 2px;
+    border-radius: 999px;
   }
+}
 
-  .theme-toggle-sr {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+.theme-pill__track {
+  position: relative;
+  width: 52px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.08);
+  border: 1.5px solid rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease, border-color 0.3s ease;
 
-  .theme-toggle__expand {
-    width: 18px;
-    height: 18px;
-    transition: transform 0.2s ease;
-    margin-top: 0;
+  body.dark & {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
   }
+}
 
-  input[type="checkbox"]:checked+.theme-toggle__expand {
-    transform: rotate(180deg);
+// The sliding thumb
+.theme-pill__thumb {
+  position: absolute;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ed8936;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1), background 0.3s ease;
+
+  body.dark & {
+    transform: translateX(26px);
+    background: #f6ad55;
   }
+}
+
+// Sun + moon icons inside the track
+.theme-pill__icon {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  stroke-width: 2;
+  transition: opacity 0.2s ease;
+  color: #6b7280;
+
+  body.dark & { color: #9ca3af; }
+}
+
+.theme-pill__sun {
+  left: 5px;
+  opacity: 1;
+  body.dark & { opacity: 0.3; }
+}
+
+.theme-pill__moon {
+  right: 5px;
+  opacity: 0.3;
+  body.dark & { opacity: 1; }
 }
 
 .dark-mode {
@@ -465,7 +507,7 @@ p {
   .wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0 8px;
     max-width: 1400px;
   }
@@ -481,6 +523,7 @@ p {
 
 .site-nav {
   line-height: 45px;
+  margin-left: auto;  // always push nav to far right
 
   .page-link {
     padding: 4px 6px;
@@ -610,11 +653,12 @@ body.dark .page-content .wrapper {
   background-color: transparent;
 }
 
-// Home page specific overrides
+// Home page specific overrides — wrapper is the full-width full-height shell
 .home {
   .page-content {
     min-height: auto;
     overflow: visible;
+    padding: 0;
 
     .wrapper {
       padding: 0;
@@ -663,17 +707,19 @@ body {
   padding: 1rem;
 }
 
-// Home page specific styles
+// Home page above-the-fold: bio section fills exactly one screen
 .home-container {
-  flex: 1;
-  overflow: visible;
+  height: calc(100vh - 45px);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2rem 2rem;
+  padding: 0 2rem;
   margin: 0;
+  box-sizing: border-box;
 }
 
+// Bio row: profile + text side by side, vertically centered
 .bio-content {
   display: flex;
   gap: 3rem;
@@ -681,16 +727,32 @@ body {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 0 1rem;
   overflow: visible;
+}
+
+// Bio text column: scrollable if text overflows the available height
+.bio-text {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+  // hide scrollbar visually but keep functionality
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+// Info-grid section: lives BELOW the fold, naturally scrollable
+.info-section {
+  padding: 3rem 2rem 2rem;
 }
 
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  max-width: 1200px;
-  margin: 2rem auto 0;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 0 1rem;
 }
 
