@@ -73,7 +73,7 @@ list_title: " "
           <span class="personal-toggle__icon" aria-hidden="true">+</span>
           <span class="personal-toggle__label">More personal</span>
         </button>
-        <div class="personal-content" id="personal-story-content" hidden>
+        <div class="personal-content" id="personal-story-content">
           <p>I grew up in Mashhad, a city in the Khorasan region on the eastern edge of the Iranian Plateau, a name whose meaning I learned before I understood its weight. Khorasan, from <em>khor</em>, sun, and <em>asan</em>, rising, names a place by an event rather than a boundary. As a child, it was simply where I was from. Over time, it has come to feel less like a location and more like a vector, something oriented toward becoming. The older I get, the more the word gathers meanings around it, geographical, historical, and something more elusive, the sense that home is not a fixed point in space but a continuing alignment, a way of being turned. The places that shape us do not remain behind us; they persist as a kind of internal grammar, structuring how we move, how we remember, how we begin again. I now live in eastern Pennsylvania with my wife, which is east in name but not in origin. And yet I find that I am still oriented toward that earlier east, still shaped by its pull.</p>
         </div>
       </div>
@@ -128,9 +128,11 @@ list_title: " "
   document.addEventListener('DOMContentLoaded', () => {
     const ring  = document.querySelector('.profile-ring');
     const orbit = document.getElementById('profile-orbit');
+    const personalStory = document.querySelector('.personal-story');
     const personalToggle = document.querySelector('.personal-toggle');
     const personalContent = document.getElementById('personal-story-content');
     const personalIcon = document.querySelector('.personal-toggle__icon');
+    const personalLabel = document.querySelector('.personal-toggle__label');
 
     if (ring && orbit) {
       // Click ring ➜ toggle pinned-open state
@@ -145,13 +147,13 @@ list_title: " "
       });
     }
 
-    if (personalToggle && personalContent && personalIcon) {
+    if (personalStory && personalToggle && personalContent && personalIcon && personalLabel) {
       personalToggle.addEventListener('click', () => {
-        const expanded = personalToggle.getAttribute('aria-expanded') === 'true';
-        const nextExpanded = !expanded;
+        const nextExpanded = !personalStory.classList.contains('is-open');
+        personalStory.classList.toggle('is-open', nextExpanded);
         personalToggle.setAttribute('aria-expanded', String(nextExpanded));
-        personalContent.hidden = !nextExpanded;
         personalIcon.textContent = nextExpanded ? '-' : '+';
+        personalLabel.textContent = nextExpanded ? 'Less personal' : 'More personal';
       });
     }
   });
