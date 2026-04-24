@@ -94,31 +94,16 @@ GEM
 
 PLATFORMS
   aarch64-linux
-  aarch64-linux
-  aarch64-linux
-  aarch64-linux
   aarch64-unknown
   arm-linux
-  arm-linux
-  arm-linux
-  arm-linux
-  arm-linux
   arm64-darwin
-  riscv64-linux
-  riscv64-linux
   riscv64-linux
   ruby
   x86-cygwin
   x86-linux
-  x86-linux
-  x86-linux
-  x86-linux
   x86-unknown
   x86_64-cygwin
   x86_64-darwin
-  x86_64-linux
-  x86_64-linux
-  x86_64-linux
   x86_64-linux
 
 DEPENDENCIES
