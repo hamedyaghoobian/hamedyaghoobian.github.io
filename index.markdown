@@ -68,7 +68,15 @@ list_title: " "
     <div class="bio-text">
       <h1>Welcome</h1>
       <p>I am an Assistant Professor and Director of Computer Science at Muhlenberg College. I teach computer science, and my research explores how artificial intelligence shapes social and organizational life, drawing on perspectives from Science and Technology Studies to understand the practices, decisions, and interactions that emerge around AI systems.</p>
-      <p>I grew up in Mashhad, a city in the Khorasan region on the eastern edge of the Iranian Plateau, a name whose meaning I learned before I understood its weight. Khorasan, from <em>khor</em>, sun, and <em>asan</em>, rising, names a place by an event rather than a boundary. As a child, it was simply where I was from. Over time, it has come to feel less like a location and more like a vector, something oriented toward becoming. The older I get, the more the word gathers meanings around it, geographical, historical, and something more elusive, the sense that home is not a fixed point in space but a continuing alignment, a way of being turned. The places that shape us do not remain behind us; they persist as a kind of internal grammar, structuring how we move, how we remember, how we begin again. I now live in eastern Pennsylvania with my wife, which is east in name but not in origin. And yet I find that I am still oriented toward that earlier east, still shaped by its pull.</p>
+      <div class="personal-story">
+        <button class="personal-toggle" type="button" aria-expanded="false" aria-controls="personal-story-content">
+          <span class="personal-toggle__icon" aria-hidden="true">+</span>
+          <span class="personal-toggle__label">More personal</span>
+        </button>
+        <div class="personal-content" id="personal-story-content" hidden>
+          <p>I grew up in Mashhad, a city in the Khorasan region on the eastern edge of the Iranian Plateau, a name whose meaning I learned before I understood its weight. Khorasan, from <em>khor</em>, sun, and <em>asan</em>, rising, names a place by an event rather than a boundary. As a child, it was simply where I was from. Over time, it has come to feel less like a location and more like a vector, something oriented toward becoming. The older I get, the more the word gathers meanings around it, geographical, historical, and something more elusive, the sense that home is not a fixed point in space but a continuing alignment, a way of being turned. The places that shape us do not remain behind us; they persist as a kind of internal grammar, structuring how we move, how we remember, how we begin again. I now live in eastern Pennsylvania with my wife, which is east in name but not in origin. And yet I find that I am still oriented toward that earlier east, still shaped by its pull.</p>
+        </div>
+      </div>
       <p>For discussions about research, collaborations, or just a friendly chat, you can reach me at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a> or visit me in the Trumbower Science Building, room 125.</p>
     </div>
   </div><!-- /.bio-content -->
@@ -120,18 +128,32 @@ list_title: " "
   document.addEventListener('DOMContentLoaded', () => {
     const ring  = document.querySelector('.profile-ring');
     const orbit = document.getElementById('profile-orbit');
-    if (!ring || !orbit) return;
+    const personalToggle = document.querySelector('.personal-toggle');
+    const personalContent = document.getElementById('personal-story-content');
+    const personalIcon = document.querySelector('.personal-toggle__icon');
 
-    // Click ring ➜ toggle pinned-open state
-    ring.addEventListener('click', e => {
-      e.stopPropagation();
-      orbit.classList.toggle('pinned');
-    });
+    if (ring && orbit) {
+      // Click ring ➜ toggle pinned-open state
+      ring.addEventListener('click', e => {
+        e.stopPropagation();
+        orbit.classList.toggle('pinned');
+      });
 
-    // Click outside ➜ unpin
-    document.addEventListener('click', e => {
-      if (!orbit.contains(e.target)) orbit.classList.remove('pinned');
-    });
+      // Click outside ➜ unpin
+      document.addEventListener('click', e => {
+        if (!orbit.contains(e.target)) orbit.classList.remove('pinned');
+      });
+    }
+
+    if (personalToggle && personalContent && personalIcon) {
+      personalToggle.addEventListener('click', () => {
+        const expanded = personalToggle.getAttribute('aria-expanded') === 'true';
+        const nextExpanded = !expanded;
+        personalToggle.setAttribute('aria-expanded', String(nextExpanded));
+        personalContent.hidden = !nextExpanded;
+        personalIcon.textContent = nextExpanded ? '-' : '+';
+      });
+    }
   });
 </script>
 
