@@ -36,11 +36,12 @@ permalink: /persian-poetry/
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     padding: 1.5rem;
-    margin: 2rem 0;
+    margin: 2rem auto;
     background: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     direction: rtl;
+    max-width: 760px;
 }
 
 .poem-card:hover {

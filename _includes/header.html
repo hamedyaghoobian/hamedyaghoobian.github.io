@@ -16,24 +16,6 @@
   <div class="wrapper">
     <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
 
-    <!-- Theme toggle pill — always visible, outside the burger menu -->
-    <button class="theme-pill" id="theme-pill" aria-label="Toggle theme" title="Toggle theme">
-      <span class="theme-pill__track">
-        <span class="theme-pill__thumb"></span>
-        <!-- Sun icon -->
-        <svg class="theme-pill__icon theme-pill__sun" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-        </svg>
-        <!-- Moon icon -->
-        <svg class="theme-pill__icon theme-pill__moon" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </span>
-    </button>
-
     <nav class="site-nav">
       <input type="checkbox" id="nav-trigger" class="nav-trigger" />
       <label for="nav-trigger">
@@ -52,5 +34,27 @@
         {%- endfor -%}
       </div>
     </nav>
+
+    <!-- Theme toggle: fixed position on mobile (right of hamburger), inline on desktop -->
+    <button class="theme-icon-btn" id="theme-pill" aria-label="Toggle theme" title="Toggle theme">
+      <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="4.5"/>
+        <line x1="12" y1="19.5" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22" x2="5.96" y2="5.96"/>
+        <line x1="18.04" y1="18.04" x2="19.78" y2="19.78"/>
+        <line x1="2" y1="12" x2="4.5" y2="12"/>
+        <line x1="19.5" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.96" y2="18.04"/>
+        <line x1="18.04" y1="5.96" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
   </div>
 </header>
