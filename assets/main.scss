@@ -721,6 +721,8 @@ body {
   margin: 0 auto;
   padding: 0;
   overflow: visible;
+  position: relative;
+  z-index: 10; /* Ensure text and avatar sit above the sun */
 }
 
 // Bio text column
@@ -1122,28 +1124,44 @@ sup a {
 }
 
 .iran-sun {
+  --sun-size: 120vh;
+  --glow-size-1: 100px;
+  --glow-spread-1: 60px;
+  --glow-size-2: 250px;
+  --glow-spread-2: 100px;
+
+  @media screen and (max-width: 768px) {
+    --sun-size: 80vw;
+    --glow-size-1: 30px;
+    --glow-spread-1: 10px;
+    --glow-size-2: 60px;
+    --glow-spread-2: 20px;
+  }
+
   position: fixed;
   top: 50%;
-  right: -120vh;
-  width: 120vh;
-  height: 120vh;
+  right: calc(var(--sun-size) * -1);
+  width: var(--sun-size);
+  height: var(--sun-size);
   border-radius: 50%;
   background-color: #ffd700;
-  box-shadow: 0 0 100px 60px rgba(255, 215, 0, 0.4), 0 0 250px 100px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 0 var(--glow-size-1) var(--glow-spread-1) rgba(255, 215, 0, 0.4), 
+              0 0 var(--glow-size-2) var(--glow-spread-2) rgba(255, 165, 0, 0.3);
   transform: translateY(-50%);
   transition: right 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s ease, box-shadow 1s ease;
-  z-index: 0;
+  z-index: 0; /* Changed to 0 since .bio-content is now z-index: 10 */
   pointer-events: none;
   opacity: 0;
 
   body.dark & {
     background-color: #f6ad55;
-    box-shadow: 0 0 100px 60px rgba(246, 173, 85, 0.5), 0 0 250px 100px rgba(237, 137, 54, 0.3);
+    box-shadow: 0 0 var(--glow-size-1) var(--glow-spread-1) rgba(246, 173, 85, 0.5), 
+                0 0 var(--glow-size-2) var(--glow-spread-2) rgba(237, 137, 54, 0.3);
   }
 }
 
 body:has(.iran-hover:hover) .iran-sun {
-  right: -60vh;
+  right: calc(var(--sun-size) * -0.5);
   opacity: 1;
 
   body.dark & {
