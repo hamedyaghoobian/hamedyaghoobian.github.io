@@ -74,12 +74,14 @@ list_title: " "
           <span class="personal-toggle__label">More personal</span>
         </button>
         <div class="personal-content" id="personal-story-content">
-          <p>I was born and raised in Mashhad. Eastern Iran. The Khorasan region. As a child, it was simply where I was from. Later, it became something else. A direction. A pull. A way of becoming. I now live in eastern Pennsylvania with my wife. East. But maybe not in origin. That earlier east still shapes me. Quietly. Steadily. From within.</p>
+          <p>I was born and raised in Mashhad. Eastern <span class="iran-hover">Iran</span>. The Khorasan region. As a child, it was simply where I was from. Later, it became something else. A direction. A pull. A way of becoming. I now live in eastern Pennsylvania with my wife. East. But maybe not in origin. That earlier east still shapes me. Quietly. Steadily. From within.</p>
         </div>
       </div>
       <p>For research, collaborations, or a chat, email me at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a>. Or visit me in the Trumbower Science Building. Room 125.</p>
     </div>
   </div><!-- /.bio-content -->
+  
+  <div class="iran-sun"></div>
 </div><!-- /.home-container -->
 
 <div class="info-section">
