@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Persian Poetry Journal
+title: Collected Poems
 permalink: /persian-poetry/
 ---
 {% include dappled-light.html %}
@@ -892,13 +892,13 @@ body.dark .collapse-btn:hover {
 
     <!-- View Toggle -->
     <div class="view-toggle">
-        <button class="view-toggle-btn active" data-view="stack" onclick="setView('stack')">
-            <i class="fas fa-layer-group"></i>
-            <span>مضمون‌ها</span>
-        </button>
-        <button class="view-toggle-btn" data-view="list" onclick="setView('list')">
+        <button class="view-toggle-btn active" data-view="list" onclick="setView('list')">
             <i class="fas fa-list"></i>
-            <span>زمانی</span>
+            <span>زمانی / Time</span>
+        </button>
+        <button class="view-toggle-btn" data-view="stack" onclick="setView('stack')">
+            <i class="fas fa-layer-group"></i>
+            <span>مضمون‌ها / Themes</span>
         </button>
     </div>
 
@@ -1117,8 +1117,9 @@ async function loadPoems() {
         renderListView(poems);
         renderThemeStacks(poems);
         
-        // Set initial view to stack
-        setView('stack');
+        // Set initial view to user preference or list
+        const savedView = localStorage.getItem('poetry-view') || 'list';
+        setView(savedView);
         
         // Initialize dates after poems are loaded
         initializeDynamicDates();
@@ -1393,8 +1394,6 @@ function generatePoemHTML(poem) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Load saved view preference
-    const savedView = localStorage.getItem('poetry-view') || 'stack';
     loadPoems();
 });
 
