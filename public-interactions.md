@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Publications
-permalink: /interactions/
+permalink: /publications/
 ---
 {% include dappled-light.html %}
 

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Collected Poems
-permalink: /persian-poetry/
+permalink: /poems/
 ---
 {% include dappled-light.html %}
 
@@ -1015,7 +1015,7 @@ function translatePoem(button) {
 
         if (poemData.translation) {
             translationText.textContent = poemData.translation;
-            translationModel.textContent = `Translated by GPT-OSS-120b (Offline Mode)`;
+            translationModel.textContent = `Translation`;
             // Provide an approximate date if timestamp isn't explicitly held
             translationTime.textContent = new Date(poemData.date || Date.now()).toLocaleDateString('fa-IR');
             translationContainer.classList.add('expanded');
