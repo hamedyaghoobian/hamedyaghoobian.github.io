@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Public(inter)a(c)tions
+title: Publications
 permalink: /interactions/
 ---
 {% include dappled-light.html %}

@@ -8,7 +8,7 @@
     "date": "2026-03-26",
     "theme": {
       "interpretation": "In the whispers of longing, the boundary between presence and absence dissolves, as the heart embodies the ache of distance, suspending time in an eternal yearning. The poem inhabits the space where the self is tenderly undone by the gentle cruelty of memory. The intimacy of longing becomes a geography that defies physical borders.",
-      "interpretationFa": "در شایعات شهوت، مرز между حضور و غیاب حل می شود، زیرا قلب درد دوری را به خود می‌گیرد و زمان را در یک اشتیاق ابدی معلق می‌کند. شعر در فضایی سکونت می‌کند که در آن خود به нежesti توسط ظلم نرمی حافظه از بین می‌رود. صمیمیت شهوت به یک جغرافیا تبدیل می شود که مرزهای فیزیکی را نقض می کند.",
+      "interpretationFa": "در شایعات شهوت، مرز بین حضور و غیاب حل می شود، زیرا قلب درد دوری را به خود می‌گیرد و زمان را در یک اشتیاق ابدی معلق می‌کند. شعر در فضایی سکونت می‌کند که در آن خود به غریبی توسط ظلم نرمی حافظه از بین می‌رود. صمیمیت شهوت به یک جغرافیا تبدیل می شود که مرزهای فیزیکی را نقض می کند.",
       "cluster": {
         "id": "geography-of-distance",
         "label": "جغرافیای دوری",
@@ -227,5 +227,29 @@
       }
     },
     "translation": "Since I dare to speak against the world,\nEither the world is mad, or I am—\nPerhaps I am even madder than the mad."
+  },
+  {
+    "verses": [
+      "دلم برای تو تنگ شده است",
+      "اما نمیدانم چه کار کنم",
+      "آرام میگریم",
+      "حال آدمی را دارم",
+      "که میخواهد به همسر مردهاش تلفن کند",
+      "اما نمیکند",
+      "چرا که به خوبی میداند",
+      "در بهشت گوشیها را برنمیدارند."
+    ],
+    "poet": "رسول یونان",
+    "date": "2026-05-06",
+    "theme": {
+      "interpretation": "The poem dwells in the ache of a grief that knows itself to be permanent. The speaker does not reach out, not from indifference but from an almost unbearable lucidity — the understanding that no call crosses the threshold between worlds. The withheld gesture becomes an act of love and acceptance at once.",
+      "interpretationFa": "شعر در درد اندوهی ساکن است که می‌داند ماندگار است. گوینده دست دراز نمی‌کند نه از بی‌تفاوتی، بلکه از نوعی وضوح طاقت‌فرسا — از آگاهی به اینکه هیچ تماسی از آستان میان دو جهان نمی‌گذرد. ژست نگه‌داشته‌شده، همزمان عملی از عشق و پذیرش می‌شود.",
+      "cluster": {
+        "id": "geography-of-distance",
+        "label": "جغرافیای دوری",
+        "labelEn": "Geography of Distance"
+      }
+    },
+    "translation": "I miss you\nbut I don't know what to do.\nI weep quietly.\nI am like a person\nwho wants to call their dead spouse\nbut doesn't —\nbecause they know all too well\nthat in heaven, no one picks up the phone."
   }
 ]

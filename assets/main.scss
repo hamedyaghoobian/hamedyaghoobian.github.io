@@ -381,10 +381,6 @@ html {
 
 .bio-text {
   text-align: center;
-
-  @media screen and (min-width: 768px) {
-    text-align: left;
-  }
 }
 
 // Text Justification
@@ -871,7 +867,7 @@ body.dark {
   }
 
   .bio-text {
-    text-align: left;
+    text-align: center;
   }
 
   .research-interests,

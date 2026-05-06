@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Pedagogy
+title: Teaching
 permalink: /pedagogy/
 ---
 {% include dappled-light.html %}
