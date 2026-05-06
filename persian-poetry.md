@@ -995,38 +995,81 @@ function getPoemIdentifier(poemCard) {
 
 // Removed loading animation functions (now instantaneous)
 
-// Translation functionality (Instant Offline Mode)
+// Translation functionality — static data from build, cached in localStorage for offline resilience
+const TRANSLATION_CACHE_PREFIX = 'poem_translation_v1_';
+
+function getCachedTranslation(poemId) {
+    try {
+        const raw = localStorage.getItem(TRANSLATION_CACHE_PREFIX + poemId);
+        if (!raw) return null;
+        return JSON.parse(raw);
+    } catch (e) {
+        return null;
+    }
+}
+
+function setCachedTranslation(poemId, data) {
+    try {
+        localStorage.setItem(TRANSLATION_CACHE_PREFIX + poemId, JSON.stringify(data));
+    } catch (e) {
+        // localStorage may be full or blocked — silently ignore
+    }
+}
+
 function translatePoem(button) {
     const poemCard = button.closest('.poem-card');
     const translationContainer = poemCard.querySelector('.translation-container');
     const translationText = poemCard.querySelector('.translation-text');
     const translationModel = poemCard.querySelector('.translation-model');
     const translationTime = poemCard.querySelector('.translation-time');
-    
-    // Check if it's already expanded
+
+    // Toggle: collapse if already expanded
     if (translationContainer.classList.contains('expanded')) {
         translationContainer.classList.remove('expanded');
         return;
     }
-    
+
+    const poemId = getPoemIdentifier(poemCard);
+
+    // 1. Check localStorage cache first
+    const cached = getCachedTranslation(poemId);
+    if (cached) {
+        translationText.textContent = cached.translation;
+        translationModel.textContent = cached.source || 'Translation';
+        translationTime.textContent = cached.date || '';
+        translationContainer.classList.add('expanded');
+        return;
+    }
+
+    // 2. Fall back to static translation baked in at build time
     try {
         const poemDataStr = decodeURIComponent(poemCard.getAttribute('data-poem'));
         const poemData = JSON.parse(poemDataStr);
 
         if (poemData.translation) {
+            const dateLabel = poemData.date
+                ? new Date(poemData.date).toLocaleDateString('fa-IR')
+                : '';
+
             translationText.textContent = poemData.translation;
-            translationModel.textContent = `Translation`;
-            // Provide an approximate date if timestamp isn't explicitly held
-            translationTime.textContent = new Date(poemData.date || Date.now()).toLocaleDateString('fa-IR');
+            translationModel.textContent = 'Translation';
+            translationTime.textContent = dateLabel;
             translationContainer.classList.add('expanded');
+
+            // Cache it so future visits (or offline) are instant
+            setCachedTranslation(poemId, {
+                translation: poemData.translation,
+                source: 'Translation',
+                date: dateLabel
+            });
         } else {
-            translationText.textContent = 'ترجمه یافت نشد / Translation not found. Try refreshing after build.';
+            translationText.textContent = 'ترجمه یافت نشد / Translation not found.';
             translationText.style.color = '#e53e3e';
             translationModel.textContent = '';
             translationTime.textContent = '';
             translationContainer.classList.add('expanded');
         }
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         translationText.textContent = 'خطا در بارگزاری ترجمه / Error loading translation';
         translationText.style.color = '#e53e3e';

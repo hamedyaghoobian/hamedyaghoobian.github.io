@@ -6,52 +6,59 @@ permalink: /pedagogy/
 {% include dappled-light.html %}
 ## Department of Math, CS, and Stat, Muhlenberg College
 
+
+
+### Fall 2026
+* Intro to Game Programming with Python (CSI 109)
+* Machine Learning (CSI 330)
+
+
 ### Spring 2026
 
-* Computer Organization
-* CUE Computer Science Seminar
+* Computer Organization (CSI 204)
+* CUE Computer Science Seminar (CSI 370)
 
 ### Fall 2025
 
-* Computer Science II
-* Introduction to Data Science
-* Human-AI Interaction
+* Computer Science II (CSI 111)
+* Introduction to Data Science (CSI 102)
+* Human-AI Interaction (CSI 320)
  
 ### Spring 2025
 
-* Computer Organization 
-* Computer Science II
-* CUE Computer Science Seminar
+* Computer Organization (CSI 204)
+* Computer Science II (CSI 111)
+* CUE Computer Science Seminar (CSI 370)
 
 ### Fall 2024
 
-* Introduction to Data Science
-* Computer Science II
-* Introduction to Machine Learning (Special Topics)
+* Introduction to Data Science (CSI 102)
+* Computer Science II (CSI 111)
+* Introduction to Machine Learning (CSI 330)
 
 ### Spring 2024
-* Introduction to Data Science
-* Computer Science II
-* Computer Organization
+* Introduction to Data Science (CSI 102)
+* Computer Science II (CSI 111)
+* Computer Organization (CSI 204)
 
 ### Fall 2023
-* Computer Science II
-* Introduction to Game Programming with Python
+* Computer Science II (CSI 111)
+* Introduction to Game Programming with Python (CSI 109)
 
 ### Spring 2023
-* Human-AI Interaction (Special Topics)
-* Introduction to Game Programming with Python
-* Computer Organization
+* Human-Computer Interaction (Special Topics Elective)
+* Introduction to Game Programming with Python (CSI 109)
+* Computer Organization (CSI 204)
 
 ### Fall 2022
-* Web Development
-* Introduction to Game Programming with Python
+* Web Development (CSI 345)
+* Introduction to Game Programming with Python (CSI 109)
 
 ### Spring 2022
-* Computer Organization
-* Introduction to Game Programming with Python
+* Computer Organization (CSI 204)
+* Introduction to Game Programming with Python (CSI 109)
 
 ### Fall 2021
-* Computer Networks
-* Introduction to Game Programming with Python
+* Computer Networks (CSI 355)
+* Introduction to Game Programming with Python (CSI 109)
 
