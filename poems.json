@@ -1,6 +1,27 @@
 [
   {
     "verses": [
+      "نمیخواهم تخت جمشید باشم مردم در من عکس بگیرند",
+      "میخواهم قلعه قورتان باشم",
+      "در کویری گمنام",
+      "دور از چشم میراث فرهنگی",
+      "چند خانواده در من زندگی کنند"
+    ],
+    "poet": "مریم اسحاقی",
+    "date": "2026-05-06",
+    "theme": {
+      "interpretation": "A meditation on the desire to be lived-in rather than looked at — to be a shelter for ordinary life rather than a monument for the gaze. The poem refuses the spectacle of heritage and chooses anonymity, intimacy, and usefulness over grandeur.",
+      "interpretationFa": "تأملی درباره‌ی آرزوی زیسته شدن به‌جای دیده شدن — پناهگاهی برای زندگی معمولی باشی، نه بنایی برای تماشا. شعر از تماشاگری میراث سر باز می‌زند و ناشناسی، صمیمیت و سودمندی را بر شکوه ترجیح می‌دهد.",
+      "cluster": {
+        "id": "anonymity-and-belonging",
+        "label": "گمنامی و تعلق",
+        "labelEn": "Anonymity & Belonging"
+      }
+    },
+    "translation": "I don't want to be Persepolis,\nfor people to take photos inside me.\nI want to be Qurtan Castle,\nin an unknown desert,\nfar from the eyes of cultural heritage,\nwith a few families living within me."
+  },
+  {
+    "verses": [
       "هوایِ کویِ تو از سر نمیرود آری",
       "غریب را دلِ سرگشته با وطن باشد"
     ],
@@ -227,29 +248,5 @@
       }
     },
     "translation": "Since I dare to speak against the world,\nEither the world is mad, or I am—\nPerhaps I am even madder than the mad."
-  },
-  {
-    "verses": [
-      "دلم برای تو تنگ شده است",
-      "اما نمیدانم چه کار کنم",
-      "آرام میگریم",
-      "حال آدمی را دارم",
-      "که میخواهد به همسر مردهاش تلفن کند",
-      "اما نمیکند",
-      "چرا که به خوبی میداند",
-      "در بهشت گوشیها را برنمیدارند."
-    ],
-    "poet": "رسول یونان",
-    "date": "2026-05-06",
-    "theme": {
-      "interpretation": "The poem dwells in the ache of a grief that knows itself to be permanent. The speaker does not reach out, not from indifference but from an almost unbearable lucidity — the understanding that no call crosses the threshold between worlds. The withheld gesture becomes an act of love and acceptance at once.",
-      "interpretationFa": "شعر در درد اندوهی ساکن است که می‌داند ماندگار است. گوینده دست دراز نمی‌کند نه از بی‌تفاوتی، بلکه از نوعی وضوح طاقت‌فرسا — از آگاهی به اینکه هیچ تماسی از آستان میان دو جهان نمی‌گذرد. ژست نگه‌داشته‌شده، همزمان عملی از عشق و پذیرش می‌شود.",
-      "cluster": {
-        "id": "geography-of-distance",
-        "label": "جغرافیای دوری",
-        "labelEn": "Geography of Distance"
-      }
-    },
-    "translation": "My heart misses you, but I don’t know what to do. I weep quietly. I feel like someone who wants to call his dead wife, but doesn't—because he knows all too well that in heaven, they don't answer phones."
   }
 ]
