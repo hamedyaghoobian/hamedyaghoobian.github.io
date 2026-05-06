@@ -491,8 +491,7 @@ body.dark .theme-icon--moon {
 }
 
 .site-header {
-  min-height: 45px;
-  line-height: 45px;
+  min-height: 56px;
   border-bottom: none;
   background-color: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -504,8 +503,9 @@ body.dark .theme-icon--moon {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 16px;
+    padding: 8px 16px;
     max-width: 1180px;
+    min-height: 56px;
   }
 }
 
@@ -514,11 +514,11 @@ body.dark .theme-icon--moon {
   letter-spacing: -0.5px;
   margin-bottom: 0;
   padding: 0;
-  line-height: 45px;
+  line-height: 1.2;
 }
 
 .site-nav {
-  line-height: 45px;
+  line-height: 1.5;
   margin-left: auto; // always push nav to far right
 
   .page-link {
