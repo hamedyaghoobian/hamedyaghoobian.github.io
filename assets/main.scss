@@ -380,11 +380,7 @@ html {
 }
 
 .bio-text {
-  text-align: center;
-
-  @media screen and (min-width: 768px) {
-    text-align: left;
-  }
+  text-align: left;
 }
 
 // Text Justification
@@ -711,11 +707,11 @@ body {
   box-sizing: border-box;
 }
 
-// Bio row: profile + text side by side, vertically centered
+// Bio row: profile + text side by side, top-aligned
 .bio-content {
   display: flex;
   gap: 2rem;
-  align-items: center;
+  align-items: flex-start;
   max-width: none;
   width: 100%;
   margin: 0 auto;
