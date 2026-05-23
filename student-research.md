@@ -28,9 +28,9 @@ Muhlenberg students interested in these topics are welcome to reach out. While p
 Students can get involved through independent studies during the academic year or through summer research opportunities. If you'd like to discuss a possible project or collaboration, please don't hesitate to contact me.
 
 ## Current Projects
-- [TimeCapsule: 18th Century LLM For Historical Sensemaking](/projects/timecapsule-18th-century-llm)
 
 ## Past Projects
+- [TimeCapsule: 18th Century LLM For Historical Sensemaking](/projects/timecapsule-18th-century-llm)
 - [Multi-Agents LLM Financial Trading Framework](/projects/multi-agents-llm-financial-trading-framework)
 - [Seasonal Changes in AI: From AI-Springs to AI-Winter](/projects/ai-seasons)
 - [Unmasking Bias in LLMs](/projects/unmask-bias-llms)
