@@ -63,6 +63,39 @@
       filter: drop-shadow(0 0 4px rgb(255, 255, 255, .7));
     }
   </style>
+  <style>
+    /* ── Figure image expand on click ─────────────────────────────── */
+    figure img {
+      cursor: zoom-in;
+      transition: transform 0.15s ease;
+    }
+
+    /* Full-screen overlay */
+    #img-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.82);
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+    }
+
+    #img-lightbox.open {
+      display: flex;
+    }
+
+    #img-lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      border-radius: 6px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+      object-fit: contain;
+      cursor: zoom-out;
+    }
+  </style>
+
   <script>
     // Single source of truth: apply theme by class + data-theme together
     function applyTheme(isDark) {
@@ -97,6 +130,30 @@
         event.preventDefault();
         toggle();
       }
+    });
+  </script>
+  <script>
+    // Figure image lightbox: click to expand, click again (or overlay) to close
+    document.addEventListener('DOMContentLoaded', () => {
+      const overlay = document.createElement('div');
+      overlay.id = 'img-lightbox';
+      const expandedImg = document.createElement('img');
+      overlay.appendChild(expandedImg);
+      document.body.appendChild(overlay);
+
+      document.querySelectorAll('figure img').forEach(img => {
+        img.addEventListener('click', () => {
+          expandedImg.src = img.src;
+          expandedImg.alt = img.alt;
+          overlay.classList.add('open');
+        });
+      });
+
+      overlay.addEventListener('click', () => overlay.classList.remove('open'));
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') overlay.classList.remove('open');
+      });
     });
   </script>
 </head>
