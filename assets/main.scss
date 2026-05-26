@@ -6,6 +6,11 @@ $spacing-unit: 30px;
 $on-medium: 768px;
 $on-large: 1024px;
 
+
+html {
+  scrollbar-gutter: stable;
+}
+
 :root {
   --day: #fffdfa;
   --evening: #fccc83;
@@ -509,7 +514,7 @@ body.dark .theme-icon--moon {
   top: 0;
   z-index: 1000;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 253, 250, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: background-color 0.3s ease, border-color 0.3s ease;
