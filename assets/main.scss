@@ -400,7 +400,6 @@ p {
   border: none;
   cursor: pointer;
   padding: 0;
-  margin-left: 0.75rem;
   position: relative;
   flex-shrink: 0;
   color: #4a5568;
@@ -422,6 +421,25 @@ p {
   &:focus-visible {
     outline: 2px solid #ed8936;
     outline-offset: 2px;
+  }
+
+  @media screen and (min-width: 601px) {
+    margin-left: 1.5rem; // Generous margin for the divider space
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 16px;
+      background-color: rgba(0, 0, 0, 0.12);
+
+      body.dark & {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+    }
   }
 
   // On mobile: fixed in header, right of the hamburger (which is at right:15px)
@@ -487,45 +505,109 @@ body.dark .theme-icon--moon {
 }
 
 .site-header {
-  min-height: 56px;
-  border-bottom: none;
-  background-color: transparent;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s ease;
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  body.dark & {
+    background-color: rgba(26, 32, 44, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
 
   .wrapper {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding: 8px 16px;
-    max-width: 1180px;
+    justify-content: space-between; // Space title and nav group cleanly
+    padding: 10px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
     min-height: 56px;
   }
 }
 
 .site-title {
-  font-size: 1.4rem;
-  letter-spacing: -0.5px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   margin-bottom: 0;
   padding: 0;
-  line-height: 1.2;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+  color: #2d3748;
+
+  body.dark & {
+    color: #e2e8f0;
+  }
+
+  &:hover {
+    color: #ed8936;
+    text-decoration: none !important;
+  }
 }
 
 .site-nav {
-  line-height: 1.5;
-  margin-left: auto; // always push nav to far right
+  display: flex;
+  align-items: center;
+  
+  @media screen and (min-width: 601px) {
+    margin-left: auto;
+    
+    .trigger {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem; // Balanced, even spacing between pages
+    }
 
-  .page-link {
-    padding: 4px 6px;
-    margin-right: 2px;
-    font-size: 0.9rem;
-    color: var(--text);
+    .page-link {
+      padding: 6px 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #4a5568 !important;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border-radius: 6px;
+      margin-right: 0 !important;
 
-    &:last-child {
-      margin-right: 0;
-      padding-right: 0;
+      body.dark & {
+        color: #cbd5e0 !important;
+      }
+
+      &:hover {
+        color: #ed8936 !important;
+        background: rgba(237, 137, 54, 0.05);
+
+        body.dark & {
+          color: #f6ad55 !important;
+          background: rgba(255, 255, 255, 0.05);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    line-height: 1.5;
+    margin-left: auto;
+
+    .page-link {
+      padding: 4px 6px;
+      margin-right: 2px;
+      font-size: 0.9rem;
+      color: var(--text);
+
+      &:last-child {
+        margin-right: 0;
+        padding-right: 0;
+      }
     }
   }
 }
