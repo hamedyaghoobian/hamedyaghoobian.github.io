@@ -83,17 +83,61 @@ permalink: /poems/
     padding: 0 0.25rem;
 }
 
-.inline-translation {
-    color: #718096;
-    font-size: 0.8rem;
-    margin-right: 0.75rem;
-    font-family: 'Vazirmatn', sans-serif;
-    font-weight: 300;
-    display: inline-block;
+/* Responsive Grid for Bilingual Arabic-Persian Poems */
+.verse:has(.inline-translation) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    max-width: 580px;
+    margin: 0.5rem auto;
+    direction: rtl;
 }
 
-body.dark .inline-translation {
+.verse .arabic-line {
+    font-family: 'Lalezar', serif;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    text-align: left; /* Align right column's content to the left (towards the gutter) */
+    display: block;
+}
+
+.verse .inline-translation {
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.8rem;
+    color: #718096;
+    font-weight: 300;
+    text-align: right; /* Align left column's content to the right (towards the gutter) */
+    margin-right: 0;
+    display: block;
+}
+
+/* Dark mode overrides */
+body.dark .verse .arabic-line {
+    color: #e2e8f0;
+}
+
+body.dark .verse .inline-translation {
     color: #a0aec0;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    .verse:has(.inline-translation) {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+        text-align: center;
+        margin: 0.75rem auto;
+    }
+    
+    .verse .arabic-line {
+        text-align: center;
+    }
+    
+    .verse .inline-translation {
+        text-align: center;
+        margin-top: 0.1rem;
+    }
 }
 
 .poet-attribution {

@@ -1,23 +1,22 @@
 [
   {
     "verses": [
-      "يغنّي المغنّي <span class=\"inline-translation\">آوازخوان می‌خوانَد</span>",
-      "عن النار والغرباء <span class=\"inline-translation\">از آتش و بیگانگان</span>",
-      "... <span class=\"inline-translation\">...</span>",
-      "ويستجوبونه: <span class=\"inline-translation\">بازجویی‌اش می‌کنند:</span>",
-      "لماذا تغنّي؟ <span class=\"inline-translation\">چرا می‌خوانی؟</span>",
-      "يردُّ عليهم: <span class=\"inline-translation\">پاسخ می‌دهد:</span>",
-      "لأنّي أغَنّي <span class=\"inline-translation\">زیرا که می‌خوانم</span>",
-      "وقد فتّشوا صدرَهُ <span class=\"inline-translation\">سینه‌اش را کاویدند</span>",
-      "فلم يجدوا غير قلبهْ <span class=\"inline-translation\">جز قلبش نیافتند</span>",
-      "وقد فتّشوا قلبَهْ <span class=\"inline-translation\">قلبش را کاویدند</span>",
-      "فلم يجدوا غير شعبهْ <span class=\"inline-translation\">جز مردمش نیافتند</span>",
-      "وقد فتشوا صوتَهُ <span class=\"inline-translation\">صدایش را کاویدند</span>",
-      "فلم يجدوا غير حزنهْ <span class=\"inline-translation\">جز اندوهش نیافتند</span>",
-      "وقد فتّشوا حزنَهُ <span class=\"inline-translation\">اندوهش را کاویدند</span>",
-      "فلم يجدوا غير سجنهْ <span class=\"inline-translation\">جز زندانش نیافتند</span>",
-      "وقد فتَّشوا سجنَهُ <span class=\"inline-translation\">زندانش را کاویدند</span>",
-      "فلم يجدوا غيرهم في القيود <span class=\"inline-translation\">و جز خودشان در زنجیر، کسی را نیافتند</span>"
+      "<span class=\"arabic-line\">يغنّي المغنّي</span><span class=\"inline-translation\">آوازخوان می‌خوانَد</span>",
+      "<span class=\"arabic-line\">عن النار والغرباء</span><span class=\"inline-translation\">از آتش و بیگانگان</span>",
+      "<span class=\"arabic-line\">ويستجوبونه:</span><span class=\"inline-translation\">بازجویی‌اش می‌کنند:</span>",
+      "<span class=\"arabic-line\">لماذا تغنّي؟</span><span class=\"inline-translation\">چرا می‌خوانی؟</span>",
+      "<span class=\"arabic-line\">يردُّ عليهم:</span><span class=\"inline-translation\">پاسخ می‌دهد:</span>",
+      "<span class=\"arabic-line\">لأنّي أغَنّي</span><span class=\"inline-translation\">زیرا که می‌خوانم</span>",
+      "<span class=\"arabic-line\">وقد فتّشوا صدرَهُ</span><span class=\"inline-translation\">سینه‌اش را کاویدند</span>",
+      "<span class=\"arabic-line\">فلم يجدوا غير قلبهْ</span><span class=\"inline-translation\">جز قلبش نیافتند</span>",
+      "<span class=\"arabic-line\">وقد فتّشوا قلبَهْ</span><span class=\"inline-translation\">قلبش را کاویدند</span>",
+      "<span class=\"arabic-line\">فلم يجدوا غير شعبهْ</span><span class=\"inline-translation\">جز مردمش نیافتند</span>",
+      "<span class=\"arabic-line\">وقد فتشوا صوتَهُ</span><span class=\"inline-translation\">صدایش را کاویدند</span>",
+      "<span class=\"arabic-line\">فلم يجدوا غير حزنهْ</span><span class=\"inline-translation\">جز اندوهش نیافتند</span>",
+      "<span class=\"arabic-line\">وقد فتّشوا حزنَهُ</span><span class=\"inline-translation\">اندوهش را کاویدند</span>",
+      "<span class=\"arabic-line\">فلم يجدوا غير سجنهْ</span><span class=\"inline-translation\">جز زندانش نیافتند</span>",
+      "<span class=\"arabic-line\">وقد فتَّشوا سجنَهُ</span><span class=\"inline-translation\">زندانش را کاویدند</span>",
+      "<span class=\"arabic-line\">فلم يجدوا غيرهم في القيود</span><span class=\"inline-translation\">و جز خودشان در زنجیر، کسی را نیافتند</span>"
     ],
     "poet": "محمود درویش",
     "date": "2026-05-26",
@@ -30,7 +29,7 @@
         "labelEn": "Echoes of Paradox"
       }
     },
-    "translation": "The singer sings\nof fire and strangers\n...\nand they interrogate him:\nWhy do you sing?\nHe answers them:\nBecause I sing\n\nAnd they searched his chest\nand found nothing but his heart\nAnd they searched his heart\nand found nothing but his people\nAnd they searched his voice\nand found nothing but his sorrow\nAnd they searched his sorrow\nand found nothing but his prison\nAnd they searched his prison\nand found no one but themselves in chains"
+    "translation": "The singer sings\nof fire and strangers\nand they interrogate him:\nWhy do you sing?\nHe answers them:\nBecause I sing\n\nAnd they searched his chest\nand found nothing but his heart\nAnd they searched his heart\nand found nothing but his people\nAnd they searched his voice\nand found nothing but his sorrow\nAnd they searched his sorrow\nand found nothing but his prison\nAnd they searched his prison\nand found no one but themselves in chains"
   },
   {
     "verses": [
