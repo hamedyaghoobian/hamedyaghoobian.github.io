@@ -1,6 +1,39 @@
 [
   {
     "verses": [
+      "يغنّي المغنّي <span class=\"inline-translation\">آوازخوان می‌خوانَد</span>",
+      "عن النار والغرباء <span class=\"inline-translation\">از آتش و بیگانگان</span>",
+      "... <span class=\"inline-translation\">...</span>",
+      "ويستجوبونه: <span class=\"inline-translation\">بازجویی‌اش می‌کنند:</span>",
+      "لماذا تغنّي؟ <span class=\"inline-translation\">چرا می‌خوانی؟</span>",
+      "يردُّ عليهم: <span class=\"inline-translation\">پاسخ می‌دهد:</span>",
+      "لأنّي أغَنّي <span class=\"inline-translation\">زیرا که می‌خوانم</span>",
+      "وقد فتّشوا صدرَهُ <span class=\"inline-translation\">سینه‌اش را کاویدند</span>",
+      "فلم يجدوا غير قلبهْ <span class=\"inline-translation\">جز قلبش نیافتند</span>",
+      "وقد فتّشوا قلبَهْ <span class=\"inline-translation\">قلبش را کاویدند</span>",
+      "فلم يجدوا غير شعبهْ <span class=\"inline-translation\">جز مردمش نیافتند</span>",
+      "وقد فتشوا صوتَهُ <span class=\"inline-translation\">صدایش را کاویدند</span>",
+      "فلم يجدوا غير حزنهْ <span class=\"inline-translation\">جز اندوهش نیافتند</span>",
+      "وقد فتّشوا حزنَهُ <span class=\"inline-translation\">اندوهش را کاویدند</span>",
+      "فلم يجدوا غير سجنهْ <span class=\"inline-translation\">جز زندانش نیافتند</span>",
+      "وقد فتَّشوا سجنَهُ <span class=\"inline-translation\">زندانش را کاویدند</span>",
+      "فلم يجدوا غيرهم في القيود <span class=\"inline-translation\">و جز خودشان در زنجیر، کسی را نیافتند</span>"
+    ],
+    "poet": "محمود درویش",
+    "date": "2026-05-26",
+    "theme": {
+      "interpretation": "The singer’s voice becomes a vessel of collective memory and sorrow, refusing the violence of interrogation. The ultimate paradox unfolds at the threshold of captivity: in searching the prisoner, the captors expose their own confinement, finding that the chains they forged bind none other than themselves.",
+      "interpretationFa": "صدای آوازخوان به ظرفی برای حافظه و اندوه جمعی تبدیل می‌شود و از تن دادن به خشونتِ بازجویی سر باز می‌زند. تناقض غایی در آستانه اسارت آشکار می‌شود: بازجویان در جست‌وجوی زندانی، بندهای خویش را هویدا می‌کنند و درمی‌یابند زنجیری که بافته‌اند، کسی جز خودشان را به بند نکشیده است.",
+      "cluster": {
+        "id": "echoes-of-paradox",
+        "label": "پژواک تناقض",
+        "labelEn": "Echoes of Paradox"
+      }
+    },
+    "translation": "The singer sings\nof fire and strangers\n...\nand they interrogate him:\nWhy do you sing?\nHe answers them:\nBecause I sing\n\nAnd they searched his chest\nand found nothing but his heart\nAnd they searched his heart\nand found nothing but his people\nAnd they searched his voice\nand found nothing but his sorrow\nAnd they searched his sorrow\nand found nothing but his prison\nAnd they searched his prison\nand found no one but themselves in chains"
+  },
+  {
+    "verses": [
       "نمیخواهم تخت جمشید باشم مردم در من عکس بگیرند",
       "میخواهم قلعه قورتان باشم",
       "در کویری گمنام",

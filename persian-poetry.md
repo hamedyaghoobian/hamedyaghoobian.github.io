@@ -83,6 +83,19 @@ permalink: /poems/
     padding: 0 0.25rem;
 }
 
+.inline-translation {
+    color: #718096;
+    font-size: 0.8rem;
+    margin-right: 0.75rem;
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: 300;
+    display: inline-block;
+}
+
+body.dark .inline-translation {
+    color: #a0aec0;
+}
+
 .poet-attribution {
     margin-top: 1.5rem;
     padding-top: 1rem;
