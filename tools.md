@@ -32,7 +32,7 @@ permalink: /tools/
 }
 
 .tool-title {
-    font-family: 'Caveat', cursive;
+    font-family: 'Excalifont', 'Caveat', cursive;
     font-size: 2.25rem;
     font-weight: 500;
     color: #1a202c;
@@ -65,7 +65,7 @@ permalink: /tools/
 }
 
 .feature-list h4 {
-    font-family: 'Caveat', cursive;
+    font-family: 'Excalifont', 'Caveat', cursive;
     font-size: 1.5rem;
     color: #1a202c;
     margin: 0 0 1rem 0;
@@ -148,7 +148,7 @@ permalink: /tools/
 }
 
 .coming-soon h3 {
-    font-family: 'Caveat', cursive;
+    font-family: 'Excalifont', 'Caveat', cursive;
     font-size: 2rem;
     color: #1a202c;
     margin-bottom: 0.5rem;
