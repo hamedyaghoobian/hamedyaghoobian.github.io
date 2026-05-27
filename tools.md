@@ -32,9 +32,9 @@ permalink: /tools/
 }
 
 .tool-title {
-    font-family: 'Libre Baskerville', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #1a202c;
     margin: 0 0 0.5rem 0;
     line-height: 1.2;
@@ -65,9 +65,9 @@ permalink: /tools/
 }
 
 .feature-list h4 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     color: #1a202c;
     margin: 0 0 1rem 0;
 }
@@ -149,9 +149,9 @@ permalink: /tools/
 }
 
 .coming-soon h3 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     color: #1a202c;
     margin-bottom: 0.5rem;
 }

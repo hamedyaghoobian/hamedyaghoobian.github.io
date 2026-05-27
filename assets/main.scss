@@ -1,6 +1,8 @@
 ---
 ---
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
+
 @import "minima";
 $spacing-unit: 30px;
 $on-medium: 768px;
@@ -63,32 +65,32 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Libre Baskerville', 'DM Serif Display', serif !important;
+  font-family: 'Cormorant Garamond', 'DM Serif Display', serif !important;
   letter-spacing: -0.01em;
   line-height: 1.3;
   color: #1a202c;
   font-weight: 700;
-  font-size: 1.3em;
+  font-size: 1.15em;
   transition: color 0.3s ease;
 }
 
 h1 {
-  font-size: 2.1em;
+  font-size: 1.8em;
 }
 
 h2 {
-  font-size: 1.7em;
+  font-size: 1.45em;
 }
 
 h3 {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .site-title {
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Cormorant Garamond', serif;
   font-weight: 700;
   font-style: italic;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
 
@@ -539,11 +541,11 @@ body.dark .theme-icon--moon {
 }
 
 .site-title {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.4rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
   font-weight: 700;
   font-style: italic;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin-bottom: 0;
   padding: 0;
   line-height: 1;
