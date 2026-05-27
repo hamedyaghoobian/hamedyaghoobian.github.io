@@ -35,13 +35,13 @@ Over an **eight-week live evaluation**, MASFIN achieved a **7.33% cumulative ret
 <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
 
   <figure class="research-figure" style="flex: 1; min-width: 300px; text-align: center;">
-    <img src="/assets/images/masfin/improved_annotation_test.jpg" alt="Cumulative Return" style="width: 100%; height: auto;">
-    <figcaption>Figure 1: Cumulative Return</figcaption>
+    <img src="/assets/images/masfin/improved_annotation_test.jpg" alt="Cumulative Return" style="max-height: 250px; width: auto; max-width: 100%; display: block; margin: 0 auto;">
+    <figcaption style="margin-top: 0.75rem;">Figure 1: Cumulative Return</figcaption>
   </figure>
 
   <figure class="research-figure" style="flex: 1; min-width: 300px; text-align: center;">
-    <img src="/assets/images/masfin/scipy_enhanced_risk_return.jpg" alt="Risk Return" style="width: 100%; height: auto;">
-    <figcaption>Figure 2: Risk–Return Profile</figcaption>
+    <img src="/assets/images/masfin/scipy_enhanced_risk_return.jpg" alt="Risk Return" style="max-height: 250px; width: auto; max-width: 100%; display: block; margin: 0 auto;">
+    <figcaption style="margin-top: 0.75rem;">Figure 2: Risk–Return Profile</figcaption>
   </figure>
 
 </div>
