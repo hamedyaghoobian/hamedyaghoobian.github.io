@@ -34,7 +34,7 @@ permalink: /tools/
 .tool-title {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #1a202c;
     margin: 0 0 0.5rem 0;
     line-height: 1.2;
@@ -67,7 +67,7 @@ permalink: /tools/
 .feature-list h4 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: 1.15rem;
+    font-size: 1.0rem;
     color: #1a202c;
     margin: 0 0 1rem 0;
 }
@@ -151,7 +151,7 @@ permalink: /tools/
 .coming-soon h3 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: #1a202c;
     margin-bottom: 0.5rem;
 }
