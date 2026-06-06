@@ -714,19 +714,20 @@ body.dark .page-content .wrapper {
 // Home page specific overrides — wrapper is the full-width full-height shell
 .home {
   .page-content {
-    min-height: auto;
+    flex: 1;                   // Expand to fill space between header and footer
+    min-height: 0;
     overflow: visible;
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center;   // Vertically center the wrapper
 
     .wrapper {
-      padding: 0;
-      margin: auto auto; // Vertically center the content wrapper within page-content
+      padding: 2rem 0;
+      margin: 0 auto;
       max-width: 100%;
       overflow: visible;
-      flex: 0 0 auto; // Keep natural content height for vertical centering
+      flex: 0 0 auto;          // Don't stretch, keep natural height
     }
   }
 }
