@@ -34,7 +34,7 @@ permalink: /tools/
 .tool-title {
     font-family: 'Cardo', serif;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     color: #1a202c;
     margin: 0 0 0.5rem 0;
     line-height: 1.2;
@@ -151,7 +151,7 @@ permalink: /tools/
 .coming-soon h3 {
     font-family: 'Cardo', serif;
     font-weight: 700;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: #1a202c;
     margin-bottom: 0.5rem;
 }
