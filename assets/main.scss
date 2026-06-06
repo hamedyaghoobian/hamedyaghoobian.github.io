@@ -715,21 +715,27 @@ body.dark .page-content .wrapper {
 // DOM structure: main.page-content > div.wrapper > div.home
 // Need the wrapper to stretch, then .home to fill it and center its children
 .page-content > .wrapper:has(.home) {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 2rem;
-  margin: 0 auto;
-  max-width: 100%;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.home {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: calc(100vh - 140px);
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 900px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    min-height: auto;
+    padding: 1.5rem;
+    margin: 0 auto;
+  }
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 .site-footer {
@@ -933,11 +939,7 @@ body.dark {
     padding: 0.75rem 1rem;
   }
 
-  // Home page specific mobile overrides
-  .home .page-content .wrapper {
-    padding: 0;
-    margin: 0;
-  }
+
 
   .bio-text {
     text-align: left;
