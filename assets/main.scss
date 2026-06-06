@@ -632,37 +632,22 @@ body.dark .theme-icon--moon {
   left: 0;
   height: 100vh;
   width: 100vw;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
-  opacity: 0.3;
+  opacity: 0.6;
 }
 
 #glow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg,
-      var(--bounce-light) 0%,
-      transparent 30%,
-      transparent 70%,
-      var(--bounce-light) 100%);
+  background: radial-gradient(circle at top right, var(--bounce-light) 0%, transparent 60%);
   transition: background 0.5s ease;
   height: 100%;
   width: 100%;
-  opacity: 0.2;
 }
 
 #glow-bounce {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg,
-      transparent 0%,
-      var(--bounce-light) 40%,
-      transparent 60%,
-      var(--bounce-light) 100%);
-  transition: background 0.5s ease;
-  opacity: 0.2;
-  height: 100%;
-  width: 100%;
+  display: none;
 }
 
 // Simplified dark mode styles
@@ -696,16 +681,7 @@ body.dark {
   }
 }
 
-// Update the dappled light container
-#dappled-light {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  overflow: hidden;
-}
+// Cleaned up dappled light overrides
 
 // Simplified content styling
 .page-content {
