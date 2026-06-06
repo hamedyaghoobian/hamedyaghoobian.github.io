@@ -711,25 +711,23 @@ body.dark .page-content .wrapper {
   background-color: transparent;
 }
 
-// Home page specific overrides — wrapper is the full-width full-height shell
-.home {
-  .page-content {
-    flex: 1;                   // Expand to fill space between header and footer
-    min-height: 0;
-    overflow: visible;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;   // Vertically center the wrapper
+// Home page specific overrides
+// DOM structure: main.page-content > div.wrapper > div.home
+// Need the wrapper to stretch, then .home to fill it and center its children
+.page-content > .wrapper:has(.home) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+}
 
-    .wrapper {
-      padding: 2rem 0;
-      margin: 0 auto;
-      max-width: 100%;
-      overflow: visible;
-      flex: 0 0 auto;          // Don't stretch, keep natural height
-    }
-  }
+.home {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .site-footer {
