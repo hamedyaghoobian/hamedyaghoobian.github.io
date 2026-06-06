@@ -718,9 +718,11 @@ body.dark .page-content .wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0;
-  margin: 0;
+  padding: 0 2rem;
+  margin: 0 auto;
   max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .home {
