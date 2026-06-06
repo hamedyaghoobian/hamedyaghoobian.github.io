@@ -32,7 +32,7 @@ permalink: /tools/
 }
 
 .tool-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Cardo', serif;
     font-weight: 700;
     font-size: 1.5rem;
     color: #1a202c;
@@ -65,7 +65,7 @@ permalink: /tools/
 }
 
 .feature-list h4 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Cardo', serif;
     font-weight: 700;
     font-size: 1.0rem;
     color: #1a202c;
@@ -149,7 +149,7 @@ permalink: /tools/
 }
 
 .coming-soon h3 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Cardo', serif;
     font-weight: 700;
     font-size: 1.3rem;
     color: #1a202c;
