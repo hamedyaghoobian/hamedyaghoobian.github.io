@@ -32,7 +32,7 @@ permalink: /tools/
 }
 
 .tool-title {
-    font-family: 'Cardo', serif;
+    font-family: 'EB Garamond', serif;
     font-weight: 700;
     font-size: 1.20rem;
     color: #1a202c;
@@ -65,7 +65,7 @@ permalink: /tools/
 }
 
 .feature-list h4 {
-    font-family: 'Cardo', serif;
+    font-family: 'EB Garamond', serif;
     font-weight: 700;
     font-size: 1.0rem;
     color: #1a202c;
@@ -149,7 +149,7 @@ permalink: /tools/
 }
 
 .coming-soon h3 {
-    font-family: 'Cardo', serif;
+    font-family: 'EB Garamond', serif;
     font-weight: 700;
     font-size: 1.10rem;
     color: #1a202c;

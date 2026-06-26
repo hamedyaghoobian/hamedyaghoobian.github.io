@@ -103,7 +103,7 @@ permalink: /poems/
 }
 
 .verse .english-line {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'EB Garamond', serif;
     font-size: 0.9rem;
     font-weight: 400;
     font-style: italic;
