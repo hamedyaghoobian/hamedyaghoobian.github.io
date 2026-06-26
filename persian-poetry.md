@@ -104,8 +104,9 @@ permalink: /poems/
 
 .verse .english-line {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 400;
+    font-style: italic;
     color: #2c3e50;
     text-align: left; /* Align right column's content to the left (towards the gutter) */
     display: block;
