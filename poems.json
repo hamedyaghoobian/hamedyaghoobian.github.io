@@ -1,6 +1,25 @@
 [
   {
     "verses": [
+      "<span class=\"english-line\">And the end of all our exploring</span><span class=\"inline-translation\">و پایان تمامی کاوش‌هایمان</span>",
+      "<span class=\"english-line\">Will be to arrive where we started</span><span class=\"inline-translation\">رسیدن به همان‌جایی خواهد بود که آغاز کردیم</span>",
+      "<span class=\"english-line\">And know the place for the first time</span><span class=\"inline-translation\">و شناختن آن جایگاه برای نخستین بار</span>"
+    ],
+    "poet": "تی. اس. الیوت",
+    "date": "2026-06-26",
+    "theme": {
+      "interpretation": "Eliot captures the cyclical nature of human inquiry and discovery, where the ultimate destination is not a new land, but a transformed consciousness. By returning to the origin with eyes that have wandered, the familiar is made strange and finally understood.",
+      "interpretationFa": "الیوت ماهیت چرخه‌ای جست‌وجو و کشف آدمی را به تصویر می‌کشد؛ جایی که مقصد نهایی نه سرزمینی جدید، بلکه آگاهیِ دگرگون‌شده است. با بازگشت به سرآغاز، آن‌هم با چشمانی که جهان را کاویده‌اند، امر آشنا بیگانه می‌نماید و سرانجام به درک درمی‌آید.",
+      "cluster": {
+        "id": "echoes-of-paradox",
+        "label": "پژواک تناقض",
+        "labelEn": "Echoes of Paradox"
+      }
+    },
+    "translation": "And the end of all our exploring\nWill be to arrive where we started\nAnd know the place for the first time\n\n—\n\nو پایان تمامی کاوش‌هایمان\nرسیدن به همان‌جایی خواهد بود که آغاز کردیم\nو شناختن آن جایگاه برای نخستین بار"
+  },
+  {
+    "verses": [
       "<span class=\"arabic-line\">يغنّي المغنّي</span><span class=\"inline-translation\">آوازخوان می‌خوانَد</span>",
       "<span class=\"arabic-line\">عن النار والغرباء</span><span class=\"inline-translation\">از آتش و بیگانگان</span>",
       "<span class=\"arabic-line\">ويستجوبونه:</span><span class=\"inline-translation\">بازجویی‌اش می‌کنند:</span>",

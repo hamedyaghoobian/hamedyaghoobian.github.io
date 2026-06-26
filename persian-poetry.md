@@ -102,6 +102,16 @@ permalink: /poems/
     display: block;
 }
 
+.verse .english-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: left; /* Align right column's content to the left (towards the gutter) */
+    display: block;
+    direction: ltr;
+}
+
 .verse .inline-translation {
     font-family: 'Vazirmatn', sans-serif;
     font-size: 0.8rem;
@@ -114,6 +124,10 @@ permalink: /poems/
 
 /* Dark mode overrides */
 body.dark .verse .arabic-line {
+    color: #e2e8f0;
+}
+
+body.dark .verse .english-line {
     color: #e2e8f0;
 }
 
@@ -131,6 +145,10 @@ body.dark .verse .inline-translation {
     }
     
     .verse .arabic-line {
+        text-align: center;
+    }
+    
+    .verse .english-line {
         text-align: center;
     }
     
