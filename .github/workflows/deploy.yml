@@ -59,7 +59,7 @@ jobs:
     - name: Inject API Key
       run: |
         # Replace the placeholder with the actual API key from secrets
-        sed -i 's/GROQ_API_KEY_PLACEHOLDER/${{ secrets.GROQ_API_KEY }}/g' persian-poetry.md
+        sed -i 's/GROQ_API_KEY_PLACEHOLDER/${{ secrets.GROQ_API_KEY }}/g' poems.md
       
     - name: Build site
       run: |
