@@ -1484,6 +1484,19 @@ function generatePoemHTML(poem) {
     const poemDataAttr = encodeURIComponent(JSON.stringify(poem));
     const dateAttribute = poem.date ? `data-date="${poem.date}"` : '';
     
+    const translateButtonHTML = poem.hideTranslation ? '' : `
+            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
+                <i class="fas fa-language"></i>
+            </button>
+            <div class="translation-container">
+                <p class="translation-text"></p>
+                <div class="translation-meta">
+                    <span class="translation-model"></span>
+                    <span class="translation-time"></span>
+                </div>
+            </div>
+    `;
+    
     return `
         <div class="poem-card" ${dateAttribute} data-poem="${poemDataAttr}">
             <div class="date-header">
@@ -1497,16 +1510,7 @@ function generatePoemHTML(poem) {
             <div class="poet-attribution">
                 <p class="poet-name">${poem.poet}</p>
             </div>
-            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-                <i class="fas fa-language"></i>
-            </button>
-            <div class="translation-container">
-                <p class="translation-text"></p>
-                <div class="translation-meta">
-                    <span class="translation-model"></span>
-                    <span class="translation-time"></span>
-                </div>
-            </div>
+            ${translateButtonHTML}
         </div>
     `;
 }
