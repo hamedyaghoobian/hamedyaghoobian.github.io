@@ -36,7 +36,7 @@ html {
 
 // Modern Typography
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
   line-height: 1.5;
   color: #2c3e50;
@@ -96,7 +96,7 @@ h3 {
 }
 
 .site-nav {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', 'Inter', sans-serif;
   font-weight: 400;
 
   .page-link {
@@ -128,7 +128,7 @@ h3 {
 
 // Footer
 .site-footer {
-  font-family: 'Inter', sans-serif;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-weight: 300;
   font-size: 0.8rem;
   color: #718096;
@@ -144,7 +144,7 @@ h3 {
   .copyright-text {
     margin: 0;
     line-height: 1.5;
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
   }
 
   .footer-separator {
@@ -927,7 +927,8 @@ body.dark {
     flex-direction: column;
     text-align: center;
     padding-left: 1rem;
-    padding-right: 2rem;
+    padding-right: 1rem;
+    align-items: center;
   }
 
   .info-grid {
@@ -942,7 +943,7 @@ body.dark {
 
 
   .bio-text {
-    text-align: left;
+    text-align: center;
   }
 
   .research-interests,
@@ -1121,7 +1122,7 @@ body.dark {
     font-size: 0.9rem;
     color: #666;
     font-style: italic;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Geist', 'Inter', sans-serif;
     line-height: 1.4;
 
     body.dark & {
