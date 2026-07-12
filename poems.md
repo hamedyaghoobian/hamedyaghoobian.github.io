@@ -1187,7 +1187,7 @@ async function loadPoems() {
             poems = [
                 {
                     "verses": ["و کجا باید", "در غیبت ابدی رویا", "پناه گرفت؟"],
-                    "poet": "احمدرضا احمدی",
+                    "poet": "احمدرضا احمدی / Ahmadreza Ahmadi",
                     "date": "2026-02-06",
                     "theme": {
                         "cluster": { "id": "weight-of-silence", "label": "سنگینی سکوت", "labelEn": "The Weight of Silence" }
@@ -1195,7 +1195,7 @@ async function loadPoems() {
                 },
                 {
                     "verses": ["به شکل رفتن درآمده بود", "به شکل دور شدن ماه از پنجره"],
-                    "poet": "رسول یونان",
+                    "poet": "رسول یونان / Rasool Yoonan",
                     "date": "2025-07-10",
                     "theme": {
                         "cluster": { "id": "beautiful-impermanence", "label": "ناپایداری زیبا", "labelEn": "Beautiful Impermanence" }
@@ -1203,7 +1203,7 @@ async function loadPoems() {
                 },
                 {
                     "verses": ["چند گویند مرا: صبر کن از لشکر غم؟", "بر من از گوشهٔ ناگاه بتازد چه کنم؟"],
-                    "poet": "عراقی",
+                    "poet": "عراقی / Iraqi",
                     "date": "2025-07-09",
                     "theme": {
                         "cluster": { "id": "weight-of-silence", "label": "سنگینی سکوت", "labelEn": "The Weight of Silence" }
@@ -1211,7 +1211,7 @@ async function loadPoems() {
                 },
                 {
                     "verses": ["سر‌نوشتم به بال کبوتر‌ها گره خورده", "سنگی می‌زنند", "یکی می‌میرد"],
-                    "poet": "سعید برآبادی",
+                    "poet": "سعید برآبادی / Saeed Baraabadi",
                     "date": "2025-07-08",
                     "theme": {
                         "cluster": { "id": "invisible-thresholds", "label": "آستانه‌های نامرئی", "labelEn": "Invisible Thresholds" }
@@ -1219,7 +1219,7 @@ async function loadPoems() {
                 },
                 {
                     "verses": ["زان که بر ضد جهان گویم سخن", "یا جهان دیوانه باشد یا که من"],
-                    "poet": "نیما یوشیج",
+                    "poet": "نیما یوشیج / Nima Yooshij",
                     "date": "2025-07-08",
                     "theme": {
                         "cluster": { "id": "echoes-of-paradox", "label": "پژواک تناقض", "labelEn": "Echoes of Paradox" }
