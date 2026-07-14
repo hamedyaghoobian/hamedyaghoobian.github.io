@@ -137,7 +137,7 @@ Three emergent heuristic patterns:
 
 ## Resources
 
-- **Paper:** Available upon acceptance  
+- **Paper:** [ACM Digital Library](https://dl.acm.org/doi/10.1145/3803784.3807554)  
 - **Code & Model:** [github.com/hamedyaghoobian/timecapsule](https://github.com/hamedyaghoobian/timecapsule)
 
 
