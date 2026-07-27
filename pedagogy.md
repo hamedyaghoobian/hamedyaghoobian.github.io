@@ -10,7 +10,7 @@ permalink: /pedagogy/
 
 ### Fall 2026
 * Intro to Game Programming with Python (CSI 102)
-* Machine Learning (Special Topics Elective)
+* Machine Learning (CSI 330)
 
 
 ### Spring 2026
