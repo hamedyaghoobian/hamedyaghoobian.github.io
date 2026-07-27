@@ -138,6 +138,7 @@ Three emergent heuristic patterns:
 ## Resources
 
 - **Paper:** [ACM Digital Library](https://dl.acm.org/doi/10.1145/3803784.3807554)  
+- **Press Coverage:** [Communications of the ACM (CACM)](https://cacm.acm.org/news/are-llms-unstuck-in-time/) - *"Are LLMs Stuck in Time?"*  
 - **Code & Model:** [github.com/hamedyaghoobian/timecapsule](https://github.com/hamedyaghoobian/timecapsule)
 
 
