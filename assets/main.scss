@@ -15,7 +15,7 @@ html {
 }
 
 :root {
-  --day: #fffdfa;
+  --day: #faf2e2;
   --evening: #fccc83;
   --dusk: #db7a2a;
   --night: #0f131c;
@@ -32,6 +32,12 @@ html {
   --text: var(--dark);
   --accent: #2b6cb0;
   --accent-hover: #2c5282;
+
+  /* Palette of the Mashhad footer drawing, reused across the page */
+  --paper: #faf2e2;
+  --ink: #2749b8;
+  --ink-soft: #6b7fbe;
+  --rule: rgba(39, 73, 184, 0.16);
 }
 
 // Modern Typography
@@ -55,6 +61,10 @@ body {
     --text: var(--dark);
     --accent: #63b3ed;
     --accent-hover: #90cdf4;
+    --paper: var(--night);
+    --ink: #d8b647;
+    --ink-soft: #9a8a63;
+    --rule: rgba(216, 182, 71, 0.18);
     background-color: var(--night);
     color: #a0c4ff;
   }
@@ -237,7 +247,7 @@ html {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1rem;
+  padding: clamp(0.3rem, 1.2vh, 1rem);
 }
 
 .bio-content {
@@ -260,7 +270,10 @@ html {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 250px; // match image width
+  // Drives the ring and the photo below. The 250px ceiling means this is a
+  // no-op on a roomy window and only gives ground on a short one.
+  --ring-size: clamp(170px, 24vh, 250px);
+  width: var(--ring-size); // match image width
   // extra bottom space for the icons strip + caption
   padding-bottom: 50px;
   z-index: 10;
@@ -269,8 +282,8 @@ html {
 
 // Orange ring wrapper — the visible circle border
 .profile-ring {
-  width: 250px;
-  height: 250px;
+  width: var(--ring-size, 250px);
+  height: var(--ring-size, 250px);
   border-radius: 50%;
   border: 2px solid rgba(237, 137, 54, 0.45);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.10);
@@ -289,8 +302,8 @@ html {
 
 // The actual image — smaller than the ring so shoulders don't touch the rim
 .profile-pic {
-  width: 215px;
-  height: 215px;
+  width: calc(var(--ring-size, 250px) * 0.86);
+  height: calc(var(--ring-size, 250px) * 0.86);
   border-radius: 50%;
   object-fit: cover;
   display: block;
@@ -719,15 +732,16 @@ body.dark .page-content .wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 140px);
-  padding: 2rem;
+  // No min-height: body is a 100vh flex column and .page-content is flex:1,
+  // so this stretches to exactly the space the header and footer leave over.
+  // A hardcoded calc() here silently breaks every time the footer changes.
+  padding: clamp(0.75rem, 2.2vh, 2rem);
   margin: 0 auto;
   max-width: 900px;
   width: 100%;
   box-sizing: border-box;
 
   @media screen and (max-width: 768px) {
-    min-height: auto;
     padding: 1.5rem;
     margin: 0 auto;
   }
@@ -736,7 +750,7 @@ body.dark .page-content .wrapper {
 .home {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: clamp(1rem, 3.4vh, 2.5rem);
 }
 
 .site-footer {
@@ -774,7 +788,7 @@ body {
 .education {
   flex: 1;
   min-width: 300px;
-  padding: 1rem;
+  padding: clamp(0.35rem, 1.4vh, 1rem);
 }
 
 // Home page container: naturally sized to fit all content on screen
@@ -1061,14 +1075,6 @@ body.dark {
 body.dark .site-footer {
   color: #718096;
   border-top-color: rgba(255, 255, 255, 0.1);
-
-  .built-with a {
-    color: #a0c4ff;
-
-    &:hover {
-      color: #63b3ed;
-    }
-  }
 }
 
 // Update dark mode link styles
@@ -1090,12 +1096,14 @@ body.dark {
     }
   }
 
-  // Exception for footer links
+  // Exception for footer links: the colophon link takes the colour of the
+  // line it sits in, not the site-wide dark link colour. !important is
+  // needed only to beat the `body.dark a` rule above.
   .site-footer .built-with a {
-    color: #a0c4ff !important;
+    color: inherit !important;
 
     &:hover {
-      color: #63b3ed !important;
+      color: inherit !important;
     }
   }
 }
@@ -1239,5 +1247,257 @@ body:has(.iran-hover:hover) .iran-sun {
 
   body.dark & {
     opacity: 0.95;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Footer: Mashhad skyline
+// The drawing's paper is #faf2e2 and its ink #2749b8. The page ground
+// is set to the same paper, so the drawing's sky *is* the page — which
+// is what lets the band show open sky above the skyline and lets the
+// edges dissolve instead of ending.
+// ─────────────────────────────────────────────────────────────
+
+.site-footer {
+  border-top: 0 !important;
+  padding: 0;
+  margin-top: clamp(1.25rem, 3vh, 2.5rem);
+  position: relative;
+  // Below .page-content (z-index 1) so the drawing rises behind the text
+  // above rather than washing over it, but still above #dappled-light.
+  z-index: 0;
+  // The reveal grows out past the footer's own box.
+  overflow: visible;
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    padding-top: clamp(0.35rem, 0.9vh, 0.55rem);
+    padding-bottom: clamp(0.55rem, 1.7vh, 1.1rem);
+  }
+}
+
+// .footer-city sits outside .wrapper, so 100% is already the full page
+// width — no 100vw, which would overflow by the scrollbar gutter.
+.footer-city {
+  position: relative;
+  width: 100%;
+
+  // What the band costs the page. The vw term holds the same slice of the
+  // drawing at every width; the cap freezes it once the drawing stops
+  // growing. This is a layout height and nothing below is allowed to touch
+  // it — the reveal happens out of flow.
+  --band-h: clamp(95px, min(21.4vw, 15vh), 214px);
+  // The drawing's full rendered height, matching the img's width rule.
+  --full-h: calc(min(100vw, 1000px) * 0.5625);
+
+  height: var(--band-h);
+  user-select: none;
+
+  // It is a <button> now, so strip the chrome back to a plain block.
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+}
+
+// The frame is out of flow and anchored to the ground line, so growing it
+// opens the crop upward without moving a single layout property — the
+// one-screen home page cannot start scrolling mid-hover.
+.footer-city__frame {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--band-h);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+
+  // Dissolves whatever edge the crop currently sits at, so the reveal never
+  // shows a hard horizontal cut. Proportional, so it holds at any height.
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 26%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 26%);
+
+  // Slower settling back than opening, matching the drawing's own fade.
+  transition: height 2.1s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+// Click opens the crop all the way up the drawing, so the cranes and the
+// sky the resting band hides come into view.
+.footer-city.is-open .footer-city__frame {
+  height: var(--full-h);
+  transition: height 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.footer-city__img {
+  display: block;
+  // The width cap is what keeps the crop constant on a wide monitor: past
+  // it the drawing stops growing, so the band's fixed height keeps showing
+  // the same slice instead of creeping down the skyline. Holding it well
+  // under the page width also draws the line work finer and sets the city
+  // further off, which is most of what makes the band read as quiet.
+  width: min(100%, 1000px);
+  // Natural aspect — the frame above does the cropping, so growing the frame
+  // uncovers more of the drawing instead of rescaling it.
+  height: auto;
+  max-width: none;
+
+  // At rest the drawing is barely awake — a texture at the foot of the page
+  // rather than a picture. It takes longer to settle back than to rouse, so
+  // it sinks away rather than snapping off.
+  opacity: 0.5;
+  transition: opacity 2.1s ease;
+
+  // Atmospheric perspective, measured over the whole drawing now rather than
+  // the visible strip: the sky and cranes stay a faint suggestion while the
+  // near buildings carry the weight, so what the hover uncovers reads as
+  // distance. The horizontal pass dissolves the left and right edges.
+  --city-veil:
+    linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.26) 24%,
+      rgba(0, 0, 0, 0.52) 50%,
+      rgba(0, 0, 0, 0.80) 76%),
+    linear-gradient(to right,
+      transparent 0%, #000 13%, #000 87%, transparent 100%);
+  -webkit-mask-image: var(--city-veil);
+  mask-image: var(--city-veil);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+// Hover is only the hint that there is something here to press; the drawing
+// stirs but stays put.
+.footer-city:hover .footer-city__img {
+  opacity: 0.68;
+  transition: opacity 0.5s ease;
+}
+
+// The press itself: the city comes fully up out of the paper.
+.footer-city.is-open .footer-city__img {
+  opacity: 1;
+  transition: opacity 1.2s ease;
+}
+
+// The bloom is decoration; anyone who has asked for less motion gets it
+// near-instantly instead of as a slow fade.
+@media (prefers-reduced-motion: reduce) {
+  .footer-city__frame,
+  .footer-city.is-open .footer-city__frame,
+  .footer-city__img,
+  .footer-city:hover .footer-city__img,
+  .footer-city.is-open .footer-city__img {
+    transition: height 0.2s ease, opacity 0.2s ease;
+  }
+}
+
+// Dark mode: inverting a two-colour drawing lands on a near-black sky
+// with warm gold line work — the palette dark mode already uses.
+body.dark .footer-city__img {
+  filter: invert(1);
+}
+
+// Caption: a plate label for the drawing, in the site title's own voice.
+// An italic serif at this size reads as a hand-note under a plate, where
+// mono's even rhythm would insist — so it separates itself from the
+// colophon below without getting any louder. Quiet at rest; it only comes
+// up to full strength when you actually look at it.
+.footer-place {
+  // This gap is what separates the caption from the colophon.
+  margin: 0 0 clamp(0.4rem, 1.3vh, 0.85rem);
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.015em;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  opacity: 0.5;
+  cursor: default;
+  // Same slow breath as the drawing, so the footer wakes as one thing.
+  transition: opacity 1.4s ease, color 1.4s ease;
+}
+
+.site-footer:hover .footer-place {
+  opacity: 1;
+  color: var(--ink);
+  transition: opacity 0.9s ease, color 0.9s ease;
+}
+
+// Colophon: where and how the thing was made, in one line.
+.site-footer .copyright-text {
+  margin: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 300;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  opacity: 0.75;
+}
+
+// Dots softer than the words they separate.
+.site-footer .footer-separator {
+  margin: 0 0.55em;
+  opacity: 0.45;
+}
+
+// Neutralises the legacy `.built-with { color: #777 }` further up, which
+// the link would otherwise inherit instead of the colophon's own colour.
+.site-footer .built-with {
+  color: inherit;
+}
+
+// The link takes the colour of the line rather than punching a coloured
+// hole in it; the underline arrives only on hover.
+.site-footer .built-with a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    text-decoration: none;
+    border-bottom-color: currentColor;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .site-footer {
+    margin-top: 1.8rem;
+
+    .wrapper {
+      padding-top: 0.45rem;
+      padding-bottom: 0.9rem;
+    }
+  }
+
+  .footer-place {
+    font-size: 0.78rem;
+    // No hover on touch, so let it read at a legible but quiet weight.
+    opacity: 0.6;
+  }
+}
+
+// Narrow screens: three segments will not sit on one phone line, so break
+// the colophon at its own separators rather than mid-phrase.
+@media screen and (max-width: 600px) {
+  .site-footer .footer-separator {
+    display: none;
+  }
+
+  .site-footer .colophon-item {
+    display: block;
   }
 }

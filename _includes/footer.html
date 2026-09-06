@@ -1,11 +1,46 @@
 <footer class="site-footer">
-    <div class="wrapper">
-      <div class="footer-content">
-        <p class="copyright-text">
-          © 2026 Hamed Yaghoobian. All rights reserved.
-          <span class="footer-separator">|</span>
-          <span class="built-with">Built with <a href="https://jekyllrb.com">Jekyll</a></span>
-        </p>
-      </div>
+
+  <button type="button" class="footer-city" aria-expanded="false">
+    <span class="footer-city__frame">
+      <img class="footer-city__img"
+           src="{{ '/assets/images/city-cranes.svg' | relative_url }}"
+           alt="Line drawing of the Mashhad skyline with construction cranes"
+           loading="lazy" decoding="async" width="1920" height="1080">
+    </span>
+  </button>
+
+  <div class="wrapper">
+    <div class="footer-content">
+      <p class="footer-place">Mashhad, where I grew up</p>
+      <p class="copyright-text">
+        <span class="colophon-item">© {{ site.time | date: "%Y" }} Hamed Yaghoobian</span>
+        <span class="footer-separator" aria-hidden="true">·</span>
+        <span class="colophon-item built-with">built with <a href="https://jekyllrb.com">Jekyll</a></span>
+      </p>
     </div>
-  </footer>
+  </div>
+
+</footer>
+
+<script>
+  // Click the skyline to open it up; click again, or press Escape, to let it
+  // settle back. Deliberate rather than hover, so it never opens by accident
+  // as the pointer crosses the footer — and so it works on touch.
+  (function () {
+    var city = document.querySelector('.footer-city');
+    if (!city) return;
+
+    function setOpen(open) {
+      city.classList.toggle('is-open', open);
+      city.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    city.addEventListener('click', function () {
+      setOpen(!city.classList.contains('is-open'));
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  })();
+</script>
