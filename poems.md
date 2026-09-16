@@ -970,7 +970,7 @@ body.dark .collapse-btn:hover {
     <div class="view-toggle">
         <button class="view-toggle-btn active" data-view="list" onclick="setView('list')">
             <i class="fas fa-list"></i>
-            <span>زمانی / Time</span>
+            <span>زمانی / Chronological</span>
         </button>
         <button class="view-toggle-btn" data-view="stack" onclick="setView('stack')">
             <i class="fas fa-layer-group"></i>
