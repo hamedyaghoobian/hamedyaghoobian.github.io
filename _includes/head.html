@@ -99,38 +99,83 @@
   </style>
 
   <script>
+    // Three modes: 'light', 'dark', 'system' — 'system' follows the OS/
+    // browser preference and keeps following it live if that changes while
+    // the tab is open. The very first paint is already handled by the tiny
+    // synchronous script at the top of <body> (default.html), which reads
+    // the same storage key and applies the class before anything renders;
+    // this script's job is everything that needs the page to exist: wiring
+    // up the button, cycling between the three modes, and reacting to a
+    // system-preference change.
+    const THEME_ORDER = ['light', 'dark', 'system'];
+    const THEME_LABEL = {
+      light: 'Light theme — click for dark',
+      dark: 'Dark theme — click for system',
+      system: 'System theme — click for light',
+    };
+    const systemPrefersDark = () =>
+      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    function resolveDark(mode) {
+      if (mode === 'dark') return true;
+      if (mode === 'light') return false;
+      return systemPrefersDark();
+    }
+
+    function getMode() {
+      const stored = localStorage.getItem('theme');
+      return THEME_ORDER.includes(stored) ? stored : 'system';
+    }
+
     // Single source of truth: apply theme by class + data-theme together
     function applyTheme(isDark) {
       document.body.classList.toggle('dark', isDark);
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     }
 
-    function toggle() {
-      document.body.classList.add('animation-ready');
-      const goingDark = !document.body.classList.contains('dark');
-      applyTheme(goingDark);
-      localStorage.setItem('theme', goingDark ? 'dark' : 'light');
+    function updatePillUI(mode) {
+      const pill = document.getElementById('theme-pill');
+      if (!pill) return;
+      pill.setAttribute('data-mode', mode);
+      pill.setAttribute('title', THEME_LABEL[mode]);
+      pill.setAttribute('aria-label', THEME_LABEL[mode]);
     }
 
-    function setTheme(theme) {
-      applyTheme(theme === 'dark');
-      localStorage.setItem('theme', theme);
+    function setMode(mode) {
+      applyTheme(resolveDark(mode));
+      localStorage.setItem('theme', mode);
+      updatePillUI(mode);
+    }
+
+    function cycleMode() {
+      document.body.classList.add('animation-ready');
+      const current = getMode();
+      const next = THEME_ORDER[(THEME_ORDER.indexOf(current) + 1) % THEME_ORDER.length];
+      setMode(next);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      setTheme(savedTheme);
+      // The early <body> script already applied the correct class; this
+      // just syncs the button's icon/label to match.
+      updatePillUI(getMode());
 
-      // Wire up pill button
       const pill = document.getElementById('theme-pill');
-      if (pill) pill.addEventListener('click', toggle);
+      if (pill) pill.addEventListener('click', cycleMode);
+
+      // Live-follow the OS preference, but only while in 'system' mode — an
+      // explicit light/dark choice is never overridden by this.
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+          if (getMode() === 'system') applyTheme(resolveDark('system'));
+        });
+      }
     });
 
-    // Space-bar shortcut
+    // Space-bar shortcut — cycles the same three modes
     document.addEventListener('keydown', function (event) {
       if (event.keyCode === 32) {
         event.preventDefault();
-        toggle();
+        cycleMode();
       }
     });
   </script>

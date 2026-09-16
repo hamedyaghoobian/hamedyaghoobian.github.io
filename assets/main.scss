@@ -475,7 +475,20 @@ p {
   }
 }
 
-// Both icons overlap; CSS class on body toggles which is visible
+// All three icons overlap; the button's own data-mode (set by head.html,
+// one of light/dark/system — the user's chosen mode, not necessarily what
+// it currently resolves to) picks which is visible. Keyed off the button
+// rather than body.dark specifically because 'system' needs its own icon
+// regardless of which theme it happens to resolve to right now.
+//
+// Written as one explicit visible/hidden pair per (mode, icon) combination
+// rather than a single shared "hidden" default with per-mode overrides —
+// with three icons and three modes, a shared default needs every non-match
+// to be re-hidden individually, and it's easy to forget one (an icon that
+// silently stays visible outside its mode, doubled up with whichever one
+// is actually meant to show). Explicit is more to read but nothing to get
+// wrong. Before JS runs (data-mode unset), only the plain .theme-icon--sun
+// rule below applies, matching the 'light' column, same as today.
 .theme-icon {
   position: absolute;
   width: 18px;
@@ -483,26 +496,48 @@ p {
   transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
-// Light mode: sun visible, moon hidden
 .theme-icon--sun {
   opacity: 1;
   transform: scale(1) rotate(0deg);
 }
 
-.theme-icon--moon {
+.theme-icon--moon,
+.theme-icon--system {
   opacity: 0;
   transform: scale(0.6) rotate(-30deg);
 }
 
-// Dark mode: moon visible, sun hidden
-body.dark .theme-icon--sun {
+.theme-icon-btn[data-mode="light"] .theme-icon--sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-icon-btn[data-mode="light"] .theme-icon--moon,
+.theme-icon-btn[data-mode="light"] .theme-icon--system {
+  opacity: 0;
+  transform: scale(0.6) rotate(-30deg);
+}
+
+.theme-icon-btn[data-mode="dark"] .theme-icon--moon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-icon-btn[data-mode="dark"] .theme-icon--sun,
+.theme-icon-btn[data-mode="dark"] .theme-icon--system {
   opacity: 0;
   transform: scale(0.6) rotate(30deg);
 }
 
-body.dark .theme-icon--moon {
+.theme-icon-btn[data-mode="system"] .theme-icon--system {
   opacity: 1;
   transform: scale(1) rotate(0deg);
+}
+
+.theme-icon-btn[data-mode="system"] .theme-icon--sun,
+.theme-icon-btn[data-mode="system"] .theme-icon--moon {
+  opacity: 0;
+  transform: scale(0.6) rotate(-15deg);
 }
 
 .dark-mode {
@@ -727,7 +762,12 @@ body.dark .page-content .wrapper {
 
 // Home page specific overrides
 // DOM structure: main.page-content > div.wrapper > div.home
-// Need the wrapper to stretch, then .home to fill it and center its children
+// .home is not in index.markdown's own markup — it's added by minima's
+// gem layout for "layout: home", which wraps the page's rendered content in
+// a div carrying that class. (index.markdown's own top-level element is
+// .home-container, one level further in — .home is supplied by the layout
+// wrapping it, not written on the page itself.)
+// Need the wrapper to stretch, then .home to fill it and center its children.
 .page-content > .wrapper:has(.home) {
   display: flex;
   flex-direction: column;
@@ -1185,8 +1225,12 @@ sup a {
   font-weight: 500;
 }
 
-// Iran Hover Effect
-.iran-hover {
+// Mashhad Hover Effect
+// Same dotted-underline trigger as before (it used to sit on "Iran"); the
+// visual it wakes now lives in the footer — see the sunrise/moonrise block
+// further down, since the two need to be near .footer-city to be positioned
+// against the actual skyline instead of guessed at with viewport coordinates.
+.mashhad-hover {
   cursor: pointer;
   position: relative;
   z-index: 2;
@@ -1201,52 +1245,6 @@ sup a {
   &:hover {
     color: #ed8936;
     border-bottom-color: transparent;
-  }
-}
-
-.iran-sun {
-  --sun-size: 120vh;
-  --glow-size-1: 100px;
-  --glow-spread-1: 60px;
-  --glow-size-2: 250px;
-  --glow-spread-2: 100px;
-
-  @media screen and (max-width: 768px) {
-    --sun-size: 80vw;
-    --glow-size-1: 30px;
-    --glow-spread-1: 10px;
-    --glow-size-2: 60px;
-    --glow-spread-2: 20px;
-  }
-
-  position: fixed;
-  top: 50%;
-  right: calc(var(--sun-size) * -1);
-  width: var(--sun-size);
-  height: var(--sun-size);
-  border-radius: 50%;
-  background-color: #ffd700;
-  box-shadow: 0 0 var(--glow-size-1) var(--glow-spread-1) rgba(255, 215, 0, 0.4), 
-              0 0 var(--glow-size-2) var(--glow-spread-2) rgba(255, 165, 0, 0.3);
-  transform: translateY(-50%);
-  transition: right 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s ease, box-shadow 1s ease;
-  z-index: 0; /* Changed to 0 since .bio-content is now z-index: 10 */
-  pointer-events: none;
-  opacity: 0;
-
-  body.dark & {
-    background-color: #f6ad55;
-    box-shadow: 0 0 var(--glow-size-1) var(--glow-spread-1) rgba(246, 173, 85, 0.5), 
-                0 0 var(--glow-size-2) var(--glow-spread-2) rgba(237, 137, 54, 0.3);
-  }
-}
-
-body:has(.iran-hover:hover) .iran-sun {
-  right: calc(var(--sun-size) * -0.5);
-  opacity: 1;
-
-  body.dark & {
-    opacity: 0.95;
   }
 }
 
@@ -1290,25 +1288,19 @@ body:has(.iran-hover:hover) .iran-sun {
   --band-h: clamp(95px, min(21.4vw, 15vh), 214px);
   // The drawing's full rendered height, matching the img's width rule.
   --full-h: calc(min(100vw, 1000px) * 0.5625);
+  // How far the hover-open reveal grows the frame. Short of the drawing's
+  // own full height on purpose — the cranes sit at roughly 80% of it, so
+  // 88% clears them with real headroom without also paying for the
+  // emptiest sliver of sky above that nothing in the drawing occupies.
+  --open-h: calc(var(--full-h) * 0.88);
 
   height: var(--band-h);
   user-select: none;
-
-  // It is a <button> now, so strip the chrome back to a plain block.
-  display: block;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  -webkit-appearance: none;
-  appearance: none;
-
-  &:focus-visible {
-    outline: 2px solid var(--ink);
-    outline-offset: 3px;
-  }
+  // No longer a button — the whole reveal is driven entirely by hovering
+  // "Mashhad" elsewhere on the page (see the sunrise/moonrise block below).
+  // pointer-events: none lets the mouse pass straight through to whatever
+  // is behind it.
+  pointer-events: none;
 }
 
 // The frame is out of flow and anchored to the ground line, so growing it
@@ -1334,10 +1326,10 @@ body:has(.iran-hover:hover) .iran-sun {
   transition: height 2.1s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-// Click opens the crop all the way up the drawing, so the cranes and the
-// sky the resting band hides come into view.
-.footer-city.is-open .footer-city__frame {
-  height: var(--full-h);
+// Hovering "Mashhad" opens the crop up the drawing, so the cranes and the
+// sky above the resting band come into view.
+body:has(.mashhad-hover:hover) .footer-city__frame {
+  height: var(--open-h);
   transition: height 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -1378,15 +1370,9 @@ body:has(.iran-hover:hover) .iran-sun {
   mask-composite: intersect;
 }
 
-// Hover is only the hint that there is something here to press; the drawing
-// stirs but stays put.
-.footer-city:hover .footer-city__img {
-  opacity: 0.68;
-  transition: opacity 0.5s ease;
-}
-
-// The press itself: the city comes fully up out of the paper.
-.footer-city.is-open .footer-city__img {
+// The city comes fully up out of the paper on the same "Mashhad" hover
+// that opens it (above) — one event, not a separate hover state of its own.
+body:has(.mashhad-hover:hover) .footer-city__img {
   opacity: 1;
   transition: opacity 1.2s ease;
 }
@@ -1395,10 +1381,9 @@ body:has(.iran-hover:hover) .iran-sun {
 // near-instantly instead of as a slow fade.
 @media (prefers-reduced-motion: reduce) {
   .footer-city__frame,
-  .footer-city.is-open .footer-city__frame,
   .footer-city__img,
-  .footer-city:hover .footer-city__img,
-  .footer-city.is-open .footer-city__img {
+  body:has(.mashhad-hover:hover) .footer-city__frame,
+  body:has(.mashhad-hover:hover) .footer-city__img {
     transition: height 0.2s ease, opacity 0.2s ease;
   }
 }
@@ -1407,6 +1392,142 @@ body:has(.iran-hover:hover) .iran-sun {
 // with warm gold line work — the palette dark mode already uses.
 body.dark .footer-city__img {
   filter: invert(1);
+}
+
+// ─────────────────────────────────────────────────────────────
+// Sunrise / moonrise
+// The same "Mashhad" hover that opens the drawing above also rises one of
+// these into the sky over it. .footer-sky is the horizon clip: anchored to
+// .footer-city's own ground line — the same origin .footer-city__frame
+// grows from — rather than the small resting band's top edge, and sized off
+// the drawing's real height rather than an arbitrary box. That's what lets
+// the rise be measured against where the cranes actually are (~80% of the
+// drawing's height) instead of a gap picked to avoid the page content,
+// which is the wrong yardstick now that the drawing itself reaches that
+// high on the same hover.
+// ─────────────────────────────────────────────────────────────
+.footer-sky {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // 10% taller than the drawing itself so the sun/moon's own size never
+  // gets clipped at the top of its rise, whatever width this renders at.
+  height: calc(var(--full-h) * 1.1);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.footer-sun,
+.footer-moon {
+  position: absolute;
+  left: 50%;
+  // Below the ground line — clipped by .footer-sky's overflow, invisible —
+  // until raised.
+  bottom: -10%;
+  transform: translateX(-50%);
+  opacity: 0;
+  // Settling back after the mouse leaves is slower than the rise itself,
+  // the same asymmetry .footer-city__frame already uses for its own bloom.
+  transition: bottom 2.3s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 2.3s ease;
+}
+
+.footer-sun {
+  width: clamp(18px, 3.6vw, 30px);
+  height: clamp(18px, 3.6vw, 30px);
+  border-radius: 50%;
+  background-color: #ffd700;
+  box-shadow: 0 0 14px 6px rgba(255, 215, 0, 0.35),
+              0 0 34px 14px rgba(255, 165, 0, 0.22);
+}
+
+// Same crescent as the header's theme-toggle moon icon (header.html), just
+// filled instead of stroked and set in the site's ink-soft blue rather than
+// the toggle's currentColor, so it reads as night rather than as UI chrome.
+.footer-moon {
+  width: clamp(16px, 3.4vw, 28px);
+  height: clamp(16px, 3.4vw, 28px);
+  color: #c7d2e8;
+  filter: drop-shadow(0 0 9px rgba(199, 210, 232, 0.45))
+          drop-shadow(0 0 20px rgba(199, 210, 232, 0.22));
+}
+
+.footer-moon__crescent {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// A few stars near the moon, staggered slightly so they don't all appear
+// on the same beat as the moon itself.
+.footer-moon__star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #e8edf7;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.footer-moon__star--1 {
+  top: 8%;
+  left: -65%;
+  transition-delay: 0.1s;
+}
+
+.footer-moon__star--2 {
+  top: 60%;
+  left: -90%;
+  transition-delay: 0.4s;
+}
+
+.footer-moon__star--3 {
+  top: -8%;
+  left: 120%;
+  transition-delay: 0.7s;
+}
+
+// Only the theme-appropriate body is ever visible; the other stays
+// display: none so it can't be hovered, focused, or read by a screen reader.
+body:not(.dark) .footer-moon {
+  display: none;
+}
+
+body.dark .footer-sun {
+  display: none;
+}
+
+// Risen to 85% of .footer-sky's own (padded) height — about 93.5% of the
+// drawing's real height, comfortably above where the cranes sit (~80%) —
+// whether or not the drawing has actually finished opening underneath it.
+body:has(.mashhad-hover:hover) .footer-sun,
+body:has(.mashhad-hover:hover) .footer-moon {
+  bottom: 85%;
+  opacity: 1;
+  transition: bottom 1.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.3s ease;
+}
+
+body:has(.mashhad-hover:hover) .footer-moon__star {
+  opacity: 1;
+}
+
+// Decoration only — still appears/disappears with reduced motion, just
+// without the slow rise. Folded into the crane bloom's own reduced-motion
+// block below would duplicate the selector list twice over, so this stays
+// a second, equally scoped block instead.
+@media (prefers-reduced-motion: reduce) {
+  .footer-sun,
+  .footer-moon,
+  body:has(.mashhad-hover:hover) .footer-sun,
+  body:has(.mashhad-hover:hover) .footer-moon {
+    transition: bottom 0.2s ease, opacity 0.2s ease;
+  }
+
+  .footer-moon__star {
+    transition: opacity 0.2s ease;
+    transition-delay: 0s;
+  }
 }
 
 // Caption: a plate label for the drawing, in the site title's own voice.
@@ -1500,4 +1621,13 @@ body.dark .footer-city__img {
   .site-footer .colophon-item {
     display: block;
   }
+}
+
+// Interior pages (everything but home) get the colophon line only — no
+// crane drawing, no click-to-open, no sunrise. It inherits .site-footer's
+// spacing/z-index/wrapper padding above; this just trims the top margin,
+// since that clamp() was sized for the drawing's own height, not a single
+// line of text.
+.site-footer--minimal {
+  margin-top: 1.5rem;
 }

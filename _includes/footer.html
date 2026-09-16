@@ -1,13 +1,38 @@
 <footer class="site-footer">
 
-  <button type="button" class="footer-city" aria-expanded="false">
+  <!-- Purely decorative — not a button any more. The whole reveal (this
+       drawing opening, and the sun/moon rising into the sky above it) is a
+       single event, launched only by hovering "Mashhad" in the bio text
+       (body:has(.mashhad-hover:hover), in main.scss). Nothing here is
+       itself clickable or hoverable — pointer-events: none lets the mouse
+       pass through it untouched. -->
+  <div class="footer-city" aria-hidden="true">
+    <!-- Placed before .footer-city__frame in the markup (not after) on
+         purpose: on the same stacking order, the crane drawing then paints
+         over this, so an opened skyline occludes the sun/moon the way real
+         buildings would rather than the two fighting for the same layer. -->
+    <span class="footer-sky">
+      <span class="footer-sun"></span>
+      <span class="footer-moon">
+        <!-- Same crescent path as the theme toggle's moon icon in
+             header.html, filled instead of stroked, so this rhymes with the
+             mark the visitor already knows from the nav bar. -->
+        <svg class="footer-moon__crescent" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <span class="footer-moon__star footer-moon__star--1"></span>
+        <span class="footer-moon__star footer-moon__star--2"></span>
+        <span class="footer-moon__star footer-moon__star--3"></span>
+      </span>
+    </span>
+
     <span class="footer-city__frame">
       <img class="footer-city__img"
            src="{{ '/assets/images/city-cranes.svg' | relative_url }}"
            alt="Line drawing of the Mashhad skyline with construction cranes"
            loading="lazy" decoding="async" width="1920" height="1080">
     </span>
-  </button>
+  </div>
 
   <div class="wrapper">
     <div class="footer-content">
@@ -21,26 +46,3 @@
   </div>
 
 </footer>
-
-<script>
-  // Click the skyline to open it up; click again, or press Escape, to let it
-  // settle back. Deliberate rather than hover, so it never opens by accident
-  // as the pointer crosses the footer — and so it works on touch.
-  (function () {
-    var city = document.querySelector('.footer-city');
-    if (!city) return;
-
-    function setOpen(open) {
-      city.classList.toggle('is-open', open);
-      city.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-
-    city.addEventListener('click', function () {
-      setOpen(!city.classList.contains('is-open'));
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setOpen(false);
-    });
-  })();
-</script>
