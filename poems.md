@@ -33,25 +33,24 @@ permalink: /poems/
 }
 
 .poem-card {
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin: 2rem auto;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    border: 1px solid rgba(44, 62, 80, 0.08);
+    border-radius: 10px;
+    padding: 2rem 1.75rem;
+    margin: 1.75rem auto;
+    background: rgba(255, 255, 255, 0.55);
+    transition: background 0.3s ease, border-color 0.3s ease;
     direction: rtl;
-    max-width: 760px;
+    max-width: 700px;
 }
 
 .poem-card:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(44, 62, 80, 0.14);
 }
 
 .date-header {
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(44, 62, 80, 0.07);
     padding-bottom: 0.75rem;
     text-align: center;
 }
@@ -70,8 +69,8 @@ permalink: /poems/
 
 .poem-verses {
     font-family: 'Lalezar', serif;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 1.1rem;
+    line-height: 1.75;
     color: #2c3e50;
     text-align: center;
     direction: rtl;
@@ -79,7 +78,7 @@ permalink: /poems/
 }
 
 .verse {
-    margin: 0.5rem 0;
+    margin: 0.6rem 0;
     padding: 0 0.25rem;
 }
 
@@ -96,7 +95,7 @@ permalink: /poems/
 
 .verse .arabic-line {
     font-family: 'Lalezar', serif;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     color: #2c3e50;
     text-align: left; /* Align right column's content to the left (towards the gutter) */
     display: block;
@@ -104,7 +103,7 @@ permalink: /poems/
 
 .verse .english-line {
     font-family: 'EB Garamond', serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 400;
     font-style: italic;
     color: #2c3e50;
@@ -115,7 +114,7 @@ permalink: /poems/
 
 .verse .inline-translation {
     font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: #718096;
     font-weight: 300;
     text-align: right; /* Align left column's content to the right (towards the gutter) */
@@ -160,9 +159,9 @@ body.dark .verse .inline-translation {
 }
 
 .poet-attribution {
-    margin-top: 1.5rem;
+    margin-top: 1.75rem;
     padding-top: 1rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid rgba(44, 62, 80, 0.07);
     text-align: center;
 }
 
@@ -197,8 +196,13 @@ body.dark .verse .inline-translation {
 
 /* Dark mode styles */
 body.dark .poem-card {
-    background: #1a202c;
-    border-color: #2d3748;
+    background: rgba(26, 32, 44, 0.5);
+    border-color: rgba(226, 232, 240, 0.08);
+}
+
+body.dark .poem-card:hover {
+    background: rgba(26, 32, 44, 0.85);
+    border-color: rgba(226, 232, 240, 0.14);
 }
 
 body.dark .page-title,
@@ -219,18 +223,98 @@ body.dark .poet-name {
 
 body.dark .date-header,
 body.dark .poet-attribution {
-    border-color: #2d3748;
+    border-color: rgba(226, 232, 240, 0.09);
 }
 
-.placeholder-card {
-    text-align: center;
+/* Year marker — the only signpost in the chronological run */
+.year-marker {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 700px;
+    margin: 3.5rem auto 1.25rem;
+    direction: rtl;
+}
+
+.year-marker::before,
+.year-marker::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(44, 62, 80, 0.1);
+}
+
+.year-marker span {
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: #a0aec0;
+    white-space: nowrap;
+}
+
+.year-marker:first-child {
+    margin-top: 1rem;
+}
+
+body.dark .year-marker::before,
+body.dark .year-marker::after {
+    background: rgba(226, 232, 240, 0.12);
+}
+
+body.dark .year-marker span {
+    color: #718096;
+}
+
+/* Closing epigraph — a line about the collection, not a poem in it */
+.poems-coda {
+    max-width: 480px;
+    margin: 5rem auto 2rem;
+    padding: 0;
+    border: 0;
     direction: ltr;
-    background: #f7fafc;
-    border-style: dashed;
+    text-align: center;
 }
 
-body.dark .placeholder-card {
-    background: #2d3748;
+.poems-coda::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 1px;
+    margin: 0 auto 2.25rem;
+    background: rgba(44, 62, 80, 0.18);
+}
+
+.poems-coda blockquote {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: #4a5568;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.poems-coda figcaption {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-style: normal;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #a0aec0;
+    margin-top: 1.25rem;
+}
+
+body.dark .poems-coda::before {
+    background: rgba(226, 232, 240, 0.2);
+}
+
+body.dark .poems-coda blockquote {
+    color: #cbd5e0;
+}
+
+body.dark .poems-coda figcaption {
+    color: #718096;
 }
 
 /* Translation features */
@@ -516,8 +600,8 @@ body.dark .translate-btn:hover {
     }
     
     .poem-verses {
-        font-size: 0.9rem;
-        line-height: 1.4;
+        font-size: 1rem;
+        line-height: 1.65;
     }
     
     .poetry-intro {
@@ -539,422 +623,6 @@ body.dark .translate-btn:hover {
     }
 }
 
-/* ======================================
-   STACKED CARD THEME VIEW
-   ====================================== */
-
-/* View Toggle */
-.view-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    direction: ltr;
-}
-
-.view-toggle-btn {
-    background: transparent;
-    border: 1px solid #e2e8f0;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
-    color: #4a5568;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.view-toggle-btn:hover {
-    background: #f7fafc;
-    border-color: #cbd5e0;
-}
-
-.view-toggle-btn.active {
-    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
-    border-color: transparent;
-    color: white;
-}
-
-body.dark .view-toggle-btn {
-    border-color: #4a5568;
-    color: #a0aec0;
-}
-
-body.dark .view-toggle-btn:hover {
-    background: #2d3748;
-}
-
-body.dark .view-toggle-btn.active {
-    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
-    color: white;
-}
-
-/* Theme Stacks Container */
-.theme-stacks-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem;
-    padding: 1.5rem 0;
-}
-
-/* Individual Theme Stack — min-height = header (~82px) + gap (0.75rem) + card-stack (170px) + bottom buffer */
-.theme-stack {
-    position: relative;
-    cursor: pointer;
-    perspective: 1000px;
-    min-height: 270px;
-}
-
-.stack-header {
-    text-align: center;
-    margin-bottom: 0.75rem;
-    padding: 0.75rem 1rem;
-    background: linear-gradient(135deg, rgba(237, 137, 54, 0.1) 0%, rgba(221, 107, 32, 0.05) 100%);
-    border-radius: 12px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(237, 137, 54, 0.2);
-}
-
-.stack-theme-label {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #ed8936;
-    margin: 0;
-    direction: rtl;
-}
-
-.stack-theme-label-en {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    color: #718096;
-    margin-top: 0.25rem;
-    direction: ltr;
-}
-
-.stack-count {
-    font-size: 0.7rem;
-    color: #a0aec0;
-    margin-top: 0.25rem;
-}
-
-body.dark .stack-header {
-    background: linear-gradient(135deg, rgba(237, 137, 54, 0.15) 0%, rgba(221, 107, 32, 0.08) 100%);
-    border-color: rgba(237, 137, 54, 0.3);
-}
-
-body.dark .stack-theme-label-en,
-body.dark .stack-count {
-    color: #718096;
-}
-
-/* Card Stack Container */
-.card-stack {
-    position: relative;
-    height: 170px;
-    transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.card-stack.expanded {
-    height: auto;
-    min-height: 0;
-}
-
-/* Stacked Cards */
-.stacked-card {
-    position: absolute;
-    width: 100%;
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-origin: center bottom;
-    cursor: pointer;
-    overflow: hidden;
-}
-
-.stacked-card:nth-child(1) { 
-    z-index: 3; 
-    transform: translateY(0) scale(1);
-}
-.stacked-card:nth-child(2) { 
-    z-index: 2; 
-    transform: translateY(5px) scale(0.97);
-    opacity: 0.7;
-}
-.stacked-card:nth-child(3) { 
-    z-index: 1; 
-    transform: translateY(10px) scale(0.94);
-    opacity: 0.4;
-}
-.stacked-card:nth-child(n+4) { 
-    z-index: 0; 
-    transform: translateY(14px) scale(0.91);
-    opacity: 0;
-}
-
-/* Hover effect on stack */
-.theme-stack:hover .stacked-card:nth-child(1) {
-    transform: translateY(-3px) scale(1.01);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-.theme-stack:hover .stacked-card:nth-child(2) {
-    transform: translateY(8px) scale(0.97);
-    opacity: 0.8;
-}
-
-.theme-stack:hover .stacked-card:nth-child(3) {
-    transform: translateY(16px) scale(0.94);
-    opacity: 0.55;
-}
-
-/* Hide content of cards behind the front card (prevent text bleed-through) */
-.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .poem-verses,
-.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .poet-name,
-.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .reveal-interpretation-btn,
-.card-stack:not(.expanded) .stacked-card:nth-child(n+2) .interpretation-overlay {
-    visibility: hidden;
-}
-
-/* Expanded state - fan out */
-.card-stack.expanded .stacked-card {
-    position: relative;
-    transform: none !important;
-    opacity: 1 !important;
-    margin-bottom: 1.5rem;
-}
-
-.card-stack.expanded .stacked-card:last-child {
-    margin-bottom: 0;
-}
-
-/* Card content in stack */
-.stacked-card .poem-verses {
-    font-size: 0.85rem;
-    line-height: 1.4;
-    max-height: 4.2em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.card-stack.expanded .stacked-card .poem-verses {
-    max-height: none;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.stacked-card .poet-name {
-    font-size: 0.85rem;
-    margin-top: 0.75rem;
-}
-
-/* Interpretation overlay - hidden by default, revealed via button */
-.interpretation-overlay {
-    display: none;
-    margin-top: 0.75rem;
-    padding: 0.75rem;
-    background: linear-gradient(135deg, rgba(237, 137, 54, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
-    border-radius: 8px;
-    border-left: 3px solid #ed8936;
-}
-
-.interpretation-overlay.visible {
-    display: block;
-    animation: fadeSlideIn 0.3s ease-out;
-}
-
-/* Reveal interpretation button - circular icon-only, matching translate button */
-.reveal-interpretation-btn {
-    display: none;
-    background: #ed8936;
-    color: white;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    align-items: center;
-    justify-content: center;
-    margin: 0.75rem auto 0;
-    position: relative;
-}
-
-.card-stack.expanded .reveal-interpretation-btn {
-    display: flex;
-}
-
-.reveal-interpretation-btn i {
-    pointer-events: none;
-}
-
-.reveal-interpretation-btn:hover {
-    background: #dd6b20;
-    transform: translateY(-1px) scale(1.05);
-}
-
-.reveal-interpretation-btn.active {
-    background: #48bb78;
-}
-
-.reveal-interpretation-btn.active:hover {
-    background: #38a169;
-}
-
-.reveal-interpretation-btn.loading {
-    color: transparent;
-}
-
-.reveal-interpretation-btn.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    margin: -8px 0 0 -8px;
-    border: 2px solid transparent;
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-body.dark .reveal-interpretation-btn {
-    background: #ed8936;
-}
-
-body.dark .reveal-interpretation-btn:hover {
-    background: #dd6b20;
-}
-
-.interpretation-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    color: #4a5568;
-    font-style: italic;
-    line-height: 1.5;
-    direction: ltr;
-    text-align: left;
-}
-
-.interpretation-text-fa {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.8rem;
-    color: #718096;
-    margin-top: 0.5rem;
-    direction: rtl;
-    text-align: right;
-}
-
-@keyframes fadeSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Collapse button */
-.collapse-btn {
-    display: none;
-    margin: 1rem auto 0;
-    padding: 0.5rem 1.5rem;
-    background: transparent;
-    border: 1px solid #e2e8f0;
-    border-radius: 20px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.8rem;
-    color: #718096;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.card-stack.expanded + .collapse-btn,
-.card-stack.expanded ~ .collapse-btn {
-    display: block;
-}
-
-.collapse-btn:hover {
-    background: #f7fafc;
-    color: #4a5568;
-}
-
-/* Dark mode for stacked cards */
-body.dark .stacked-card {
-    background: #1a202c;
-    border-color: #2d3748;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-body.dark .theme-stack:hover .stacked-card:nth-child(1) {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
-body.dark .interpretation-overlay {
-    background: linear-gradient(135deg, rgba(237, 137, 54, 0.12) 0%, rgba(26, 32, 44, 0) 100%);
-}
-
-body.dark .interpretation-text {
-    color: #e2e8f0;
-}
-
-body.dark .interpretation-text-fa {
-    color: #a0aec0;
-}
-
-body.dark .collapse-btn {
-    border-color: #4a5568;
-    color: #a0aec0;
-}
-
-body.dark .collapse-btn:hover {
-    background: #2d3748;
-    color: #e2e8f0;
-}
-
-/* Responsive stacked cards */
-@media (max-width: 768px) {
-    .theme-stacks-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .theme-stack {
-        min-height: 250px;
-    }
-    
-    .stacked-card {
-        padding: 0.75rem;
-    }
-    
-    .stacked-card .poem-verses {
-        font-size: 0.8rem;
-    }
-}
-
-/* List view (chronological) - hide stacks */
-.poetry-container.list-view .theme-stacks-container {
-    display: none;
-}
-
-/* Stack view - hide list */
-.poetry-container.stack-view #poems-container {
-    display: none;
-}
-
-.poetry-container.stack-view .theme-stacks-container {
-    display: grid;
-}
 </style>
 
 <div class="poetry-container">
@@ -966,22 +634,7 @@ body.dark .collapse-btn:hover {
         <p style="font-size: 0.85rem; color: #718096; margin-top: 1rem; font-style: italic; direction: ltr;">AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original verses.</p>
     </div>
 
-    <!-- View Toggle -->
-    <div class="view-toggle">
-        <button class="view-toggle-btn active" data-view="list" onclick="setView('list')">
-            <i class="fas fa-list"></i>
-            <span>زمانی / Chronological</span>
-        </button>
-        <button class="view-toggle-btn" data-view="stack" onclick="setView('stack')">
-            <i class="fas fa-layer-group"></i>
-            <span>مضمون‌ها / Themes</span>
-        </button>
-    </div>
-
-    <!-- Theme Stacks (Stack View) -->
-    <div class="theme-stacks-container" id="theme-stacks"></div>
-
-    <!-- Poems will be loaded here dynamically (List View) -->
+    <!-- Poems are loaded here in reverse-chronological order -->
     <div id="poems-container">
         <!-- Loading indicator -->
         <div class="poem-card" id="loading-poems">
@@ -1154,14 +807,12 @@ function translatePoem(button) {
 }
 
 // Load poems from JSON and generate HTML
-let allPoems = []; // Store poems globally for view switching
-
 async function loadPoems() {
     try {
         console.log('Loading poems...');
         
         // Try multiple paths in case of path issues
-        const paths = ['poems.json', '/poems.json', '../poems.json'];
+        const paths = ['/poems.json', 'poems.json', '../poems.json'];
         let response;
         let poems;
         
@@ -1182,63 +833,40 @@ async function loadPoems() {
         }
         
         if (!poems) {
-            // Fallback to embedded data with sample themes
+            // Fallback to embedded data
             console.log('Using fallback embedded data');
             poems = [
                 {
                     "verses": ["و کجا باید", "در غیبت ابدی رویا", "پناه گرفت؟"],
                     "poet": "احمدرضا احمدی / Ahmadreza Ahmadi",
-                    "date": "2026-02-06",
-                    "theme": {
-                        "cluster": { "id": "weight-of-silence", "label": "سنگینی سکوت", "labelEn": "The Weight of Silence" }
-                    }
+                    "date": "2026-02-06"
                 },
                 {
                     "verses": ["به شکل رفتن درآمده بود", "به شکل دور شدن ماه از پنجره"],
                     "poet": "رسول یونان / Rasool Yoonan",
-                    "date": "2025-07-10",
-                    "theme": {
-                        "cluster": { "id": "beautiful-impermanence", "label": "ناپایداری زیبا", "labelEn": "Beautiful Impermanence" }
-                    }
+                    "date": "2025-07-10"
                 },
                 {
                     "verses": ["چند گویند مرا: صبر کن از لشکر غم؟", "بر من از گوشهٔ ناگاه بتازد چه کنم؟"],
                     "poet": "عراقی / Iraqi",
-                    "date": "2025-07-09",
-                    "theme": {
-                        "cluster": { "id": "weight-of-silence", "label": "سنگینی سکوت", "labelEn": "The Weight of Silence" }
-                    }
+                    "date": "2025-07-09"
                 },
                 {
                     "verses": ["سر‌نوشتم به بال کبوتر‌ها گره خورده", "سنگی می‌زنند", "یکی می‌میرد"],
                     "poet": "سعید برآبادی / Saeed Baraabadi",
-                    "date": "2025-07-08",
-                    "theme": {
-                        "cluster": { "id": "invisible-thresholds", "label": "آستانه‌های نامرئی", "labelEn": "Invisible Thresholds" }
-                    }
+                    "date": "2025-07-08"
                 },
                 {
                     "verses": ["زان که بر ضد جهان گویم سخن", "یا جهان دیوانه باشد یا که من"],
                     "poet": "نیما یوشیج / Nima Yooshij",
-                    "date": "2025-07-08",
-                    "theme": {
-                        "cluster": { "id": "echoes-of-paradox", "label": "پژواک تناقض", "labelEn": "Echoes of Paradox" }
-                    }
+                    "date": "2025-07-08"
                 }
             ];
         }
         
-        // Store globally
-        allPoems = poems;
         console.log('Poems loaded:', poems.length);
         
-        // Render both views
-        renderListView(poems);
-        renderThemeStacks(poems);
-        
-        // Set initial view to user preference or list
-        const savedView = localStorage.getItem('poetry-view') || 'list';
-        setView(savedView);
+        renderPoems(poems);
         
         // Initialize dates after poems are loaded
         initializeDynamicDates();
@@ -1261,217 +889,51 @@ async function loadPoems() {
     }
 }
 
-// Render list view (chronological)
-function renderListView(poems) {
+// Persian (Jalali) year of a date, in Persian digits — used as the only
+// signpost in the chronological run.
+function getPersianYear(dateString) {
+    if (!dateString) return '';
+    try {
+        const year = new Date(dateString).toLocaleDateString('fa-IR-u-ca-persian', { year: 'numeric' });
+        return toPersianDigits(year).replace(/[^\u06F0-\u06F9\u0660-\u0669]/g, '');
+    } catch (e) {
+        return '';
+    }
+}
+
+// Render the chronological run of poems, with a hairline year marker
+// wherever the Persian year changes, and Darwish as a closing epigraph.
+function renderPoems(poems) {
     const container = document.getElementById('poems-container');
     const loadingElement = document.getElementById('loading-poems');
-    
+
     if (!container) {
         console.error('poems-container not found');
         return;
     }
-    
-    // Remove loading indicator
+
     if (loadingElement) {
         loadingElement.remove();
     }
-    
-    // Generate HTML for each poem
-    poems.forEach((poem, index) => {
-        console.log(`Adding poem ${index + 1}:`, poem.poet);
-        const poemHTML = generatePoemHTML(poem);
-        container.insertAdjacentHTML('beforeend', poemHTML);
-    });
-    
-    // Add the placeholder card at the end
-    const placeholderHTML = `
-        <div class="poem-card placeholder-card">
-            <div class="date-header">
-                <p class="poem-context">I've built my homeland, I've even founded my state--in my language.<br>— Mahmoud Darwish</p>
-            </div>
-        </div>
-    `;
-    container.insertAdjacentHTML('beforeend', placeholderHTML);
-}
 
-// Group poems by theme cluster
-function groupPoemsByTheme(poems) {
-    const groups = {};
-    
+    let lastYear = null;
     poems.forEach(poem => {
-        const clusterId = poem.theme?.cluster?.id || 'uncategorized';
-        const clusterLabel = poem.theme?.cluster?.label || 'بدون مضمون';
-        const clusterLabelEn = poem.theme?.cluster?.labelEn || 'Uncategorized';
-        
-        if (!groups[clusterId]) {
-            groups[clusterId] = {
-                id: clusterId,
-                label: clusterLabel,
-                labelEn: clusterLabelEn,
-                poems: []
-            };
+        const year = getPersianYear(poem.date);
+        if (year && year !== lastYear) {
+            container.insertAdjacentHTML('beforeend',
+                `<div class="year-marker"><span>${year}</span></div>`);
+            lastYear = year;
         }
-        groups[clusterId].poems.push(poem);
+        container.insertAdjacentHTML('beforeend', generatePoemHTML(poem));
     });
-    
-    return Object.values(groups);
-}
 
-// Render theme stacks
-function renderThemeStacks(poems) {
-    const container = document.getElementById('theme-stacks');
-    if (!container) {
-        console.error('theme-stacks container not found');
-        return;
-    }
-    
-    const themeGroups = groupPoemsByTheme(poems);
-    console.log('Theme groups:', themeGroups.length);
-    
-    container.innerHTML = themeGroups.map(group => `
-        <div class="theme-stack" data-theme-id="${group.id}">
-            <div class="stack-header" onclick="toggleStack('${group.id}')">
-                <div class="stack-theme-label">${group.label}</div>
-                <div class="stack-theme-label-en">${group.labelEn}</div>
-                <div class="stack-count">${group.poems.length} شعر</div>
-            </div>
-            <div class="card-stack" id="stack-${group.id}">
-                ${group.poems.map(poem => generateStackedCardHTML(poem)).join('')}
-            </div>
-            <button class="collapse-btn" onclick="collapseStack('${group.id}')">
-                <i class="fas fa-chevron-up"></i> بستن / Collapse
-            </button>
-        </div>
-    `).join('');
-}
-
-// Generate HTML for a stacked card (simplified version)
-let stackedCardCounter = 0;
-
-function generateStackedCardHTML(poem) {
-    const cardId = `stacked-card-${stackedCardCounter++}`;
-    const versesHTML = poem.verses.slice(0, 3).map(verse => 
-        `<div class="verse">${verse}</div>`
-    ).join('');
-    
-    // Store entire poem data on the card for instantaneous offline interpretation/translation
-    const poemDataAttr = encodeURIComponent(JSON.stringify(poem));
-    
-    return `
-        <div class="stacked-card" id="${cardId}" data-poem="${poemDataAttr}">
-            <div class="poem-verses">
-                ${versesHTML}
-            </div>
-            <div class="poet-name">${poem.poet}</div>
-            <button class="reveal-interpretation-btn" onclick="toggleInterpretation('${cardId}', event)" title="تفسیر / Interpretation">
-                <i class="fas fa-lightbulb"></i>
-            </button>
-            <div class="interpretation-overlay" id="${cardId}-interpretation">
-                <div class="interpretation-text"></div>
-                <div class="interpretation-text-fa"></div>
-            </div>
-        </div>
-    `;
-}
-
-// Toggle interpretation visibility (Instant Offline Mode)
-function toggleInterpretation(cardId, event) {
-    event.stopPropagation();
-    const overlay = document.getElementById(`${cardId}-interpretation`);
-    const btn = event.currentTarget;
-    const card = document.getElementById(cardId);
-    
-    if (!overlay || !card) return;
-    
-    // If already visible, just hide it
-    if (overlay.classList.contains('visible')) {
-        overlay.classList.remove('visible');
-        btn.classList.remove('active');
-        return;
-    }
-    
-    const textEl = overlay.querySelector('.interpretation-text');
-    const textFaEl = overlay.querySelector('.interpretation-text-fa');
-    
-    try {
-        const poemDataStr = decodeURIComponent(card.getAttribute('data-poem'));
-        const poemData = JSON.parse(poemDataStr);
-        
-        if (poemData.theme && poemData.theme.interpretation) {
-            textEl.textContent = `"${poemData.theme.interpretation}"`;
-            textFaEl.textContent = poemData.theme.interpretationFa || '';
-            overlay.classList.add('visible');
-            btn.classList.add('active');
-        } else {
-            textEl.textContent = 'تفسیر یافت نشد / Interpretation not found. Try refreshing after build.';
-            textEl.style.color = '#e53e3e';
-            overlay.classList.add('visible');
-            btn.classList.add('active');
-        }
-    } catch(err) {
-        console.error(err);
-        textEl.textContent = 'خطا در بارگزاری تفسیر / Error loading interpretation';
-        textEl.style.color = '#e53e3e';
-        overlay.classList.add('visible');
-        btn.classList.add('active');
-    }
-}
-
-// Toggle stack expansion
-function toggleStack(themeId) {
-    const stack = document.getElementById(`stack-${themeId}`);
-    if (stack) {
-        stack.classList.toggle('expanded');
-        
-        // Hide all interpretations when collapsing
-        if (!stack.classList.contains('expanded')) {
-            stack.querySelectorAll('.interpretation-overlay.visible').forEach(overlay => {
-                overlay.classList.remove('visible');
-            });
-            stack.querySelectorAll('.reveal-interpretation-btn.active').forEach(btn => {
-                btn.classList.remove('active');
-            });
-        }
-    }
-}
-
-// Collapse a specific stack
-function collapseStack(themeId) {
-    const stack = document.getElementById(`stack-${themeId}`);
-    if (stack) {
-        stack.classList.remove('expanded');
-        // Hide all interpretations
-        stack.querySelectorAll('.interpretation-overlay.visible').forEach(overlay => {
-            overlay.classList.remove('visible');
-        });
-        stack.querySelectorAll('.reveal-interpretation-btn.active').forEach(btn => {
-            btn.classList.remove('active');
-        });
-    }
-}
-
-// View toggle
-function setView(view) {
-    const container = document.querySelector('.poetry-container');
-    const buttons = document.querySelectorAll('.view-toggle-btn');
-    
-    // Update container class
-    container.classList.remove('stack-view', 'list-view');
-    container.classList.add(`${view}-view`);
-    
-    // Update button states
-    buttons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.view === view) {
-            btn.classList.add('active');
-        }
-    });
-    
-    // Store preference
-    localStorage.setItem('poetry-view', view);
-    
-    // Re-initialize dates for visible cards
-    setTimeout(initializeDynamicDates, 100);
+    // Closing epigraph — not a poem, so it is not set as one.
+    container.insertAdjacentHTML('beforeend', `
+        <figure class="poems-coda">
+            <blockquote>I&rsquo;ve built my homeland, I&rsquo;ve even founded my state&mdash;in my language.</blockquote>
+            <figcaption>Mahmoud Darwish</figcaption>
+        </figure>
+    `);
 }
 
 // Generate HTML for a single poem (list view)
