@@ -32,20 +32,12 @@ permalink: /poems/
     padding: 0 1rem;
 }
 
+/* No box, no shadow — whitespace and the date-header's hairline do the
+   work of separating one poem from the next. */
 .poem-card {
-    border: 1px solid rgba(44, 62, 80, 0.08);
-    border-radius: 10px;
-    padding: 2rem 1.75rem;
-    margin: 1.75rem auto;
-    background: rgba(255, 255, 255, 0.55);
-    transition: background 0.3s ease, border-color 0.3s ease;
+    margin: 3.5rem auto;
     direction: rtl;
     max-width: 700px;
-}
-
-.poem-card:hover {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(44, 62, 80, 0.14);
 }
 
 .date-header {
@@ -195,16 +187,6 @@ body.dark .verse .inline-translation {
 }
 
 /* Dark mode styles */
-body.dark .poem-card {
-    background: rgba(26, 32, 44, 0.5);
-    border-color: rgba(226, 232, 240, 0.08);
-}
-
-body.dark .poem-card:hover {
-    background: rgba(26, 32, 44, 0.85);
-    border-color: rgba(226, 232, 240, 0.14);
-}
-
 body.dark .page-title,
 body.dark .poem-verses {
     color: #e2e8f0;
@@ -355,21 +337,20 @@ body.dark .poems-coda figcaption {
     align-items: center;
 }
 
+/* A quiet inline glyph, not a CTA — translation is a secondary action,
+   so it gets no fill, no circle, just an icon that warms up on hover. */
 .translate-btn {
-    background: #ed8936;
-    color: white;
+    background: none;
+    color: #a0aec0;
     border: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 16px;
+    padding: 0.85rem; /* invisible — keeps the tap target sane while the glyph stays small */
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1.5rem auto 0 auto;
-    position: relative;
+    margin: 0.5rem auto 0 auto; /* padding above already adds most of the gap */
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
 }
@@ -379,32 +360,12 @@ body.dark .poems-coda figcaption {
 }
 
 .translate-btn:hover {
-    background: #dd6b20;
-    transform: translateY(-1px) scale(1.05);
+    color: #ed8936;
 }
 
 .translate-btn:disabled {
-    background: #a0aec0;
+    color: #cbd5e0;
     cursor: not-allowed;
-    transform: none;
-}
-
-.translate-btn.loading {
-    color: transparent;
-}
-
-.translate-btn.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    margin: -8px 0 0 -8px;
-    border: 2px solid transparent;
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
 }
 
 /* Advanced Loading Animation */
@@ -576,14 +537,6 @@ body.dark .translation-meta {
     color: #a0aec0;
 }
 
-body.dark .translate-btn {
-    background: #ed8936;
-}
-
-body.dark .translate-btn:hover {
-    background: #dd6b20;
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
     .poetry-container {
@@ -591,8 +544,7 @@ body.dark .translate-btn:hover {
     }
     
     .poem-card {
-        padding: 1rem;
-        margin: 1.5rem 0;
+        margin: 2.5rem 0;
     }
     
     .page-title {
