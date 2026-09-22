@@ -141,7 +141,6 @@ h3 {
 
 // Footer
 .site-footer {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-weight: 300;
   font-size: 0.8rem;
   color: #718096;
@@ -157,7 +156,6 @@ h3 {
   .copyright-text {
     margin: 0;
     line-height: 1.5;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: inherit;
   }
 
@@ -1534,9 +1532,9 @@ body:has(.mashhad-hover:hover) .footer-moon__star {
 }
 
 // Caption: a plate label for the drawing, in the site title's own voice.
-// An italic serif at this size reads as a hand-note under a plate, where
-// mono's even rhythm would insist — so it separates itself from the
-// colophon below without getting any louder. Quiet at rest; it only comes
+// An italic serif at this size reads as a hand-note under a plate, next to
+// the colophon's plain upright type below — so it separates itself from
+// the colophon without getting any louder. Quiet at rest; it only comes
 // up to full strength when you actually look at it.
 .footer-place {
   // This gap is what separates the caption from the colophon.
@@ -1562,7 +1560,6 @@ body:has(.mashhad-hover:hover) .footer-moon__star {
 // Colophon: where and how the thing was made, in one line.
 .site-footer .copyright-text {
   margin: 0;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-weight: 300;
   font-size: 0.66rem;
   letter-spacing: 0.04em;
