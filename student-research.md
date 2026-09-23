@@ -28,10 +28,10 @@ Muhlenberg students interested in these topics are welcome to reach out. While p
 Students can get involved through independent studies during the academic year or through summer research opportunities. If you'd like to discuss a possible project or collaboration, please don't hesitate to contact me.
 
 ## Current Projects
-- [Nightshade/Glaze VLM Evaluation Harness](/projects/nightshade-glaze-vlm-eval)
-- [NAACL Submission Review](/projects/naacl-submission-review)
-- [Student Summer Research Review](/projects/student-summer-research-review)
-- [Raising Reachy: Framing, Values, and Responsibility in LLM-Powered Robot Interaction](/projects/raising-reachy)
+- **[Nightshade/Glaze VLM Evaluation Harness](/projects/nightshade-glaze-vlm-eval)**: An evaluation harness for testing how vision-language models perceive and respond to images protected by anti-AI-training tools such as Nightshade and Glaze.
+- **[NAACL Submission Review](/projects/naacl-submission-review)**: Preparing and revising a paper for submission to NAACL.
+- **[Student Summer Research Review](/projects/student-summer-research-review)**: Reviewing and synthesizing the outcomes of Summer 2026 undergraduate research.
+- **[Raising Reachy: Framing, Values, and Responsibility in LLM-Powered Robot Interaction](/projects/raising-reachy)**: Studying how undergraduates "raise" an LLM-powered Reachy Mini robot framed as a learner, and the values and behaviors they pass on to it.
 
 ## Past Projects
 - [TimeCapsule: 18th Century LLM For Historical Sensemaking](/projects/timecapsule-18th-century-llm)
