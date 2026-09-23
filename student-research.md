@@ -30,7 +30,7 @@ Students can get involved through independent studies during the academic year o
 ## Current Projects
 - **[Nightshade/Glaze VLM Evaluation Harness](/projects/nightshade-glaze-vlm-eval)**: An evaluation harness for testing how vision-language models perceive and respond to images protected by anti-AI-training tools such as Nightshade and Glaze.
 - **[The Grammar of Belief](/projects/grammar-of-belief)**: Testing whether language models can separate what someone believes from what is true, in English and in Turkish.
-- **[Student Summer Research Review](/projects/student-summer-research-review)**: Whether the Airbnb Superhost rating threshold can reliably tell listings apart, and what the badge is actually worth.
+- **[181 Reviews to Tell Two Listings Apart](/projects/superhost-rating-reliability)**: Whether the Airbnb Superhost rating threshold can reliably tell listings apart, and what the badge is actually worth.
 - **[Raising Reachy: Framing, Values, and Responsibility in LLM-Powered Robot Interaction](/projects/raising-reachy)**: Studying how undergraduates "raise" an LLM-powered Reachy Mini robot framed as a learner, and the values and behaviors they pass on to it.
 
 ## Past Projects
