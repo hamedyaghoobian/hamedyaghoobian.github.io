@@ -28,6 +28,10 @@ Muhlenberg students interested in these topics are welcome to reach out. While p
 Students can get involved through independent studies during the academic year or through summer research opportunities. If you'd like to discuss a possible project or collaboration, please don't hesitate to contact me.
 
 ## Current Projects
+- [Nightshade/Glaze VLM Evaluation Harness](/projects/nightshade-glaze-vlm-eval)
+- [NAACL Submission Review](/projects/naacl-submission-review)
+- [Student Summer Research Review](/projects/student-summer-research-review)
+- [Raising Reachy: Framing, Values, and Responsibility in LLM-Powered Robot Interaction](/projects/raising-reachy)
 
 ## Past Projects
 - [TimeCapsule: 18th Century LLM For Historical Sensemaking](/projects/timecapsule-18th-century-llm)
