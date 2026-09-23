@@ -8,7 +8,7 @@ list_title: " "
 
 ---
 
-*Note: This research was conducted during Summer 2026 with Muhlenberg undergraduate student researcher, Judah.*
+*Note: This research was conducted during Summer 2026 with Muhlenberg undergraduate student researcher, Judah Dasebre.*
 
 ## Overview
 
