@@ -24,7 +24,7 @@ permalink: /tools/
 }
 
 .tool-title {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Newsreader', serif;
     font-size: 1.20rem;
     color: #1a202c;
     margin: 0 0 0.5rem 0;
@@ -32,7 +32,7 @@ permalink: /tools/
 }
 
 .tool-subtitle {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 1rem;
     color: #718096;
     margin: 0;
@@ -40,7 +40,7 @@ permalink: /tools/
 }
 
 .tool-description {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 1rem;
     line-height: 1.6;
     color: #2c3e50;
@@ -56,7 +56,7 @@ permalink: /tools/
 }
 
 .feature-list h4 {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Newsreader', serif;
     font-size: 1.0rem;
     color: #1a202c;
     margin: 0 0 0.85rem 0;
@@ -69,7 +69,7 @@ permalink: /tools/
 }
 
 .feature-list li {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 0.95rem;
     color: #4a5568;
     margin-bottom: 0.5rem;
@@ -78,7 +78,7 @@ permalink: /tools/
 
 .tech-stack {
     margin: 1.5rem 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 0.9rem;
     color: #718096;
 }
@@ -99,7 +99,7 @@ permalink: /tools/
     color: white;
     text-decoration: none;
     border-radius: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-weight: 500;
     font-size: 0.95rem;
     transition: all 0.2s ease;
@@ -116,7 +116,7 @@ permalink: /tools/
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid #e2e8f0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 0.9rem;
     color: #718096;
 }
@@ -140,14 +140,14 @@ permalink: /tools/
 }
 
 .coming-soon p {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     color: #718096;
     margin: 0;
     font-size: 1rem;
 }
 
 .section-intro {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 1.1rem;
     color: #4a5568;
     margin-bottom: 2rem;
@@ -168,7 +168,7 @@ permalink: /tools/
     background: #fff;
     color: #4a5568;
     border-radius: 20px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.2s ease;
