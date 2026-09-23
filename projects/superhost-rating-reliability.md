@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "181 Reviews to Tell Two Listings Apart"
+title: "Noisy Stars: Rating Reliability and the Superhost Premium"
 
 permalink: /projects/superhost-rating-reliability
 header: true
