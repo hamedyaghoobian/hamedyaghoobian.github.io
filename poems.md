@@ -299,22 +299,19 @@ body.dark .poems-coda figcaption {
     color: #718096;
 }
 
-/* Translation features */
+/* Translation features — an indent and a thin rule, not a tinted card
+   with a colored accent bar. */
 .translation-container {
     display: none;
     margin-top: 1rem;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 6px;
-    border-left: 3px solid #ed8936;
-    transition: all 0.3s ease;
+    padding-left: 1.25rem;
+    border-left: 1px solid rgba(44, 62, 80, 0.14);
     direction: ltr;
     text-align: left;
 }
 
 .translation-container.expanded {
     display: block;
-    border: 1px solid #e2e8f0;
 }
 
 .translation-text {
@@ -520,12 +517,7 @@ body.dark .loading-progress {
 
 /* Dark mode for translation features */
 body.dark .translation-container {
-    background: #2d3748;
-    border-left-color: #ed8936;
-}
-
-body.dark .translation-container.expanded {
-    border-color: #4a5568;
+    border-left-color: rgba(226, 232, 240, 0.16);
 }
 
 body.dark .translation-text {

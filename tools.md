@@ -83,15 +83,13 @@ permalink: /tools/
     color: #718096;
 }
 
+/* Plain words with breathing room, not filled pills — the tech stack
+   is a list to read, not a set of clickable filter chips. */
 .tech-tag {
     display: inline-block;
-    background: #edf2f7;
-    color: #4a5568;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    margin: 0.25rem 0.25rem 0.25rem 0;
+    color: #718096;
+    margin: 0.25rem 0.75rem 0.25rem 0;
     font-size: 0.85rem;
-    font-weight: 500;
 }
 
 .cta-button {
@@ -204,8 +202,7 @@ body.dark .feature-list {
     border-left-color: rgba(226, 232, 240, 0.16);
 }
 body.dark .tech-tag {
-    background: #4a5568;
-    color: #e2e8f0;
+    color: #a0aec0;
 }
 body.dark .cta-button {
     background: #ed8936;
