@@ -10,15 +10,11 @@ list_title: " "
 
 *In collaboration with Muhlenberg undergraduate researcher Hayk Gregorian.*
 
----
-
 ## Overview
 
 **TimeCapsule** is a 1.2B-parameter language model trained *ab initio* exclusively on British literature, parliamentary records, and periodicals from **1800 to 1875**. Unlike modern LLMs that suppress future knowledge through prompting, TimeCapsule is structurally incapable of knowing the post-Victorian world, creating what we term an **epistemological event horizon**: a hard chronological boundary beyond which no world-knowledge can pass.
 
 The project introduces **selective temporal training (STT)** as a new design paradigm for historical AI, arguing that deliberate ignorance is not a deficit but a generative condition for authentic historical sensemaking.
-
----
 
 ## The Core Problem
 
@@ -30,8 +26,6 @@ TimeCapsule rejects performative suppression. It does not *pretend* not to know 
   <img src="/assets/images/timecapsule/fig1_chronological_cliff.png" alt="The chronological boundary / epistemological event horizon">
   <figcaption><strong>Figure 1.</strong> The epistemological event horizon. Training data terminates at 1875, placing post-Victorian technologies (<em>airplane, electronic computer, internet</em>) in <em>terra incognita</em> and forcing the model to generate Victorian analogical explanations instead.</figcaption>
 </figure>
-
----
 
 ## Methodology
 
@@ -63,8 +57,6 @@ Gender representation reflects Victorian print culture: a **4.99:1 male-to-femal
 ### Evaluation
 
 TimeCapsule achieved a **perplexity of 37.59** on held-out Victorian prose, a **45.4% relative reduction** over GPT-2 (68.83). Memorization remained below 0.05% n-gram overlap, confirming strong generalization.
-
----
 
 ## Case Studies
 
@@ -102,8 +94,6 @@ Applying t-SNE to 50 terms from 19th-century discourses of civilization and empi
 
 These patterns are preserved deliberately. A Victorian model stripped of its racialized and imperial associations may be safer as a consumer product, but it becomes analytically useless for studying the historical formation of those ideologies. TimeCapsule renders the colonial gaze **computationally legible**, not to endorse it, but to make it available for scholarly examination.
 
----
-
 ## Expert Evaluation: A Crisis of Authenticity
 
 We conducted a blind hermeneutic probe with two English faculty experts (specialists in Romanticism and 19th-century literature), presenting 10 authentic Victorian passages and 10 TimeCapsule-generated passages for origin classification.
@@ -121,8 +111,6 @@ Three emergent heuristic patterns:
 - **The "Hyper-Real" Trap:** Expert A correctly identified all 10 generated passages, but because they were *too* coherent and concrete, lacking the "meandering opacity" of genuine Victorian writing.
 - **The Rejection of the Real:** Both experts misclassified 40–50% of real Victorian texts as machine-generated, suggesting that once a model can reproduce plausible archival style, canonical prose itself begins to appear machine-like.
 
----
-
 ## Key Contributions
 
 1. **Selective Temporal Training (STT):** A methodology for training small-scale models on temporally bounded corpora to enforce epistemological constraint rather than simulate it through prompting.
@@ -132,8 +120,6 @@ Three emergent heuristic patterns:
 3. **Hallucination as Ontological Repair:** Reframing model "errors" on anachronistic prompts as historically constrained inferences that reveal the ontological structures of 19th-century thought.
 
 4. **Archival Honesty:** Preserving historical biases (gender, empire, race) as an ethical and scholarly necessity, rather than an alignment failure, for humanistic AI research.
-
----
 
 ## Resources
 
