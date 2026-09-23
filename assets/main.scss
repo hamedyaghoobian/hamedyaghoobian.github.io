@@ -233,6 +233,48 @@ a {
   }
 }
 
+// Tables — flat, hairline-only override of minima's default boxed,
+// zebra-striped table. Minima's own version has no dark-mode styling at
+// all, so it also fixes a real bug: white/light-gray cells on the dark
+// background made data illegible.
+table {
+  width: 100%;
+  margin-bottom: $spacing-unit;
+  border-collapse: collapse;
+  border: none;
+
+  tr:nth-child(even) {
+    background: none;
+  }
+
+  th,
+  td {
+    padding: 0.6rem 1rem 0.6rem 0;
+    border: none;
+    border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+    text-align: left;
+  }
+
+  th {
+    font-weight: 600;
+    color: #1a202c;
+    background: none;
+    border-bottom: 1px solid rgba(44, 62, 80, 0.25);
+  }
+
+  body.dark & {
+    th,
+    td {
+      border-bottom-color: rgba(226, 232, 240, 0.12);
+    }
+
+    th {
+      color: #e2e8f0;
+      border-bottom-color: rgba(226, 232, 240, 0.3);
+    }
+  }
+}
+
 // Optional: Add smooth scrolling
 html {
   scroll-behavior: smooth;
