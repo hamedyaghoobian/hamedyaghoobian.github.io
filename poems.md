@@ -94,7 +94,7 @@ permalink: /poems/
 }
 
 .verse .english-line {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Newsreader', serif;
     font-size: 1rem;
     font-weight: 400;
     font-style: italic;
@@ -177,7 +177,7 @@ body.dark .verse .inline-translation {
 }
 
 .english-title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 0.8rem;
     color: #a0aec0;
     margin-top: 0.5rem;
@@ -267,7 +267,7 @@ body.dark .year-marker span {
 }
 
 .poems-coda blockquote {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Newsreader', serif;
     font-size: 1.25rem;
     font-style: italic;
     line-height: 1.6;
@@ -278,7 +278,7 @@ body.dark .year-marker span {
 }
 
 .poems-coda figcaption {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 0.7rem;
     font-style: normal;
     letter-spacing: 0.16em;
@@ -315,7 +315,7 @@ body.dark .poems-coda figcaption {
 }
 
 .translation-text {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 0.85rem;
     line-height: 1.6;
     color: #2c3e50;
@@ -383,7 +383,7 @@ body.dark .poems-coda figcaption {
 }
 
 .loading-text {
-    font-family: 'Vazirmatn', 'Inter', sans-serif;
+    font-family: 'Vazirmatn', 'Instrument Sans', sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
     color: #4a5568;
