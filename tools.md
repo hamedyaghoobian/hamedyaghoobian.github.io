@@ -47,19 +47,19 @@ permalink: /tools/
     margin-bottom: 1.5rem;
 }
 
+/* An indent and a thin rule, not a tinted card with a colored accent
+   bar — the same move as a plain blockquote. */
 .feature-list {
     margin: 1.5rem 0;
-    background: #f7fafc;
-    padding: 1.5rem;
-    border-radius: 6px;
-    border-left: 4px solid #ed8936;
+    padding-left: 1.25rem;
+    border-left: 1px solid rgba(44, 62, 80, 0.14);
 }
 
 .feature-list h4 {
     font-family: 'EB Garamond', serif;
     font-size: 1.0rem;
     color: #1a202c;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.85rem 0;
 }
 
 .feature-list ul {
@@ -201,8 +201,7 @@ body.dark .source-attribution {
     color: #e2e8f0;
 }
 body.dark .feature-list {
-    background: #2d3748;
-    border-left-color: #ed8936;
+    border-left-color: rgba(226, 232, 240, 0.16);
 }
 body.dark .tech-tag {
     background: #4a5568;
