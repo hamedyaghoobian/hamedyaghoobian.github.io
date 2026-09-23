@@ -11,18 +11,10 @@ permalink: /tools/
     margin: 0 auto;
 }
 
+/* No box, no shadow — the tool-header's hairline and generous margin
+   between cards do the work of separating one tool from the next. */
 .tool-card {
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 2rem;
-    margin: 2rem 0;
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.tool-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 3rem 0;
 }
 
 .tool-header {
@@ -33,7 +25,6 @@ permalink: /tools/
 
 .tool-title {
     font-family: 'EB Garamond', serif;
-    font-weight: 700;
     font-size: 1.20rem;
     color: #1a202c;
     margin: 0 0 0.5rem 0;
@@ -66,7 +57,6 @@ permalink: /tools/
 
 .feature-list h4 {
     font-family: 'EB Garamond', serif;
-    font-weight: 700;
     font-size: 1.0rem;
     color: #1a202c;
     margin: 0 0 1rem 0;
@@ -122,8 +112,6 @@ permalink: /tools/
     background: #dd6b20;
     color: white;
     text-decoration: none;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(237, 137, 54, 0.3);
 }
 
 .source-attribution {
@@ -139,20 +127,17 @@ permalink: /tools/
     color: #ed8936;
 }
 
+/* A closing note, not another card — matches how the poems page treats
+   its own closing line. */
 .coming-soon {
     text-align: center;
-    padding: 3rem 2rem;
-    background: #f7fafc;
-    border-radius: 8px;
-    margin: 3rem 0;
-    border: 1px solid #e2e8f0;
+    padding: 3rem 0 0;
+    margin: 3rem 0 0;
+    border-top: 1px solid rgba(44, 62, 80, 0.08);
 }
 
-.coming-soon h3 {
-    font-family: 'EB Garamond', serif;
-    font-weight: 700;
+.coming-soon h2 {
     font-size: 1.10rem;
-    color: #1a202c;
     margin-bottom: 0.5rem;
 }
 
@@ -207,10 +192,6 @@ permalink: /tools/
 </style>
 
 <style>
-body.dark .tool-card {
-    background: #1a202c;
-    border-color: #2d3748;
-}
 body.dark .tool-title,
 body.dark .tool-subtitle,
 body.dark .tool-description,
@@ -234,8 +215,7 @@ body.dark .cta-button:hover {
     background: #dd6b20;
 }
 body.dark .coming-soon {
-    background: #1a202c;
-    border-color: #2d3748;
+    border-top-color: rgba(226, 232, 240, 0.1);
 }
 body.dark .coming-soon h2,
 body.dark .coming-soon p {
