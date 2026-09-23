@@ -156,6 +156,31 @@ list_title: " "
         personalLabel.textContent = nextExpanded ? 'Less personal' : 'More personal';
       });
     }
+
+    // On mobile the footer reveal this opens sits far below "Mashhad" in the
+    // bio text — on a stacked, single-column layout the page is long enough
+    // that the sunrise/moonrise plays entirely off-screen, invisible to
+    // whatever triggered it. Below the layout's own mobile breakpoint, a tap
+    // scrolls the footer into view and holds the reveal open for a few
+    // seconds via body.mashhad-active (see main.scss), so it plays the same
+    // reveal a desktop hover does, just somewhere it can actually be seen.
+    const mashhad = document.querySelector('.mashhad-hover');
+    const footerCity = document.querySelector('.footer-city');
+    let mashhadRevealTimer = null;
+
+    if (mashhad && footerCity) {
+      mashhad.addEventListener('click', () => {
+        if (!window.matchMedia('(max-width: 768px)').matches) return;
+
+        document.body.classList.add('mashhad-active');
+        footerCity.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        clearTimeout(mashhadRevealTimer);
+        mashhadRevealTimer = setTimeout(() => {
+          document.body.classList.remove('mashhad-active');
+        }, 4200);
+      });
+    }
   });
 </script>
 

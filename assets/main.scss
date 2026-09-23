@@ -1368,8 +1368,13 @@ sup a {
 }
 
 // Hovering "Mashhad" opens the crop up the drawing, so the cranes and the
-// sky above the resting band come into view.
-body:has(.mashhad-hover:hover) .footer-city__frame {
+// sky above the resting band come into view. body.mashhad-active is the
+// same reveal, driven by a tap instead of a hover — see the mobile-tap
+// script on the "Mashhad" span below, added because on a narrow screen the
+// footer this opens sits far below the fold, out of sight of whatever
+// triggered it.
+body:has(.mashhad-hover:hover) .footer-city__frame,
+body.mashhad-active .footer-city__frame {
   height: var(--open-h);
   transition: height 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -1413,7 +1418,8 @@ body:has(.mashhad-hover:hover) .footer-city__frame {
 
 // The city comes fully up out of the paper on the same "Mashhad" hover
 // that opens it (above) — one event, not a separate hover state of its own.
-body:has(.mashhad-hover:hover) .footer-city__img {
+body:has(.mashhad-hover:hover) .footer-city__img,
+body.mashhad-active .footer-city__img {
   opacity: 1;
   transition: opacity 1.2s ease;
 }
@@ -1424,7 +1430,9 @@ body:has(.mashhad-hover:hover) .footer-city__img {
   .footer-city__frame,
   .footer-city__img,
   body:has(.mashhad-hover:hover) .footer-city__frame,
-  body:has(.mashhad-hover:hover) .footer-city__img {
+  body:has(.mashhad-hover:hover) .footer-city__img,
+  body.mashhad-active .footer-city__frame,
+  body.mashhad-active .footer-city__img {
     transition: height 0.2s ease, opacity 0.2s ease;
   }
 }
@@ -1543,13 +1551,16 @@ body.dark .footer-sun {
 // drawing's real height, comfortably above where the cranes sit (~80%) —
 // whether or not the drawing has actually finished opening underneath it.
 body:has(.mashhad-hover:hover) .footer-sun,
-body:has(.mashhad-hover:hover) .footer-moon {
+body:has(.mashhad-hover:hover) .footer-moon,
+body.mashhad-active .footer-sun,
+body.mashhad-active .footer-moon {
   bottom: 85%;
   opacity: 1;
   transition: bottom 1.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.3s ease;
 }
 
-body:has(.mashhad-hover:hover) .footer-moon__star {
+body:has(.mashhad-hover:hover) .footer-moon__star,
+body.mashhad-active .footer-moon__star {
   opacity: 1;
 }
 
@@ -1561,7 +1572,9 @@ body:has(.mashhad-hover:hover) .footer-moon__star {
   .footer-sun,
   .footer-moon,
   body:has(.mashhad-hover:hover) .footer-sun,
-  body:has(.mashhad-hover:hover) .footer-moon {
+  body:has(.mashhad-hover:hover) .footer-moon,
+  body.mashhad-active .footer-sun,
+  body.mashhad-active .footer-moon {
     transition: bottom 0.2s ease, opacity 0.2s ease;
   }
 
