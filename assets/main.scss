@@ -1308,13 +1308,35 @@ sup a {
 // On a stacked mobile layout the footer reveal above sits far enough below
 // "Mashhad" that scrolling to it would yank the page away from what the
 // visitor was reading, just to show them a decoration. Below the layout's
-// own mobile breakpoint, body.mashhad-active (added by a tap, see the
-// script on the "Mashhad" span in index.markdown) instead rises a much
-// smaller version of the same sun/moon right next to the word itself — same
-// event, no scroll. Zero-size anchor + absolutely-positioned children keeps
-// this out of text flow entirely, so it can't shift surrounding words.
+// own mobile breakpoint, a tap instead plays a much smaller version of the
+// same beat right next to the word itself: a sliver of horizon glows in,
+// in the drawing's own ink, and a sun or moon rises above it — echoing the
+// footer's sky-over-skyline pairing in miniature rather than just popping
+// a bare, unrelated circle into the middle of a sentence. Zero-size anchor
+// + absolutely-positioned children keeps all of it out of text flow, so it
+// can't shift surrounding words.
+//
+// Timing lives entirely in these two keyframe animations, triggered by
+// body.mashhad-active (added by a tap; see index.markdown) rather than
+// split across a JS timer and a CSS transition duration that would have to
+// be hand-kept in sync. index.markdown clears the class again on that
+// same animation's animationend.
 .mashhad-local-sky {
   display: none;
+}
+
+@keyframes mashhad-local-rise {
+  0% { opacity: 0; transform: translateY(4px); }
+  15% { opacity: 1; transform: translateY(-13px); }
+  78% { opacity: 1; transform: translateY(-13px); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+
+@keyframes mashhad-local-horizon {
+  0% { opacity: 0; }
+  15% { opacity: 0.7; }
+  78% { opacity: 0.7; }
+  100% { opacity: 0; }
 }
 
 @media (max-width: 768px) {
@@ -1326,6 +1348,22 @@ sup a {
     vertical-align: baseline;
   }
 
+  // The ground the sun/moon rises over — var(--ink-soft) rather than an
+  // invented colour, so it's drawn in the same ink as the skyline it's
+  // standing in for and follows dark mode's gold automatically, with no
+  // separate override needed.
+  .mashhad-local-horizon {
+    position: absolute;
+    left: -4px;
+    bottom: 1px;
+    width: 32px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--ink-soft);
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .mashhad-local-sun,
   .mashhad-local-moon {
     position: absolute;
@@ -1334,9 +1372,6 @@ sup a {
     opacity: 0;
     transform: translateY(4px);
     pointer-events: none;
-    // Settling back is slower than the rise — the same asymmetry the
-    // footer's own sun/moon uses.
-    transition: opacity 1.6s ease, transform 1.6s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   .mashhad-local-sun {
@@ -1371,19 +1406,20 @@ sup a {
     display: none;
   }
 
+  body.mashhad-active .mashhad-local-horizon {
+    animation: mashhad-local-horizon 3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
   body.mashhad-active .mashhad-local-sun,
   body.mashhad-active .mashhad-local-moon {
-    opacity: 1;
-    transform: translateY(-13px);
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: mashhad-local-rise 3s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mashhad-local-sun,
-    .mashhad-local-moon,
+    body.mashhad-active .mashhad-local-horizon,
     body.mashhad-active .mashhad-local-sun,
     body.mashhad-active .mashhad-local-moon {
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      animation-duration: 0.6s;
     }
   }
 }
