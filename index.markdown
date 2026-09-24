@@ -74,7 +74,7 @@ list_title: " "
           <span class="personal-toggle__label">More personal</span>
         </button>
         <div class="personal-content" id="personal-story-content">
-          <p>I was born and raised in <span class="mashhad-hover">Mashhad</span>. Eastern Iran. The Khorasan region. Growing up, it didn't register much. Later, it became something else. Less an origin than a direction. A pull. A way of becoming-east rather than being-from-east. I now live in eastern Pennsylvania with my wife. East, still. But a different east. That earlier east did not follow me here. It works through me. Quietly. Sometimes not. From within. Still orienting. Still unfinished.</p>
+          <p>I was born and raised in <span class="mashhad-hover">Mashhad</span><span class="mashhad-local-sky" aria-hidden="true"><span class="mashhad-local-sun"></span><span class="mashhad-local-moon"><svg class="mashhad-local-moon__crescent" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span></span>. Eastern Iran. The Khorasan region. Growing up, it didn't register much. Later, it became something else. Less an origin than a direction. A pull. A way of becoming-east rather than being-from-east. I now live in eastern Pennsylvania with my wife. East, still. But a different east. That earlier east did not follow me here. It works through me. Quietly. Sometimes not. From within. Still orienting. Still unfinished.</p>
         </div>
       </div>
       <p>For research, collaborations, or a chat, email me at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a>. Or visit me in the Trumbower Science Building. Room 125.</p>
@@ -157,28 +157,26 @@ list_title: " "
       });
     }
 
-    // On mobile the footer reveal this opens sits far below "Mashhad" in the
-    // bio text — on a stacked, single-column layout the page is long enough
-    // that the sunrise/moonrise plays entirely off-screen, invisible to
-    // whatever triggered it. Below the layout's own mobile breakpoint, a tap
-    // scrolls the footer into view and holds the reveal open for a few
-    // seconds via body.mashhad-active (see main.scss), so it plays the same
-    // reveal a desktop hover does, just somewhere it can actually be seen.
+    // The footer reveal this triggers sits far below "Mashhad" in the bio
+    // text — on a stacked mobile layout the page is long enough that the
+    // sunrise/moonrise plays entirely off-screen. Rather than scrolling the
+    // page down to a reveal the visitor didn't ask to jump to, body.mashhad-active
+    // (see main.scss) also rises a small local sun or moon right next to
+    // "Mashhad" itself below the layout's own mobile breakpoint — same
+    // event, no scroll.
     const mashhad = document.querySelector('.mashhad-hover');
-    const footerCity = document.querySelector('.footer-city');
     let mashhadRevealTimer = null;
 
-    if (mashhad && footerCity) {
+    if (mashhad) {
       mashhad.addEventListener('click', () => {
         if (!window.matchMedia('(max-width: 768px)').matches) return;
 
         document.body.classList.add('mashhad-active');
-        footerCity.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
         clearTimeout(mashhadRevealTimer);
         mashhadRevealTimer = setTimeout(() => {
           document.body.classList.remove('mashhad-active');
-        }, 4200);
+        }, 3000);
       });
     }
   });

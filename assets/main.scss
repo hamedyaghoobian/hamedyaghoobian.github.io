@@ -960,7 +960,9 @@ body {
   opacity: 0;
   overflow: hidden;
   transform: translateY(-4px);
-  transition: max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease, transform 0.3s ease;
+  // overflow switches back to hidden the instant the class comes off, so
+  // closing still clips correctly throughout — only opening delays it.
+  transition: max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease, transform 0.3s ease, overflow 0s linear 0s;
 
   p {
     margin-top: 0.5rem;
@@ -973,6 +975,16 @@ body {
     max-height: 30rem;
     opacity: 1;
     transform: translateY(0);
+    // Delayed past the slide-open transition above (0.38s) rather than
+    // switching immediately: while opening, overflow:hidden is still doing
+    // real work (it's what makes max-height read as a reveal instead of a
+    // jump-cut). Once open and settled, it serves no purpose except
+    // clipping .mashhad-local-sun/.mashhad-local-moon's rise on mobile —
+    // "Mashhad" sits on the paragraph's very first line, close enough to
+    // this box's own top edge that the small local reveal otherwise loses
+    // its top few pixels.
+    overflow: visible;
+    transition: max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease, transform 0.3s ease, overflow 0s linear 0.4s;
   }
 }
 
@@ -1267,10 +1279,13 @@ sup a {
 }
 
 // Mashhad Hover Effect
-// Same dotted-underline trigger as before (it used to sit on "Iran"); the
-// visual it wakes now lives in the footer — see the sunrise/moonrise block
-// further down, since the two need to be near .footer-city to be positioned
-// against the actual skyline instead of guessed at with viewport coordinates.
+// Same dotted-underline trigger as before (it used to sit on "Iran"); on a
+// wide-enough viewport the visual it wakes lives in the footer — see the
+// sunrise/moonrise block further down, since it needs to be near
+// .footer-city to be positioned against the actual skyline instead of
+// guessed at with viewport coordinates. Below the mobile breakpoint, a
+// second, much smaller version rises right here instead (next block) —
+// see the comment there for why.
 .mashhad-hover {
   cursor: pointer;
   position: relative;
@@ -1286,6 +1301,90 @@ sup a {
   &:hover {
     color: #ed8936;
     border-bottom-color: transparent;
+  }
+}
+
+// Mobile-only local sun/moon
+// On a stacked mobile layout the footer reveal above sits far enough below
+// "Mashhad" that scrolling to it would yank the page away from what the
+// visitor was reading, just to show them a decoration. Below the layout's
+// own mobile breakpoint, body.mashhad-active (added by a tap, see the
+// script on the "Mashhad" span in index.markdown) instead rises a much
+// smaller version of the same sun/moon right next to the word itself — same
+// event, no scroll. Zero-size anchor + absolutely-positioned children keeps
+// this out of text flow entirely, so it can't shift surrounding words.
+.mashhad-local-sky {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mashhad-local-sky {
+    display: inline-block;
+    position: relative;
+    width: 1px;
+    height: 1px;
+    vertical-align: baseline;
+  }
+
+  .mashhad-local-sun,
+  .mashhad-local-moon {
+    position: absolute;
+    left: 0.4em;
+    bottom: 0;
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    // Settling back is slower than the rise — the same asymmetry the
+    // footer's own sun/moon uses.
+    transition: opacity 1.6s ease, transform 1.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .mashhad-local-sun {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #ffd700;
+    box-shadow: 0 0 8px 3px rgba(255, 215, 0, 0.4),
+                0 0 16px 6px rgba(255, 165, 0, 0.22);
+  }
+
+  .mashhad-local-moon {
+    width: 14px;
+    height: 14px;
+    color: #c7d2e8;
+    filter: drop-shadow(0 0 5px rgba(199, 210, 232, 0.5));
+  }
+
+  .mashhad-local-moon__crescent {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Only the theme-appropriate body is ever visible, same rule as the
+  // footer's own sun/moon.
+  body:not(.dark) .mashhad-local-moon {
+    display: none;
+  }
+
+  body.dark .mashhad-local-sun {
+    display: none;
+  }
+
+  body.mashhad-active .mashhad-local-sun,
+  body.mashhad-active .mashhad-local-moon {
+    opacity: 1;
+    transform: translateY(-13px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mashhad-local-sun,
+    .mashhad-local-moon,
+    body.mashhad-active .mashhad-local-sun,
+    body.mashhad-active .mashhad-local-moon {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
   }
 }
 
