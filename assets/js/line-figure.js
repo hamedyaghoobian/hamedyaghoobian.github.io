@@ -1,7 +1,7 @@
 // Shared drawing kit for the line figures at the head of project pages
 // (assets/js/*-figure.js, placed with _includes/project-figure.html).
 //
-// Each figure is an isometric ink drawing in the Mashhad footer's palette:
+// Each figure is an isometric ink drawing in the home footer's palette:
 // colours live in main.scss (.project-figure), never here, so every figure
 // flips with body.dark on its own. A figure is a list of items (eras,
 // crews, listings, years…); the pointer or the arrow keys pick one, it

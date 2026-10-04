@@ -1,42 +1,20 @@
 <footer class="site-footer">
 
-  <!-- Purely decorative — not a button any more. The whole reveal (this
-       drawing opening, and the sun/moon rising into the sky above it) is a
-       single event, launched only by hovering "Mashhad" in the bio text
-       (body:has(.mashhad-hover:hover), in main.scss). Nothing here is
-       itself clickable or hoverable — pointer-events: none lets the mouse
-       pass through it untouched. -->
-  <div class="footer-city" aria-hidden="true">
-    <!-- Placed before .footer-city__frame in the markup (not after) on
-         purpose: on the same stacking order, the crane drawing then paints
-         over this, so an opened skyline occludes the sun/moon the way real
-         buildings would rather than the two fighting for the same layer. -->
-    <span class="footer-sky">
-      <span class="footer-sun"></span>
-      <span class="footer-moon">
-        <!-- Same crescent path as the theme toggle's moon icon in
-             header.html, filled instead of stroked, so this rhymes with the
-             mark the visitor already knows from the nav bar. -->
-        <svg class="footer-moon__crescent" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-        <span class="footer-moon__star footer-moon__star--1"></span>
-        <span class="footer-moon__star footer-moon__star--2"></span>
-        <span class="footer-moon__star footer-moon__star--3"></span>
-      </span>
-    </span>
-
-    <span class="footer-city__frame">
-      <img class="footer-city__img"
-           src="{{ '/assets/images/city-cranes.svg' | relative_url }}"
-           alt="Line drawing of the Mashhad skyline with construction cranes"
-           loading="lazy" decoding="async" width="1920" height="1080">
-    </span>
-  </div>
+  <!-- The mountains above Mashhad, drawn live by assets/js/mashhad-range.js
+       in the site's ink, with Mashhad's own sun or moon at its true place
+       for the hour there. Decorative: the caption below carries the time
+       in words. -->
+  <div class="footer-range" aria-hidden="true"></div>
 
   <div class="wrapper">
     <div class="footer-content">
-      <p class="footer-place">Mashhad, where I grew up</p>
+      <!-- The short line is there from the start (and filled in with
+           Mashhad's time by the script); the full line replaces it while
+           the footer is awake. -->
+      <p class="footer-place">
+        <span class="footer-place__short">Mashhad, where I grew up</span>
+        <span class="footer-place__full" aria-hidden="true"></span>
+      </p>
       <p class="copyright-text">
         <span class="colophon-item">© {{ site.time | date: "%Y" }} Hamed Yaghoobian</span>
         <span class="footer-separator" aria-hidden="true">·</span>
@@ -44,5 +22,7 @@
       </p>
     </div>
   </div>
+
+  <script src="{{ '/assets/js/mashhad-range.js' | relative_url }}" defer></script>
 
 </footer>
