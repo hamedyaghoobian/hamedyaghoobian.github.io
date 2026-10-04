@@ -8,13 +8,10 @@
 
   <div class="wrapper">
     <div class="footer-content">
-      <!-- The short line is there from the start (and filled in with
-           Mashhad's time by the script); the full line replaces it while
-           the footer is awake. -->
-      <p class="footer-place">
-        <span class="footer-place__short">Mashhad, where I grew up</span>
-        <span class="footer-place__full" aria-hidden="true"></span>
-      </p>
+      <!-- Mashhad's time, written in by assets/js/mashhad-range.js. It shows
+           only while the footer is awake, in space kept for it, so nothing
+           below moves when it appears. -->
+      <p class="footer-place"></p>
       <p class="copyright-text">
         <span class="colophon-item">© {{ site.time | date: "%Y" }} Hamed Yaghoobian</span>
         <span class="footer-separator" aria-hidden="true">·</span>
