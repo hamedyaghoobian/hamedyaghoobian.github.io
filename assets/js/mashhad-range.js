@@ -6,7 +6,8 @@
 // ribbing the slopes, mist in the valleys. Over it stands a sun if it is
 // day in Mashhad right now, a moon if it is night there, placed along its
 // arc by how far through Mashhad's day (or night) it is; the slopes that
-// face it take the full ink. The caption gives Mashhad's local time.
+// face it take the full ink. While the footer is awake, a caption gives
+// Mashhad's local time.
 //
 // The footer wakes on its own terms: while the pointer is over it (with a
 // soft lamp following the pointer along the ridges), or on a touch screen
@@ -16,8 +17,7 @@
   const footer = document.querySelector('.site-footer');
   const host = footer && footer.querySelector('.footer-range');
   if (!host) return;
-  const short = footer.querySelector('.footer-place__short');
-  const full = footer.querySelector('.footer-place__full');
+  const place = footer.querySelector('.footer-place');
 
   // ── Mashhad's clock and sun ───────────────────────────────────────────
 
@@ -66,16 +66,13 @@
     return { day, p: Math.min(1, wrap(t - (day ? r : s)) / length) };
   }
 
-  function captions(date) {
+  function caption(date) {
     const time = new Intl.DateTimeFormat('en-US', { timeZone: ZONE, hour: 'numeric', minute: '2-digit' })
       .format(date).replace(/\s*([AP])M$/, (_, a) => ` ${a.toLowerCase()}m`);
     const ahead = (offset(ZONE, date) - offset(HOME, date)) / 60;
     const whole = Math.floor(ahead);
     const hours = `${whole}${ahead - whole >= 0.5 ? '½' : ''} hours`;
-    return {
-      short: `Mashhad, where I grew up · ${time} there now`,
-      full: `In Mashhad it’s ${time} · ${hours} ahead of Pennsylvania · ${MILES} miles east`
-    };
+    return `In Mashhad it’s ${time} · ${hours} ahead of Pennsylvania · ${MILES} miles east`;
   }
 
   // ── The range ─────────────────────────────────────────────────────────
@@ -154,9 +151,7 @@
   function draw(W, H, R) {
     const date = new Date();
     const { day, p } = sky(date);
-    const text = captions(date);
-    if (short) short.textContent = text.short;
-    if (full) full.textContent = text.full;
+    if (place) place.textContent = caption(date);
 
     const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, focusable: 'false', class: day ? 'range--day' : 'range--night' });
     svg.style.height = `${H}px`;

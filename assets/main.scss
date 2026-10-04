@@ -1460,11 +1460,11 @@ body.dark {
   }
 }
 
-// Caption: a plate label for the drawing, in the site title's own voice.
-// An italic serif at this size reads as a hand-note under a plate, next to
-// the colophon's plain upright type below — so it separates itself from
-// the colophon without getting any louder. Quiet at rest; it only comes
-// up to full strength when you actually look at it.
+// Caption: Mashhad's time, a hand-note under the drawing in the site
+// title's own voice. An italic serif at this size separates itself from
+// the colophon's plain upright type below without getting any louder. It
+// appears only while the footer is awake; at rest its line is kept, empty
+// to the eye, so waking never moves the colophon.
 .footer-place {
   // This gap is what separates the caption from the colophon.
   margin: 0 0 clamp(0.4rem, 1.3vh, 0.85rem);
@@ -1473,10 +1473,9 @@ body.dark {
   font-size: 0.82rem;
   letter-spacing: 0.015em;
   line-height: 1.4;
+  min-height: 1.4em;
   color: var(--ink-soft);
-  // It carries Mashhad's time now, so it reads at rest rather than only
-  // when the footer wakes.
-  opacity: 0.8;
+  opacity: 0;
   cursor: default;
   // Same slow breath as the drawing, so the footer wakes as one thing.
   transition: opacity 1.4s ease, color 1.4s ease;
@@ -1486,33 +1485,6 @@ body.dark {
   opacity: 1;
   color: var(--ink);
   transition: opacity 0.9s ease, color 0.9s ease;
-}
-
-// The short line and the full one share one cell and cross-fade, so the
-// swap never moves the colophon below.
-.footer-place {
-  display: grid;
-  justify-items: center;
-}
-
-.footer-place__short,
-.footer-place__full {
-  grid-area: 1 / 1;
-  transition: opacity 0.9s ease;
-}
-
-.footer-place__full {
-  opacity: 0;
-}
-
-.site-footer.is-awake .footer-place:has(.footer-place__full:not(:empty)) {
-  .footer-place__short {
-    opacity: 0;
-  }
-
-  .footer-place__full {
-    opacity: 1;
-  }
 }
 
 // Colophon: where and how the thing was made, in one line.
@@ -1564,8 +1536,6 @@ body.dark {
 
   .footer-place {
     font-size: 0.78rem;
-    // No hover on touch, so let it read at a legible but quiet weight.
-    opacity: 0.6;
   }
 }
 
