@@ -10,6 +10,8 @@ list_title: " "
 
 *Note: This research is being conducted with Muhlenberg undergraduate student researcher, Melina Sarion.*
 
+{% include project-figure.html id="reachy-figure" script="reachy-figure.js" class="project-figure--small" %}
+
 Reachy Mini is a small, expressive robot from Pollen Robotics and Hugging Face, here powered by a large language model. This project studies how undergraduates "raise" it when it's framed as a learner that needs their guidance, rather than as a tool or a peer — and how that framing shapes their behavior, the values they try to instill, and their sense of intelligence, likeability, trust, and anxiety toward the robot.
 
 This project is currently in progress.

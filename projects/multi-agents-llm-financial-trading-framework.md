@@ -10,6 +10,8 @@ list_title: " "
 
 *Note: This research was conducted in Summer 2025 with Muhlenberg undergraduate student researcher, Sebastian Montalvo.*
 
+{% include project-figure.html id="masfin-figure" script="masfin-figure.js" %}
+
 ## 1. Introduction
 
 Financial forecasting represents one of the most complex challenges in data-driven decision making due to market volatility, non-stationarity, and the integration of quantitative and qualitative signals. Recent advances in **large language models (LLMs)** have renewed interest in this space, particularly through **multi-agent frameworks** that allow modular reasoning, interpretability, and reproducibility.
