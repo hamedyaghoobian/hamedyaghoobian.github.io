@@ -1,0 +1,13 @@
+{%- comment -%}
+  A line figure at the head of a project page.
+    id      the figure container's id; the caption is id + "-readout"
+    script  the figure's file in assets/js/
+    note    optional small line under the caption (e.g. "Schematic, not measured.")
+    class   optional extra class on the <figure>
+{%- endcomment -%}
+<figure class="project-figure {{ include.class }}">
+  <div id="{{ include.id }}" class="project-figure__canvas"></div>
+  <figcaption><span id="{{ include.id }}-readout" aria-live="polite"></span>{% if include.note %}<br><span class="project-figure__note">{{ include.note }}</span>{% endif %}</figcaption>
+</figure>
+<script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/' | append: include.script | relative_url }}" defer></script>

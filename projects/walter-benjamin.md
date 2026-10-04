@@ -10,6 +10,8 @@ list_title: " "
 
 *Note: This research was conducted over a span of 4 weeks in Summer 2022 with Muhlenberg undergraduate student researcher, Christian Johansson.*
 
+{% include project-figure.html id="benjamin-figure" script="benjamin-figure.js" note="One sheet per letter in the dataset; place is where Benjamin wrote from." %}
+
 ## 1. Introduction
 
 Walter Benjamin, a renowned German philosopher and critical theorist (1892-1940), is celebrated for his prolific letter-writing. His letters, which were later compiled into a book titled "The Correspondence of Walter Benjamin, 1910-1940" <sup>[1](#ref1)</sup>, provide a rich resource for exploring the writer's evolving thoughts and emotions over time. In this study, we aim to leverage advanced computational frameworks, particularly large pretrained language models, to gain deeper insights into these letters.

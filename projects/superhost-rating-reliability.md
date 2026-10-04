@@ -10,6 +10,8 @@ list_title: " "
 
 *Note: This research was conducted during Summer 2026 with Muhlenberg undergraduate student researcher, Judah Dasebre.*
 
+{% include project-figure.html id="superhost-figure" script="superhost-figure.js" note="Schematic listings; the 4.8 line and 0.37 are the study's." %}
+
 ## Overview
 
 Airbnb awards its Superhost badge partly on a threshold: a mean guest rating of at least 4.8 stars. Most existing research asks what the badge is worth, and price estimates in that literature disagree, even in sign. This project asks the prior question: what can the rating behind that threshold actually tell apart? It also asks what the badge is associated with in price, and whether a causal effect of Superhost status is identifiable at all.

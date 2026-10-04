@@ -10,6 +10,8 @@ list_title: " "
 
 *In collaboration with Muhlenberg undergraduate researcher Hayk Gregorian.*
 
+{% include project-figure.html id="timecapsule-figure" script="timecapsule-figure.js" class="project-figure--wide" %}
+
 ## Overview
 
 **TimeCapsule** is a 1.2B-parameter language model trained *ab initio* exclusively on British literature, parliamentary records, and periodicals from **1800 to 1875**. Unlike modern LLMs that suppress future knowledge through prompting, TimeCapsule is structurally incapable of knowing the post-Victorian world, creating what we term an **epistemological event horizon**: a hard chronological boundary beyond which no world-knowledge can pass.
@@ -21,11 +23,6 @@ The project introduces **selective temporal training (STT)** as a new design par
 Modern LLMs are structural time-travelers who know too much. When asked to simulate a Victorian perspective, GPT-5.1 defines an airplane as *"a vehicle soaring above the clouds"*; factually correct today, but a profound epistemological failure in an 1875 simulation. These models can mimic 19th-century diction while quietly embedding modern scientific and ethical frameworks beneath the surface.
 
 TimeCapsule rejects performative suppression. It does not *pretend* not to know about the airplane. It **cannot** know.
-
-<figure class="research-figure">
-  <img src="/assets/images/timecapsule/fig1_chronological_cliff.png" alt="The chronological boundary / epistemological event horizon">
-  <figcaption><strong>Figure 1.</strong> The epistemological event horizon. Training data terminates at 1875, placing post-Victorian technologies (<em>airplane, electronic computer, internet</em>) in <em>terra incognita</em> and forcing the model to generate Victorian analogical explanations instead.</figcaption>
-</figure>
 
 ## Methodology
 
@@ -64,10 +61,12 @@ TimeCapsule achieved a **perplexity of 37.59** on held-out Victorian prose, a **
 
 We projected the embedding of "TIME" onto a NATURE ↔ FACTORY semantic axis for both TimeCapsule and a modern BERT baseline. The divergence is striking:
 
-<figure class="research-figure">
-  <img src="/assets/images/timecapsule/fig2_semantic_shift.png" alt="Semantic shift: TIME projected onto the Nature–Factory axis">
-  <figcaption><strong>Figure 2.</strong> "TIME" shifts 7.5 units toward "FACTORY" in TimeCapsule vs. the modern baseline, a <strong>2.1× increase</strong> in semantic alignment with industrial temporality. The model learned the commodification of time purely from 19th-century collocational patterns.</figcaption>
+<figure class="research-figure chart-figure">
+  <div id="axis-figure" class="project-figure__canvas"></div>
+  <figcaption><span id="axis-figure-readout" class="chart-figure__readout" aria-live="polite"></span><strong>Figure 1.</strong> "TIME" shifts 7.5 units toward "FACTORY" in TimeCapsule vs. the modern baseline, a <strong>2.1× increase</strong> in semantic alignment with industrial temporality. The model learned the commodification of time purely from 19th-century collocational patterns.</figcaption>
 </figure>
+<script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/timecapsule-axis-figure.js' | relative_url }}" defer></script>
 
 Similar drifts appear across the Victorian lexicon: "VALUE" shifts 11.5 units from "VIRTUE" toward "COMMERCE"; "POWER" aligns 8.8 units closer to "STEAM" than to abstract "AUTHORITY." These quantitative signatures confirm that generative archives can function as rigorous instruments of sociological measurement.
 
@@ -87,10 +86,12 @@ The *computer* response is particularly instructive. In 1875, "computation" appe
 
 Applying t-SNE to 50 terms from 19th-century discourses of civilization and empire reveals sharply divergent ideological geometries:
 
-<figure class="research-figure">
-  <img src="/assets/images/timecapsule/fig3_bias_topography_v2.png" alt="Bias topography: t-SNE of empire and civilization terms">
-  <figcaption><strong>Figure 3.</strong> In TimeCapsule, "progress" clusters with "dominion," "conquest," "empire," and "missionary." In modern BERT, it clusters with "improvement," "invention," and "machine," revealing how the conflation of civilization with imperial domination is a historically specific ideological structure.</figcaption>
+<figure class="research-figure chart-figure chart-figure--wide">
+  <div id="topography-figure" class="project-figure__canvas"></div>
+  <figcaption><span id="topography-figure-readout" class="chart-figure__readout" aria-live="polite"></span><strong>Figure 2.</strong> In TimeCapsule, "progress" sits beside "conquest" and "dominion"; in modern BERT, beside "improvement," "trade," and "commerce," revealing how the conflation of civilization with imperial domination is a historically specific ideological structure. Layouts recomputed from the study's embeddings with the paper's t-SNE settings.</figcaption>
 </figure>
+<script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/timecapsule-topography-figure.js' | relative_url }}" defer></script>
 
 These patterns are preserved deliberately. A Victorian model stripped of its racialized and imperial associations may be safer as a consumer product, but it becomes analytically useless for studying the historical formation of those ideologies. TimeCapsule renders the colonial gaze **computationally legible**, not to endorse it, but to make it available for scholarly examination.
 
@@ -98,10 +99,12 @@ These patterns are preserved deliberately. A Victorian model stripped of its rac
 
 We conducted a blind hermeneutic probe with two English faculty experts (specialists in Romanticism and 19th-century literature), presenting 10 authentic Victorian passages and 10 TimeCapsule-generated passages for origin classification.
 
-<figure class="research-figure">
-  <img src="/assets/images/timecapsule/fig4_confusion_of_expertise.png" alt="Confusion matrix of expert judgments">
-  <figcaption><strong>Figure 4.</strong> Confusion matrix of expert judgments (40 total classifications). Cohen's κ = 0.271 (fair agreement). Notably, <strong>45% of genuine Victorian excerpts were classified as machine-generated</strong>, exemplifying the crisis of authenticity.</figcaption>
+<figure class="research-figure chart-figure">
+  <div id="experts-figure" class="project-figure__canvas"></div>
+  <figcaption><span id="experts-figure-readout" class="chart-figure__readout" aria-live="polite"></span><strong>Figure 3.</strong> Expert judgments on ten paired passages (40 classifications). Cohen's κ = 0.271 (fair agreement). Notably, <strong>45% of genuine Victorian excerpts were classified as machine-generated</strong>, exemplifying the crisis of authenticity.</figcaption>
 </figure>
+<script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/timecapsule-experts-figure.js' | relative_url }}" defer></script>
 
 The most revealing outcome was not that generated text passed as human, but that **authentic Victorian prose was rejected as machine-generated**. One expert dismissed a Trollope passage as "bad writing mimicking a known cadence"; another rejected a Dickens excerpt over the phrase "brick-and-mortar," believing it was a "1990s Amazon-era anachronism."
 

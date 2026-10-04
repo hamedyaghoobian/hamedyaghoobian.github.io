@@ -10,6 +10,8 @@ list_title: " "
 
 *Note: This research was conducted over a span of fall semester 2024 with Muhlenberg undergraduate student researcher, Andrew Franklin, and was merely a data collection project.*
 
+{% include project-figure.html id="seasons-figure" script="ai-seasons-figure.js" note="Schematic, not measured." %}
+
 ## 1. Project Overview
 
 This project was a data collection initiative designed to gather a comprehensive dataset of digital content related to the concepts of "AI Winter," "AI Summer," and general "Artificial Intelligence." The primary objective was to systematically scrape, parse, and store information from a diverse range of sources, including technology news sites, academic repositories, and video platforms. This dataset serves as a foundational resource for future research and analysis on the cyclical trends, sentiment, and discourse surrounding AI development.
