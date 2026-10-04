@@ -1994,6 +1994,10 @@ body.mashhad-active .footer-moon__star {
     font-family: 'Instrument Sans', sans-serif;
     font-size: 8.5px;
     fill: var(--ink-soft);
+
+    &--small {
+      font-size: 6.5px;
+    }
   }
 
   .is-lit polygon,
