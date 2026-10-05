@@ -1578,6 +1578,11 @@ body.dark {
     max-width: 260px;
   }
 
+  // A long timeline (the poems shelf) needs the page's full measure.
+  &--shelf {
+    max-width: 760px;
+  }
+
   .project-figure__canvas {
     outline: none;
     border-radius: 4px;

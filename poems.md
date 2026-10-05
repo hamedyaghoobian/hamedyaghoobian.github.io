@@ -5,6 +5,8 @@ permalink: /poems/
 ---
 {% include dappled-light.html %}
 
+{% include project-figure.html id="poems-figure" script="poems-shelf-figure.js" note="Each volume stands at the middle of its poet's life; close ones are set side by side." class="project-figure--shelf" %}
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Noto+Naskh+Arabic:wght@400..700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
@@ -597,9 +599,23 @@ function toPersianDigits(str) {
     return str.replace(/[0-9]/g, (w) => persianDigits[+w]);
 }
 
+// A poem's date ("2026-06-26") is a calendar day, not an instant. Read it
+// as one: new Date("2026-06-26") would be midnight UTC, which is still the
+// day before for any visitor west of London.
+function parseDay(dateString) {
+    const [y, m, d] = String(dateString).split('-').map(Number);
+    return new Date(y, m - 1, d);
+}
+
+// Today as YYYY-MM-DD in the visitor's own calendar (toISOString is UTC).
+function todayString() {
+    const t = new Date();
+    return [t.getFullYear(), String(t.getMonth() + 1).padStart(2, '0'), String(t.getDate()).padStart(2, '0')].join('-');
+}
+
 function getDualCalendarDate(dateString) {
     // If no date provided, use today's date
-    const targetDate = dateString ? new Date(dateString) : new Date();
+    const targetDate = dateString ? parseDay(dateString) : new Date();
     
     // Get Persian date
     const persianDate = targetDate.toLocaleDateString('fa-IR-u-ca-persian', {
@@ -632,7 +648,7 @@ function initializeDynamicDates() {
         
         // If no date attribute exists, auto-assign today's date and store it
         if (!dateString && poemCard) {
-            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+            const today = todayString(); // YYYY-MM-DD, local
             const poemKey = `poem_date_${getPoemIdentifier(poemCard)}`;
             
             // Check if we've already stored a date for this poem
@@ -721,7 +737,7 @@ function translatePoem(button) {
 
         if (poemData.translation) {
             const dateLabel = poemData.date
-                ? new Date(poemData.date).toLocaleDateString('fa-IR')
+                ? parseDay(poemData.date).toLocaleDateString('fa-IR')
                 : '';
 
             translationText.textContent = poemData.translation;
@@ -838,7 +854,7 @@ async function loadPoems() {
 function getPersianYear(dateString) {
     if (!dateString) return '';
     try {
-        const year = new Date(dateString).toLocaleDateString('fa-IR-u-ca-persian', { year: 'numeric' });
+        const year = parseDay(dateString).toLocaleDateString('fa-IR-u-ca-persian', { year: 'numeric' });
         return toPersianDigits(year).replace(/[^\u06F0-\u06F9\u0660-\u0669]/g, '');
     } catch (e) {
         return '';
