@@ -1665,6 +1665,26 @@ body.dark {
     stroke-width: 0.6;
   }
 
+  // Content laid onto a face with plane()/face() in line-figure.js: keep
+  // its strokes hairline however the face skews them.
+  .lf-face * {
+    vector-effect: non-scaling-stroke;
+  }
+
+  // Text on a face takes its size from the drawing (font-size in the face's
+  // own units), so no class here sets one.
+  .lf-face text {
+    font-family: 'Instrument Sans', sans-serif;
+    fill: var(--ink-soft);
+    stroke: none;
+    transition: fill 0.2s ease;
+  }
+
+  .is-lit .lf-face text,
+  .lf-face text.is-lit {
+    fill: var(--ink);
+  }
+
   .lf-line {
     fill: none;
     stroke: var(--ink-soft);
