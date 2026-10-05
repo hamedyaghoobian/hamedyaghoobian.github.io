@@ -5,6 +5,8 @@ permalink: /news/
 ---
 {% include dappled-light.html %}
 
+{% include project-figure.html id="news-figure" script="news-figure.js" note="Each item stands at the month it is listed under." class="project-figure--wide" %}
+
 * **July 2026**: Quoted in the *Communications of the ACM* (CACM) article, *"[Are LLMs Stuck in Time?](https://cacm.acm.org/news/are-llms-unstuck-in-time/)"* by Samuel Greengard, discussing our work on [<span class="small-caps">TimeCapsule</span>](/projects/timecapsule-18th-century-llm) and the temporal challenges of LLMs.
 
 * **April 2026**: *"<span class="small-caps">TimeCapsule</span>: Generative Hallucination as a Method for Historical Sensemaking,"* with student researcher Hayk Grigorian (Class of '26), has been accepted to [ACM Creativity & Cognition 2026](https://cc.acm.org/2026/), paper available [here](https://dl.acm.org/doi/10.1145/3803784.3807554).
