@@ -46,6 +46,31 @@ window.LineFigure = window.LineFigure || (function () {
     return g;
   }
 
+  // Drawing flat on a face. plane(origin, U, V) is an SVG transform that
+  // lays a group's ordinary 2-D content (rect, text, path, circle) onto the
+  // plane through `origin` spanned by U and V, so screens, labels, tabs and
+  // round things sit on a face at the right angle without hand-skewed
+  // points. The faces of a box from (u0, v0, h0) to (u1, v1, h1), each with
+  // its origin at the face's top-left as seen and units in world units:
+  //   onTop(u0, v0, h1)   x along u, y along v   (lies flat)
+  //   onNear(u0, v1, h1)  x along u, y down      (the side facing the viewer)
+  //   onEnd(u0, v0, h1)   x along v, y down      (the left end)
+  // Give strokes inside such a group vector-effect: non-scaling-stroke
+  // (.lf-face does) so the skew doesn't thicken them. Technique adapted from
+  // MrBongoC/ai-iso-skill (MIT).
+  const dir = (du, dv, dh) => [(du + dv) * C, (dv - du) * S - dh];
+  function plane(origin, U, V) {
+    const [ox, oy] = iso(...origin), [a, b] = dir(...U), [c, d] = dir(...V);
+    return `matrix(${a.toFixed(4)} ${b.toFixed(4)} ${c.toFixed(4)} ${d.toFixed(4)} ${ox.toFixed(2)} ${oy.toFixed(2)})`;
+  }
+  const onTop = (u, v, h) => plane([u, v, h], [1, 0, 0], [0, 1, 0]);
+  const onNear = (u, v, h) => plane([u, v, h], [1, 0, 0], [0, 0, -1]);
+  const onEnd = (u, v, h) => plane([u, v, h], [0, 1, 0], [0, 0, -1]);
+  // A group already placed on a face: draw into it in the face's own units.
+  function face(parent, transform, cls = 'lf-face') {
+    return el('g', { class: cls, transform }, parent);
+  }
+
   // A label lying in a vertical face that runs along u, so it reads as
   // printed on the near edge of a plate.
   function edgeLabel(parent, text, u, v, h, cls = 'lf-text') {
@@ -132,5 +157,5 @@ window.LineFigure = window.LineFigure || (function () {
     return { set, toView };
   }
 
-  return { iso, pts, el, svg, box, edgeLabel, nearest, interact };
+  return { iso, pts, el, svg, box, edgeLabel, nearest, interact, plane, onTop, onNear, onEnd, face };
 })();

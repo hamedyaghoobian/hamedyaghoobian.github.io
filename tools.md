@@ -244,13 +244,16 @@ body.dark .filter-btn.active {
 
 <div class="tool-card" data-category="educational">
   <div class="tool-header">
-    <h3 class="tool-title">AI Ethics Lab</h3>
+    <h3 class="tool-title">AI and Data Ethics</h3>
     <p class="tool-subtitle">Computer Science Program at Muhlenberg College</p>
   </div>
   
   <div class="tool-description">
     A comprehensive digital platform currently under development for the upcoming Spring 2027 AI Ethics course. This tool will serve as a central hub for students to engage with ethical challenges in artificial intelligence through interactive modules and case studies.
   </div>
+
+  {% include project-figure.html id="ethics-figure" script="ethics-lenses-figure.js" note="Lenses after the Markkula Center's framework for ethical decision-making · keys 1–6" class="project-figure--wide" %}
+
 
   <div class="feature-list">
     <h4>Project Status</h4>
@@ -282,6 +285,9 @@ body.dark .filter-btn.active {
   <div class="tool-description">
     An experimental conversational AI interface that enables interactive dialogue with Gilles Deleuze's famous A-Z interviews. This tool leverages large language models to facilitate engaging conversations with English translations of Deleuze's expansive philosophical discussions.
   </div>
+
+  {% include project-figure.html id="bot-figure" script="bot-abecedaire-figure.js" class="project-figure--wide" %}
+
 
   <div class="feature-list">
     <h4>Key Features</h4>
@@ -319,6 +325,9 @@ body.dark .filter-btn.active {
   <div class="tool-description">
     An interactive educational tool inspired by Google's Teachable Machine, specifically designed for early-stage AI enthusiasts in junior high and high school. This platform provides students with hands-on activities to intuitively explore and understand core machine learning concepts.
   </div>
+
+  {% include project-figure.html id="machine-figure" script="teach-machine-figure.js" note="Click a square to teach it · keys: arrows, Enter, 1 coin, 2 cube, R reset" class="project-figure--wide" %}
+
 
   <div class="feature-list">
     <h4>Key Features</h4>
