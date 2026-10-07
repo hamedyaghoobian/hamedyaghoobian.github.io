@@ -10,6 +10,11 @@ permalink: /pedagogy/
 
 
 
+### Spring 2027 (scheduled)
+* Computer Organization (CSI 240)
+* CUE Computer Science Seminar (CSI 370)
+* AI and Data Ethics (CSI 205) · new course
+
 ### Fall 2026
 * Intro to Game Programming with Python (CSI 102) · two sections
 * Machine Learning (CSI 330)

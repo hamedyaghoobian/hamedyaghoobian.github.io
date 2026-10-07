@@ -249,7 +249,7 @@ body.dark .filter-btn.active {
   </div>
   
   <div class="tool-description">
-    A comprehensive digital platform currently under development for the upcoming Spring 2027 AI Ethics course. This tool will serve as a central hub for students to engage with ethical challenges in artificial intelligence through interactive modules and case studies.
+    A comprehensive digital platform currently under development for the upcoming Spring 2027 course, CSI 205: AI and Data Ethics. This tool will serve as a central hub for students to engage with ethical challenges in artificial intelligence through interactive modules and case studies.
   </div>
 
   {% include project-figure.html id="ethics-figure" script="ethics-lenses-figure.js" note="Lenses after the Markkula Center's framework for ethical decision-making · keys 1–6" class="project-figure--wide" %}
@@ -259,7 +259,7 @@ body.dark .filter-btn.active {
     <h4>Project Status</h4>
     <ul>
       <li><strong>Work in Progress:</strong> This project is currently in active development.</li>
-      <li><strong>Target Launch:</strong> Spring 2027 (AI Ethics Course)</li>
+      <li><strong>Target Launch:</strong> Spring 2027 (CSI 205: AI and Data Ethics)</li>
       <li><strong>Goal:</strong> Enhancing computer science education with practical ethical frameworks.</li>
     </ul>
   </div>
@@ -271,7 +271,7 @@ body.dark .filter-btn.active {
     </p>
   </div>
 
-  <a href="https://aiethics-lab.github.io/" class="cta-button" target="_blank">
+  <a href="https://aidataethics.github.io/" class="cta-button" target="_blank">
     Visit Development Site
   </a>
 </div>
