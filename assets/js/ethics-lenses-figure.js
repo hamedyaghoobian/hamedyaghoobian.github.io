@@ -47,7 +47,7 @@
   el('line', { x1: 6, y1: 9.5, x2: bw - 6, y2: 9.5, class: 'lf-line lf-faint' }, board);
   const lines = [0, 1, 2].map(n => el('text', { x: bw / 2, y: 15 + n * 4, 'text-anchor': 'middle', 'font-size': 2.7 }, board));
   el('text', { x: bw / 2, y: BH - 3, 'text-anchor': 'middle', 'font-size': 1.9, 'letter-spacing': 0.2 }, board)
-    .textContent = `AI AND DATA ETHICS · ${OPENING.toUpperCase()}`;
+    .textContent = `CSI 205 · AI AND DATA ETHICS · ${OPENING.toUpperCase()}`;
 
   // Wrap a question onto at most three lines of about `width` characters.
   function wrap(text, width) {

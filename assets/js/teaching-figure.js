@@ -1,15 +1,18 @@
 // Teaching (pedagogy.md): every section taught at Muhlenberg, Fall 2021 to
-// Fall 2026. Semesters run along the plate, one row per course; each
-// section is a block, so a semester with two sections of a course stacks
-// two. Picking a block lights its course's whole row and the caption gives
-// the course's run. Kept in step with the list on the page by hand.
+// Fall 2026, and what is scheduled next. Semesters run along the plate,
+// one row per course; each section is a block, so a semester with two
+// sections of a course stacks two. Scheduled sections (UPCOMING) are drawn
+// in dashed outline and left out of the counts. Picking a block lights its
+// course's whole row and the caption gives the course's run. Kept in step
+// with the list on the page by hand.
 
 (function () {
   const root = document.getElementById('teaching-figure');
   if (!root || !window.LineFigure) return;
   const { iso, pts, el, svg: makeSvg, box, edgeLabel, interact } = window.LineFigure;
 
-  const SEMESTERS = ['F21', 'S22', 'F22', 'S23', 'F23', 'S24', 'F24', 'S25', 'F25', 'S26', 'F26'];
+  const SEMESTERS = ['F21', 'S22', 'F22', 'S23', 'F23', 'S24', 'F24', 'S25', 'F25', 'S26', 'F26', 'S27'];
+  const UPCOMING = ['S27'];            // scheduled, not yet taught
   const FULL = s => (s[0] === 'F' ? 'Fall' : 'Spring') + ' 20' + s.slice(1);
 
   // [label on the plate, full name, { semester: sections }, pilot note].
@@ -19,17 +22,19 @@
     ['102', 'Intro to Game Programming with Python (CSI 102)', { F21: 2, S22: 2, F22: 2, S23: 1, F23: 2, F26: 2 }],
     ['109', 'Introduction to Data Science (CSI 109)', { S24: 1, F24: 1, F25: 1 }],
     ['111', 'Computer Science II (CSI 111)', { F23: 1, S24: 1, F24: 1, S25: 1, F25: 1 }],
-    ['240', 'Computer Organization (CSI 240)', { S22: 1, S23: 1, S24: 1, S25: 1, S26: 1 }],
+    ['205', 'AI and Data Ethics (CSI 205)', { S27: 1 }, 'new course'],
+    ['240', 'Computer Organization (CSI 240)', { S22: 1, S23: 1, S24: 1, S25: 1, S26: 1, S27: 1 }],
     ['386', 'Human-Computer Interaction (CSI 386)', { S23: 1 }, 'new pilot, special topics; became Human-AI Interaction (CSI 320)'],
     ['320', 'Human-AI Interaction (CSI 320)', { F25: 1 }, 'grew from the CSI 386 pilot'],
     ['387', 'Introduction to Machine Learning (CSI 387)', { F24: 1 }, 'new pilot, special topics; became Machine Learning (CSI 330)'],
     ['330', 'Machine Learning (CSI 330)', { F26: 1 }, 'grew from the CSI 387 pilot'],
     ['345', 'Web Development (CSI 345)', { F22: 1 }],
     ['355', 'Computer Networks (CSI 355)', { F21: 1 }],
-    ['370', 'CUE Computer Science Seminar (CSI 370)', { S25: 1, S26: 1 }]
+    ['370', 'CUE Computer Science Seminar (CSI 370)', { S25: 1, S26: 1, S27: 1 }]
   ];
-  // Pilot row → the row of the course it became.
-  const LINEAGE = [[4, 5], [6, 7]];
+  // Pilot → the course it became, by course number.
+  const rowOf = label => COURSES.findIndex(c => c[0] === label);
+  const LINEAGE = [['386', '320'], ['387', '330']].map(([a, b]) => [rowOf(a), rowOf(b)]);
   const family = r => {
     const pair = LINEAGE.find(p => p.includes(r));
     return pair || [r];
@@ -43,10 +48,13 @@
   const T = 4;                         // plate thickness
   const W = SEMESTERS.length * CU, D = COURSES.length * CV;
 
-  const sections = COURSES.reduce((n, c) => n + Object.values(c[2]).reduce((a, b) => a + b, 0), 0);
+  // Taught sections only; a course only scheduled so far isn't counted.
+  const taughtIn = c => SEMESTERS.filter(s => c[2][s] && !UPCOMING.includes(s));
+  const sections = COURSES.reduce((n, c) => n + taughtIn(c).reduce((a, s) => a + c[2][s], 0), 0);
+  const taughtCourses = COURSES.filter(c => taughtIn(c).length).length;
 
-  const svg = makeSvg(root, '-24 -112 290 210',
-    `Every course section taught from Fall 2021 to Fall 2026 as blocks on a grid of semesters and courses: ${sections} sections of ${COURSES.length} courses. Intro to Game Programming runs through most semesters, often with two sections; Computer Organization recurs every spring from 2022 to 2026.`);
+  const svg = makeSvg(root, '-24 -120 306 218',
+    `Every course section taught from Fall 2021 to Fall 2026 as blocks on a grid of semesters and courses: ${sections} sections of ${taughtCourses} courses, plus Spring 2027's scheduled sections in dashed outline: Computer Organization, the CUE seminar and the new AI and Data Ethics (CSI 205). Intro to Game Programming runs through most semesters, often with two sections; Computer Organization recurs every spring from 2022 to 2026.`);
 
   box(svg, 'lf-solid').set(0, 0, -T, W, D, 0);
 
@@ -83,24 +91,27 @@
   const blocks = [];
   COURSES.forEach((c, r) => SEMESTERS.forEach((s, i) => {
     const n = c[2][s] || 0;
-    for (let k = 0; k < n; k++) blocks.push({ r, i, k, u: i * CU + (CU - BU) / 2, v: r * CV + (CV - BV) / 2 });
+    for (let k = 0; k < n; k++) blocks.push({ r, i, k, u: i * CU + (CU - BU) / 2, v: r * CV + (CV - BV) / 2, upcoming: UPCOMING.includes(s) });
   }));
   blocks.sort((a, b) => (a.v - a.u) - (b.v - b.u) || a.k - b.k);
-  blocks.forEach(b => { b.g = box(svg, 'lf-solid'); });
+  blocks.forEach(b => { b.g = box(svg, b.upcoming ? 'lf-ghost' : 'lf-solid'); });
 
   const blockCentre = b => iso(b.u + BU / 2, b.v + BV / 2, SH * (b.k + 0.5));
 
   const runOf = c => {
-    const taught = SEMESTERS.filter(s => c[2][s]);
+    const taught = taughtIn(c);
+    const next = SEMESTERS.filter(s => c[2][s] && UPCOMING.includes(s));
+    if (!taught.length) return `scheduled for ${next.map(FULL).join(', ')}`;
+    const ahead = next.length ? ` · next: ${next.map(FULL).join(', ')}` : '';
     const n = taught.reduce((a, s) => a + c[2][s], 0);
     const span = taught.length === 1 ? FULL(taught[0]) : `${FULL(taught[0])} – ${FULL(taught[taught.length - 1])}`;
-    return `${taught.length} semester${taught.length === 1 ? '' : 's'}, ${n} section${n === 1 ? '' : 's'} · ${span}`;
+    return `${taught.length} semester${taught.length === 1 ? '' : 's'}, ${n} section${n === 1 ? '' : 's'} · ${span}${ahead}`;
   };
 
   interact({
     root, svg,
     count: COURSES.length,
-    rest: `Fall 2021 – Fall 2026 · ${sections} sections of ${COURSES.length} courses`,
+    rest: `Fall 2021 – Fall 2026 · ${sections} sections of ${taughtCourses} courses · Spring 2027 scheduled, in outline`,
     describe: r => `${COURSES[r][1]} · ${runOf(COURSES[r])}` + (COURSES[r][3] ? ` · ${COURSES[r][3]}` : ''),
     // The nearest block on screen picks its course.
     pick: (x, y) => {
