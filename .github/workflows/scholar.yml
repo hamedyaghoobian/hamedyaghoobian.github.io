@@ -1,0 +1,73 @@
+name: Update publications from Google Scholar
+
+# Weekly, and by hand from the Actions tab ("Run workflow").
+# Fetches the Scholar profile into _data/scholar.json (scripts/fetch_scholar.py),
+# commits it only when something changed, opens an issue listing any new paper
+# not yet filed in _data/publications.yml, and redeploys the site. If Scholar
+# blocks the request the job ends quietly and the saved data stays as it was.
+on:
+  schedule:
+    - cron: '17 6 * * 1'   # Mondays, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write   # commit _data/scholar.json
+  issues: write     # report new papers
+  actions: write    # start the deploy workflow
+
+concurrency:
+  group: scholar
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # bibtexparser 2 broke scholarly's imports; stay on 1.x.
+      - name: Install
+        run: pip install scholarly "bibtexparser<2" pyyaml
+
+      - name: Fetch Google Scholar
+        env:
+          NEW_PUBLICATIONS: ${{ runner.temp }}/new_publications.md
+        run: python3 scripts/fetch_scholar.py
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          if [[ -n $(git status --porcelain _data/scholar.json) ]]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            git add _data/scholar.json
+            git commit -m "Update publications from Google Scholar"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # One open issue at a time: update it if it exists, otherwise open one.
+      - name: Report new papers
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOTE: ${{ runner.temp }}/new_publications.md
+        run: |
+          [[ -f "$NOTE" ]] || exit 0
+          title="New Google Scholar papers to file"
+          existing=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [[ -n "$existing" ]]; then
+            gh issue edit "$existing" --body-file "$NOTE"
+          else
+            gh issue create --title "$title" --body-file "$NOTE"
+          fi
+
+      # A commit pushed by this job doesn't start other workflows on its own.
+      - name: Redeploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main

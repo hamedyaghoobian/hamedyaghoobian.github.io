@@ -1,0 +1,181 @@
+{
+ "profile": "https://scholar.google.com/citations?user=5Ax8m6sAAAAJ",
+ "name": "Hamed Yaghoobian",
+ "citedby": 91,
+ "hindex": 4,
+ "i10index": 4,
+ "cites_per_year": {
+  "2020": 1,
+  "2021": 1,
+  "2022": 10,
+  "2023": 11,
+  "2024": 17,
+  "2025": 30,
+  "2026": 17
+ },
+ "publications": [
+  {
+   "id": "5Ax8m6sAAAAJ:UeHWp8X0CEIC",
+   "authors": [
+    "Hamed Yaghoobian",
+    "Hamid R Arabnia",
+    "Khaled Rasheed"
+   ],
+   "venue": "",
+   "url": "https://arxiv.org/abs/2107.02276",
+   "title": "Sarcasm detection: A comparative study",
+   "year": 2021,
+   "citation": "arXiv preprint arXiv:2107.02276, 2021",
+   "cites": 37
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:W7OEmFMy1HYC",
+   "authors": [
+    "Hamed Yaghoobian"
+   ],
+   "venue": "Journal of Human-Technology Relations",
+   "url": "https://journals.open.tudelft.nl/jhtr/article/view/7398",
+   "title": "The Writer In-between: A Post-phenomenological Analysis of LLMs and their Implications for Writer-Tool Relations",
+   "year": 2025,
+   "citation": "Journal of Human-Technology Relations 3, 1-18, 2025",
+   "cites": 24
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:Tyk-4Ss8FVUC",
+   "authors": [
+    "Sahar Voghoei",
+    "James M Byars",
+    "Scott Jackson King",
+    "Soheil Shapouri",
+    "Hamed Yaghoobian",
+    "Khaled M Rasheed",
+    "Hamid R Arabnia"
+   ],
+   "venue": "arXiv preprint arXiv:2309.13052",
+   "url": "https://arxiv.org/abs/2309.13052",
+   "title": "Students success modeling: most important factors",
+   "year": 2023,
+   "citation": "arXiv preprint arXiv:2309.13052, 2023",
+   "cites": 11
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:IjCSPb-OGe4C",
+   "authors": [
+    "Elliott Kuecker"
+   ],
+   "venue": "Reconceptualizing Educational Research Methodology",
+   "url": "https://journals.oslomet.no/rerm/article/view/4684",
+   "title": "The ethos of citation in qualitative research methodology",
+   "year": 2021,
+   "citation": "Reconceptualizing Educational Research Methodology 12 (2), 2021",
+   "cites": 10
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:YsMSGLbcyi4C",
+   "authors": [
+    "Hamed Yaghoobian"
+   ],
+   "venue": "Somatechnics",
+   "url": "https://www.euppublishing.com/doi/abs/10.3366/soma.2025.0448",
+   "title": "Data-Body Machine: A Deleuzian Perspective in Digital Ontology",
+   "year": 2025,
+   "citation": "Somatechnics 15 (1), 45-62, 2025",
+   "cites": 3
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:u5HHmVD_uO8C",
+   "authors": [
+    "Hamed Yaghoobian",
+    "Ali Akbar Khazaei",
+    "Mojtaba Salmani Zarchi",
+    "S Javad Sayed Hosayni"
+   ],
+   "venue": "2011 UKSim 5th European Symposium on Computer Modeling and Simulation",
+   "url": "https://ieeexplore.ieee.org/abstract/document/6131218/",
+   "title": "Modeling of a Robust and Fast Noise Cancellation System",
+   "year": 2011,
+   "citation": "2011 UKSim 5th European Symposium on Computer Modeling and Simulation, 210-213, 2011",
+   "cites": 3
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:eQOLeE2rZwMC",
+   "authors": [
+    "Marc S Montalvo",
+    "Hamed Yaghoobian"
+   ],
+   "venue": "arXiv preprint arXiv:2512.21878",
+   "url": "https://arxiv.org/abs/2512.21878",
+   "title": "MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting",
+   "year": 2025,
+   "citation": "arXiv preprint arXiv:2512.21878, 2025",
+   "cites": 2
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:qjMakFHDy7sC",
+   "authors": [
+    "Nahid Yahyapoor",
+    "Hamed Yaghoobian",
+    "Manijeh Keshtgari"
+   ],
+   "venue": "arXiv preprint arXiv:1801.02789",
+   "url": "https://arxiv.org/abs/1801.02789",
+   "title": "An efficient and secure two-party key agreement protocol based on chaotic maps",
+   "year": 2018,
+   "citation": "arXiv preprint arXiv:1801.02789, 2018",
+   "cites": 1
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:WF5omc3nYNoC",
+   "authors": [
+    "Hayk Grigorian",
+    "Hamed Yaghoobian"
+   ],
+   "venue": "",
+   "url": "https://dl.acm.org/doi/abs/10.1145/3803784.3807554",
+   "title": "TimeCapsule: Generative Hallucination as a Method for Historical Sensemaking",
+   "year": 2026,
+   "citation": "Proceedings of the 2026 Conference on Creativity and Cognition, 229-238, 2026",
+   "cites": 0
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:2osOgNQ5qMEC",
+   "authors": [
+    "Hamed Yaghoobian"
+   ],
+   "venue": "",
+   "url": "https://dl.acm.org/doi/abs/10.1145/3408877.3439659",
+   "title": "Pedagogical Possibilities of Critical Engagement in Introductory CS Education",
+   "year": 2021,
+   "citation": "Proceedings of the 52nd ACM Technical Symposium on Computer Science …, 2021",
+   "cites": 0
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:zYLM7Y9cAGgC",
+   "authors": [
+    "Hamed Yaghoobian"
+   ],
+   "venue": "",
+   "url": "https://search.proquest.com/openview/7b9e3ea4e53365a249be9df8b4f92267/1?pq-origsite=gscholar&cbl=18750&diss=y",
+   "title": "Structure-and Context-aware NLP Approaches to Emotion and Subjectivity",
+   "year": 2021,
+   "citation": "University of Georgia, 2021",
+   "cites": 0
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:u-x6o8ySG0sC",
+   "authors": [
+    "Azadeh Alipoor",
+    "Saeed Shaerbaf-Tabrizi",
+    "Ali Akbar Khazaei",
+    "Hamed Yaghoobian"
+   ],
+   "venue": "",
+   "url": "https://scholar.google.com/scholar?cluster=4747188654117996835&hl=en&oi=scholarr",
+   "title": "A Novel Multicarrier Transmission Chaotic Communication System",
+   "year": null,
+   "citation": "",
+   "cites": 0
+  }
+ ],
+ "updated": "2026-10-08T12:46:36+00:00"
+}
