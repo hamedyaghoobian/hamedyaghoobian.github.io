@@ -1,0 +1,26 @@
+# Student researchers, as named on the project pages. Used two ways: the
+# Scholar job suggests "student" for a new paper when a co-author's surname
+# matches one here, and the Publications page shows the name (and class
+# year, when given) beside papers you've tagged with them. Add new students
+# here as they join; `year` is the class year, written as it appears.
+- name: Hayk Grigorian
+  year: "'26"
+  project: /projects/timecapsule-18th-century-llm
+- name: Sebastian Montalvo
+  year: "'28"
+  project: /projects/multi-agents-llm-financial-trading-framework
+- name: Melina Sarion
+  year: "'27"
+  project: /projects/raising-reachy
+- name: Abhilasha Talwar
+  project: /projects/grammar-of-belief
+- name: Judah Dasebre
+  project: /projects/superhost-rating-reliability
+- name: Joseph Tsocanos
+  project: /projects/nightshade-glaze-vlm-eval
+- name: Andrew Franklin
+  project: /projects/ai-seasons
+- name: Geoffrey Levy
+  project: /projects/unmask-bias-llms
+- name: Christian Johansson
+  project: /projects/walter-benjamin

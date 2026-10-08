@@ -1785,3 +1785,165 @@ body.dark {
     fill: var(--ink);
   }
 }
+
+// ─────────────────────────────────────────────────────────────
+// Publications (public-interactions.md): built from Google Scholar's data
+// and _data/publications.yml, with small ASCII charts drawn by
+// assets/js/publications-ascii.js in the site's ink. Monospace for the
+// charts only; a wide chart scrolls inside itself, never the page.
+// ─────────────────────────────────────────────────────────────
+.pubs {
+  max-width: 760px;
+  margin: 0 auto;
+
+  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.pubs-overview {
+  margin: 0.5rem 0 2.5rem;
+
+  figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .pubs-stats {
+    display: block;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pubs-chart-note {
+    font-style: italic;
+  }
+}
+
+.ascii-chart {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  // Exactly one line per row, so stacked block characters meet as solid bars.
+  line-height: 1;
+  color: var(--ink);
+  overflow-x: auto;
+  white-space: pre;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.pubs-section {
+  margin: 2rem 0;
+
+  h2 {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+.pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr auto;
+  gap: 0 1rem;
+  align-items: baseline;
+  padding: 0.75rem 0;
+
+  & + & {
+    border-top: 1px solid var(--rule);
+  }
+}
+
+.pub-year {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.pub-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.pub-title {
+  font-family: 'Newsreader', serif;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.pub-authors,
+.pub-venue,
+.pub-students {
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.pub-venue {
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.pub-students {
+  color: var(--ink);
+}
+
+// What a piece is, when it isn't a paper (Poster, PhD dissertation).
+.pub-type {
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.pub-project {
+  font-size: 0.82rem;
+}
+
+.pub-cites {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+
+  &.is-drawn {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+  }
+}
+
+.pubs-source {
+  margin-top: 2.5rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+// On a phone the bar moves under the paper instead of beside it.
+@media (max-width: 600px) {
+  .pub {
+    grid-template-columns: 2.8rem 1fr;
+  }
+
+  .pub-cites {
+    grid-column: 2;
+    margin-top: 0.3rem;
+  }
+
+  .ascii-chart {
+    font-size: 9px;   // the whole chart fits a 375px phone
+  }
+}

@@ -1,0 +1,56 @@
+# How each Google Scholar paper is presented on the Publications page.
+# Scholar supplies the facts (title, authors, venue, year, citations) into
+# _data/scholar.json every week; this file is yours and is never touched by
+# that job. Match papers by Scholar's id (shown in the weekly issue for new
+# papers, or in _data/scholar.json).
+#
+#   category:  student | mine | collaboration   ("mine" shows as Sole-authored)
+#   type:      a label for what it is, when not a paper: Poster, PhD dissertation…
+#   students:  names as in _data/students.yml, shown with their class year
+#   project:   a project page on this site
+#   pdf:       a link to the paper, if Scholar's own link isn't the one you want
+#   authors:   the author line to show, when Scholar's is incomplete or wrong
+#   hidden:    true to leave a paper off the page (Scholar errors, duplicates)
+#
+# A Scholar paper with no entry here shows under "New, to sort".
+# These first entries are a starting point — move anything that's misfiled.
+
+# Student research
+- id: "5Ax8m6sAAAAJ:WF5omc3nYNoC"   # TimeCapsule (C&C '26)
+  category: student
+  students: ["Hayk Grigorian"]
+  project: /projects/timecapsule-18th-century-llm
+  pdf: https://dl.acm.org/doi/10.1145/3803784.3807554
+- id: "5Ax8m6sAAAAJ:eQOLeE2rZwMC"   # MASFIN (Scholar names him "Marc S Montalvo")
+  category: student
+  students: ["Sebastian Montalvo"]
+  project: /projects/multi-agents-llm-financial-trading-framework
+
+# Sole-authored
+- id: "5Ax8m6sAAAAJ:W7OEmFMy1HYC"   # The Writer In-between
+  category: mine
+- id: "5Ax8m6sAAAAJ:YsMSGLbcyi4C"   # Data-Body Machine
+  category: mine
+- id: "5Ax8m6sAAAAJ:2osOgNQ5qMEC"   # Pedagogical Possibilities (SIGCSE '21)
+  category: mine
+  type: Poster
+- id: "5Ax8m6sAAAAJ:zYLM7Y9cAGgC"   # PhD dissertation, University of Georgia
+  category: mine
+  type: PhD dissertation
+
+# Collaborations
+- id: "5Ax8m6sAAAAJ:UeHWp8X0CEIC"   # Sarcasm detection
+  category: collaboration
+- id: "5Ax8m6sAAAAJ:Tyk-4Ss8FVUC"   # Students success modeling
+  category: collaboration
+- id: "5Ax8m6sAAAAJ:qjMakFHDy7sC"   # Two-party key agreement protocol
+  category: collaboration
+- id: "5Ax8m6sAAAAJ:u5HHmVD_uO8C"   # Noise cancellation system (2011)
+  category: collaboration
+  authors: "Hamed Yaghoobian, Ali Akbar Khazaei, Mojtaba Salmani Zarchi, S. Javad Sayed Hosayni"
+  pdf: https://doi.org/10.1109/EMS.2011.78
+- id: "5Ax8m6sAAAAJ:u-x6o8ySG0sC"   # Multicarrier chaotic communication system
+  hidden: true                      # left off the page by choice
+- id: "5Ax8m6sAAAAJ:IjCSPb-OGe4C"   # The ethos of citation (Scholar lists only the primary author)
+  category: collaboration
+  authors: "Elliott Kuecker (primary author), with writing contributions by Matthew Harris, Jennifer Tesler, and Hamed Yaghoobian"
