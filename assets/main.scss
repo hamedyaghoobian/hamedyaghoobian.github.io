@@ -1947,3 +1947,51 @@ body.dark {
     font-size: 9px;   // the whole chart fits a 375px phone
   }
 }
+
+// Reachy Mini (assets/js/reachy-figure.js): the parts that are dark on the
+// real robot — its lenses, the goggle bridge, the base ring — drawn dark in
+// both themes: deep ink on paper, near-black with a gold rim on the night page.
+.project-figure {
+  .reachy-lens {
+    fill: var(--ink);
+    stroke: var(--ink);
+    stroke-width: 0.9;
+  }
+
+  .reachy-rim {
+    fill: none;
+    stroke: var(--paper);
+    stroke-width: 0.6;
+    opacity: 0.35;
+  }
+
+  .reachy-glint {
+    fill: var(--paper);
+  }
+
+  .reachy-bridge {
+    stroke: var(--ink);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
+  ellipse.reachy-base {
+    fill: var(--ink-soft);
+    fill-opacity: 0.45;
+  }
+}
+
+body.dark .project-figure {
+  .reachy-lens {
+    fill: #05070c;
+  }
+
+  .reachy-rim {
+    stroke: var(--ink);
+    opacity: 0.5;
+  }
+
+  .reachy-glint {
+    fill: var(--ink);
+  }
+}
