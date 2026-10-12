@@ -352,6 +352,44 @@ body.dark .filter-btn.active {
   </a>
 </div>
 
+<div class="tool-card" data-category="educational">
+  <div class="tool-header">
+    <h3 class="tool-title">Learning Machines</h3>
+    <p class="tool-subtitle">Machine learning, one working machine at a time</p>
+  </div>
+
+  <div class="tool-description">
+    A study companion built for Machine Learning (CSI 330): a small machine for each idea in the course, from bias and variance to cross-validation. Each runs on real data (Palmer penguins, NHANES, wine), computes what scikit-learn computes, and writes out its own arithmetic as you turn its dials. Each comes with guided tasks that ask you to predict before you look.
+  </div>
+
+  <script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/csi330-data.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/csi330-kit.js' | relative_url }}" defer></script>
+  {% include project-figure.html id="w3-figure" script="csi330-w3-figure.js" class="project-figure--study" fig="Preview" title="The Bayes balance" hint="move over the curves · ← → · P priors" %}
+
+  <div class="feature-list">
+    <h4>What's inside</h4>
+    <ul>
+      <li>Nine machines so far, week by week: bias–variance, k-NN, logistic regression, naive Bayes, least squares, k-NN regression, classification metrics, regression metrics, cross-validation</li>
+      <li>A live calculation under every figure: the formula with the current numbers filled in</li>
+      <li>"Try this" tasks with answers to open once you've tried</li>
+      <li>Works with pointer or keyboard, in light or dark, on a phone</li>
+    </ul>
+  </div>
+
+  <div class="tech-stack">
+    <strong>Focus Area:</strong><br>
+    <span class="tech-tag">Machine Learning</span>
+    <span class="tech-tag">scikit-learn</span>
+    <span class="tech-tag">Interactive Learning</span>
+    <span class="tech-tag">CSI 330</span>
+  </div>
+
+  <a href="{{ '/tools/learning-machines/' | relative_url }}" class="cta-button">
+    Open Learning Machines
+  </a>
+</div>
+
 <div class="coming-soon">
 
 <h2>About These Tools</h2>

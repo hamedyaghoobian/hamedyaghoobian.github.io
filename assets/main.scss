@@ -975,7 +975,8 @@ body {
 
 .personal-story.is-open {
   .personal-content {
-    max-height: 30rem;
+    // room for both paragraphs on the narrowest phones, where they wrap longest
+    max-height: 48rem;
     opacity: 1;
     transform: translateY(0);
     // Delayed past the slide-open transition above (0.38s) rather than

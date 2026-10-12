@@ -75,6 +75,7 @@ list_title: " "
         </button>
         <div class="personal-content" id="personal-story-content">
           <p>I was born and raised in Mashhad. Eastern Iran. The Khorasan region. Growing up, it didn't register much. Later, it became something else. Less an origin than a direction. A pull. A way of becoming-east rather than being-from-east. I now live in eastern Pennsylvania with my wife. East, still. But a different east. That earlier east did not follow me here. It works through me. Quietly. Sometimes not. From within. Still orienting. Still unfinished.</p>
+          <p>I like cooking, making sourdough, and good tea and coffee. These days, I'm learning Turkish and making things with Claude. Both make me feel alternately clever and illiterate. The bread is less judgmental.</p>
         </div>
       </div>
       <p>For research, collaborations, or a chat, email me at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a>. Or visit me in the Trumbower Science Building. Room 125.</p>
