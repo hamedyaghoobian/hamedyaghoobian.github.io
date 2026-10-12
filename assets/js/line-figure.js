@@ -25,7 +25,23 @@ window.LineFigure = window.LineFigure || (function () {
     return node;
   }
 
+  // One glow filter for the whole page, referenced by CSS as url(#lf-glow)
+  // on lit parts in the dark theme: a soft halo in the accent colour under
+  // the part itself.
+  function glowFilter() {
+    if (document.getElementById('lf-glow')) return;
+    const host = el('svg', { width: 0, height: 0, 'aria-hidden': 'true', style: 'position:absolute' }, document.body);
+    const f = el('filter', { id: 'lf-glow', x: '-30%', y: '-30%', width: '160%', height: '160%', 'color-interpolation-filters': 'sRGB' }, el('defs', {}, host));
+    el('feGaussianBlur', { in: 'SourceAlpha', stdDeviation: 1.6, result: 'b' }, f);
+    el('feFlood', { 'flood-opacity': 0.85, result: 'c' }, f);   // colour from CSS (--glow)
+    el('feComposite', { in: 'c', in2: 'b', operator: 'in', result: 'g' }, f);
+    const m = el('feMerge', {}, f);
+    el('feMergeNode', { in: 'g' }, m);
+    el('feMergeNode', { in: 'SourceGraphic' }, m);
+  }
+
   function svg(root, viewBox, label) {
+    glowFilter();
     return el('svg', { viewBox, role: 'img', 'aria-label': label }, root);
   }
 
@@ -78,6 +94,35 @@ window.LineFigure = window.LineFigure || (function () {
     const t = el('text', { class: cls, transform: `matrix(${C} ${-S} 0 1 ${x.toFixed(2)} ${y.toFixed(2)})` }, parent);
     t.textContent = text;
     return t;
+  }
+
+  // A round part standing upright on (u, v) — a post, foot, knob, drum or
+  // dial body: its side and the front half of its base, then its top. A
+  // circle of radius r on a level plane projects to an ellipse with these
+  // semi-axes in this camera. Give it 'lf-solid lf-shaded' for the side tone.
+  const RX = Math.SQRT2 * C, RY = Math.SQRT2 * S;
+  function cylinder(parent, cls) {
+    const g = el('g', { class: cls }, parent);
+    const side = el('path', {}, g);
+    const top = el('ellipse', {}, g);
+    g.set = (u, v, h0, h1, r) => {
+      const [x, yb] = iso(u, v, h0), yt = iso(u, v, h1)[1];
+      const rx = r * RX, ry = r * RY;
+      side.setAttribute('d', `M${(x - rx).toFixed(2)} ${yt.toFixed(2)}L${(x - rx).toFixed(2)} ${yb.toFixed(2)}A${rx.toFixed(2)} ${ry.toFixed(2)} 0 0 0 ${(x + rx).toFixed(2)} ${yb.toFixed(2)}L${(x + rx).toFixed(2)} ${yt.toFixed(2)}Z`);
+      top.setAttribute('cx', x.toFixed(2)); top.setAttribute('cy', yt.toFixed(2));
+      top.setAttribute('rx', rx.toFixed(2)); top.setAttribute('ry', ry.toFixed(2));
+      return g;
+    };
+    return g;
+  }
+
+  // Small fittings: a screw head as a dot with a ring, at a world point.
+  function screw(parent, u, v, h, r = 0.7) {
+    const [x, y] = iso(u, v, h);
+    const g = el('g', { class: 'lf-screw' }, parent);
+    el('ellipse', { cx: x.toFixed(2), cy: y.toFixed(2), rx: (r * RX * 1.6).toFixed(2), ry: (r * RY * 1.6).toFixed(2) }, g);
+    el('circle', { cx: x.toFixed(2), cy: y.toFixed(2), r: (r * 0.7).toFixed(2) }, g);
+    return g;
   }
 
   // Index of the x in xs nearest to x, or -1 if none is within reach.
@@ -152,10 +197,28 @@ window.LineFigure = window.LineFigure || (function () {
     });
     o.root.addEventListener('blur', () => set(-1));
 
+    // An idle tour: while the figure is on screen and nobody has touched it
+    // for a while, walk the items slowly (o.tour = ms per item). Never under
+    // reduced motion, and never while the pointer rests on the figure.
+    if (o.tour && window.IntersectionObserver) {
+      let visible = false, inside = false, quietSince = performance.now();
+      const touched = () => { quietSince = performance.now(); };
+      o.svg.addEventListener('pointerenter', () => { inside = true; touched(); });
+      o.svg.addEventListener('pointerleave', () => { inside = false; touched(); });
+      o.svg.addEventListener('pointerdown', touched);
+      o.root.addEventListener('keydown', touched);
+      new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(o.root);
+      setInterval(() => {
+        if (!visible || inside || still.matches || document.activeElement === o.root) return;
+        if (performance.now() - quietSince < 5000) return;
+        set((active + 1) % o.count);
+      }, o.tour);
+    }
+
     if (readout) readout.textContent = o.rest;
     o.draw(glow, -1);
     return { set, toView };
   }
 
-  return { iso, pts, el, svg, box, edgeLabel, nearest, interact, plane, onTop, onNear, onEnd, face };
+  return { iso, pts, el, svg, box, cylinder, screw, edgeLabel, nearest, interact, plane, onTop, onNear, onEnd, face };
 })();

@@ -67,11 +67,11 @@ list_title: " "
 
     <div class="bio-text">
       <h1>Welcome</h1>
-      <p>I am an Assistant Professor and Director of Computer Science at Muhlenberg College. I teach computer science. I study AI. How it shapes people, organizations, decisions, and everyday life. My work draws on Science and Technology Studies. On practices. On interactions. On what emerges around AI.</p>
+      <p>I am an Assistant Professor and Director of Computer Science at Muhlenberg College. I teach computer science. I study AI: how it shapes people, organizations, decisions, and everyday life. My work draws on Science and Technology Studies, with an interest in practices, interactions, and what emerges when people and technologies encounter one another.</p>
       <div class="personal-story">
         <button class="personal-toggle" type="button" aria-expanded="false" aria-controls="personal-story-content">
           <span class="personal-toggle__icon" aria-hidden="true">+</span>
-          <span class="personal-toggle__label">More personal</span>
+          <span class="personal-toggle__label">A little more</span>
         </button>
         <div class="personal-content" id="personal-story-content">
           <p>I was born and raised in Mashhad. Eastern Iran. The Khorasan region. Growing up, it didn't register much. Later, it became something else. Less an origin than a direction. A pull. A way of becoming-east rather than being-from-east. I now live in eastern Pennsylvania with my wife. East, still. But a different east. That earlier east did not follow me here. It works through me. Quietly. Sometimes not. From within. Still orienting. Still unfinished.</p>
@@ -153,7 +153,7 @@ list_title: " "
         personalStory.classList.toggle('is-open', nextExpanded);
         personalToggle.setAttribute('aria-expanded', String(nextExpanded));
         personalIcon.textContent = nextExpanded ? '-' : '+';
-        personalLabel.textContent = nextExpanded ? 'Less personal' : 'More personal';
+        personalLabel.textContent = nextExpanded ? 'A little less' : 'A little more';
       });
     }
   });

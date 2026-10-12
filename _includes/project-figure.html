@@ -4,10 +4,24 @@
     script  the figure's file in assets/js/
     note    optional small line under the caption (e.g. "Schematic, not measured.")
     class   optional extra class on the <figure>
+    title   optional: frames the figure as a card, with `fig` ("Fig 1") at top
+            left, the title at top right, `hint` at bottom left and the live
+            readout at bottom right
 {%- endcomment -%}
+{%- if include.title -%}
+<figure class="project-figure project-figure--card {{ include.class }}">
+  <div class="figure-card">
+    <div class="figure-card__row"><span class="figure-card__fig">{{ include.fig }}</span><span class="figure-card__title">{{ include.title }}</span></div>
+    <div id="{{ include.id }}" class="project-figure__canvas"></div>
+    <div class="figure-card__row"><span class="figure-card__hint">{{ include.hint }}</span><span id="{{ include.id }}-readout" class="figure-card__readout" aria-live="polite"></span></div>
+  </div>
+  {% if include.note %}<figcaption><span class="project-figure__note">{{ include.note }}</span></figcaption>{% endif %}
+</figure>
+{%- else -%}
 <figure class="project-figure {{ include.class }}">
   <div id="{{ include.id }}" class="project-figure__canvas"></div>
   <figcaption><span id="{{ include.id }}-readout" aria-live="polite"></span>{% if include.note %}<br><span class="project-figure__note">{{ include.note }}</span>{% endif %}</figcaption>
 </figure>
+{%- endif %}
 <script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/' | append: include.script | relative_url }}" defer></script>
