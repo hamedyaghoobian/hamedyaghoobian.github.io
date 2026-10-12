@@ -7,6 +7,8 @@
     title   optional: frames the figure as a card, with `fig` ("Fig 1") at top
             left, the title at top right, `hint` at bottom left and the live
             readout at bottom right
+    calc    optional (card only): a strip under the card where the figure
+            writes out its live calculation, id + "-calc"
 {%- endcomment -%}
 {%- if include.title -%}
 <figure class="project-figure project-figure--card {{ include.class }}">
@@ -14,6 +16,7 @@
     <div class="figure-card__row"><span class="figure-card__fig">{{ include.fig }}</span><span class="figure-card__title">{{ include.title }}</span></div>
     <div id="{{ include.id }}" class="project-figure__canvas"></div>
     <div class="figure-card__row"><span class="figure-card__hint">{{ include.hint }}</span><span id="{{ include.id }}-readout" class="figure-card__readout" aria-live="polite"></span></div>
+    {% if include.calc %}<div id="{{ include.id }}-calc" class="figure-card__calc"></div>{% endif %}
   </div>
   {% if include.note %}<figcaption><span class="project-figure__note">{{ include.note }}</span></figcaption>{% endif %}
 </figure>
