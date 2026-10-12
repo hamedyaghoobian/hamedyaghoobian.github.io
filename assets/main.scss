@@ -36,6 +36,8 @@ html {
   --ink: #2749b8;
   --ink-soft: #6b7fbe;
   --rule: rgba(39, 73, 184, 0.16);
+  /* The one accent in the line figures: only what is live wears it */
+  --glow: #d9480f;
 }
 
 // Modern Typography
@@ -63,6 +65,7 @@ body {
     --ink: #d8b647;
     --ink-soft: #9a8a63;
     --rule: rgba(216, 182, 71, 0.18);
+    --glow: #ff7a3d;
     background-color: var(--night);
     color: #a0c4ff;
   }
@@ -1993,5 +1996,136 @@ body.dark .project-figure {
 
   .reachy-glint {
     fill: var(--ink);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Anatomy-style figures: solids shaded by facing, round parts, fittings,
+// and a framed card with corner captions (Fig n, title, hint, live
+// readout). After the craft rules of Ryan's Anatomy skill
+// (github.com/wheresryan22/anatomy, MIT); drawn with this site's own kit.
+// ─────────────────────────────────────────────────────────────
+.project-figure,
+.chart-figure {
+  // Two side tones mixed from the page's ink and paper, so they follow the
+  // theme: the near side a little darker than the top, the end darker still.
+  --tone-mid: color-mix(in srgb, var(--ink) 7%, var(--paper));
+  --tone-lo: color-mix(in srgb, var(--ink) 15%, var(--paper));
+
+  .lf-solid path,
+  .lf-solid ellipse,
+  path.lf-solid {
+    fill: var(--paper);
+    stroke: var(--ink-soft);
+    stroke-width: 0.9;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+  }
+
+  .lf-shaded > polygon:nth-of-type(1),
+  .lf-shaded > path {
+    fill: var(--tone-mid);
+  }
+
+  .lf-shaded > polygon:nth-of-type(2) {
+    fill: var(--tone-lo);
+  }
+
+  .lf-screw ellipse {
+    fill: var(--paper);
+    stroke: var(--ink-soft);
+    stroke-width: 0.5;
+  }
+
+  .lf-screw circle {
+    fill: var(--ink-soft);
+  }
+
+  .is-lit path,
+  .is-lit ellipse {
+    stroke: var(--ink);
+  }
+
+  // A part in motion or in the reader's eye: the one accent.
+  .lf-accent polygon,
+  .lf-accent path,
+  .lf-accent ellipse,
+  polygon.lf-accent {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.1;
+  }
+}
+
+.project-figure--card {
+  max-width: 640px;
+
+  .figure-card {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 10px 14px 9px;
+  }
+
+  .figure-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+  }
+
+  .figure-card__fig,
+  .figure-card__title,
+  .figure-card__hint {
+    text-transform: uppercase;
+  }
+
+  .figure-card__fig {
+    text-transform: none;
+  }
+
+  .figure-card__readout {
+    text-align: right;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    max-width: 68%;
+  }
+
+  figcaption {
+    min-height: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Glow: whatever a figure lights (.is-lit — the picked item, a passing
+// checkpoint, a set letter) takes the one accent colour, and in the dark
+// theme it glows. In the light theme it stays a flat accent with no
+// radiating light. After the lighting rules of the iso-glow skill (built on
+// MrBongoC/ai-iso-skill, MIT). Swapping the ink tokens inside a lit part
+// recolours every stroke and text in it without touching each figure.
+// ─────────────────────────────────────────────────────────────
+.project-figure,
+.chart-figure {
+  .is-lit:not(svg),
+  .lf-hot {
+    --ink: var(--glow);
+    --ink-soft: var(--glow);
+  }
+}
+
+#lf-glow feFlood {
+  flood-color: var(--glow);
+}
+
+body.dark {
+  .project-figure,
+  .chart-figure {
+    .is-lit:not(svg),
+    .lf-hot {
+      filter: url(#lf-glow);
+    }
   }
 }

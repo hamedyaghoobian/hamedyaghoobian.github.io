@@ -10,7 +10,7 @@ list_title: " "
 
 *Note: This research was conducted in Summer 2025 with Muhlenberg undergraduate student researcher, Sebastian Montalvo.*
 
-{% include project-figure.html id="masfin-figure" script="masfin-figure.js" %}
+{% include project-figure.html id="masfin-figure" script="masfin-figure.js" fig="Plate I" title="MASFIN · five crews" hint="point at a station · ← →" note="The cards show the flow, not counts; the gauge is the 8-week live result." %}
 
 ## 1. Introduction
 

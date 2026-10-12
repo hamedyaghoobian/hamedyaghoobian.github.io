@@ -41,6 +41,8 @@ The training corpus spans 136,302 documents drawn from the Internet Archive, cut
 | Religious / Theological | 3,937 | 2.9% |
 | Other | 23,314 | 17.1% |
 
+{% include project-figure.html id="timecapsule-case-figure" script="timecapsule-case-figure.js" fig="Plate I" title="The type case · 1800–1875" hint="point at a case or a slip · ← →" note="Compartments sized by the table above; the slips are the three probes from Case B." %}
+
 Gender representation reflects Victorian print culture: a **4.99:1 male-to-female** pronoun ratio (218M vs. 43.7M occurrences). Geographic frequency mirrors British imperial reach, with London (148K mentions), followed by India (110K), exceeding most European nations. These asymmetries are preserved deliberately as **archival honesty**: correcting them would falsify the historical record.
 
 ### Model Architecture
