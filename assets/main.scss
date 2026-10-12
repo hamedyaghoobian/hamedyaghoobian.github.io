@@ -2129,3 +2129,72 @@ body.dark {
     }
   }
 }
+
+// The CSI 330 study page: figures a little wider, so the boards read.
+.project-figure--card.project-figure--study {
+  max-width: 760px;
+}
+
+// Under a study figure: the calculation behind its reading, written out
+// with the live numbers (the figure fills #id-calc), so the arithmetic is
+// as visible as the machine.
+.project-figure--card .figure-card__calc {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  text-align: left;
+
+  b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .hot {
+    color: var(--glow);
+    font-weight: 600;
+  }
+
+  var {
+    font-style: italic;
+  }
+}
+
+// "Try this": guided tasks under each study figure, with the answers folded.
+.study-try {
+  margin: -0.6rem auto 2.4rem;
+  max-width: 760px;
+  padding: 0.9rem 1.1rem;
+  border-left: 2px solid var(--rule);
+  font-size: 0.95rem;
+
+  > p:first-child {
+    margin-top: 0;
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  ol {
+    margin: 0 0 0.6rem;
+    padding-left: 1.3rem;
+  }
+
+  li {
+    margin-bottom: 0.35rem;
+  }
+
+  details {
+    margin-top: 0.4rem;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--ink);
+  }
+}

@@ -17,7 +17,7 @@ permalink: /pedagogy/
 
 ### Fall 2026
 * Intro to Game Programming with Python (CSI 102) · two sections
-* Machine Learning (CSI 330)
+* Machine Learning (CSI 330) · [study companion: one interactive figure per week]({{ "/teaching/csi-330/" | relative_url }})
 
 
 ### Spring 2026
