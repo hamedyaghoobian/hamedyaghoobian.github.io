@@ -62,7 +62,7 @@
     },
     step: () => set((i + 1) % 12)
   });
-  function set(k) {
+  let set = function (k) {
     i = k;
     const f = D.fits[i];
     wire.setAttribute('d', f.curve.map((y, j) => `${j ? 'L' : 'M'}${sx(D.grid[j]).toFixed(2)} ${sy(y).toFixed(2)}`).join(' '));
@@ -77,6 +77,13 @@
   }
   svg.addEventListener('pointerdown', e => { const k = sel.pick(e); if (k >= 0) set(k); });
   svg.addEventListener('pointermove', e => { if (e.buttons) { const k = sel.pick(e); if (k >= 0) set(k); } });
+  // Parts, in the entry's order; and the degree as buttons too.
+  K.parts(root, svg, [b.el, wire, sel.el, [setTrain.el, setTest.el], small.el]);
+  const sync = K.panel(root, [
+    { label: 'Degree', type: 'seg', options: D.fits.map((f, k) => [k, String(f.deg)]), get: () => i, set: k => set(k) }
+  ]);
+  const set0 = set;
+  set = k => { set0(k); sync(); };
   set(2);
   K.fit(svg);
 })();

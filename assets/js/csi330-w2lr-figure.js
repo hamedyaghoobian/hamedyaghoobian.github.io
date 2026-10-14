@@ -40,9 +40,10 @@
   // The squash dial: z from −6 to 6 evenly on the outer scale; inside, the
   // probability each z means, its ticks crowding toward both ends.
   const DU = 142, DV = 36, DH = 22;
-  cylinder(svg, 'lf-solid lf-shaded').set(DU + 17, DV - 2, 0, DH, 1.4);
-  box(svg, 'lf-solid lf-shaded').set(DU, DV - 4, DH, DU + 34, DV, DH + 29);
-  const f = face(svg, onNear(DU, DV, DH + 29));
+  const DG = el('g', {}, svg);                      // the dial, to name as a part
+  cylinder(DG, 'lf-solid lf-shaded').set(DU + 17, DV - 2, 0, DH, 1.4);
+  box(DG, 'lf-solid lf-shaded').set(DU, DV - 4, DH, DU + 34, DV, DH + 29);
+  const f = face(DG, onNear(DU, DV, DH + 29));
   const cx = 17, cy = 16.5, R = 12, ZMAX = 6;
   const ang = z => Math.PI * (1 - (Math.max(-ZMAX, Math.min(ZMAX, z)) + ZMAX) / (2 * ZMAX));
   const at = (z, rr) => [cx + rr * Math.cos(ang(z)), cy - rr * Math.sin(ang(z))];
@@ -153,6 +154,16 @@
     if (x < 16 || x > 126 || y < 4 || y > 77) return;
     st.x = Math.round(sx.inv(x) * 2) / 2; update();
   });
+  // Parts, in the entry's order; the weights, the pointer and the threshold by hand.
+  K.parts(root, svg, [b.el, curve, DG, [qline, qdot], [cut, cutTxt, tline], gLoss.el]);
+  const fitted = () => Math.abs(st.w1 - FIT.w1) < 1e-3 && Math.abs(st.mid + FIT.w0 / FIT.w1) < 0.02;
+  ctl.after = K.panel(root, [
+    { label: 'Bill', type: 'range', min: 32, max: 60, step: 0.5, get: () => st.x, set: v => { st.x = v; update(); }, fmt: v => v.toFixed(1) + ' mm' },
+    { label: 'w₁ steepness', type: 'range', min: -4, max: 1, step: 0.01, get: () => st.w1, set: v => { cancelAnimationFrame(anim); st.w1 = v; update(); }, fmt: v => v.toFixed(2) },
+    { label: 'Undecided at', type: 'range', min: 34, max: 58, step: 0.1, get: () => st.mid, set: v => { cancelAnimationFrame(anim); st.mid = v; update(); }, fmt: v => v.toFixed(1) + ' mm' },
+    { label: 'Threshold', type: 'seg', options: TS.map((T, i) => [i, String(T)]), get: () => st.t, set: i => { st.t = i; update(); } },
+    { label: 'Weights', type: 'seg', options: [[true, 'fitted by scikit-learn (F)']], get: fitted, set: () => settle() }
+  ]);
   update();
   K.fit(svg);
 })();

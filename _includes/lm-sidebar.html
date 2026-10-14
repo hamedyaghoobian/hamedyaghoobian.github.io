@@ -1,0 +1,33 @@
+{%- comment -%}
+  Learning Machines' index: the reference pages, then every entry by
+  section with a count, the current page marked. Read from
+  _data/learning_machines.yml. On a narrow screen it folds into "Contents".
+{%- endcomment -%}
+{%- assign LM = site.data.learning_machines -%}
+{%- assign base = "/tools/learning-machines/" | relative_url -%}
+<details class="lm-toc" id="lm-toc">
+  <summary>Contents</summary>
+  <p class="lm-side__name"><a href="{{ base }}">Learning Machines</a></p>
+  <ul class="lm-side__top">
+    <li><a href="{{ base }}"{% if page.lm_home %} aria-current="page"{% endif %}>Explore</a></li>
+    <li><a href="{{ base }}#in-order">Building a model, in order</a></li>
+    <li><a href="{{ base }}why-this-not-that/"{% if page.lm_page == "why" %} aria-current="page"{% endif %}>Why this, not that</a></li>
+    <li><a href="{{ base }}how-it-is-drawn/"{% if page.lm_page == "how" %} aria-current="page"{% endif %}>How it is drawn</a></li>
+  </ul>
+  {%- for s in LM.sections %}
+  <p class="lm-side__group">{{ s.name }} <span>{{ s.entries.size }}</span></p>
+  <ul class="lm-side__list">
+    {%- for slug in s.entries %}
+    {%- assign e = LM.entries[slug] %}
+    <li><a href="{{ base }}{{ slug }}/"{% if page.entry == slug %} aria-current="page"{% endif %}>{{ e.title }}</a></li>
+    {%- endfor %}
+  </ul>
+  {%- endfor %}
+</details>
+<script>
+  // Open on wide screens, where the index is a sidebar; folded on phones.
+  (function () {
+    var d = document.getElementById('lm-toc');
+    if (d && window.matchMedia('(min-width: 900px)').matches) d.open = true;
+  })();
+</script>

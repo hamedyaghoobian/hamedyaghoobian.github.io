@@ -1,0 +1,147 @@
+# Learning Machines (/tools/learning-machines/): the index of entries, read
+# by _layouts/learning-machines.html and _includes/lm-sidebar.html. Each
+# entry's page lives in learning-machines/<slug>.md and holds its prose;
+# this file holds its place, its figure and its numbered parts. A part's
+# `see` names another entry's slug.
+
+sections:
+  - name: Foundations
+    entries: [bias-and-variance]
+  - name: Classification
+    entries: [k-nearest-neighbors, logistic-regression, naive-bayes]
+  - name: Regression
+    entries: [least-squares, knn-regression]
+  - name: Evaluation
+    entries: [classification-metrics, regression-metrics]
+  - name: Validation
+    entries: [cross-validation]
+
+entries:
+  bias-and-variance:
+    num: 1
+    week: 1
+    title: Bias and variance
+    line: Too simple, too flexible, and the error that tells them apart
+    figure: {id: w1-figure, script: csi330-w1-figure.js, title: The complexity dial, hint: "degree selector · ← →", note: "Simulated data: a noisy sine. The training error only falls; the test error is the one to watch."}
+    parts:
+      - {name: The board, text: "Forty points from a noisy curve: twenty filled to train on, twenty rings held back."}
+      - {name: The wire, text: "The fitted polynomial for the chosen degree, by least squares on powers of x.", see: least-squares}
+      - {name: The degree selector, text: "The model's flexibility, from a straight line (1) to degree 12."}
+      - {name: The two gauges, text: "RMSE on the training points and on the held-back points.", see: regression-metrics}
+      - {name: The error board, text: "Both errors against degree: one only falls, the other makes a U.", see: cross-validation}
+
+  k-nearest-neighbors:
+    num: 2
+    week: 2
+    title: k-nearest neighbors
+    line: Classify a new bird by asking the most similar ones
+    figure: {id: w2-figure, script: csi330-w2-figure.js, title: The neighbour board, hint: "move over the board · ←→↑↓ · K for k · S for units", note: "All 342 penguins. Standardised distance is what a StandardScaler pipeline uses."}
+    parts:
+      - {name: The board, text: "All 342 penguins by bill length and depth: circle Adelie, triangle Chinstrap, square Gentoo."}
+      - {name: The query bird, text: "The bird to classify. Move it anywhere."}
+      - {name: The threads and the reach, text: "Lines to the k nearest birds, and a dashed ring as far as the k-th."}
+      - {name: The k selector, text: "How many neighbours vote: the same complexity dial as week 1.", see: bias-and-variance}
+      - {name: The units switch, text: "Distance in raw millimetres, or in standard deviations of each measurement."}
+      - {name: The vote tubes, text: "One tube per species; the fullest is the prediction. Average instead of vote, and you have k-NN regression.", see: knn-regression}
+
+  logistic-regression:
+    num: 3
+    week: 2
+    title: Logistic regression
+    line: A line, then a squash, then a probability
+    figure: {id: w2lr-figure, script: csi330-w2lr-figure.js, title: The squash, hint: "move over the board · ← → · ↑ ↓ steepness · [ ] slide · F fit · T threshold", note: "All 342 penguins, Adelie = 1. Fitted without regularisation, as in Lecture 2.2: z = 51.11 − 1.192x."}
+    parts:
+      - {name: The board, text: "Every penguin by bill length: Adelie on the top row (1), the rest below (0)."}
+      - {name: The S-curve, text: "P(Adelie) = σ(w₀ + w₁x), the model's answer for every bill length."}
+      - {name: The squash dial, text: "One needle: z (the log-odds) on the even outer scale, p on the squeezed inner one."}
+      - {name: The pointer, text: "The bill length you are asking about, and where it meets the curve. w₁ and w₀ are set in the panel under the machine."}
+      - {name: The threshold cut, text: "Where p crosses the threshold: a choice, not part of the model.", see: classification-metrics}
+      - {name: The log-loss gauge, text: "What fitting makes as small as possible. Naive Bayes reaches probabilities another way.", see: naive-bayes}
+
+  naive-bayes:
+    num: 4
+    week: 3
+    title: Gaussian naive Bayes
+    line: Prior × likelihood, weighed on a balance
+    figure: {id: w3-figure, script: csi330-w3-figure.js, title: The Bayes balance, hint: "move over the curves · ← → · P priors", note: "GaussianNB fitted on bill length for all 342 birds."}
+    parts:
+      - {name: The curves board, text: "One bell curve per species: how likely each bill length is, given the species."}
+      - {name: The marker, text: "The bill length being weighed."}
+      - {name: The scales, text: "Each block's footprint is the prior and its height the likelihood, so it weighs prior × likelihood."}
+      - {name: The priors switch, text: "Priors from the data's mix, or equal for all three."}
+      - {name: The posterior tape, text: "Each weight divided by the total: the probabilities. Logistic regression gets them without bell curves.", see: logistic-regression}
+
+  least-squares:
+    num: 5
+    week: 4
+    title: Linear regression and least squares
+    line: The line the springs settle on
+    figure: {id: w4-figure, script: csi330-w4-figure.js, title: The spring-loaded line, hint: "point to turn the rod · ← → · F to let it settle", note: "Forty penguins; least squares fitted on those forty. A spring's energy grows with the square of its stretch, so resting springs find the least-squares line."}
+    parts:
+      - {name: The board, text: "Forty penguins: body mass against flipper length."}
+      - {name: The pivot, text: "The mean point. Every least-squares line passes through it."}
+      - {name: The rod, text: "The line, with the slope you set."}
+      - {name: The springs, text: "One per bird, straight up or down: the residuals.", see: regression-metrics}
+      - {name: The gauges, text: "RMSE, and how many times worse than the best line this one is."}
+
+  knn-regression:
+    num: 6
+    week: 5
+    title: k-NN regression
+    line: Predict a number by averaging the neighbours
+    figure: {id: w5-figure, script: csi330-w5-figure.js, title: The averaging carriage, hint: "move over the board · ← → flipper · ↑ ↓ k", note: "All 342 penguins. The dashed trace is the full prediction curve for the chosen k; the faint line is week 4's least squares."}
+    parts:
+      - {name: The board, text: "All 342 penguins: body mass against flipper length."}
+      - {name: The pointer, text: "The flipper length to predict at."}
+      - {name: The band, text: "The k nearest birds along the axis.", see: k-nearest-neighbors}
+      - {name: The bar, text: "Their mean mass: the prediction."}
+      - {name: The trace, text: "The prediction for every flipper length: jagged at k = 1, flat at large k.", see: bias-and-variance}
+      - {name: The faint line, text: "Least squares, for comparison.", see: least-squares}
+
+  classification-metrics:
+    num: 7
+    week: 6
+    title: Classification metrics
+    line: One threshold, four kinds of answer
+    figure: {id: w6-figure, script: csi330-w6-figure.js, title: The threshold sorter, hint: "move over the board · ← → fine · ↑ ↓ coarse", note: "NHANES: logistic regression on glucose, trained on 70% and scored on the 517 people held out."}
+    parts:
+      - {name: The strip board, text: "517 held-out people by predicted probability of diabetes; those who have it on the top row."}
+      - {name: The threshold blade, text: "Everyone to its right is predicted yes.", see: logistic-regression}
+      - {name: The four trays, text: "True positives, false negatives, false positives, true negatives: the confusion matrix."}
+      - {name: The gauges, text: "Accuracy, precision and recall, read off the trays."}
+
+  regression-metrics:
+    num: 8
+    week: 7
+    title: Regression metrics
+    line: MAE, RMSE and R² from the same misses
+    figure: {id: w7-figure, script: csi330-w7-figure.js, title: The residual sticks, hint: "drag a point · ← → pick · ↑ ↓ move · R reset", note: "Thirty typical NHANES participants (insulin under 60, glucose under 12) against a line fitted on everyone."}
+    parts:
+      - {name: The board, text: "Thirty NHANES participants: insulin against glucose."}
+      - {name: The line, text: "A fixed model, fitted on everyone.", see: least-squares}
+      - {name: The sticks, text: "Each person's miss, from point to line."}
+      - {name: The gauges, text: "MAE, RMSE and R², recomputed as you drag."}
+
+  cross-validation:
+    num: 9
+    week: 8
+    title: Cross-validation
+    line: Every observation tested once, and the spread kept
+    figure: {id: w8-figure, script: csi330-w8-figure.js, title: The fold tray, hint: "click a fold · ← → rounds · ↑ ↓ k", note: "Wine: logistic regression on alcohol and density, StratifiedKFold. One card stands for five wines; tabbed cards are red."}
+    parts:
+      - {name: The tray, text: "Two hundred wines, one card per five, in k folds."}
+      - {name: The lifted fold, text: "Held out this round; the model trains on the rest."}
+      - {name: The bars, text: "Each fold's accuracy, as the rounds go by.", see: classification-metrics}
+      - {name: The mean line, text: "The cross-validated estimate, with its spread."}
+      - {name: The k selector, text: "3, 5 or 10 folds: more training data per round, smaller test folds.", see: bias-and-variance}
+
+# Building a model, in order: the pipeline's stages, each pointing to the
+# entries that explain it. `stage` is the home figure's panel (1–6).
+order:
+  - {name: Frame the question, text: "What is predicted, from what: a class or a number.", see: [k-nearest-neighbors, least-squares], stage: 1}
+  - {name: Split the data, text: "Hold back a test set before anything is learned.", see: [cross-validation, bias-and-variance], stage: 2}
+  - {name: Scale the features, text: "Put measurements on one footing, using the training data only.", see: [k-nearest-neighbors], stage: 2}
+  - {name: Choose and fit a model, text: "A rule with weights, chosen to make the training loss small.", see: [logistic-regression, naive-bayes, least-squares, knn-regression], stage: 3}
+  - {name: Turn scores into answers, text: "Probabilities, then a decision, with a threshold you choose.", see: [logistic-regression, classification-metrics], stage: 4}
+  - {name: Measure on the test set, text: "Count the kinds of right and wrong, or the sizes of the misses.", see: [classification-metrics, regression-metrics], stage: 6}
+  - {name: Validate the choice, text: "Rotate the held-out part to see how much the score moves.", see: [cross-validation], stage: 6}

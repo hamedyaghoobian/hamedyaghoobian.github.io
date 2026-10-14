@@ -20,7 +20,7 @@
   const b = K.board(svg, 0, 132, 24, 6, 96);
   const sx = K.scale(170, 235, 16, 126), sy = K.scale(2500, 6500, 77, 8);
   K.axes(b.g, sx, sy, [170, 190, 210, 230], [3000, 4000, 5000, 6000], 'flipper length (mm)', 'body mass (g)', 2.8);
-  el('line', { class: 'lf-line lf-faint', x1: sx(170), y1: sy(D.b0 + D.b1 * 170), x2: sx(235), y2: sy(D.b0 + D.b1 * 235) }, b.g);
+  const ols = el('line', { class: 'lf-line lf-faint', x1: sx(170), y1: sy(D.b0 + D.b1 * 170), x2: sx(235), y2: sy(D.b0 + D.b1 * 235) }, b.g);
   const dots = A.map(([x, y]) => el('circle', { class: 'lf-line lf-faint', cx: sx(x), cy: sy(y), r: 0.8 }, b.g));
   const trace = el('path', { class: 'lf-line', 'stroke-dasharray': '1.2 0.8' }, b.g);
   const hot = el('g', { class: 'lf-hot' }, b.g);
@@ -84,6 +84,12 @@
     st.q = Math.max(172, Math.min(231, Math.round(sx.inv(x)))); update();
   });
   svg.addEventListener('pointerdown', e => { const k = sel.pick(e); if (k >= 0) { st.k = k; update(); } });
+  // Parts, in the entry's order; the flipper length and k by hand.
+  K.parts(root, svg, [b.el, [carriage, qline], band, bar, trace, ols]);
+  ctl.after = K.panel(root, [
+    { label: 'Flipper', type: 'range', min: 172, max: 231, step: 1, get: () => st.q, set: v => { st.q = v; update(); }, fmt: v => v + ' mm' },
+    { label: 'k', type: 'seg', options: KS.map((k, i) => [i, String(k)]), get: () => st.k, set: i => { st.k = i; update(); } }
+  ]);
   update();
   K.fit(svg);
 })();

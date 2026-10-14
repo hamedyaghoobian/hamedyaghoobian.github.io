@@ -31,9 +31,10 @@
 
   // The tray and its cards, farthest first; each fold is a group that lifts.
   const U0 = 4, U1 = 128, V0 = 34, V1 = 44;
-  box(svg, 'lf-solid lf-shaded').set(U0 - 2, V0 - 2, 0, U1 + 2, V1 + 2, 1.5);
-  const tray = el('g', {}, svg);
-  box(svg, 'lf-solid lf-shaded').set(U0 - 2, V1, 0, U1 + 2, V1 + 2, 4);   // the tray's near lip
+  const TRG = el('g', {}, svg);                     // the tray, to name as a part
+  box(TRG, 'lf-solid lf-shaded').set(U0 - 2, V0 - 2, 0, U1 + 2, V1 + 2, 1.5);
+  const tray = el('g', {}, TRG);
+  box(TRG, 'lf-solid lf-shaded').set(U0 - 2, V1, 0, U1 + 2, V1 + 2, 4);   // the tray's near lip
   const KS = [3, 5, 10];
   const sel = K.selector(svg, 50, 56, KS, 'K FOLDS');
 
@@ -64,6 +65,7 @@
     groups.forEach((g, f) => {
       const on = f === st.fold;
       g.setAttribute('class', on ? 'lf-hot' : '');
+      if (on) g.setAttribute('data-part', 1); else g.removeAttribute('data-part');
       g.setAttribute('transform', on ? 'translate(0 -10)' : '');
     });
     bars.replaceChildren();
@@ -76,8 +78,8 @@
       el('text', { x: x + bw / 2, y: by(0.5) + 3.2, 'font-size': 2.2, 'text-anchor': 'middle' }, g).textContent = f <= st.fold ? s.toFixed(2) : `fold ${f + 1}`;
     });
     const m = K.mean(done), sd = Math.sqrt(K.mean(done.map(s => (s - m) ** 2)));
-    el('line', { class: 'lf-line', x1: 12, x2: 122, y1: by(m), y2: by(m), 'stroke-dasharray': '1.2 1' }, bars);
-    el('text', { x: 122, y: by(m) - 1.2, 'font-size': 2.4, 'text-anchor': 'end' }, bars).textContent = `mean ${m.toFixed(3)} ± ${sd.toFixed(3)}`;
+    el('line', { class: 'lf-line', 'data-part': 3, x1: 12, x2: 122, y1: by(m), y2: by(m), 'stroke-dasharray': '1.2 1' }, bars);
+    el('text', { 'data-part': 3, x: 122, y: by(m) - 1.2, 'font-size': 2.4, 'text-anchor': 'end' }, bars).textContent = `mean ${m.toFixed(3)} ± ${sd.toFixed(3)}`;
     sel.set(st.k);
     const all = st.fold === k - 1;
     const size = Math.floor(D.n / k) + (st.fold < D.n % k ? 1 : 0);   // as scikit-learn sizes its folds
@@ -109,6 +111,14 @@
     const f = groups.findIndex(g => g.contains(e.target));
     if (f >= 0) { st.fold = f; update(); }
   });
+  // Parts, in the entry's order (the lifted fold and the mean line are
+  // marked as they are drawn); k and the round by hand.
+  K.parts(root, svg, [TRG, null, bars, null, sel.el]);
+  ctl.after = K.panel(root, [
+    { label: 'k', type: 'seg', options: KS.map((k, i) => [i, String(k)]), get: () => st.k, set: i => setK(i) },
+    { label: 'Round', type: 'range', min: 1, max: 10, step: 1, get: () => st.fold + 1,
+      set: v => { st.fold = Math.min(KS[st.k], v) - 1; update(); }, fmt: v => `${Math.min(v, KS[st.k])} of ${KS[st.k]}` }
+  ]);
   setK(1);
   K.fit(svg);
 })();

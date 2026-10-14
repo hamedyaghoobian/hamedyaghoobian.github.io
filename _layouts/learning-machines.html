@@ -1,0 +1,115 @@
+---
+layout: default
+---
+{%- comment -%}
+  Learning Machines (/tools/learning-machines/): a sidebar index and an
+  article. An entry page (front matter `entry: <slug>`) gets its breadcrumb,
+  title, figure and numbered parts from _data/learning_machines.yml, then
+  the page's own prose, then the entries before and after it. Other pages
+  (the home, Why this, not that, How it is drawn) are their content alone.
+  Layout after Pascal Architecture's visual encyclopedia.
+{%- endcomment -%}
+{%- assign LM = site.data.learning_machines -%}
+{%- assign base = "/tools/learning-machines/" | relative_url -%}
+{% include dappled-light.html %}
+<script>window.LM_BASE = "{{ base }}";</script>
+<script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/csi330-data.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/csi330-kit.js' | relative_url }}" defer></script>
+<!-- Equations: formula blocks carry TeX in data-tex; inline maths arrives
+     from kramdown as \( … \). KaTeX typesets both; without it the TeX shows. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!window.katex) return;
+    document.querySelectorAll('.lm-formula__eq[data-tex]').forEach(function (n) {
+      katex.render(n.dataset.tex, n, { displayMode: true, throwOnError: false });
+    });
+    var main = document.querySelector('.lm-main');
+    if (main && window.renderMathInElement) renderMathInElement(main, {
+      delimiters: [{ left: '\\[', right: '\\]', display: true }, { left: '\\(', right: '\\)', display: false }],
+      ignoredClasses: ['project-figure'], throwOnError: false
+    });
+  });
+</script>
+
+<div class="lm">
+  <nav class="lm-side" aria-label="Learning Machines">{% include lm-sidebar.html %}</nav>
+
+  <article class="lm-main">
+  {%- if page.entry %}
+    {%- assign e = LM.entries[page.entry] %}
+    {%- assign order = "" | split: "" %}
+    {%- for s in LM.sections %}
+      {%- if s.entries contains page.entry %}{% assign section = s.name %}{% endif %}
+      {%- assign order = order | concat: s.entries %}
+    {%- endfor %}
+    <p class="lm-crumbs"><a href="{{ base }}">← Learning Machines</a> <span>/</span> {{ section }} <span>/</span> <b>{{ e.title }}</b></p>
+    <h1 class="lm-title">{{ e.title }}</h1>
+    {%- capture num %}No. {% if e.num < 10 %}0{% endif %}{{ e.num }}{% endcapture %}
+    <p class="lm-line">{{ num }} · {{ e.line }} · Week {{ e.week }}</p>
+
+    {% include project-figure.html id=e.figure.id script=e.figure.script class="project-figure--study" calc="1" fig=num title=e.figure.title hint=e.figure.hint note=e.figure.note %}
+
+    <section class="lm-parts">
+      <div class="lm-parts__head">
+        <h2>The parts</h2>
+        <p>Choose a part to see it in the machine. Esc clears focus. <button type="button" class="lm-parts__clear" hidden>Clear focus ↺</button></p>
+      </div>
+      <ol data-figure="{{ e.figure.id }}">
+        {%- for p in e.parts %}
+        <li tabindex="0" data-part="{{ forloop.index0 }}"><span class="lm-parts__name">{{ p.name }}</span><span class="lm-parts__text">{{ p.text }}</span>
+          {%- if p.see %}{% assign s2 = LM.entries[p.see] %}<a class="lm-parts__see" href="{{ base }}{{ p.see }}/">Open {{ s2.title }} ↗</a>{% endif %}</li>
+        {%- endfor %}
+      </ol>
+    </section>
+
+    <script>
+      // The parts list and the figure answer each other: choosing a part
+      // focuses it in the machine; hovering the machine marks the part here.
+      (function () {
+        var list = document.querySelector('.lm-parts ol'), clear = document.querySelector('.lm-parts__clear');
+        var fig = document.getElementById(list.dataset.figure);
+        function send(i) { fig.dispatchEvent(new CustomEvent('lm-part', { detail: i })); }
+        list.addEventListener('click', function (e) {
+          var li = e.target.closest('li'); if (!li || e.target.closest('a')) return;
+          send(+li.dataset.part);
+        });
+        list.addEventListener('keydown', function (e) {
+          var li = e.target.closest('li');
+          if (li && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); send(+li.dataset.part); }
+          if (e.key === 'Escape') { var on = list.querySelector('.is-focused'); if (on) send(+on.dataset.part); }
+        });
+        clear.addEventListener('click', function () { var on = list.querySelector('.is-focused'); if (on) send(+on.dataset.part); });
+        fig.addEventListener('lm-part-focused', function (e) {
+          [].forEach.call(list.children, function (li) { li.classList.toggle('is-focused', +li.dataset.part === e.detail); });
+          clear.hidden = e.detail < 0;
+          if (e.detail >= 0) fig.closest('figure').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+        fig.addEventListener('lm-part-hover', function (e) {
+          [].forEach.call(list.children, function (li) { li.classList.toggle('is-hover', +li.dataset.part === e.detail); });
+        });
+      })();
+    </script>
+
+    <div class="lm-body">
+{{ content }}
+    </div>
+
+    <nav class="lm-pager" aria-label="Entries">
+      {%- for slug in order %}
+        {%- if slug == page.entry %}
+          {%- assign i = forloop.index0 %}
+        {%- endif %}
+      {%- endfor %}
+      {%- assign prev = i | minus: 1 %}{%- assign nxt = i | plus: 1 %}
+      {%- if prev >= 0 %}{% assign ps = order[prev] %}<a class="lm-pager__prev" href="{{ base }}{{ ps }}/"><span>Previous</span>{{ LM.entries[ps].title }}</a>{% else %}<span></span>{% endif %}
+      {%- if nxt < order.size %}{% assign ns = order[nxt] %}<a class="lm-pager__next" href="{{ base }}{{ ns }}/"><span>Next</span>{{ LM.entries[ns].title }}</a>{% endif %}
+    </nav>
+  {%- else %}
+{{ content }}
+  {%- endif %}
+  </article>
+</div>
