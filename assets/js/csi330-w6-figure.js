@@ -40,16 +40,16 @@
     { key: 'TN', name: 'true negative', u: 84 }, { key: 'FP', name: 'false positive', u: 62 },
     { key: 'FN', name: 'false negative', u: 36 }, { key: 'TP', name: 'true positive', u: 14 }
   ];
-  const TV = 40;
+  const TV = 40, TG = el('g', {}, svg);            // the trays, to name as a part
   TRAY.forEach(t => {
-    box(svg, 'lf-solid lf-shaded').set(t.u, TV, 0, t.u + 18, TV + 14, 1.5);
-    t.g = el('g', {}, svg);
-    const f = face(svg, onTop(t.u, TV + 15, 0));
+    box(TG, 'lf-solid lf-shaded').set(t.u, TV, 0, t.u + 18, TV + 14, 1.5);
+    t.g = el('g', {}, TG);
+    const f = face(TG, onTop(t.u, TV + 15, 0));
     t.count = el('text', { x: 9, y: 3, 'font-size': 2.8, 'text-anchor': 'middle' }, f);
     el('text', { x: 9, y: 5.8, 'font-size': 1.9, 'text-anchor': 'middle' }, f).textContent = t.name;
   });
   // the truth each pair shares, printed in front of the counts
-  const pair = face(svg, onTop(14, 62.5, 0));
+  const pair = face(TG, onTop(14, 62.5, 0));
   el('text', { x: 20, y: 3.4, 'font-size': 2.4, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, pair).textContent = 'ACTUAL YES';
   el('text', { x: 70, y: 3.4, 'font-size': 2.4, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, pair).textContent = 'ACTUAL NO';
   el('path', { class: 'lf-line lf-faint', d: 'M0 0.4 L40 0.4 M48 0.4 L88 0.4' }, pair);
@@ -104,6 +104,12 @@
     if (x < 18 || x > 126 || y < 2 || y > 58) return;
     st.t = Math.round(Math.max(0.01, Math.min(0.99, sx.inv(x))) * 100) / 100; update();
   });
+  // Parts, in the entry's order; the threshold by hand.
+  K.parts(root, svg, [b.el, blade, TG, [gA.el, gP.el, gR.el]]);
+  ctl.after = K.panel(root, [
+    { label: 'Threshold', type: 'range', min: 0.01, max: 0.99, step: 0.01, get: () => st.t, set: v => { st.t = v; update(); }, fmt: v => v.toFixed(2) },
+    { label: 'Try', type: 'seg', options: [0.1, 0.2, 0.3, 0.5, 0.7].map(T => [T, String(T)]), get: () => st.t, set: v => { st.t = v; update(); } }
+  ]);
   update();
   K.fit(svg);
 })();

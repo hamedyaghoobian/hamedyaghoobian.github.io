@@ -28,7 +28,8 @@ window.CSIKit = window.CSIKit || (function () {
   // from h0 to h1, with two feet. Returns { g, w, h, toFace(e) }: g is a group
   // on the near face (x along u from 0 to w, y down from 0 to h) to draw an
   // ordinary plot into; toFace maps a pointer event into those units.
-  function board(svg, u0, u1, v, h0, h1, d = 3) {
+  function board(svg0, u0, u1, v, h0, h1, d = 3) {
+    const svg = el('g', {}, svg0);                  // the whole board, to name as a part
     box(svg, 'lf-solid lf-shaded').set(u0 + 4, v - 10, 0, u0 + 10, v + 4, 2);
     box(svg, 'lf-solid lf-shaded').set(u1 - 10, v - 10, 0, u1 - 4, v + 4, 2);
     // a board raised off the bench stands on two posts
@@ -38,9 +39,9 @@ window.CSIKit = window.CSIKit || (function () {
     const w = u1 - u0, h = h1 - h0;
     el('rect', { class: 'lf-line lf-faint', x: 1.5, y: 1.5, width: w - 3, height: h - 3, rx: 1 }, g);
     return {
-      g, w, h,
+      g, w, h, el: svg,
       toFace(e) {
-        const p = g.ownerSVGElement.createSVGPoint();
+        const p = svg0.createSVGPoint();
         p.x = e.clientX; p.y = e.clientY;
         const q = p.matrixTransform(g.getScreenCTM().inverse());
         return [q.x, q.y];
@@ -82,7 +83,8 @@ window.CSIKit = window.CSIKit || (function () {
   // A dial gauge on a post at (u, v): a half dial on a small panel facing
   // the viewer, from lo to hi. The reading sits under the dial, the name
   // under the reading, clear of the needle's sweep. Returns set(value).
-  function gauge(svg, u, v, label, lo, hi, fmt = x => x.toFixed(2), hPost = 16) {
+  function gauge(svg0, u, v, label, lo, hi, fmt = x => x.toFixed(2), hPost = 16) {
+    const svg = el('g', {}, svg0);
     cylinder(svg, 'lf-solid lf-shaded').set(u + 9, v - 2, 0, hPost, 1.1);
     box(svg, 'lf-solid lf-shaded').set(u, v - 4, hPost, u + 18, v, hPost + 16);
     const f = face(svg, onNear(u, v, hPost + 16));
@@ -97,17 +99,20 @@ window.CSIKit = window.CSIKit || (function () {
     el('circle', { class: 'lf-dot', cx, cy, r: 0.8 }, f);
     const val = el('text', { class: 'lf-hot', x: cx, y: 11.8, 'font-size': 2.3, 'text-anchor': 'middle' }, f);
     el('text', { x: cx, y: 14.6, 'font-size': 1.8, 'text-anchor': 'middle', 'letter-spacing': 0.2 }, f).textContent = label;
-    return v2 => {
+    const set = v2 => {
       const t = Math.max(0, Math.min(1, (v2 - lo) / (hi - lo)));
       const [nx, ny] = at(t, R - 1);
       needle.setAttribute('x2', nx.toFixed(2)); needle.setAttribute('y2', ny.toFixed(2));
       val.textContent = fmt(v2);
     };
+    set.el = svg;
+    return set;
   }
 
   // A selector on the bench: a slot with detents along u, a knob riding in
   // it. Returns { set(i), pick(e) → i or -1 }.
-  function selector(svg, u0, v, labels, title) {
+  function selector(svg0, u0, v, labels, title) {
+    const svg = el('g', {}, svg0);
     const step = 7, u1 = u0 + step * (labels.length - 1);
     box(svg, 'lf-solid lf-shaded').set(u0 - 4, v - 4, 0, u1 + 4, v + 4, 1.2);
     const top = face(svg, onTop(u0 - 4, v - 4, 1.2));
@@ -121,12 +126,12 @@ window.CSIKit = window.CSIKit || (function () {
     return {
       set(i) { knob.set(u0 + i * step, v, 1.2, 4.2, 1.6); },
       pick(e) {
-        const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+        const p = svg0.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
         const q = p.matrixTransform(top.getScreenCTM().inverse());
         if (q.y < -2 || q.y > 10 || q.x < -2 || q.x > u1 - u0 + 10) return -1;
         return Math.max(0, Math.min(labels.length - 1, Math.round((q.x - 4) / step)));
       },
-      hit
+      hit, el: svg
     };
   }
 
@@ -152,7 +157,9 @@ window.CSIKit = window.CSIKit || (function () {
       }, every);
     }
     const calcEl = document.getElementById(root.id + '-calc');
-    return { say: t => { if (readout) readout.textContent = t; }, calc: html => { if (calcEl) calcEl.innerHTML = html; }, still };
+    // after: set to a panel's sync(), so buttons follow every change of state
+    const api = { say: t => { if (readout) readout.textContent = t; if (api.after) api.after(); }, calc: html => { if (calcEl) calcEl.innerHTML = html; }, still, after: null };
+    return api;
   }
 
   // Frame the drawing: the viewBox hugs what was drawn, plus a margin.
@@ -162,7 +169,94 @@ window.CSIKit = window.CSIKit || (function () {
     svg.setAttribute('viewBox', [b.x - pad, b.y - pad, b.width + 2 * pad, b.height + 2 * pad].map(v => v.toFixed(1)).join(' '));
   }
 
+  // A control panel under the figure, inside its card: rows of labelled
+  // segmented buttons and sliders, so every setting the keys reach can also
+  // be set by hand. controls: [{ label, type: 'seg', options: [[value,
+  // text], …], get, set } | { label, type: 'range', min, max, step, get,
+  // set, fmt }]. Returns sync(), to call after every change.
+  function panel(root, controls) {
+    const host = document.createElement('div');
+    host.className = 'lm-panel';
+    root.insertAdjacentElement('afterend', host);
+    const rows = controls.map(c => {
+      const row = document.createElement('div');
+      row.className = 'lm-panel__row';
+      const lab = document.createElement('span');
+      lab.className = 'lm-panel__label';
+      lab.textContent = c.label;
+      row.appendChild(lab);
+      if (c.type === 'seg') {
+        const seg = document.createElement('div');
+        seg.className = 'lm-seg';
+        seg.setAttribute('role', 'group');
+        seg.setAttribute('aria-label', c.label);
+        c.buttons = c.options.map(([v, text]) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = text;
+          b.addEventListener('click', () => { c.set(v); sync(); });
+          seg.appendChild(b);
+          return [v, b];
+        });
+        row.appendChild(seg);
+      } else {
+        const input = document.createElement('input');
+        Object.assign(input, { type: 'range', min: c.min, max: c.max, step: c.step });
+        input.setAttribute('aria-label', c.label);
+        const out = document.createElement('output');
+        input.addEventListener('input', () => { c.set(+input.value); sync(); });
+        c.input = input; c.out = out;
+        row.appendChild(input); row.appendChild(out);
+      }
+      host.appendChild(row);
+      return c;
+    });
+    function sync() {
+      rows.forEach(c => {
+        const v = c.get();
+        if (c.buttons) c.buttons.forEach(([bv, b]) => b.setAttribute('aria-pressed', String(bv === v)));
+        else { c.input.value = v; c.out.textContent = c.fmt ? c.fmt(v) : v; }
+      });
+    }
+    sync();
+    return sync;
+  }
+
+  // The figure's parts, in the order the entry lists them: each is an
+  // element (or a list) that stays in place while the figure redraws. A
+  // part can be focused from the entry's list (a 'lm-part' event on root):
+  // it takes the accent and everything else fades; Esc or the same part
+  // again clears it. Hovering the drawing names the part under the pointer
+  // in the card's hint, and marks it in the list.
+  function parts(root, svg, list, names) {
+    list.forEach((els, i) => [].concat(els).forEach(n => n && n.setAttribute('data-part', i)));
+    names = names || [...document.querySelectorAll('.lm-parts__name')].map(n => n.textContent);
+    const hint = root.parentElement.querySelector('.figure-card__hint');
+    const plain = hint ? hint.textContent : '';
+    let on = -1;
+    function focus(i) {
+      on = i === on ? -1 : i;
+      svg.classList.toggle('lm-focusing', on >= 0);
+      svg.querySelectorAll('.lm-focus-on').forEach(n => n.classList.remove('lm-focus-on'));
+      if (on >= 0) svg.querySelectorAll(`[data-part="${on}"]`).forEach(n => n.classList.add('lm-focus-on'));
+      root.dispatchEvent(new CustomEvent('lm-part-focused', { detail: on, bubbles: true }));
+    }
+    root.addEventListener('lm-part', e => focus(e.detail));
+    root.addEventListener('keydown', e => { if (e.key === 'Escape' && on >= 0) focus(on); });
+    svg.addEventListener('pointermove', e => {
+      const n = e.target.closest && e.target.closest('[data-part]');
+      const i = n ? +n.getAttribute('data-part') : -1;
+      if (hint) hint.textContent = i >= 0 && names ? `${String(i + 1).padStart(2, '0')} ${names[i]}` : plain;
+      root.dispatchEvent(new CustomEvent('lm-part-hover', { detail: i, bubbles: true }));
+    });
+    svg.addEventListener('pointerleave', () => {
+      if (hint) hint.textContent = plain;
+      root.dispatchEvent(new CustomEvent('lm-part-hover', { detail: -1, bubbles: true }));
+    });
+    return { focus };
+  }
+
   const mean = a => a.reduce((s, v) => s + v, 0) / a.length;
 
-  return { bench, plate, board, scale, axes, gauge, selector, controls, fit, mean };
+  return { bench, plate, board, scale, axes, gauge, selector, controls, fit, mean, panel, parts };
 })();

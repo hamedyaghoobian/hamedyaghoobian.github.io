@@ -23,7 +23,7 @@
   const sx = K.scale(4, 12, 16, 126), sy = K.scale(0, 150, 77, 8);
   K.axes(b.g, sx, sy, [4, 6, 8, 10, 12], [0, 50, 100, 150], 'glucose (mmol/L)', 'insulin (µU/mL)', 2.8);
   const yhat = x => D.b0 + D.b1 * x;
-  el('line', { class: 'lf-line lf-strong', x1: sx(4), y1: sy(yhat(4)), x2: sx(12), y2: sy(yhat(12)) }, b.g);
+  const fitLine = el('line', { class: 'lf-line lf-strong', x1: sx(4), y1: sy(yhat(4)), x2: sx(12), y2: sy(yhat(12)) }, b.g);
   const sticks = P0.map(() => el('line', { class: 'lf-line' }, b.g));
   const dots = P0.map(() => el('circle', { class: 'lf-dot', r: 1.1 }, b.g));
 
@@ -91,6 +91,20 @@
   });
   svg.addEventListener('pointerup', () => { drag = false; });
   svg.addEventListener('dblclick', () => { st.pts = P0.map(p => p.slice()); update(); });
+  // Parts, in the entry's order; the outlier by hand.
+  const SG = el('g', {}, b.g);
+  sticks.forEach(n => SG.appendChild(n));
+  b.g.appendChild(SG); dots.forEach(n => b.g.appendChild(n));     // keep the dots above the sticks
+  K.parts(root, svg, [b.el, fitLine, SG, [gMAE.el, gRMSE.el, gR2.el]]);
+  const far = P0.reduce((bi, p, i, a) => p[0] > a[bi][0] ? i : bi, 0);
+  const state = () => st.pts.every((p, i) => p[1] === P0[i][1]) ? 'none'
+    : st.pts.every((p, i) => i === far ? p[1] === 150 : p[1] === P0[i][1]) ? 'one' : '';
+  ctl.after = K.panel(root, [
+    { label: 'Data', type: 'seg', options: [['none', 'as measured'], ['one', 'one outlier: 10.5 → 150']], get: state,
+      set: v => { st.pts = P0.map(p => p.slice()); st.pick = far; if (v === 'one') st.pts[far][1] = 150; update(); } },
+    { label: 'Picked point', type: 'range', min: 0, max: 150, step: 1, get: () => Math.round(st.pts[st.pick][1]),
+      set: v => { st.pts[st.pick][1] = v; update(); }, fmt: v => 'insulin ' + v }
+  ]);
   update();
   K.fit(svg);
 })();

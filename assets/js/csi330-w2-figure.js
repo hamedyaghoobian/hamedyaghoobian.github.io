@@ -41,13 +41,14 @@
 
   // Three vote tubes on the bench, the k selector, the units switch.
   const TU = [146, 160, 174], TV = 34;
+  const TG = el('g', {}, svg);
   const tubes = TU.map((u, s) => {
-    box(svg, 'lf-solid lf-shaded').set(u - 5, TV - 5, 0, u + 5, TV + 5, 2);
-    const fill = cylinder(el('g', {}, svg), 'lf-solid lf-shaded');
-    const glass = cylinder(svg, 'lf-solid');
+    box(TG, 'lf-solid lf-shaded').set(u - 5, TV - 5, 0, u + 5, TV + 5, 2);
+    const fill = cylinder(el('g', {}, TG), 'lf-solid lf-shaded');
+    const glass = cylinder(TG, 'lf-solid');
     glass.querySelectorAll('path, ellipse').forEach(n => { n.style.fill = 'none'; });
     // the species printed on the front of its tube's stand
-    const lab = face(svg, onNear(u - 5, TV + 5, 2));
+    const lab = face(TG, onNear(u - 5, TV + 5, 2));
     el('text', { x: 5, y: 1.55, 'font-size': 1.5, 'text-anchor': 'middle', 'letter-spacing': 0.1 }, lab).textContent = SP[s].toUpperCase();
     glass.set(u, TV, 2, 30, 3.4);
     return { fill, wrap: fill.parentNode };
@@ -64,7 +65,7 @@
   const sd = [0, 1].map(j => Math.sqrt(K.mean(B.map(r => (r[j] - m[j]) ** 2))));
 
   const st = { q: [45, 17], k: 2, scaled: true };
-  function update() {
+  let update = function () {
     const [qa, qd] = st.q, k = KS[st.k];
     const dist = r => st.scaled ? Math.hypot((r[0] - qa) / sd[0], (r[1] - qd) / sd[1]) : Math.hypot(r[0] - qa, r[1] - qd);
     const order = B.map((r, i) => [dist(r), i]).sort((x, y) => x[0] - y[0]).slice(0, k).map(p => p[1]);
@@ -120,6 +121,17 @@
     if (k >= 0) { st.k = k; update(); return; }
     if (e.target.closest('g') === sw || sw.contains(e.target)) { st.scaled = !st.scaled; update(); }
   });
+  // Parts, in the entry's order; every key's setting as buttons too,
+  // with three birds to jump to.
+  K.parts(root, svg, [b.el, cross, [threads, ellipse], sel.el, sw, TG]);
+  const sync = K.panel(root, [
+    { label: 'k', type: 'seg', options: KS.map((k, i) => [i, String(k)]), get: () => st.k, set: i => { st.k = i; update(); } },
+    { label: 'Distance', type: 'seg', options: [[false, 'raw mm'], [true, 'standardised']], get: () => st.scaled, set: v => { st.scaled = v; update(); } },
+    { label: 'Bird', type: 'seg', options: [['38,14', '38 × 14'], ['45,17', '45 × 17'], ['50,19', '50 × 19']],
+      get: () => st.q.join(','), set: v => { st.q = v.split(',').map(Number); update(); } }
+  ]);
+  const update0 = update;
+  update = () => { update0(); sync(); };
   update();
   K.fit(svg);
 })();

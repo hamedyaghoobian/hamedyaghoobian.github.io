@@ -42,14 +42,16 @@
   // The frame of the scales: a crossbar on two posts; the scales hang in a
   // group redrawn on every change; the near post goes in front of them.
   const XS = [124, 150, 176], V = 30, BAR = 78;
-  cylinder(svg, 'lf-solid lf-shaded').set(188, V, 0, BAR, 2);
-  box(svg, 'lf-solid lf-shaded').set(106, V - 2, BAR, 190, V + 2, BAR + 4);
-  const hang = el('g', {}, svg);
-  cylinder(svg, 'lf-solid lf-shaded').set(108, V, 0, BAR, 2);
+  const SG = el('g', {}, svg);                      // the scales, to name as a part
+  cylinder(SG, 'lf-solid lf-shaded').set(188, V, 0, BAR, 2);
+  box(SG, 'lf-solid lf-shaded').set(106, V - 2, BAR, 190, V + 2, BAR + 4);
+  const hang = el('g', {}, SG);
+  cylinder(SG, 'lf-solid lf-shaded').set(108, V, 0, BAR, 2);
 
   // The posterior tape, the priors switch.
-  box(svg, 'lf-solid lf-shaded').set(108, 53, 0, 190, 61, 2);
-  const tape = el('g', {}, svg);
+  const TG = el('g', {}, svg);
+  box(TG, 'lf-solid lf-shaded').set(108, 53, 0, 190, 61, 2);
+  const tape = el('g', {}, TG);
   const sw = el('g', { style: 'cursor:pointer' }, svg);
   // wide enough for its longest label, EQUAL PRIORS, with room either side
   box(sw, 'lf-solid lf-shaded').set(20, 40, 0, 58, 50, 2.4);
@@ -124,6 +126,13 @@
     st.x = Math.round(sx.inv(x) * 2) / 2; update();
   });
   svg.addEventListener('pointerdown', e => { if (sw.contains(e.target)) { st.equal = !st.equal; update(); } });
+  // Parts, in the entry's order; the length and the priors by hand.
+  K.parts(root, svg, [b.el, marker, SG, sw, TG]);
+  ctl.after = K.panel(root, [
+    { label: 'Bill', type: 'range', min: 32, max: 60, step: 0.5, get: () => st.x, set: v => { st.x = v; update(); }, fmt: v => v.toFixed(1) + ' mm' },
+    { label: 'Weigh', type: 'seg', options: [[42, '42'], [50, '50'], [56, '56 mm']], get: () => st.x, set: v => { st.x = v; update(); } },
+    { label: 'Priors', type: 'seg', options: [[false, 'from the data'], [true, 'equal']], get: () => st.equal, set: v => { st.equal = v; update(); } }
+  ]);
   update();
   K.fit(svg);
 })();

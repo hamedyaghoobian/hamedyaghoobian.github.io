@@ -32,7 +32,7 @@
   P.forEach(([x, y]) => el('circle', { class: 'lf-dot', cx: sx(x), cy: sy(y), r: 1 }, b.g));
   const rod = el('g', { class: 'lf-hot' }, b.g);
   const rodLine = el('line', { class: 'lf-line lf-strong' }, rod);
-  el('circle', { class: 'lf-line lf-strong', cx: sx(xm), cy: sy(ym), r: 1.6 }, rod);
+  const pivot = el('circle', { class: 'lf-line lf-strong', cx: sx(xm), cy: sy(ym), r: 1.6 }, rod);
   const ghost = el('line', { class: 'lf-line lf-faint', 'stroke-dasharray': '1.2 1' }, b.g);
 
   const setR = K.gauge(svg, 146, 34, 'RMSE (g)', 300, 1300, v => Math.round(v) + ' g', 20);
@@ -97,6 +97,13 @@
     st.m = Math.max(-20, Math.min(120, (sy.inv(y) - ym) / dx)); update();
   });
   svg.addEventListener('pointerleave', () => { if (!ctl.still.matches) settle(); });
+  // Parts, in the entry's order; the slope by hand.
+  K.parts(root, svg, [b.el, pivot, rodLine, springs, [setR.el, setRatio.el]]);
+  ctl.after = K.panel(root, [
+    { label: 'Slope', type: 'range', min: -20, max: 120, step: 0.5, get: () => st.m, set: v => { cancelAnimationFrame(anim); st.m = v; update(); }, fmt: v => v.toFixed(1) + ' g/mm' },
+    { label: 'Try', type: 'seg', options: [[0, 'flat'], [90, 'steep'], ['best', 'let it settle (F)']],
+      get: () => Math.abs(st.m - best) < 0.05 ? 'best' : st.m, set: v => { if (v === 'best') settle(); else { cancelAnimationFrame(anim); st.m = v; update(); } } }
+  ]);
   update();
   K.fit(svg);
 })();
