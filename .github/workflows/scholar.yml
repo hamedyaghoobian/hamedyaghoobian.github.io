@@ -1,13 +1,17 @@
 name: Update publications from Google Scholar
 
-# Weekly, and by hand from the Actions tab ("Run workflow").
+# Twice a week, and by hand from the Actions tab ("Run workflow").
+# Monday is the weekly update; Thursday is a second try for the weeks when
+# Scholar turns GitHub's servers away (it commits only if something changed).
 # Fetches the Scholar profile into _data/scholar.json (scripts/fetch_scholar.py),
 # commits it only when something changed, opens an issue listing any new paper
 # not yet filed in _data/publications.yml, and redeploys the site. If Scholar
-# blocks the request the job ends quietly and the saved data stays as it was.
+# blocks or stalls the request, the fetch gives up after 10 minutes, the job
+# ends quietly and the saved data stays as it was.
 on:
   schedule:
     - cron: '17 6 * * 1'   # Mondays, 06:17 UTC
+    - cron: '17 6 * * 4'   # Thursdays, 06:17 UTC: a second try
   workflow_dispatch:
 
 permissions:
@@ -22,6 +26,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -33,7 +38,11 @@ jobs:
       - name: Install
         run: pip install scholarly "bibtexparser<2" pyyaml
 
+      # Scholar sometimes stalls requests from GitHub instead of refusing
+      # them; without a limit this step could hang for hours.
       - name: Fetch Google Scholar
+        timeout-minutes: 10
+        continue-on-error: true
         env:
           NEW_PUBLICATIONS: ${{ runner.temp }}/new_publications.md
         run: python3 scripts/fetch_scholar.py
