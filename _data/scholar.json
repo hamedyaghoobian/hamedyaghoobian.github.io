@@ -1,7 +1,7 @@
 {
  "profile": "https://scholar.google.com/citations?user=5Ax8m6sAAAAJ",
  "name": "Hamed Yaghoobian",
- "citedby": 91,
+ "citedby": 93,
  "hindex": 4,
  "i10index": 4,
  "cites_per_year": {
@@ -11,7 +11,7 @@
   "2023": 11,
   "2024": 17,
   "2025": 30,
-  "2026": 17
+  "2026": 19
  },
  "publications": [
   {
@@ -38,7 +38,7 @@
    "title": "The Writer In-between: A Post-phenomenological Analysis of LLMs and their Implications for Writer-Tool Relations",
    "year": 2025,
    "citation": "Journal of Human-Technology Relations 3, 1-18, 2025",
-   "cites": 24
+   "cites": 25
   },
   {
    "id": "5Ax8m6sAAAAJ:Tyk-4Ss8FVUC",
@@ -111,6 +111,19 @@
    "cites": 2
   },
   {
+   "id": "5Ax8m6sAAAAJ:WF5omc3nYNoC",
+   "authors": [
+    "Hayk Grigorian",
+    "Hamed Yaghoobian"
+   ],
+   "venue": "",
+   "url": "https://dl.acm.org/doi/abs/10.1145/3803784.3807554",
+   "title": "TimeCapsule: Generative Hallucination as a Method for Historical Sensemaking",
+   "year": 2026,
+   "citation": "Proceedings of the 2026 Conference on Creativity and Cognition, 229-238, 2026",
+   "cites": 1
+  },
+  {
    "id": "5Ax8m6sAAAAJ:qjMakFHDy7sC",
    "authors": [
     "Nahid Yahyapoor",
@@ -123,19 +136,6 @@
    "year": 2018,
    "citation": "arXiv preprint arXiv:1801.02789, 2018",
    "cites": 1
-  },
-  {
-   "id": "5Ax8m6sAAAAJ:WF5omc3nYNoC",
-   "authors": [
-    "Hayk Grigorian",
-    "Hamed Yaghoobian"
-   ],
-   "venue": "",
-   "url": "https://dl.acm.org/doi/abs/10.1145/3803784.3807554",
-   "title": "TimeCapsule: Generative Hallucination as a Method for Historical Sensemaking",
-   "year": 2026,
-   "citation": "Proceedings of the 2026 Conference on Creativity and Cognition, 229-238, 2026",
-   "cites": 0
   },
   {
    "id": "5Ax8m6sAAAAJ:2osOgNQ5qMEC",
@@ -177,5 +177,5 @@
    "cites": 0
   }
  ],
- "updated": "2026-10-08T12:46:36+00:00"
+ "updated": "2026-10-18T16:22:34+00:00"
 }
