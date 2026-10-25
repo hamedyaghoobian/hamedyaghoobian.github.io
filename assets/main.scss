@@ -3304,3 +3304,56 @@ body.dark .project-figure .pf-figure .pf-col.is-lit {
     fill: var(--glow);
   }
 }
+
+// AI Seasons: the 2024 corpus by source and year (ai-seasons-corpus-figure.js).
+.project-figure .ac-figure {
+  .ac-name {
+    font-size: 12px;
+    fill: var(--ink);
+  }
+
+  .ac-year,
+  .ac-total {
+    font-size: 10.5px;
+    fill: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ac-colbg,
+  .ac-rowbg {
+    fill: transparent;
+  }
+
+  .ac-col.is-on .ac-colbg {
+    fill: var(--ink);
+    opacity: 0.06;
+  }
+
+  .ac-col.is-on .ac-year {
+    fill: var(--glow);
+  }
+
+  .ac-base {
+    stroke: var(--rule);
+    stroke-width: 0.6;
+  }
+
+  .ac-cell {
+    fill: var(--ink);
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+
+  &.ac-picking .ac-cell:not(.is-on) {
+    opacity: 0.2;
+  }
+
+  .ac-cell.is-on {
+    fill: var(--glow);
+    opacity: 1;
+  }
+
+  .ac-row.is-on .ac-name {
+    font-weight: 600;
+  }
+}

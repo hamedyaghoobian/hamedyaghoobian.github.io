@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "MASFIN: A Multi-Agent System for Financial Forecasting"
+title: "MASFIN: Multi-Agent LLM Financial Trading Framework"
 
 permalink: /projects/multi-agents-llm-financial-trading-framework
 header: true

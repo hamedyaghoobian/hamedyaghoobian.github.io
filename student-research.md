@@ -32,11 +32,11 @@ Students can get involved through independent studies during the academic year o
 - **[The Grammar of Belief](/projects/grammar-of-belief)**: Testing whether language models can separate what someone believes from what is true, in English and in Turkish.
 - **[Noisy Stars: Rating Reliability and the Superhost Premium](/projects/superhost-rating-reliability)**: Whether the Airbnb Superhost rating threshold can reliably tell listings apart, and what the badge is actually worth.
 - **[Raising Reachy: Framing, Values, and Responsibility in LLM-Powered Robot Interaction](/projects/raising-reachy)**: Studying how undergraduates "raise" an LLM-powered Reachy Mini robot framed as a learner, and the values and behaviors they pass on to it.
+- **[Seasonal Changes in AI: From AI-Springs to AI-Winter](/projects/ai-seasons)**: A corpus of news, papers and videos on AI's booms and busts, now the starting point for a study of how "the AI winter" has been named and dated.
 
 ## Past Projects
 - [TimeCapsule: 18th Century LLM For Historical Sensemaking](/projects/timecapsule-18th-century-llm)
-- [Multi-Agents LLM Financial Trading Framework](/projects/multi-agents-llm-financial-trading-framework)
-- [Seasonal Changes in AI: From AI-Springs to AI-Winter](/projects/ai-seasons)
+- [MASFIN: Multi-Agent LLM Financial Trading Framework](/projects/multi-agents-llm-financial-trading-framework)
 - [Unmasking Bias in LLMs](/projects/unmask-bias-llms)
 - [A Peek Into Correspondences of Walter Benjamin Using BERT](/projects/walter-benjamin)
 

@@ -10,7 +10,8 @@ list_title: " "
 
 *Note: This research was conducted over a span of fall semester 2024 with Muhlenberg undergraduate student researcher, Andrew Franklin, and was merely a data collection project.*
 
-{% include project-figure.html id="seasons-figure" script="ai-seasons-figure.js" note="Schematic, not measured." %}
+<script src="{{ '/assets/js/ai-seasons-corpus.js' | relative_url }}" defer></script>
+{% include project-figure.html id="seasons-figure" script="ai-seasons-corpus-figure.js" class="project-figure--shelf project-figure--wide" fig="Plate I" title="What the scrapers gathered" hint="point at a square, a source or a year · ← →" note="Each square is one source's documents for one year, its area by count. Counts from the corpus Andrew Franklin's scrapers built, after repairing malformed rows." %}
 
 ## 1. Project Overview
 
@@ -48,3 +49,7 @@ The project was built around a few key components that managed the overall proce
 - **Main Execution Script:** The primary script used a thread pool to run scrapers for multiple sources (TechCrunch, ArXiv, YouTube) simultaneously, improving efficiency.
 - **Database Insertion Utility:** A standardized function was used to connect to the MySQL database and insert new records of collected data in a consistent manner.
 - **Debugging Utility:** A simple utility was available for printing command-line arguments, likely used for testing purposes during development.
+
+## 5. What Comes Next
+
+Andrew has since graduated, and I have picked the project up again. The corpus is now the starting point for a study of the phrase "AI winter" itself: when it was coined, how its winters have been dated, and how those dates came to be repeated. That work is in progress; more here once it is published.
