@@ -10,7 +10,8 @@ list_title: " "
 
 *Note: This research was conducted in Summer 2025 with Muhlenberg undergraduate student researcher, Sebastian Montalvo.*
 
-{% include project-figure.html id="masfin-figure" script="masfin-figure.js" fig="Plate I" title="MASFIN · five crews" hint="point at a station · ← →" note="The cards show the flow, not counts; the gauge is the 8-week live result." %}
+<script src="{{ '/assets/js/masfin-data.js' | relative_url }}" defer></script>
+{% include project-figure.html id="masfin-figure" script="masfin-holdings-figure.js" class="project-figure--shelf project-figure--wide" fig="Plate I" title="What the crews held, week by week" hint="point at a week or a stock · ← →" note="Each row is a stock; a bar in each week it was held, as thick as its allocation. From the project's portfolio and returns sheets, June 16 to August 15, 2025." %}
 
 ## 1. Introduction
 
