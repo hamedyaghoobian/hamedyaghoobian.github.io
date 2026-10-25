@@ -1,6 +1,24 @@
 [
   {
     "verses": [
+      "شرمی به روی ما",
+      "که ز خود دست بسته‌ایم"
+    ],
+    "poet": "نیما یوشیج / Nima Yooshij",
+    "date": "2026-10-25",
+    "theme": {
+      "interpretation": "The chains in these two lines were not forged by any jailer. Nima turns the gaze inward: the shame is not in being bound, but in having tied the knot ourselves, in the quiet consent by which fear, habit and silence become a captivity no one else imposed.",
+      "interpretationFa": "زنجیرِ این دو سطر را هیچ زندانبانی نساخته است. نیما نگاه را به درون برمی‌گرداند: شرم نه در دربند بودن، که در آن است که گره را خود زده‌ایم؛ در رضایتی خاموش که از راهِ ترس و عادت و سکوت، اسارتی می‌سازد که کسی جز ما بر ما تحمیل نکرده است.",
+      "cluster": {
+        "id": "weight-of-silence",
+        "label": "سنگینی سکوت",
+        "labelEn": "The Weight of Silence"
+      }
+    },
+    "translation": "Shame upon our faces,\nwe who have bound our own hands."
+  },
+  {
+    "verses": [
       "<span class=\"english-line\">And the end of all our exploring</span><span class=\"inline-translation\">و پایان تمامی کاوش‌هایمان</span>",
       "<span class=\"english-line\">Will be to arrive where we started</span><span class=\"inline-translation\">رسیدن به همان‌جایی خواهد بود که آغاز کردیم</span>",
       "<span class=\"english-line\">And know the place for the first time</span><span class=\"inline-translation\">و شناختن آن جایگاه برای نخستین بار</span>"
