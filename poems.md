@@ -5,7 +5,7 @@ permalink: /poems/
 ---
 {% include dappled-light.html %}
 
-{% include project-figure.html id="poems-figure" script="poems-shelf-figure.js" note="Each volume stands at the middle of its poet's life; close ones are set side by side." class="project-figure--shelf" %}
+{% include project-figure.html id="poems-figure" script="poems-form-figure.js" note="Distant reading in miniature: each poem is a column at its poet's time, each line a dot at its length in letters. The classical lines keep to a narrow band; after Nima's «Qoqnus» (1937) the lines come loose. Measured on the excerpts copied here." class="project-figure--shelf" %}
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Noto+Naskh+Arabic:wght@400..700&display=swap');

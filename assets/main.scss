@@ -3068,3 +3068,105 @@ body.dark {
     overflow-x: auto;
   }
 }
+
+// Collected Poems: form across a thousand years (assets/js/poems-form-figure.js).
+.project-figure .pf-figure {
+  text {
+    font-family: 'Vazirmatn', sans-serif;
+    fill: var(--ink-soft);
+    stroke: none;
+  }
+
+  .pf-tick {
+    font-size: 12px;
+  }
+
+  .pf-note {
+    font-size: 12.5px;
+  }
+
+  .pf-sub {
+    font-size: 11px;
+  }
+
+  .pf-band {
+    fill: color-mix(in srgb, var(--ink) 6%, transparent);
+    stroke: none;
+  }
+
+  .pf-axis line {
+    stroke: var(--ink-soft);
+    stroke-width: 0.8;
+  }
+
+  .pf-axis .pf-grid {
+    stroke: var(--rule);
+    stroke-width: 0.6;
+  }
+
+  .pf-break {
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 0.8;
+  }
+
+  .pf-gap {
+    fill: var(--paper);
+  }
+
+  .pf-nima line {
+    stroke: var(--glow);
+    stroke-width: 0.9;
+    stroke-dasharray: 2 2;
+  }
+
+  .pf-nima text {
+    fill: var(--glow);
+    font-size: 13px;
+  }
+
+  .pf-nima .pf-sub {
+    font-size: 11px;
+  }
+
+  .pf-hit {
+    fill: transparent;
+    cursor: pointer;
+  }
+
+  .pf-range {
+    stroke: var(--ink-soft);
+    stroke-width: 1.4;
+  }
+
+  .pf-dot {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.3;
+  }
+
+  .is-classical .pf-dot {
+    fill: var(--ink);
+  }
+
+  &.pf-picking .pf-col:not(.is-lit) {
+    opacity: 0.3;
+  }
+
+  .pf-col {
+    transition: opacity 0.2s ease;
+  }
+
+  .pf-col.is-lit .pf-range,
+  .pf-col.is-lit .pf-dot {
+    stroke: var(--glow);
+  }
+
+  .pf-col.is-lit.is-classical .pf-dot {
+    fill: var(--glow);
+  }
+}
+
+body.dark .project-figure .pf-figure .pf-col.is-lit {
+  filter: url(#lf-glow);
+}
