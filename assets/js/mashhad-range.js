@@ -25,7 +25,6 @@
   const LON = 59.60;
   const ZONE = 'Asia/Tehran';
   const HOME = 'America/New_York';     // eastern Pennsylvania
-  const MILES = '6,400';               // great-circle distance, Allentown → Mashhad
 
   // Minutes east of UTC for a time zone at an instant — daylight saving
   // on either side comes from the browser's own time-zone data.
@@ -71,8 +70,8 @@
       .format(date).replace(/\s*([AP])M$/, (_, a) => ` ${a.toLowerCase()}m`);
     const ahead = (offset(ZONE, date) - offset(HOME, date)) / 60;
     const whole = Math.floor(ahead);
-    const hours = `${whole}${ahead - whole >= 0.5 ? '½' : ''} hours`;
-    return `In Mashhad it’s ${time} · ${hours} ahead of Pennsylvania · ${MILES} miles east`;
+    const hours = `${whole}${ahead - whole >= 0.5 ? '½' : ''}h`;
+    return `Mashhad, ${time} · ${hours} ahead`;
   }
 
   // ── The range ─────────────────────────────────────────────────────────

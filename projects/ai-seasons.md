@@ -11,7 +11,7 @@ list_title: " "
 *Note: This research was conducted over a span of fall semester 2024 with Muhlenberg undergraduate student researcher, Andrew Franklin, and was merely a data collection project.*
 
 <script src="{{ '/assets/js/ai-seasons-corpus.js' | relative_url }}" defer></script>
-{% include project-figure.html id="seasons-figure" script="ai-seasons-corpus-figure.js" class="project-figure--shelf project-figure--wide" fig="Plate I" title="What the scrapers gathered" hint="point at a square, a source or a year · ← →" note="Each square is one source's documents for one year, its area by count. Counts from the corpus Andrew Franklin's scrapers built, after repairing malformed rows." %}
+{% include project-figure.html id="seasons-figure" script="ai-seasons-corpus-figure.js" class="project-figure--shelf" fig="Plate I" title="What the scrapers gathered" hint="point at a square, a source or a year · ← →" note="Each square is one source's documents for one year, its area by count. Counts from the corpus Andrew Franklin's scrapers built, after repairing malformed rows." %}
 
 ## 1. Project Overview
 
@@ -38,9 +38,11 @@ The project aggregated data from seven primary sources, each handled by a dedica
 | TechCrunch | Scraped articles from the "Artificial Intelligence" category, iterating through pages to collect article content and metadata. |
 | The Verge | Traversed the website's sitemaps to find and process articles, extracting text and metadata. |
 | YouTube | Used the YouTube Data API to find videos based on search terms (e.g., "ai summer") and retrieved video details and full-text transcripts. |
-| Hacker News | Queried the Hacker News API for posts related to "ai winter" and scraped the content of the linked articles. |
-| Gizmodo | Scraped articles from the "Artificial Intelligence" section of the site. |
-| PubMed | Searched for articles related to "artificial intelligence" and extracted titles, URLs, and abstracts. |
+| The Next Web | Collected articles and their text, stored alongside the Lifewire and PubMed scrapes. |
+| Lifewire | Collected consumer-technology articles and their text. |
+| PubMed Central | Searched for articles related to "artificial intelligence" and extracted titles, URLs, and text. |
+
+Scrapers were also written for Hacker News and Gizmodo, but their data did not survive into the corpus.
 
 ## 4. Core System Components
 
