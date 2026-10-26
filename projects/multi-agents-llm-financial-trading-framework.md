@@ -11,7 +11,7 @@ list_title: " "
 *Note: This research was conducted in Summer 2025 with Muhlenberg undergraduate student researcher, Sebastian Montalvo.*
 
 <script src="{{ '/assets/js/masfin-data.js' | relative_url }}" defer></script>
-{% include project-figure.html id="masfin-figure" script="masfin-holdings-figure.js" class="project-figure--shelf project-figure--wide" fig="Plate I" title="What the crews held, week by week" hint="point at a week or a stock · ← →" note="Each row is a stock; a bar in each week it was held, as thick as its allocation. From the project's portfolio and returns sheets, June 16 to August 15, 2025." %}
+{% include project-figure.html id="masfin-figure" script="masfin-holdings-figure.js" class="project-figure--shelf" fig="Plate I" title="What the crews held, week by week" hint="point at a week or a stock · ← →" note="Each row is a stock; a bar in each week it was held, as thick as its allocation. From the project's portfolio and returns sheets, June 16 to August 15, 2025." %}
 
 ## 1. Introduction
 
@@ -33,7 +33,7 @@ Each stage incorporates human-in-the-loop validation to ensure transparency and 
 
 ## 3. Results
 
-Over an **eight-week live evaluation**, MASFIN achieved a **7.33% cumulative return**, outperforming the **S&P 500 (4.92%)**, **NASDAQ-100 (5.36%)**, and **Dow Jones (4.11%)** in six of eight weeks. The system exhibited higher volatility (2.61% weekly) but demonstrated a strong correlation with benchmark indices, suggesting enhanced performance within existing market trends.
+Over an **eight-week live evaluation**, MASFIN achieved a **7.33% cumulative return**, ahead of the **S&P 500 (4.92%)**, **NASDAQ-100 (5.36%)**, and **Dow Jones (4.11%)**. It gained in six of the eight weeks, a win rate comparable to the NASDAQ-100 and S&P 500, and beat all three indexes in four of them. The system exhibited higher volatility (2.61% weekly) but demonstrated a strong correlation with benchmark indices, suggesting enhanced performance within existing market trends.
 
 <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
 

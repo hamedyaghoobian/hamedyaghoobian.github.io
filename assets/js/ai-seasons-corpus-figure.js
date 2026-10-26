@@ -9,6 +9,8 @@
 // are a scatter. That shape decides what the corpus can be asked about any
 // one year. Point at a square, a source or a year; ← → steps through the
 // years. Data: counts from the corpus (scripts/ai_seasons_corpus.py).
+//
+// On a narrow screen the chart is redrawn narrower rather than shrunk.
 
 (function () {
   const root = document.getElementById('seasons-figure');
@@ -19,43 +21,62 @@
   const fmt = n => n.toLocaleString('en-US');
   const words = n => (n >= 1e6 ? `${Math.round(n / 1e6)} million` : fmt(n)) + ' words';
 
-  // ── Layout ──────────────────────────────────────────────────────────
-  const X0 = 118, X1 = 690, CW = (X1 - X0) / YN;
-  const TOP = 30, RH = 30;
-  const colX = i => X0 + CW * i + CW / 2;
-  const rowY = r => TOP + RH * r + RH / 2;
-  const max = Math.max(...S.flatMap(s => Object.values(s.years)));
-  const side = n => Math.max(1.6, Math.sqrt(n / max) * (CW - 3));   // area ∝ documents
+  let on = null, F = null;   // { r, i } — a row, a year, or both; the drawn figure
 
-  const svg = makeSvg(root, `0 0 760 ${TOP + R * RH + 30}`,
-    `A chart of the documents the 2024 scrapers gathered: one row per source (${S.map(s => s.name).join(', ')}), one column per year from ${Y0} to ${Y1}, each square sized by the number of documents.`);
-  svg.classList.add('ac-figure');
+  function draw(narrow) {
+    if (F) F.svg.remove();
+    // ── Layout ──────────────────────────────────────────────────────────
+    const VW = narrow ? 400 : 760, X0 = narrow ? 104 : 118, X1 = narrow ? 344 : 690, CW = (X1 - X0) / YN;
+    const TOP = 30, RH = 30;
+    const colX = i => X0 + CW * i + CW / 2;
+    const rowY = r => TOP + RH * r + RH / 2;
+    const max = Math.max(...S.flatMap(s => Object.values(s.years)));
+    const side = n => Math.max(1.6, Math.sqrt(n / max) * (CW - 3));   // area ∝ documents
 
-  const cols = [];
-  for (let i = 0; i < YN; i++) {
-    const g = el('g', { class: 'ac-col' }, svg);
-    el('rect', { class: 'ac-colbg', x: X0 + CW * i + 1, y: 4, width: CW - 2, height: TOP + R * RH - 2 }, g);
-    const y = Y0 + i;
-    if (y % 2 === 1 || i === 0) el('text', { class: 'ac-year', x: colX(i), y: 18, 'text-anchor': 'middle' }, g).textContent = y;
-    cols.push(g);
-  }
-  el('text', { class: 'ac-year', x: X1 + 64, y: 18, 'text-anchor': 'end' }, svg).textContent = 'documents';
+    const svg = makeSvg(root, `0 0 ${VW} ${TOP + R * RH + 6}`,
+      `A chart of the documents the 2024 scrapers gathered: one row per source (${S.map(s => s.name).join(', ')}), one column per year from ${Y0} to ${Y1}, each square sized by the number of documents.`);
+    svg.classList.add('ac-figure');
+    svg.classList.toggle('ac-narrow', narrow);
 
-  const rows = S.map((s, r) => {
-    const g = el('g', { class: 'ac-row' }, svg), y = rowY(r);
-    el('rect', { class: 'ac-rowbg', x: 0, y: y - RH / 2, width: X0 - 4, height: RH }, g);
-    el('line', { class: 'ac-base', x1: X0, x2: X1, y1: y, y2: y }, g);
-    el('text', { class: 'ac-name', x: X0 - 10, y: y + 4, 'text-anchor': 'end' }, g).textContent = s.name;
-    el('text', { class: 'ac-total', x: X1 + 64, y: y + 4, 'text-anchor': 'end' }, g).textContent = fmt(s.docs);
-    const cells = {};
-    Object.entries(s.years).forEach(([yr, n]) => {
-      const i = +yr - Y0;
-      if (i < 0 || i >= YN) return;
-      const a = side(n);
-      cells[i] = el('rect', { class: 'ac-cell', x: colX(i) - a / 2, y: y - a / 2, width: a, height: a }, g);
+    const cols = [];
+    for (let i = 0; i < YN; i++) {
+      const g = el('g', { class: 'ac-col' }, svg);
+      el('rect', { class: 'ac-colbg', x: X0 + CW * i + 1, y: 4, width: CW - 2, height: TOP + R * RH - 2 }, g);
+      const y = Y0 + i;
+      if (narrow ? y % 4 === 3 : y % 2 === 1 || i === 0) el('text', { class: 'ac-year', x: colX(i), y: 18, 'text-anchor': 'middle' }, g).textContent = y;
+      cols.push(g);
+    }
+    if (!narrow) el('text', { class: 'ac-year', x: VW - 6, y: 18, 'text-anchor': 'end' }, svg).textContent = 'documents';
+
+    const rows = S.map((s, r) => {
+      const g = el('g', { class: 'ac-row' }, svg), y = rowY(r);
+      el('rect', { class: 'ac-rowbg', x: 0, y: y - RH / 2, width: X0 - 4, height: RH }, g);
+      el('line', { class: 'ac-base', x1: X0, x2: X1, y1: y, y2: y }, g);
+      el('text', { class: 'ac-name', x: X0 - 10, y: y + 4, 'text-anchor': 'end' }, g).textContent = s.name;
+      el('text', { class: 'ac-total', x: VW - 6, y: y + 4, 'text-anchor': 'end' }, g).textContent = fmt(s.docs);
+      const cells = {};
+      Object.entries(s.years).forEach(([yr, n]) => {
+        const i = +yr - Y0;
+        if (i < 0 || i >= YN) return;
+        const a = side(n);
+        cells[i] = el('rect', { class: 'ac-cell', x: colX(i) - a / 2, y: y - a / 2, width: a, height: a }, g);
+      });
+      return { g, s, cells };
     });
-    return { g, s, cells };
-  });
+
+    svg.querySelectorAll('.ac-rowbg, .ac-colbg').forEach(n => { n.style.pointerEvents = 'all'; });
+    svg.addEventListener('pointermove', e => {
+      const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const r = Math.floor((q.y - TOP) / RH), i = Math.floor((q.x - X0) / CW);
+      const inRow = r >= 0 && r < R, inCol = q.x >= X0 && i >= 0 && i < YN;
+      const next = inRow && q.x < X0 ? { r } : inCol ? (inRow ? { r, i } : { i }) : null;
+      if (JSON.stringify(next) !== JSON.stringify(on)) { on = next; show(); }
+    });
+    svg.addEventListener('pointerleave', () => { on = null; show(); });
+    F = { svg, rows, cols, narrow };
+    show();
+  }
 
   // ── The caption ─────────────────────────────────────────────────────
   const readout = document.getElementById(root.id + '-readout');
@@ -65,8 +86,8 @@
   const span = s => { const ys = Object.keys(s.years).map(Number); return ys.length ? `${Math.min(...ys)}–${Math.max(...ys)}` : 'undated'; };
   const rest = `${fmt(docs)} documents, about ${words(allWords)}, from ${R} sources` + (early ? ` (${early} dated before ${Y0}, not drawn)` : '') + '.';
 
-  let on = null;   // { r, i } — a row, a year, or both
-  function show() {
+    function show() {
+    const { svg, rows, cols } = F;
     svg.classList.toggle('ac-picking', !!on);
     rows.forEach((R_, r) => {
       R_.g.classList.toggle('is-on', !!on && (on.r === r || on.r === undefined));
@@ -86,16 +107,6 @@
     say(`${y}: ${fmt(here.reduce((a, s) => a + s.years[y], 0))} documents` + (here.length ? ' — ' + here.map(s => `${s.name} ${fmt(s.years[y])}`).join(', ') : '') + '.');
   }
 
-  svg.querySelectorAll('.ac-rowbg, .ac-colbg').forEach(n => { n.style.pointerEvents = 'all'; });
-  svg.addEventListener('pointermove', e => {
-    const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
-    const q = p.matrixTransform(svg.getScreenCTM().inverse());
-    const r = Math.floor((q.y - TOP) / RH), i = Math.floor((q.x - X0) / CW);
-    const inRow = r >= 0 && r < R, inCol = q.x >= X0 && i >= 0 && i < YN;
-    const next = inRow && q.x < X0 ? { r } : inCol ? (inRow ? { r, i } : { i }) : null;
-    if (JSON.stringify(next) !== JSON.stringify(on)) { on = next; show(); }
-  });
-  svg.addEventListener('pointerleave', () => { on = null; show(); });
   root.tabIndex = 0;
   root.addEventListener('keydown', e => {
     const s = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
@@ -103,5 +114,9 @@
     else if (e.key === 'Escape') { on = null; show(); }
   });
   root.addEventListener('blur', () => { on = null; show(); });
-  show();
+
+  // Redraw only when the figure crosses the narrow/wide line.
+  const isNarrow = () => root.clientWidth < 520;
+  draw(isNarrow());
+  new ResizeObserver(() => { if (isNarrow() !== F.narrow) draw(isNarrow()); }).observe(root);
 })();
