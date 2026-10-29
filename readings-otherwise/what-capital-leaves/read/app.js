@@ -328,6 +328,23 @@ addEventListener("resize", () => {
   resizeTimer = setTimeout(reflowPlaceholders, 200);
 });
 
+// ---------- light and dark (shared with the painting) ----------
+
+const themeBtn = document.getElementById("theme");
+const theme = () => document.documentElement.dataset.theme === "light" ? "light" : "dark";
+function syncThemeButton() {
+  const next = theme() === "dark" ? "light" : "dark";
+  themeBtn.textContent = next;
+  themeBtn.setAttribute("aria-label", `Switch to ${next} mode`);
+}
+themeBtn.addEventListener("click", () => {
+  const next = theme() === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("what-capital-leaves:theme", next); } catch (_) {}
+  syncThemeButton();
+});
+syncThemeButton();
+
 fetch("../data/marks.json")
   .then(r => r.json())
   .then(data => {
