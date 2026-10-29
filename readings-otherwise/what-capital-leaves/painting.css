@@ -223,7 +223,8 @@ a { color: inherit; }
   color: var(--red);
   transition: background .2s, color .2s;
 }
-#strike:hover { background: var(--red); color: #111; }
+#strike:hover:not(:disabled) { background: var(--red); color: #111; }
+#strike:disabled { cursor: default; opacity: .3; }
 #strike:focus-visible { outline: 1px solid var(--bone); outline-offset: 2px; }
 .strike-note {
   margin: .4rem 0 0;
