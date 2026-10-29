@@ -567,7 +567,7 @@ function takeIn(mx, my) {
       const m = grid[row * COLS + col];
       if (m < 0) continue;
       const v = markVertex[m];
-      if (!touch[v]) { traced.push(v); touchedCount++; }
+      if (!touch[v]) { traced.push(v); touchedCount++; strikeBtn.disabled = false; }
       if (touch[v] < 255) { touch[v] = 255; touchDirty = true; }
     }
   }
@@ -738,11 +738,14 @@ function fade(now) {
 
 // Strike: withdraw your labour. The traces go, the count goes back to nothing, and for a while
 // the painting has nothing to live on.
+// Strike starts disabled: there is nothing to withdraw until your pointer has taken something in.
+const strikeBtn = document.getElementById("strike");
 let strikeUntil = 0;
 const striking = () => performance.now() < strikeUntil;
 
 function strike() {
   strikeUntil = performance.now() + STRIKE_MS;
+  strikeBtn.disabled = true;
   touch.fill(0);
   traced.length = 0;
   touchDirty = true;
@@ -756,7 +759,7 @@ function strike() {
   note.classList.add("show");
   setTimeout(() => note.classList.remove("show"), STRIKE_MS);
 }
-document.getElementById("strike").addEventListener("click", strike);
+strikeBtn.addEventListener("click", strike);
 
 let lastSave = 0;
 function work(dt, now) {
