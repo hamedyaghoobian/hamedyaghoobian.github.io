@@ -322,6 +322,64 @@ function onScroll() {
 
 addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
+// ---------- scrubbing: drag along the rail to race through the book ----------
+
+const scrubLabel = document.createElement("div");
+scrubLabel.id = "scrub";
+scrubLabel.setAttribute("aria-hidden", "true");
+document.body.appendChild(scrubLabel);
+let scrubbing = false;
+
+// The chapter under a height on the rail, and how far down that chapter's tick it is.
+function railAt(y) {
+  let best = 0, bd = Infinity, frac = 0;
+  for (let k = 0; k < chapters.length; k++) {
+    const r = chapters[k].tick.getBoundingClientRect();
+    const d = y < r.top ? r.top - y : y > r.bottom ? y - r.bottom : 0;
+    if (d < bd) { bd = d; best = k; frac = r.height ? Math.min(1, Math.max(0, (y - r.top) / r.height)) : 0; }
+    if (d === 0) break;
+  }
+  return [best, frac];
+}
+
+function showScrub(k, y) {
+  const ch = chapters[k];
+  scrubLabel.textContent = `${ch.n ? `${ch.vol}.${ch.n}` : ch.vol}  ${ch.title}`;
+  scrubLabel.style.top = y + "px";
+  scrubLabel.classList.add("show");
+}
+
+function scrubTo(y) {
+  const [k, frac] = railAt(y);
+  const top = chapters[k].el.getBoundingClientRect().top + scrollY;
+  const next = k + 1 < chapters.length ? chapters[k + 1].el : document.querySelector(".colophon");
+  const bottom = next.getBoundingClientRect().top + scrollY;
+  scrollTo({ top: top + frac * Math.max(0, bottom - top - innerHeight * 0.5), behavior: "instant" });
+  showScrub(k, y);
+}
+
+rail.addEventListener("pointerdown", e => {
+  e.preventDefault();
+  try { rail.setPointerCapture(e.pointerId); } catch (_) {}
+  scrubbing = true;
+  document.body.classList.add("scrubbing");
+  scrubTo(e.clientY);
+});
+rail.addEventListener("pointermove", e => {
+  if (scrubbing) scrubTo(e.clientY);
+  else if (e.pointerType === "mouse") showScrub(railAt(e.clientY)[0], e.clientY);
+});
+function endScrub() {
+  scrubbing = false;
+  document.body.classList.remove("scrubbing");
+  scrubLabel.classList.remove("show");
+}
+rail.addEventListener("pointerup", endScrub);
+rail.addEventListener("pointercancel", endScrub);
+rail.addEventListener("pointerleave", () => { if (!scrubbing) scrubLabel.classList.remove("show"); });
+// the ticks stay links for the keyboard; a pointer click is already handled as a scrub
+rail.addEventListener("click", e => { if (e.detail) e.preventDefault(); });
+
 let resizeTimer = 0;
 addEventListener("resize", () => {
   clearTimeout(resizeTimer);
