@@ -40,6 +40,12 @@ permalink: /readings-otherwise/
 
 .ro-title a:hover { color: var(--glow); }
 
+.ro-links {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: .9rem;
+    margin: .6rem 0 0;
+}
+
 .ro-note {
     font-family: 'Instrument Sans', sans-serif;
     font-size: 1rem;
@@ -57,4 +63,5 @@ permalink: /readings-otherwise/
   <div class="ro-number">No. 1 · <time datetime="2026-10-28">October 28, 2026</time></div>
   <div class="ro-title"><a href="{{ '/readings-otherwise/what-capital-leaves/' | relative_url }}">What Capital Leaves</a></div>
   <p class="ro-note">Marx's <em>Capital</em>, all three volumes, with every word taken out. The punctuation that remains is painted as a dark sea. Stand still and the missing words come back. The quotation marks glow where the factory children speak. The painting lives on your attention, and the only red in it is yours.</p>
+  <p class="ro-links"><a href="{{ '/readings-otherwise/what-capital-leaves/' | relative_url }}">See it</a> · <a href="{{ '/readings-otherwise/what-capital-leaves/read/' | relative_url }}">Read it as a page</a> · <a href="https://github.com/hamedyaghoobian/what-capital-leaves">Code</a></p>
 </div>
