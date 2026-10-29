@@ -54,7 +54,7 @@ permalink: /readings-otherwise/
 <p class="ro-intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="ro-piece">
-  <div class="ro-number">No. 1 · 2026</div>
+  <div class="ro-number">No. 1 · <time datetime="2026-10-28">October 28, 2026</time></div>
   <div class="ro-title"><a href="{{ '/readings-otherwise/what-capital-leaves/' | relative_url }}">What Capital Leaves</a></div>
   <p class="ro-note">Marx's <em>Capital</em>, all three volumes, with every word taken out. The punctuation that remains is painted as a dark sea. Stand still and the missing words come back. The quotation marks glow where the factory children speak. The painting lives on your attention, and the only red in it is yours.</p>
 </div>
