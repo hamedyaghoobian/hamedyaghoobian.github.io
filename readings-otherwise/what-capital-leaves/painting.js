@@ -219,12 +219,14 @@ void main() {
   bool asks = uAsk > 0.5 && t == 13;
   float strokePx = max(uScale * 2.5, 3.0) * look.z;
   float glyphPx = uScale * (quote ? 1.45 : 1.3);
-  float size = mix(strokePx, glyphPx, uGlyph) * (1.0 + aTouch * 0.35);
+  float size = mix(strokePx, glyphPx, uGlyph) * (1.0 + aTouch * 0.25);
   gl_PointSize = size * k * uDpr;
 
   vec3 g = ground(uv);
   vec3 c = mix(g * look.x, uTint[t], look.y);
-  c = mix(c, uTouchCol, aTouch * 0.7);
+  // a faint trace is dark rust; a full one is the bright red of living labour
+  vec3 red = mix(uTouchCol * vec3(0.45, 0.32, 0.3), uTouchCol, smoothstep(0.15, 0.9, aTouch));
+  c = mix(c, red, smoothstep(0.0, 0.35, aTouch) * 0.9);
   // lanterns are mostly dim and now and then flare, each on its own clock
   if (quote) c *= 0.14 + 1.7 * pow(0.5 + 0.5 * sin(uTime * 0.6 + aMark.w * 60.0), 10.0);
   // Marx's own questions flicker on a slower clock
@@ -545,7 +547,7 @@ canvas.addEventListener("pointerup", e => {
   release(e);
 });
 canvas.addEventListener("pointercancel", release);
-canvas.addEventListener("pointerleave", () => { mouseW = [-1e4, -1e4]; });
+canvas.addEventListener("pointerleave", () => { mouseW = [-1e4, -1e4]; lastBrush = null; });
 canvas.addEventListener("dblclick", e => { const [x, y] = local(e); zoomAt(x, y, 3); });
 
 document.getElementById("zoom-in").onclick = () => zoomAt(cw / 2, ch / 2, 2);
@@ -569,20 +571,66 @@ function wake() {
   document.getElementById("hint").classList.add("gone");
 }
 
-// Marks under the pointer are taken in: they redden and stay that way.
+// Marks under the pointer are taken in, with a brush rather than a stamp: a soft round tip,
+// a little longer along the stroke, whose edge catches some marks and misses others the way a
+// dry brush does. Slow strokes are wide and heavy; fast ones thin and light. Going over a trace
+// deepens it.
+const BRUSH_PX = 17;           // radius of a slow stroke, in screen pixels
+let lastBrush = null;          // where the previous pointer sample landed, to join the stroke up
+
+function hash(n) {             // a fixed, per-mark random number in [0, 1)
+  n = Math.imul(n ^ (n >>> 16), 0x45d9f3b);
+  n = Math.imul(n ^ (n >>> 16), 0x45d9f3b);
+  return ((n ^ (n >>> 16)) >>> 0) / 4294967296;
+}
+
 function takeIn(mx, my) {
   if (striking()) return;
+  const now = performance.now();
+  const prev = lastBrush && now - lastBrush.t < 120 ? lastBrush : null;
+  if (!prev) {
+    lastBrush = { x: mx, y: my, t: now, carry: 0 };
+    return stamp(mx, my, 1, 0, BRUSH_PX * 0.6, 0.5);
+  }
+  const dx = mx - prev.x, dy = my - prev.y, len = Math.hypot(dx, dy);
+  if (len < 0.5) return;
+  lastBrush = { x: mx, y: my, t: now, carry: 0 };
+  const speed = len / Math.max(1, now - prev.t);                  // px per ms
+  const slow = 1 / (1 + speed * 0.9);                               // 1 when still, toward 0 when fast
+  const radius = BRUSH_PX * (0.35 + 0.65 * slow);
+  const strength = 0.45 + 0.55 * slow;
+  const ux = dx / len, uy = dy / len;
+  const step = Math.max(1.5, radius * 0.35);
+  // stamps keep an even spacing along the whole stroke, however short each pointer move is
+  let d = step - prev.carry;
+  for (; d <= len; d += step) stamp(prev.x + ux * d, prev.y + uy * d, ux, uy, radius, strength);
+  lastBrush.carry = len - (d - step);
+}
+
+function stamp(mx, my, ux, uy, radius, strength) {
   const [wx, wy] = toWorld(mx, my);
-  const r = Math.max(14 / view.s, 0.6);
+  const r = radius / view.s;
   const c0 = Math.max(0, Math.floor((wx - r) / CELL_W)), c1 = Math.min(COLS - 1, Math.floor((wx + r) / CELL_W));
   const r0 = Math.max(0, Math.floor(wy - r)), r1 = Math.min(ROWS - 1, Math.floor(wy + r));
   for (let row = r0; row <= r1; row++) {
     for (let col = c0; col <= c1; col++) {
       const m = grid[row * COLS + col];
       if (m < 0) continue;
+      // distance in screen pixels, stretched so the tip is longer along the stroke than across it
+      const px = ((col + 0.5) * CELL_W - wx) * view.s, py = (row + 0.5 - wy) * view.s;
+      const along = px * ux + py * uy, across = px * uy - py * ux;
+      const d = Math.hypot(along * 0.75, across) / radius;
+      if (d >= 1) continue;
+      const fall = Math.pow(1 - d * d, 1.6);
+      if (hash(m) > fall * 1.25) continue;                         // the ragged edge
       const v = markVertex[m];
-      if (!touch[v]) { traced.push(v); touchedCount++; strikeBtn.disabled = false; }
-      if (touch[v] < 255) { touch[v] = 255; touchDirty = true; }
+      const add = 255 * strength * fall * (0.55 + 0.45 * hash(m + 7919));
+      const was = touch[v];
+      const now = Math.min(255, Math.max(was, was * 0.6 + add));     // layering deepens a trace
+      if (now <= was) continue;
+      if (!was) { traced.push(v); touchedCount++; strikeBtn.disabled = false; }
+      touch[v] = now;
+      touchDirty = true;
     }
   }
 }
