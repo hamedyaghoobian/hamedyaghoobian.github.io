@@ -37,12 +37,20 @@ const fmt = new Intl.NumberFormat("en");
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const Q = new URLSearchParams(location.search);
-// Ember: almost dark. The voices glow pale; the only red is what the viewer's pointer takes in.
-const PAL = {
-  sky: [0.05, 0.05, 0.05], low: [0.20, 0.19, 0.19], sun: [0.55, 0.53, 0.50], corner: [0.04, 0.04, 0.04],
-  sea: [0.16, 0.155, 0.15], deep: [0.02, 0.02, 0.02], streak: [0.34, 0.33, 0.31], dim: [0.45, 0.2],
-  lum: 0.75, tint: 0, quote: [0.95, 0.90, 0.84],
+// Two palettes, one per theme. Dark (Ember): the voices glow pale. Light (Bone): ink on paper.
+// In both, the only red is what the viewer's pointer takes in.
+const PALETTES = {
+  dark: { sky: [0.05, 0.05, 0.05], low: [0.20, 0.19, 0.19], sun: [0.55, 0.53, 0.50], corner: [0.04, 0.04, 0.04],
+          sea: [0.16, 0.155, 0.15], deep: [0.02, 0.02, 0.02], streak: [0.34, 0.33, 0.31], dim: [0.45, 0.2],
+          lum: 0.75, quote: [0.95, 0.90, 0.84], quoteLum: 1.2, stroke: 1, touch: [1.0, 0.18, 0.16],
+          line: [0.9, 0.85, 0.8], clear: [0.02, 0.02, 0.02], glow: true },
+  light: { sky: [0.84, 0.81, 0.75], low: [0.93, 0.91, 0.86], sun: [0.99, 0.98, 0.95], corner: [0.80, 0.77, 0.71],
+           sea: [0.88, 0.85, 0.80], deep: [0.70, 0.67, 0.62], streak: [0.97, 0.95, 0.90], dim: [1.0, 1.0],
+           lum: 0.3, quote: [0.30, 0.26, 0.24], quoteLum: 0.4, stroke: 0.5, touch: [0.75, 0.06, 0.08],
+           line: [0.3, 0.25, 0.2], clear: [0.93, 0.91, 0.87], glow: false },
 };
+const theme = () => document.documentElement.dataset.theme === "light" ? "light" : "dark";
+let PAL = PALETTES[theme()];
 
 // which layer each mark type sits on when the painting is taken apart
 const LSET = {
@@ -366,16 +374,22 @@ function setupGL(verts) {
 
   atlas();
   gl.useProgram(markProg);
-  // a palette keeps the shapes and changes what carries colour
-  const look = LOOK.map(l => [l[0] * PAL.lum, l[1] * PAL.tint, l[2], l[3]]);
-  const tint = TINT.map(t => t.slice());
-  for (const q of [7, 8]) { tint[q] = PAL.quote; look[q][1] = 0.9; look[q][0] = 1.2; }
-  gl.uniform4fv(U.uLook, look.flat());
-  gl.uniform3fv(U.uTint, tint.flat());
   gl.uniform1fv(U.uLayer, LSET.types);
   gl.uniform1f(U.uAsk, 0);
-  gl.uniform3fv(U.uTouchCol, [1.0, 0.18, 0.16]);
   gl.uniform1i(U.uAtlas, 0);
+  usePalette();
+}
+
+// A palette keeps the shapes and changes what carries colour.
+function usePalette() {
+  PAL = PALETTES[theme()];
+  gl.useProgram(markProg);
+  const look = LOOK.map(l => [l[0] * PAL.lum, 0, l[2] * PAL.stroke, l[3]]);
+  const tint = TINT.map(t => t.slice());
+  for (const q of [7, 8]) { tint[q] = PAL.quote; look[q][1] = 0.9; look[q][0] = PAL.quoteLum; }
+  gl.uniform4fv(U.uLook, look.flat());
+  gl.uniform3fv(U.uTint, tint.flat());
+  gl.uniform3fv(U.uTouchCol, PAL.touch);
   for (const [prog, u] of [[markProg, U], [groundProg, UG]]) {
     gl.useProgram(prog);
     gl.uniform3fv(u.uSkyTop, PAL.sky); gl.uniform3fv(u.uSkyLow, PAL.low); gl.uniform3fv(u.uSun, PAL.sun);
@@ -383,7 +397,7 @@ function setupGL(verts) {
     gl.uniform3fv(u.uStreak, PAL.streak);
   }
   gl.uniform2fv(UG.uDim, PAL.dim);
-  gl.uniform3fv(UG.uLineCol, [0.9, 0.85, 0.8]);
+  gl.uniform3fv(UG.uLineCol, PAL.line);
 }
 
 // ---------- view: scale in CSS px per world unit, offset of the world origin ----------
@@ -799,7 +813,7 @@ function frameLoop(now) {
   const time = (now - t0) / 1000;
 
   gl.viewport(0, 0, canvas.width, canvas.height);
-  gl.clearColor(0.02, 0.02, 0.02, 1);
+  gl.clearColor(...PAL.clear, 1);
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   gl.useProgram(groundProg);
@@ -854,7 +868,7 @@ function frameLoop(now) {
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);     // paint
   gl.drawArrays(gl.POINTS, 0, quoteStart);
-  gl.blendFunc(gl.ONE, gl.ONE);                     // light
+  if (PAL.glow) gl.blendFunc(gl.ONE, gl.ONE);       // light; on paper the voices are ink
   gl.drawArrays(gl.POINTS, quoteStart, N - quoteStart);
   gl.disable(gl.BLEND);
 
@@ -869,6 +883,24 @@ function frameLoop(now) {
 }
 
 function smooth(a, b, x) { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+// ---------- light and dark ----------
+
+const THEME_KEY = "what-capital-leaves:theme";
+const themeBtn = document.getElementById("theme");
+function syncThemeButton() {
+  const next = theme() === "dark" ? "light" : "dark";
+  themeBtn.textContent = next;
+  themeBtn.setAttribute("aria-label", `Switch to ${next} mode`);
+}
+themeBtn.addEventListener("click", () => {
+  const next = theme() === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
+  if (gl) usePalette();
+  syncThemeButton();
+});
+syncThemeButton();
 
 // ---------- start ----------
 

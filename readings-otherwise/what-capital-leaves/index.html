@@ -5,12 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What Capital Leaves · Readings, Otherwise</title>
 <meta name="description" content="Marx's Capital, all three volumes, with every word removed: a sea of punctuation, haunted by what was taken out.">
+<script>
+  // light or dark, shared by the painting and the page; dark unless the visitor chose light
+  try { document.documentElement.dataset.theme = localStorage.getItem("what-capital-leaves:theme") === "light" ? "light" : "dark"; }
+  catch (_) { document.documentElement.dataset.theme = "dark"; }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="painting.css?v=3">
+<link rel="stylesheet" href="painting.css?v=4">
 </head>
 <body>
+<button id="theme" class="theme-toggle" type="button">light</button>
 
 <p class="kicker"><a href="../">Readings, Otherwise</a> <span>No. 1</span></p>
 
@@ -54,6 +60,6 @@
 
 <noscript><p class="fallback">This painting needs JavaScript. <a href="read/">Read it as a page instead.</a></p></noscript>
 
-<script src="painting.js?v=3"></script>
+<script src="painting.js?v=4"></script>
 </body>
 </html>
