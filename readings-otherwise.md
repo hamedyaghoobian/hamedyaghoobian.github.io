@@ -63,7 +63,7 @@ permalink: /readings-otherwise/
   <div class="ro-number">No. 2 · <time datetime="2026-11-01">November 1, 2026</time></div>
   <div class="ro-title"><a href="{{ '/readings-otherwise/what-the-birds-leave/' | relative_url }}">What the Birds Leave</a></div>
   <p class="ro-note">Attar's <em>Conference of the Birds</em>, in Persian, with every letter taken out. The 112,052 dots that remain fly as a murmuration. Stand still and they come home to the verse, right to left, over the bare skeletons of the letters they were lifted from. Set it in naskh or in nastaliq and the same dots land somewhere else. Set it in FitzGerald's English and only 2,840 of them have anywhere to land. The gold dots are the ones that spell the Simorgh.</p>
-  <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-birds-leave/' | relative_url }}">See it</a> · <a href="https://ganjoor.net/attar/manteghotteyr">Read the poem on Ganjoor</a></p>
+  <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-birds-leave/' | relative_url }}">See it</a> · <a href="https://ganjoor.net/attar/manteghotteyr">Read the poem on Ganjoor</a> · <a href="https://github.com/hamedyaghoobian/attar-conference-of-birds">Code</a></p>
 </div>
 
 <div class="ro-piece">
