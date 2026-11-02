@@ -40,6 +40,8 @@ permalink: /readings-otherwise/
 
 .ro-title a:hover { color: var(--glow); }
 
+.ro-note bdi { font-size: 1.1em; }
+
 .ro-links {
     font-family: 'Instrument Sans', sans-serif;
     font-size: .9rem;
@@ -62,7 +64,7 @@ permalink: /readings-otherwise/
 <div class="ro-piece">
   <div class="ro-number">No. 2 · <time datetime="2026-11-01">November 1, 2026</time></div>
   <div class="ro-title"><a href="{{ '/readings-otherwise/what-the-birds-leave/' | relative_url }}">What the Birds Leave</a></div>
-  <p class="ro-note">In 1177 Attar, a perfumer of Nishapur in Khorasan, finished <em>The Conference of the Birds</em>, a Sufi poem in which the birds of the world set out to find their king, the Simorgh, and the thirty who survive the journey find only themselves: <em>si morgh</em>, thirty birds. Here it is with every letter taken out. The 112,052 dots that remain fly as a murmuration. Stand still and they come home to the verse, over the bare skeletons of the letters they were lifted from. Set it in naskh or nastaliq and the same dots land somewhere else. In FitzGerald's English only 2,840 have anywhere to land. The gold dots spell the Simorgh.</p>
+  <p class="ro-note">In 1177 Attar of Nishapur, <bdi lang="fa">عطار نیشابوری</bdi>, a perfumer in Khorasan, finished <em>The Conference of the Birds</em>, <bdi lang="fa">منطق‌الطیر</bdi>, a Sufi poem in which the birds of the world set out to find their king, the Simorgh, <bdi lang="fa">سیمرغ</bdi>, and the thirty who survive the journey find only themselves: <bdi lang="fa">سی مرغ</bdi>, <em>si morgh</em>, thirty birds. Here it is with every letter taken out. The 112,052 dots that remain fly as a murmuration. Stand still and they come home to the verse, over the bare skeletons of the letters they were lifted from. Set it in naskh or nastaliq and the same dots land somewhere else. In FitzGerald's English only 2,840 have anywhere to land. The gold dots spell the Simorgh.</p>
   <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-birds-leave/' | relative_url }}">See it</a> · <a href="https://ganjoor.net/attar/manteghotteyr">Read the poem on Ganjoor</a> · <a href="https://github.com/hamedyaghoobian/attar-conference-of-birds">Code</a></p>
 </div>
 
