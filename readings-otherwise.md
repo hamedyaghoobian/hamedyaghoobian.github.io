@@ -64,7 +64,7 @@ permalink: /readings-otherwise/
 <div class="ro-piece">
   <div class="ro-number">No. 3 · <time datetime="2026-11-02">November 2, 2026</time></div>
   <div class="ro-title"><a href="{{ '/readings-otherwise/what-ferdowsi-let-in/' | relative_url }}">What Ferdowsi Let In</a></div>
-  <p class="ro-note">Ferdowsi finished the <em>Shahnameh</em>, <bdi lang="fa">شاهنامه</bdi>, the Book of Kings, in 1010: some 50,000 couplets of Iran's history from the first king to the Arab conquest, famous for keeping its Persian nearly free of Arabic. Here it is with every Persian word taken out. What is left are the 6,409 words he let in from Arabic, one in ninety, scattered across a dark field: Caesar, <bdi lang="fa">قیصر</bdi>, the rein, ivory, arms, the spearhead. Come close and they can be read in their lines. A second layer shades in red the 166 sections that end in a death.</p>
+  <p class="ro-note">Ferdowsi finished the <em>Shahnameh</em>, <bdi lang="fa">شاهنامه</bdi>, the Book of Kings, in 1010: some 50,000 couplets of Iran's history from the first king to the Arab conquest, famous for keeping its Persian nearly free of Arabic. Here it is with every Persian word taken out. What is left are the 6,409 words he let in from Arabic, one in ninety, scattered across a dark field: Caesar, <bdi lang="fa">قیصر</bdi>, the rein, ivory, arms, the spearhead. Come close and they can be read in their lines. A second layer shades in red the 166 sections whose headings name a death.</p>
   <p class="ro-links"><a href="{{ '/readings-otherwise/what-ferdowsi-let-in/' | relative_url }}">See it</a> · <a href="https://ganjoor.net/ferdousi/shahname">Read the Shahnameh on Ganjoor</a> · <a href="https://github.com/hamedyaghoobian/ferdowsi-shahnameh">Code</a></p>
 </div>
 
