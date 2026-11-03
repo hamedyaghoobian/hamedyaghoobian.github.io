@@ -62,6 +62,13 @@ permalink: /readings-otherwise/
 <p class="ro-intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="ro-piece">
+  <div class="ro-number">No. 3 · <time datetime="2026-11-02">November 2, 2026</time></div>
+  <div class="ro-title"><a href="{{ '/readings-otherwise/what-ferdowsi-let-in/' | relative_url }}">What Ferdowsi Let In</a></div>
+  <p class="ro-note">Ferdowsi finished the <em>Shahnameh</em>, <bdi lang="fa">شاهنامه</bdi>, the Book of Kings, in 1010: some 50,000 couplets of Iran's history from the first king to the Arab conquest, famous for keeping its Persian nearly free of Arabic. Here it is with every Persian word taken out. What is left are the 6,409 words he let in from Arabic, one in ninety, scattered across a dark field: Caesar, <bdi lang="fa">قیصر</bdi>, the rein, ivory, arms, the spearhead. Come close and they can be read in their lines. A second layer shades in red the 166 sections whose headings name a death.</p>
+  <p class="ro-links"><a href="{{ '/readings-otherwise/what-ferdowsi-let-in/' | relative_url }}">See it</a> · <a href="https://ganjoor.net/ferdousi/shahname">Read the Shahnameh on Ganjoor</a> · <a href="https://github.com/hamedyaghoobian/ferdowsi-shahnameh">Code</a></p>
+</div>
+
+<div class="ro-piece">
   <div class="ro-number">No. 2 · <time datetime="2026-11-01">November 1, 2026</time></div>
   <div class="ro-title"><a href="{{ '/readings-otherwise/what-the-birds-leave/' | relative_url }}">What the Birds Leave</a></div>
   <p class="ro-note">In 1177 Attar of Nishapur, <bdi lang="fa">عطار نیشابوری</bdi>, a herbalist and druggist in Khorasan, finished <em>The Conference of the Birds</em>, <bdi lang="fa">منطق‌الطیر</bdi>, a Sufi poem in which the birds of the world set out to find their king, the Simorgh, <bdi lang="fa">سیمرغ</bdi>, and the thirty who survive the journey find only themselves: <bdi lang="fa">سی مرغ</bdi>, <em>si morgh</em>, thirty birds. Here it is with every letter taken out. The 112,052 dots that remain fly as a murmuration. Stand still and they come home to the verse, over the bare skeletons of the letters they were lifted from. Set it in naskh or nastaliq and the same dots land somewhere else. In FitzGerald's English only 2,840 have anywhere to land. The gold dots spell the Simorgh.</p>
