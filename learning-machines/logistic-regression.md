@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Logistic regression · Learning Machines"
+short: "learning machines · logistic regression"
 permalink: /tools/learning-machines/logistic-regression/
 entry: logistic-regression
 ---

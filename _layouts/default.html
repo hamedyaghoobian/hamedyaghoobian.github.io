@@ -2,41 +2,28 @@
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
   {%- include head.html -%}
+  {%- include fp-section.html -%}
 
-  <body>
-
+  <body class="fp fp-depth-{{ fp_depth }} fp-sec-{{ fp_key.n }}{% if page.body_class %} {{ page.body_class }}{% endif %}">
     <script>
-      // Applies the theme before any content paints, so a system-dark
-      // visitor (or anyone who has picked dark explicitly) never sees a
-      // flash of the light theme first. Deliberately tiny and synchronous —
-      // it only reads storage/media and sets a class + attribute, nothing
-      // else. The full theme script (button wiring, cycling between modes,
-      // live system-preference updates) lives in head.html and runs on
-      // DOMContentLoaded instead, once #theme-pill actually exists.
+      // First paint in the right theme: read the knob's last position before anything renders.
       (function () {
-        var stored = localStorage.getItem('theme');
-        var mode = (stored === 'light' || stored === 'dark') ? stored : 'system';
-        var dark = mode === 'dark' ||
-          (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        document.body.classList.toggle('dark', dark);
-        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        var s; try { s = localStorage.getItem('theme'); } catch (e) {}
+        var m = (s === 'light' || s === 'dark') ? s : 'system';
+        var d = m === 'dark' || (m === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.body.classList.toggle('dark', d);
+        document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
       })();
     </script>
+    <a class="fp-skip" href="#content">skip to content</a>
 
     {%- include header.html -%}
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
+    <main class="fp-main" id="content" aria-label="Content" tabindex="-1">
+      {{ content }}
     </main>
 
-    {%- if page.url == "/" -%}
-      {%- include footer.html -%}
-    {%- else -%}
-      {%- include footer-minimal.html -%}
-    {%- endif -%}
-
+    {%- include footer.html -%}
   </body>
 
 </html>

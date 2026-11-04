@@ -1,25 +1,26 @@
 // CSI 330 · Week 2 · k-nearest neighbours. A board plots all 342 penguins
 // by bill length and depth (circle Adelie, triangle Chinstrap, square
 // Gentoo). Move the query bird over the board: threads run to its k nearest
-// neighbours and three tubes on the bench fill with their votes; the fullest
+// neighbours and three tubes beside it fill with their votes; the fullest
 // tube is the prediction. A selector sets k; a switch measures distance in
 // raw millimetres or in standardised units (what StandardScaler does), and
-// the neighbours change — units decide who counts as near.
+// the neighbours change — units decide who counts as near. Drawn flat, in
+// front elevation, with the kit (csi330-kit.js).
 
 (function () {
   const root = document.getElementById('w2-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, box, cylinder, face, onTop, onNear, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, D = window.CSI330.w2;
+  const K = window.CSIKit, D = window.CSI330.w2, el = K.el;
   const SP = D.species, B = D.birds;
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A board plotting 342 penguins by bill length and bill depth. A query bird moves over the board; threads run to its k nearest neighbours and three tubes fill with their votes. A selector sets k and a switch chooses raw or standardised distance.');
 
-  K.bench(svg, -6, -4, 190, 66);
-  K.plate(svg, 'PALMER PENGUINS · 342 BIRDS · BILL LENGTH × BILL DEPTH', 4, 66);
+  const G = 100, S = K.stage(svg);                    // G: the plinth's top
+  K.bench(S, -6, 188, G);
+  K.plate(S, 'PALMER PENGUINS · 342 BIRDS · BILL LENGTH × BILL DEPTH', 4, G);
 
-  const b = K.board(svg, 0, 132, 24, 6, 96);
+  const b = K.board(S, 0, 8, 132, 90, G);
   const sx = K.scale(32, 60, 16, 126), sy = K.scale(13, 22, 77, 8);
   K.axes(b.g, sx, sy, [35, 40, 45, 50, 55, 60], [14, 16, 18, 20, 22], 'bill length (mm)', 'bill depth (mm)', 2.8);
 
@@ -39,26 +40,19 @@
   el('path', { class: 'lf-line lf-strong', d: 'M-3 0 L3 0 M0 -3 L0 3' }, cross);
   el('circle', { class: 'lf-line lf-strong', r: 1.6 }, cross);
 
-  // Three vote tubes on the bench, the k selector, the units switch.
-  const TU = [146, 160, 174], TV = 34;
-  const TG = el('g', {}, svg);
-  const tubes = TU.map((u, s) => {
-    box(TG, 'lf-solid lf-shaded').set(u - 5, TV - 5, 0, u + 5, TV + 5, 2);
-    const fill = cylinder(el('g', {}, TG), 'lf-solid lf-shaded');
-    const glass = cylinder(TG, 'lf-solid');
-    glass.querySelectorAll('path, ellipse').forEach(n => { n.style.fill = 'none'; });
-    // the species printed on the front of its tube's stand
-    const lab = face(TG, onNear(u - 5, TV + 5, 2));
-    el('text', { x: 5, y: 1.55, 'font-size': 1.5, 'text-anchor': 'middle', 'letter-spacing': 0.1 }, lab).textContent = SP[s].toUpperCase();
-    glass.set(u, TV, 2, 30, 3.4);
-    return { fill, wrap: fill.parentNode };
+  // Three vote tubes standing beside the board, each on a stand with its
+  // species printed on it; the k selector and the units switch on the plinth.
+  const TU = [146, 160, 174];
+  const TG = el('g', {}, S);
+  const tubes = TU.map((x, s) => {
+    const t = K.tube(TG, x, G - 32, G);
+    el('text', { x, y: G - 0.85, 'font-size': 1.5, 'text-anchor': 'middle', 'letter-spacing': 0.1 }, TG).textContent = SP[s].toUpperCase();
+    return t;
   });
   const KS = [1, 3, 5, 7, 9, 15, 25];
-  const sel = K.selector(svg, 22, 48, KS, 'K NEIGHBOURS');
-  const sw = el('g', { style: 'cursor:pointer' }, svg);
-  box(sw, 'lf-solid lf-shaded').set(148, 50, 0, 180, 58, 2.4);
-  const swTop = face(sw, onTop(148, 50, 2.4));
-  const swText = el('text', { x: 16, y: 5.3, 'font-size': 2.6, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, swTop);
+  const sel = K.selector(S, 22, G + 1.3, KS, 'K NEIGHBOURS');
+  const swK = K.toggle(S, 144, G + 1.3, 36, 8.4);
+  const sw = swK.el, swText = swK.text;
 
   // Standardising: each feature minus its mean, over its spread (as StandardScaler).
   const m = [0, 1].map(j => K.mean(B.map(r => r[j])));
@@ -85,7 +79,7 @@
     const top = Math.max(...votes);
     const win = votes.filter(v => v === top).length > 1 ? B[order.find(i => votes[B[i][2]] === top)][2] : votes.indexOf(top);
     tubes.forEach((t, s) => {
-      t.fill.set(TU[s], TV, 2, 2 + 28 * votes[s] / k, 3);
+      t.set(votes[s] / k);
       t.wrap.setAttribute('class', s === win ? 'lf-hot' : '');
     });
     sel.set(st.k);

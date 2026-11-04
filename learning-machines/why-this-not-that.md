@@ -1,11 +1,14 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Why this, not that · Learning Machines"
+short: "learning machines · why this, not that"
 permalink: /tools/learning-machines/why-this-not-that/
 lm_page: why
 ---
 {%- assign base = "/tools/learning-machines/" | relative_url -%}
-<p class="lm-crumbs"><a href="{{ base }}">← Learning Machines</a> <span>/</span> <b>Why this, not that</b></p>
+<p class="lm-path"><a href="{{ base }}">learning machines</a> <span>/</span> reference</p>
 
 <h1 class="lm-title">Why this, not that</h1>
 <p class="lm-line">The same question answered more than one way, and what decides between them</p>

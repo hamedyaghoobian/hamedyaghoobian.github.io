@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Readings panel, round two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;800&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css?v=po2">
+<style>
+  @font-face { font-family: "Amiri"; src: url("data/hand.woff2") format("woff2"); font-display: block; }
+  @font-face { font-family: "Amiri Attar"; src: url("../what-the-birds-leave/data/naskh/hand.woff2") format("woff2"); font-display: block; }
+  body { background: var(--paper); color: var(--ink); }
+  .to { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  .to-top { border-bottom: var(--stroke) solid var(--ink); padding-bottom: 8px; }
+  .to-top h1 { margin: 0; font: 800 1.4rem/1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .to-lede { margin: 10px 0 8px; font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); max-width: 84ch; }
+  .rules { margin: 0 0 26px; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .rules li { margin: 0; padding: 8px 10px; border: var(--hair) solid var(--rule-strong); border-radius: var(--radius); font: 400 .7rem/1.45 var(--mono); }
+  .rules li b { display: block; margin-bottom: 3px; font: 800 .9rem/1.2 var(--sans); }
+  .rules li::marker { content: none; }
+  .opt { margin: 0 0 30px; }
+  .opt__tag { display: flex; justify-content: space-between; gap: 16px; margin: 0 0 6px; font: 500 .7rem/1.4 var(--mono); }
+  .opt__tag b { font-weight: 500; white-space: nowrap; }
+  .opt__tag span { color: var(--ink-soft); text-align: right; max-width: 76ch; }
+  .opt--rec .opt__tag b::after { content: " · recommended"; color: var(--live); }
+  .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+  .who { margin: 0 0 4px; font: 400 .62rem/1 var(--mono); color: var(--ink-soft); }
+
+  /* the panel: the foot of the frame, cobalt */
+  .pn {
+    --m: #F2EBDA; --ms: rgba(242,235,218,.62); --mr: rgba(242,235,218,.28);
+    background: #1F2A9E; color: var(--m); border-radius: var(--radius);
+    padding: 14px 18px 14px; min-height: 160px;
+  }
+  .birds .pn { --hand: "Amiri Attar"; }
+  .pn { --hand: "Amiri"; }
+  .fa { direction: rtl; unicode-bidi: isolate; }
+  .v { font-family: var(--hand), var(--fa-serif); }
+  .mono { font: 400 .62rem/1.4 var(--mono); color: var(--ms); }
+  .sense { font: italic 400 .98rem/1.3 var(--serif); }
+  b.ar { font-weight: 400; color: var(--m); }
+  .hand { box-shadow: inset 0 -2px 0 var(--yellow); }
+
+  /* the verse size for all three: Amiri wants to be smaller than its size suggests;
+     1.3rem with the word space pulled in sits as one line, not a row of words */
+  .verse { font-size: 1.3rem; line-height: 1.65; word-spacing: -.06em; color: var(--ms); }
+
+  /* ── 1: the bayt, refined ── */
+  .o1 .where { margin: 0 0 8px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .o1 .where .v { font-size: .86rem; color: var(--ms); }
+  .o1 .bayt { display: flex; justify-content: center; gap: 1.8em; direction: rtl; padding: 6px 0 8px;
+              border-top: 1px solid var(--mr); border-bottom: 1px solid var(--mr); }
+  .o1 .bayt p { margin: 0; white-space: nowrap; }
+  .o1 .foot { margin: 9px 0 0; display: flex; align-items: baseline; gap: 10px; }
+  .o1 .foot .v { font-size: 1.45rem; line-height: 1; }
+
+  /* ── 2: the verse form, as on the poems page ── */
+  .o2 .where { margin: 0 0 10px; }
+  .o2 .where .v { font-size: .86rem; color: var(--ms); }
+  .o2 .lines { direction: rtl; border-right: 2px solid var(--m); padding-right: 12px; margin: 0; }
+  .o2 .line { display: flex; align-items: baseline; gap: 14px; margin: 0; padding: 0 4px; }
+  .o2 .line .t { flex: 1; }
+  .o2 .line .n { flex: none; direction: ltr; font: 400 .6rem/1 var(--mono); color: var(--ms); }
+  .o2 .line:nth-child(2) { padding-right: 2.2em; }             /* the second hemistich steps in */
+  .o2 .foot { margin: 8px 0 0; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .o2 .foot .v { font-size: 1.15rem; }
+
+  /* ── 3: interlinear, as Persian scribes glossed Arabic ── */
+  .o3 .where { margin: 0 0 6px; text-align: center; }
+  .o3 .where .v { font-size: .86rem; color: var(--ms); }
+  .o3 .bayt { display: flex; justify-content: center; gap: 1.8em; direction: rtl; }
+  .o3 .bayt p { margin: 0; white-space: nowrap; }
+  .o3 .gl { display: inline-flex; flex-direction: column; align-items: center; vertical-align: top; line-height: 1.65; }
+  .o3 .gl small { margin-top: 3px; font: italic 400 .7rem/1 var(--serif); color: var(--m); direction: ltr; white-space: nowrap; }
+  .o3 .gl small.d { font: 400 .58rem/1 var(--mono); color: var(--ms); font-style: normal; }
+  .o3 .under { display: flex; justify-content: center; gap: 1.8em; direction: rtl; margin-top: -2px; }
+  .o3 .under span { font: 400 .58rem/1 var(--mono); color: var(--ms); direction: ltr; }
+  .o3 .foot { margin: 12px 0 0; padding-top: 7px; border-top: 1px solid var(--mr); display: flex; justify-content: space-between; gap: 10px; }
+
+  @media (max-width: 760px) { .pair, .rules { grid-template-columns: 1fr; } .o1 .bayt, .o3 .bayt { flex-direction: column; align-items: center; gap: 0; } }
+</style>
+</head>
+<body>
+<div class="to">
+  <div class="to-top"><h1>readings · the couplet under the pointer, round two</h1></div>
+  <p class="to-lede">Consistent first. The Ferdowsi and Birds panels are the same component, so each option is drawn for both. Each one keeps to the site's rules, so the fix comes from how the type is set rather than from a new typeface:</p>
+  <ul class="rules">
+    <li><b>the poets' words</b>verse and headings in Amiri, the site's Persian verse face; each piece's own cut of it</li>
+    <li><b>the site's words</b>counts and labels in mono; the sense in Newsreader, the English of someone else's word</li>
+    <li><b>your hand</b>yellow, as a rule under what you're on</li>
+    <li><b>tighter</b>Amiri at 1.3rem, not 1.65; the word space pulled in, no justification</li>
+  </ul>
+
+  <section class="opt">
+    <p class="opt__tag"><b>1 · the bayt, refined</b><span>A, set properly: smaller, the two hemistichs drawn together across one gutter, ruled above and below. The word and its sense, or the dot count, sit under the rule.</span></p>
+    <div class="pair">
+      <div><p class="who">what ferdowsi let in</p>
+        <div class="pn o1">
+          <p class="where"><span class="mono">couplet 36,618 / 49,610</span><span class="v fa">پادشاهی بهرام گور · آمدن شنگل به ایران</span></p>
+          <div class="bayt v verse"><p>همه نامجوی و همه نامدار</p><p>همه پاک با <b class="ar hand">طوق</b> و با گوشوار</p></div>
+          <p class="foot"><span class="v fa">طوق</span><span class="sense">collar, torque</span><span class="mono">from Arabic</span></p>
+        </div></div>
+      <div class="birds"><p class="who">what the birds leave</p>
+        <div class="pn o1">
+          <p class="where"><span class="mono">couplet 2 / 4,697</span><span class="v fa">فی التوحید باری تعالی جل و علا</span></p>
+          <div class="bayt v verse"><p>عرش را بر آب بنیاد او نهاد</p><p>خاکیان را عمر بر باد او نهاد</p></div>
+          <p class="foot"><span class="mono">17 dots · 10 and 7</span></p>
+        </div></div>
+    </div>
+  </section>
+
+  <section class="opt opt--rec">
+    <p class="opt__tag"><b>2 · the verse form, one for the whole site</b><span>The form an open poem takes on the poems page: an ink rule at the line's start (the right, in Persian), the second hemistich stepping in, a count in mono at each line's end. Ferdowsi counts Arabic words, the Birds count dots, the poems page counts letters. One way of showing a line, everywhere.</span></p>
+    <div class="pair">
+      <div><p class="who">what ferdowsi let in</p>
+        <div class="pn o2">
+          <p class="where"><span class="v fa">پادشاهی بهرام گور · آمدن شنگل به ایران</span></p>
+          <div class="lines v verse">
+            <p class="line"><span class="t">همه نامجوی و همه نامدار</span><span class="n">0</span></p>
+            <p class="line"><span class="t">همه پاک با <b class="ar hand">طوق</b> و با گوشوار</span><span class="n">1</span></p>
+          </div>
+          <p class="foot"><span><span class="v fa">طوق</span> <span class="sense">collar, torque</span> <span class="mono">from Arabic</span></span><span class="mono">couplet 36,618 of 49,610</span></p>
+        </div></div>
+      <div class="birds"><p class="who">what the birds leave</p>
+        <div class="pn o2">
+          <p class="where"><span class="v fa">فی التوحید باری تعالی جل و علا</span></p>
+          <div class="lines v verse">
+            <p class="line"><span class="t">عرش را بر آب بنیاد او نهاد</span><span class="n">10</span></p>
+            <p class="line"><span class="t">خاکیان را عمر بر باد او نهاد</span><span class="n">7</span></p>
+          </div>
+          <p class="foot"><span class="mono">dots per line</span><span class="mono">couplet 2 of 4,697</span></p>
+        </div></div>
+    </div>
+  </section>
+
+  <section class="opt">
+    <p class="opt__tag"><b>3 · interlinear</b><span>Persian scribes glossed Arabic words by writing the meaning small, right under the word, between the lines. Here the sense hangs under the Arabic word, in the line itself. For the Birds, each hemistich's dot count sits under it the same way.</span></p>
+    <div class="pair">
+      <div><p class="who">what ferdowsi let in</p>
+        <div class="pn o3">
+          <p class="where"><span class="v fa">پادشاهی بهرام گور · آمدن شنگل به ایران</span></p>
+          <div class="bayt v verse"><p>همه نامجوی و همه نامدار</p><p>همه پاک با <span class="gl"><b class="ar hand">طوق</b><small>collar</small></span> و با گوشوار</p></div>
+          <p class="foot"><span class="mono">from Arabic · <span class="v" style="font-size:.95rem">طوق</span>, collar, torque</span><span class="mono">couplet 36,618 of 49,610</span></p>
+        </div></div>
+      <div class="birds"><p class="who">what the birds leave</p>
+        <div class="pn o3">
+          <p class="where"><span class="v fa">فی التوحید باری تعالی جل و علا</span></p>
+          <div class="bayt v verse"><p>عرش را بر آب بنیاد او نهاد</p><p>خاکیان را عمر بر باد او نهاد</p></div>
+          <div class="under"><span>10 dots</span><span>7 dots</span></div>
+          <p class="foot"><span class="mono">17 dots</span><span class="mono">couplet 2 of 4,697</span></p>
+        </div></div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

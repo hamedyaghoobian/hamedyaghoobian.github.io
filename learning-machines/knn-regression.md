@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "k-NN regression · Learning Machines"
+short: "learning machines · k-nn regression"
 permalink: /tools/learning-machines/knn-regression/
 entry: knn-regression
 ---

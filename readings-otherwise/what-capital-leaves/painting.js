@@ -13,11 +13,17 @@ const LOOK = [
   [1.40, 0.70, 1.70, 0.0], [1.00, 0.60, 1.10, 1.3], [1.00, 0.60, 1.10, -1.3], [1.00, 0.60, 1.00, 1.57],
   [1.00, 0.60, 1.00, 1.57], [1.10, 0.80, 1.40, 0.4], [1.10, 0.80, 1.40, 0.4], [0.90, 0.40, 1.10, 0.0],
 ];
+// The site's tokens, as numbers 0–1: the only colours in the painting.
+const RGB = c => c.map(v => v / 255);
+const CREAM = RGB([242, 235, 218]), COBALT = RGB([43, 59, 209]), DEEP = RGB([31, 42, 158]),
+      NIGHT = RGB([24, 33, 127]), RED = RGB([224, 54, 44]), RED_LIT = RGB([255, 107, 94]);
+// what each mark leans toward: the heavy marks (full stop, dash) sink to night, brackets of
+// thought (parentheses, ellipses) to cobalt, the rest lift to cream
 const TINT = [
-  [0.45, 0.02, 0.05], [1.0, 0.40, 0.40], [1.0, 0.35, 0.12], [1.0, 0.50, 0.20],
-  [0.40, 0.02, 0.05], [1.0, 1.00, 1.00], [1.0, 1.00, 1.00], [1.0, 0.86, 0.80],
-  [1.0, 0.86, 0.80], [0.95, 0.08, 0.12], [0.95, 0.08, 0.12], [0.90, 0.62, 0.30],
-  [0.90, 0.62, 0.30], [1.0, 0.25, 0.35], [1.0, 0.25, 0.35], [0.70, 0.15, 0.10],
+  NIGHT, CREAM, CREAM, CREAM,
+  NIGHT, CREAM, CREAM, CREAM,
+  CREAM, COBALT, COBALT, CREAM,
+  CREAM, CREAM, CREAM, COBALT,
 ];
 
 const ASPECT = 1.35;          // The Slave Ship is 91 × 123 cm
@@ -34,26 +40,18 @@ const fmt = new Intl.NumberFormat("en");
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const Q = new URLSearchParams(location.search);
-// Two palettes, one per theme. Dark (Ember): the voices glow pale. Light (Bone): ink on paper.
-// In both, the only red is what the viewer's pointer takes in.
-const PALETTES = {
-  dark: { sky: [0.05, 0.05, 0.05], low: [0.20, 0.19, 0.19], sun: [0.55, 0.53, 0.50], corner: [0.04, 0.04, 0.04],
-          sea: [0.16, 0.155, 0.15], deep: [0.02, 0.02, 0.02], streak: [0.34, 0.33, 0.31], dim: [0.45, 0.2],
-          lum: 0.75, quote: [0.95, 0.90, 0.84], quoteLum: 1.2, stroke: 1, touch: [1.0, 0.18, 0.16],
-          line: [0.9, 0.85, 0.8], clear: [0.02, 0.02, 0.02], glow: true },
-  light: { sky: [0.84, 0.81, 0.75], low: [0.93, 0.91, 0.86], sun: [0.99, 0.98, 0.95], corner: [0.80, 0.77, 0.71],
-           sea: [0.88, 0.85, 0.80], deep: [0.70, 0.67, 0.62], streak: [0.97, 0.95, 0.90], dim: [1.0, 1.0],
-           lum: 0.3, quote: [0.30, 0.26, 0.24], quoteLum: 0.4, stroke: 0.5, touch: [0.75, 0.06, 0.08],
-           line: [0.3, 0.25, 0.2], clear: [0.93, 0.91, 0.87], glow: false },
-};
-const theme = () => document.documentElement.dataset.theme === "light" ? "light" : "dark";
-let PAL = PALETTES[theme()];
+// One palette, the same in both themes: the frame is always the dark sea. A cobalt sky over a
+// deep sea, a cream sun, cream marks; the voices glow cream. The only red is the machine,
+// the light reading through the marks: live, in the site's red (its brighter step, to carry on cobalt).
+const PAL = { sky: NIGHT, low: COBALT, sun: CREAM, corner: NIGHT, sea: DEEP, deep: NIGHT, streak: COBALT, dim: [0.8, 0.5],
+              lum: 1.0, quote: CREAM, quoteLum: 1.2, stroke: 1, touch: RED, line: CREAM, clear: NIGHT, glow: true,
+              lift: CREAM, machine: RED_LIT };
 
 // which layer each mark type sits on when the painting is taken apart
 const LSET = {
   types: [1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1], gap: 0.36,
-  names: ["I · ground|a sea after Turner, 1840", "II · marks|all the punctuation",
-          "III · voices|the quotation marks", "IV · ghosts|the words taken out"],
+  names: ["ground|a sea after Turner, 1840", "marks|all the punctuation",
+          "voices|the quotation marks", "ghosts|the words taken out"],
 };
 const GHOST_Z = LSET.names.length - 1;
 
@@ -66,6 +64,7 @@ const EXTRA = 6000;            // room after the book's own marks for the punctu
 let markBuf, extraCount = 0;
 let quoteStart = 0;            // vertices from here on are quotation marks
 let horizon = 0.41;
+let markX, markY;              // each mark's home, for j / k
 
 // ---------- layout: reading order, wrapped into a painting ----------
 
@@ -84,7 +83,7 @@ function layout() {
   markType = new Uint8Array(N);
   markChapter = new Uint16Array(N);
   markLocal = new Uint32Array(N);
-  const homeX = new Float32Array(N), homeY = new Float32Array(N);
+  const homeX = markX = new Float32Array(N), homeY = markY = new Float32Array(N);
 
   let cell = 0, k = 0;
   chapters.forEach((ch, ci) => {
@@ -131,7 +130,7 @@ function layout() {
 
 const GROUND = `
 uniform float uHorizon;
-uniform vec3 uSkyTop, uSkyLow, uSun, uCorner, uSeaTop, uSeaDeep, uStreak;
+uniform vec3 uSkyTop, uSkyLow, uSun, uCorner, uSeaTop, uSeaDeep, uStreak, uDrainLo, uDrainHi;
 vec3 ground(vec2 uv) {
   float h = uHorizon;
   vec2 sun = vec2(0.6, h - 0.13);
@@ -151,9 +150,10 @@ vec3 ground(vec2 uv) {
   }
   return col * (0.9 + 0.12 * n);
 }
+// lifeless, the painting is two inks only: night to cream by how light it is
 vec3 drain(vec3 c, float life) {
   float l = dot(c, vec3(0.3, 0.5, 0.2));
-  return mix(vec3(l * 0.75, l * 0.7, l * 0.7), c, life);
+  return mix(mix(uDrainLo, uDrainHi, clamp(l, 0.0, 1.0)), c, life);
 }
 // flat on the wall, or taken apart into layers seen from above (uExplode 0..1)
 uniform float uExplode, uYaw, uPitch, uExScale, uGap, uZMid;
@@ -184,7 +184,8 @@ uniform float uAsk;
 uniform float uHead, uCols, uRunning;
 uniform vec3 uMachineCol;
 uniform float uLift;
-uniform vec3 uTouchCol;
+uniform vec2 uSolo;       // the layer chosen, and how far the others have gone (0..1); -1 for none
+uniform vec3 uTouchCol, uLiftCol;
 out vec3 vColor;
 out float vAlpha, vAngle, vType;
 ${GROUND}
@@ -223,11 +224,11 @@ void main() {
   // and a thin line of light along the row it is on, from the margin up to where it has reached
   float behind = uHead - (floor(home.y) * uCols + floor(home.x / 0.6));
   float sameRow = floor(home.y) == floor(uHead / uCols) ? 1.0 : 0.0;
-  float lit = behind >= 0.0 ? max(exp(-behind / 45.0), max(exp(-behind / 400.0) * 0.45, sameRow * 0.3)) : 0.0;
+  float lit = behind >= 0.0 ? max(exp(-behind / 60.0), max(exp(-behind / 500.0) * 0.6, sameRow * 0.45)) : 0.0;
   lit *= mix(0.4, 1.0, uRunning);
   float strokePx = max(uScale * 2.5, 3.0) * look.z;
   float glyphPx = uScale * (quote ? 1.45 : 1.3);
-  float size = mix(strokePx, glyphPx, uGlyph) * (1.0 + aTouch * 0.25 + lit * lit * 2.2);
+  float size = mix(strokePx, glyphPx, uGlyph) * (1.0 + aTouch * 0.25 + lit * lit * 3.0);
   gl_PointSize = size * k * uDpr;
 
   vec3 g = ground(uv);
@@ -236,7 +237,7 @@ void main() {
   vec3 red = mix(uTouchCol * vec3(0.45, 0.32, 0.3), uTouchCol, smoothstep(0.15, 0.9, aTouch));
   c = mix(c, red, smoothstep(0.0, 0.35, aTouch) * 0.9);
   // up close on the dark sea, the marks lift so they can be read
-  c = mix(c, vec3(0.82, 0.79, 0.76) * look.x, uGlyph * uLift);
+  c = mix(c, uLiftCol * look.x, uGlyph * uLift);
   c = mix(c, uMachineCol, lit);
   // lanterns are mostly dim and now and then flare, each on its own clock
   if (quote) c *= 0.14 + 1.7 * pow(0.5 + 0.5 * sin(uTime * 0.6 + aMark.w * 60.0), 10.0);
@@ -244,6 +245,8 @@ void main() {
   if (asks) c *= 0.35 + 2.2 * pow(0.5 + 0.5 * sin(uTime * 0.35 + aMark.w * 90.0), 6.0);
   vColor = drain(c, uLife);
   vAlpha = quote ? mix(0.5, 0.95, uGlyph) : mix(0.8, 1.0, uGlyph);
+  // one layer chosen: the others leave; taken apart they stay faintly, so you can see where they were
+  if (uSolo.x >= 0.0 && abs(uLayer[t] - uSolo.x) > 0.5) vAlpha *= 1.0 - uSolo.y * (1.0 - 0.12 * uExplode);
   vAngle = look.w + atan(f.y, f.x) * 0.35 * (1.0 - uGlyph);
   vType = aMark.z;
 }`;
@@ -292,13 +295,15 @@ precision highp float;
 in vec2 vUv;
 uniform float uLife, uGlyph, uOutline;
 uniform vec2 uDim;
-uniform vec3 uLineCol;
+uniform vec3 uLineCol, uClear;
+uniform float uFade;      // 1, or less while another layer is chosen
 out vec4 outColor;
 ${GROUND}
 void main() {
   if (uOutline > 0.5) { outColor = vec4(uLineCol, 1.0) * 0.5; return; }
   // under the strokes: the painted ground, darker, and darker still when you read up close
   vec3 c = ground(vUv) * mix(uDim.x, uDim.y, uGlyph);
+  c = mix(uClear, c, uFade);
   outColor = vec4(drain(c, uLife), 1.0);
 }`;
 
@@ -335,7 +340,7 @@ function atlas() {
   x.fillStyle = "#fff";
   x.textAlign = "center";
   x.textBaseline = "alphabetic";
-  x.font = `500 ${S * 0.78}px "EB Garamond", Georgia, serif`;
+  x.font = `500 ${S * 0.78}px "Newsreader", Georgia, serif`;
   TYPES.forEach((g, i) => x.fillText(g, (i % 4 + 0.5) * S, (Math.floor(i / 4) + 0.7) * S));
   const tex = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -395,7 +400,6 @@ function setupGL(verts) {
 
 // A palette keeps the shapes and changes what carries colour.
 function usePalette() {
-  PAL = PALETTES[theme()];
   gl.useProgram(markProg);
   const look = LOOK.map(l => [l[0] * PAL.lum, 0, l[2] * PAL.stroke, l[3]]);
   const tint = TINT.map(t => t.slice());
@@ -403,11 +407,13 @@ function usePalette() {
   gl.uniform4fv(U.uLook, look.flat());
   gl.uniform3fv(U.uTint, tint.flat());
   gl.uniform3fv(U.uTouchCol, PAL.touch);
+  gl.uniform3fv(U.uLiftCol, PAL.lift);
   for (const [prog, u] of [[markProg, U], [groundProg, UG]]) {
     gl.useProgram(prog);
     gl.uniform3fv(u.uSkyTop, PAL.sky); gl.uniform3fv(u.uSkyLow, PAL.low); gl.uniform3fv(u.uSun, PAL.sun);
     gl.uniform3fv(u.uCorner, PAL.corner); gl.uniform3fv(u.uSeaTop, PAL.sea); gl.uniform3fv(u.uSeaDeep, PAL.deep);
     gl.uniform3fv(u.uStreak, PAL.streak);
+    gl.uniform3fv(u.uDrainLo, NIGHT); gl.uniform3fv(u.uDrainHi, CREAM);
   }
   gl.uniform2fv(UG.uDim, PAL.dim);
   gl.uniform3fv(UG.uLineCol, PAL.line);
@@ -468,13 +474,45 @@ function project(px, py, z) {
   return [fx + (cw * 0.42 + x * f * e - fx) * explode, fy + (ch / 2 + y * f * e - fy) * explode];
 }
 const labels = LSET.names.map((name, i) => {
-  const el = document.createElement("span");
+  const el = document.createElement("button");
+  el.type = "button";
   el.className = "layer-label";
+  el.title = "See this layer alone";
   const [title, sub] = name.split("|");
-  el.innerHTML = `<b>${title}</b>${sub ? `<small>${sub}</small>` : ""}`;
+  el.innerHTML = `<span class="fp-k">${i + 1}</span><b>${title}</b>${sub ? `<small>${sub}</small>` : ""}`;
+  el.tabIndex = -1;                              // reachable only while the painting is taken apart
+  el.onpointerenter = el.onfocus = () => peekAt(i);
+  el.onpointerleave = el.onblur = () => { if (peek === i) peekAt(-1); };
+  el.onclick = () => chooseLayer(i);
   frame.appendChild(el);
   return el;
 });
+
+// one layer alone: the painting goes back on the wall with only that layer in it
+let solo = Q.has("layer") ? +Q.get("layer") - 1 : -1, peek = -1, soloAmt = 0, soloShown = -1;
+const soloChip = document.getElementById("solo");
+function peekAt(z) {
+  peek = z;
+  labels.forEach((el, i) => el.classList.toggle("is-peek", i === z));
+}
+function chooseLayer(z) {
+  if (z >= LSET.names.length) return;
+  solo = z;
+  peekAt(-1);
+  if (z >= 0) {
+    const [title, sub] = LSET.names[z].split("|");
+    soloChip.querySelector(".what").innerHTML = `<span class="fp-k">${z + 1}</span>${title} alone<small>${sub}</small>`;
+    if (explodeTarget) setExplode(false);
+  }
+  soloChip.hidden = z < 0;
+  try {
+    const url = new URL(location.href);
+    if (z >= 0) url.searchParams.set("layer", z + 1); else url.searchParams.delete("layer");
+    history.replaceState(null, "", url);
+  } catch (_) {}
+  if (ui) ui.render();
+}
+soloChip.querySelector("button").onclick = () => chooseLayer(-1);
 function placeLabels() {
   labels.forEach((el, i) => {
     const [x, y] = project(W, H, i);          // each label at its own plane's near corner
@@ -486,6 +524,9 @@ function setExplode(on) {
   explodeTarget = on ? 1 : 0;
   target.s = fitS; target.ox = 0; target.oy = 0;
   document.body.classList.toggle("exploded", on);
+  layersBtn.setAttribute("aria-pressed", on);
+  labels.forEach(el => el.tabIndex = on ? 0 : -1);
+  if (!on) peekAt(-1);
 }
 
 function toWorld(mx, my) { return [(mx - view.ox) / view.s, (my - view.oy) / view.s]; }
@@ -553,7 +594,7 @@ function release(e) {
   if (!pointers.size) canvas.classList.remove("dragging");
 }
 canvas.addEventListener("pointerup", e => {
-  if (dragMoved < 6 && pointers.size === 1 && !explodeTarget) reveal(...local(e));
+  if (dragMoved < 6 && pointers.size === 1 && !explodeTarget) { sel = -1; reveal(...local(e)); }
   release(e);
 });
 canvas.addEventListener("pointercancel", release);
@@ -565,14 +606,7 @@ document.getElementById("zoom-out").onclick = () => zoomAt(cw / 2, ch / 2, 0.5);
 const layersBtn = document.getElementById("layers");
 layersBtn.onclick = () => setExplode(!explodeTarget);
 document.getElementById("reset").onclick = () => { target.s = fitS; target.ox = 0; target.oy = 0; };
-addEventListener("keydown", e => {
-  if (e.target.closest("input, textarea")) return;
-  if (e.key === "+" || e.key === "=") zoomAt(cw / 2, ch / 2, 1.6);
-  else if (e.key === "-") zoomAt(cw / 2, ch / 2, 1 / 1.6);
-  else if (e.key === "0") document.getElementById("reset").click();
-  else return;
-  wake();
-});
+layersBtn.addEventListener("click", () => { layersBtn.setAttribute("aria-pressed", !!explodeTarget); if (ui) ui.render(); });
 
 function wake() {
   lastMove = performance.now();
@@ -668,6 +702,10 @@ async function reveal(mx, my) {
   const testimony = m >= 0;
   if (!testimony) m = nearest(mx, my, Math.max(6, view.s), null);
   if (m < 0) { panel.classList.remove("show"); return; }
+  return revealMark(m, testimony, false);
+}
+
+async function revealMark(m, testimony, keep) {
   const ch = chapters[markChapter[m]];
   const my_ = ++revealToken;
   const { text, pos } = await loadText(ch.key);
@@ -680,15 +718,89 @@ async function reveal(mx, my) {
   panel.classList.toggle("testimony", testimony);
   panel.classList.add("show");
   clearTimeout(panelTimer);
-  panelTimer = setTimeout(() => panel.classList.remove("show"), 14000);
+  if (!keep) panelTimer = setTimeout(() => { panel.classList.remove("show"); if (ui) ui.render(); }, 14000);
+  if (ui) ui.render();
 }
+
+// ---------- keys: the page's until the frame has focus, then the piece's (see ../piece.js) ----------
+
+// j / k go from voice to voice: the quotation marks, in the order Marx wrote them. The view comes
+// close, a yellow ring (your hand) marks the one you are on, and its passage shows below.
+let sel = -1;
+const selRing = document.getElementById("sel-ring");
+function voiceStep(d) {
+  let m = sel;
+  if (m < 0) {
+    m = nearest(cw / 2, ch * .4, Math.max(cw, ch), null);
+    if (m < 0) m = 0;
+    if (isQuote(m) && d > 0) m -= 1;
+  }
+  do { m += d; } while (m >= 0 && m < N && !isQuote(m));
+  if (m < 0 || m >= N) return;
+  sel = m;
+  if (explodeTarget) setExplode(false);
+  const s = Math.max(target.s, 22);
+  target.s = s;
+  target.ox = cw / 2 - markX[m] * s;
+  target.oy = ch * .4 - markY[m] * s;
+  clamp(target);
+  wake();
+  revealMark(m, true, true);
+}
+function ring() {
+  if (sel < 0 || explode > .01) { selRing.hidden = true; return; }
+  selRing.hidden = false;
+  selRing.style.transform = `translate(${view.ox + markX[sel] * view.s}px, ${view.oy + markY[sel] * view.s}px)`;
+}
+
+const ui = window.Piece({
+  frame,
+  keys: () => explodeTarget
+    ? [["j k", "look at a layer"], ["1–4", "one layer alone"], ["enter", "see it alone"], ["l", "put it back"], ["esc", "put it back"]]
+    : [["j k", "the next voice"], ["l", "layers"], ["1–4", "one layer alone"], ["s", "stop the machine"], ["+ − 0", "zoom · whole painting"],
+       ["← →", "move"], ["esc", solo >= 0 ? "the whole painting back" : sel >= 0 || panel.classList.contains("show") ? "close the passage" : "give the keys back"]],
+  help: () => [
+    ["j k", "the next / previous voice: a quotation mark, its passage below"],
+    ["l", "take the painting apart into its layers (≋)"],
+    ["1–4", "one layer alone: 1 ground · 2 marks · 3 voices · 4 ghosts"],
+    ["s", "stop the machine for a moment"],
+    ["+ − 0", "come closer · go back · see the whole painting (◻)"],
+    ["← ↑ → ↓", "move across the painting"],
+    ["", "taken apart: j k look at a layer, enter shows it alone, esc puts the painting back"],
+  ],
+  key(e) {
+    const k = e.key, step = 80, n = LSET.names.length;
+    if (explodeTarget) {
+      if (k === "j" || k === "ArrowDown") { peekAt(peek <= 0 ? n - 1 : peek - 1); return true; }
+      if (k === "k" || k === "ArrowUp") { peekAt(peek < 0 || peek >= n - 1 ? 0 : peek + 1); return true; }
+      if (/^[1-4]$/.test(k)) { chooseLayer(+k - 1); return true; }
+      if (k === "Enter" && peek >= 0) { chooseLayer(peek); return true; }
+      return false;
+    }
+    if (/^[1-4]$/.test(k)) { chooseLayer(solo === +k - 1 ? -1 : +k - 1); return true; }
+    if (k === "j" || k === "k") { voiceStep(k === "j" ? 1 : -1); return true; }
+    if (k.startsWith("Arrow") && !explodeTarget) {
+      target.ox += k === "ArrowLeft" ? step : k === "ArrowRight" ? -step : 0;
+      target.oy += k === "ArrowUp" ? step : k === "ArrowDown" ? -step : 0;
+      clamp(target); wake();
+      return true;
+    }
+    return false;
+  },
+  escape() {
+    if (explodeTarget) { setExplode(false); return true; }
+    if (solo >= 0) { chooseLayer(-1); return true; }
+    if (sel >= 0 || panel.classList.contains("show")) { sel = -1; clearTimeout(panelTimer); panel.classList.remove("show"); return true; }
+    return false;
+  },
+});
 
 // ---------- ghosts: the words that were taken out ----------
 
 let lastGhost = 0;
 
 function haunt(now) {
-  if ((now - lastMove < IDLE_MS && explode < 0.5) || now - lastGhost < (reduceMotion ? 2400 : 900)) return;
+  if ((now - lastMove < IDLE_MS && explode < 0.5 && solo !== GHOST_Z) || now - lastGhost < (reduceMotion ? 2400 : 900)) return;
   if (ghostLayer.childElementCount > 12) return;
   lastGhost = now;
   for (let tries = 0; tries < 12; tries++) {
@@ -727,14 +839,25 @@ function work(dt) {
   if (!document.hidden) life = Math.min(1, life + dt / 25);
 }
 
-// ---------- the machine reads; you write ----------
+// ---------- the machine reads ----------
 
 const TOKENS_PER_S = 1200;     // roughly the pace of a language model reading
 const STOP_MS = 9000;
-let head = 0, stoppedUntil = 0, given = 0, giftAt = 0, lastReadout = 0, reading = false;
+let head = 0, stoppedUntil = 0, lastReadout = 0, reading = false;
 const machineLine = document.getElementById("machine-line");
 const readingLine = document.getElementById("reading");
-const givenLine = document.getElementById("given-line");
+// where it is reading: a red point that can be followed from across the room
+const headDot = document.createElement("i");
+headDot.className = "head-dot";
+headDot.setAttribute("aria-hidden", "true");
+frame.appendChild(headDot);
+function placeHead(running) {
+  const c = Math.floor(head);
+  const [x, y] = project((c % COLS + 0.5) * CELL_W, Math.floor(c / COLS) + 0.5, 1);
+  headDot.style.transform = `translate(${x}px, ${y}px)`;
+  headDot.classList.toggle("is-stopped", !running);
+  headDot.style.opacity = solo >= 0 && solo !== 1 ? 0 : "";
+}
 
 // the mark the machine has just reached
 function headMark() {
@@ -776,49 +899,6 @@ function stopMachine() {
   setTimeout(() => note.classList.remove("show"), STOP_MS);
 }
 
-// The writing field: a word is gone the moment it is finished. Only punctuation stays.
-const words = document.getElementById("words");
-const WORD = /[\p{L}\p{N}]+(?:['\u2019-][\p{L}\p{N}]+)*(?=[^\p{L}\p{N}'\u2019-])/gu;
-words.addEventListener("input", () => {
-  const kept = words.value.replace(WORD, "").replace(/\s+/g, "");
-  if (kept !== words.value) words.value = kept;
-});
-
-const GIVE = { "\u2013": "\u2014", "\u201c": '"', "\u201d": '"', "\u2018": "'", "\u2019": "'" };
-document.getElementById("write").addEventListener("submit", e => {
-  e.preventDefault();
-  const marks = words.value.replace(/[\p{L}\p{N}\s]/gu, "").replace(/\.\.\./g, "\u2026");
-  words.value = "";
-  let open = true;
-  const types = [];
-  for (const c0 of marks) {
-    const c = GIVE[c0] || c0;
-    if (c === '"') { types.push(open ? OPEN_Q : CLOSE_Q); open = !open; }
-    else if (c === "'") types.push(T["\u2019"]);
-    else if (c in T) types.push(T[c]);
-  }
-  if (!types.length) { givenLine.textContent = "Nothing to keep. It only takes punctuation."; return; }
-  give(types);
-});
-
-// Your marks land just ahead of the light, between the lines, in red. It reads them next.
-function give(types) {
-  giftAt = Math.max(giftAt, Math.floor(head) + 6);
-  const total = COLS * ROWS;
-  gl.bindBuffer(gl.ARRAY_BUFFER, markBuf);
-  for (const t of types) {
-    if (extraCount >= EXTRA) break;
-    const cell = giftAt++ % total, v = N + extraCount++;
-    gl.bufferSubData(gl.ARRAY_BUFFER, v * 16,
-      new Float32Array([(cell % COLS + 0.5) * CELL_W, Math.floor(cell / COLS) + 0.95, t, Math.random()]));
-    touch[v] = 255;
-  }
-  touchDirty = true;
-  given += types.length;
-  givenLine.textContent = `You have given it ${fmt.format(given)} mark${given === 1 ? "" : "s"}. It kept none of your words.`;
-  document.getElementById("n-marks").textContent = fmt.format(N + extraCount);
-}
-
 // ---------- the loop ----------
 
 let then = performance.now(), t0 = then;
@@ -838,6 +918,11 @@ function frameLoop(now) {
   work(dt);
   haunt(now);
   const running = machine(now, dt);
+  const want = explodeTarget ? (peek >= 0 ? peek : solo) : solo;
+  if (want >= 0) soloShown = want;
+  soloAmt += ((want >= 0 ? 1 : 0) - soloAmt) * (1 - Math.pow(0.01, dt));
+  const others = 1 - soloAmt * (1 - 0.12 * e);              // what a layer not chosen keeps
+  ghostLayer.style.opacity = soloAmt > 0.001 && soloShown !== GHOST_Z ? others : 1;
 
   const glyph = smooth(9, 18, view.s) * (1 - e);
   const drift = (reduceMotion ? 0.35 : 1) * (1 - smooth(4, 14, view.s));
@@ -864,6 +949,8 @@ function frameLoop(now) {
   gl.useProgram(groundProg);
   gl.uniform1f(UG.uZ, 0);
   gl.uniform1f(UG.uOutline, 0);
+  gl.uniform1f(UG.uFade, soloAmt > 0.001 && soloShown !== 0 ? others : 1);
+  gl.uniform3fv(UG.uClear, PAL.clear);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   if (e > 0.01) {
     // the empty frames of the upper layers, so you can see where each one sits
@@ -898,8 +985,9 @@ function frameLoop(now) {
   gl.uniform1f(U.uHead, head);
   gl.uniform1f(U.uCols, COLS);
   gl.uniform1f(U.uRunning, running ? 1 : 0);
-  gl.uniform1f(U.uLift, theme() === "light" ? 0 : 0.75);
-  gl.uniform3fv(U.uMachineCol, theme() === "light" ? [0.1, 0.1, 0.12] : [0.75, 0.9, 1.0]);
+  gl.uniform1f(U.uLift, 0.75);
+  gl.uniform3fv(U.uMachineCol, PAL.machine);
+  gl.uniform2f(U.uSolo, soloAmt > 0.001 ? soloShown : -1, soloAmt);
 
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);     // paint
@@ -916,29 +1004,13 @@ function frameLoop(now) {
     g.style.left = sx + "px"; g.style.top = sy + "px";
   }
   if (e > 0.001 || labels[0].style.opacity !== "0") placeLabels();
+  ring();
+  placeHead(running);
 
   requestAnimationFrame(frameLoop);
 }
 
 function smooth(a, b, x) { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
-
-// ---------- light and dark ----------
-
-const THEME_KEY = "what-capital-leaves:theme";
-const themeBtn = document.getElementById("theme");
-function syncThemeButton() {
-  const next = theme() === "dark" ? "light" : "dark";
-  themeBtn.textContent = next;
-  themeBtn.setAttribute("aria-label", `Switch to ${next} mode`);
-}
-themeBtn.addEventListener("click", () => {
-  const next = theme() === "dark" ? "light" : "dark";
-  document.documentElement.dataset.theme = next;
-  try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
-  if (gl) usePalette();
-  syncThemeButton();
-});
-syncThemeButton();
 
 // ---------- start ----------
 
@@ -948,11 +1020,11 @@ async function start() {
     vol.chapters.forEach((c, i) => chapters.push({ ...c, vol: vol.id, volStart: i === 0 }));
   }
   const verts = layout();
-  frame.style.setProperty("--aspect", (W / H).toFixed(4));
+  frame.parentElement.style.setProperty("--aspect", (W / H).toFixed(4));   // the stage: the frame and the keys under it
   document.getElementById("n-marks").textContent = fmt.format(N);
   document.getElementById("n-tokens").textContent = fmt.format(data.tokens);
 
-  await document.fonts.load('500 40px "EB Garamond"').catch(() => {});
+  await document.fonts.load('500 40px "Newsreader"').catch(() => {});
   try {
     setupGL(verts);
   } catch (err) {
@@ -963,6 +1035,7 @@ async function start() {
   resize();
   target.s = view.s = fitS;
   if (explodeTarget) setExplode(true);
+  if (solo >= 0) chooseLayer(solo);
   new ResizeObserver(resize).observe(canvas);
   requestAnimationFrame(frameLoop);
 }

@@ -1,0 +1,117 @@
+// ─────────────────────────────────────────────────────────────
+// Tools (tools.md, /tools/): the filter, then a numbered index that opens
+// in place. Built on .fp-index / .fp-row / .fp-spec / .fp-seg; this only
+// sets what is particular to the tools.
+// Also: the 404 page (404.html), which has no section of its own.
+// ─────────────────────────────────────────────────────────────
+
+.tl-bar__hint { margin: 0; }
+
+// The row's meta: status (a live dot while the tool is still being built),
+// then its kind.
+.tl-row .fp-row__m { gap: 14px; }
+.tl-status { display: inline-flex; align-items: center; gap: 7px; }
+.tl-kind { min-width: 11ch; text-align: right; }
+
+// j / k marks the row's head only, so an open row's figure keeps its paper.
+.tl-row.fp-at { background: none; color: inherit; }
+.tl-row.fp-at > .fp-row__head { background: var(--hand); color: var(--on-hand); }
+
+.tl-row .fp-row__body { max-width: calc(var(--measure) + 68px); }
+.tl-sub { margin: 0 0 .5rem; }
+.tl-desc { font-size: 1rem; line-height: 1.6; }
+
+// Figures sit on the left of the body, under the text they illustrate.
+.tl-row .project-figure { margin: 1.4rem 0 1.6rem; }
+.tl-row .project-figure figcaption { text-align: left; font: 400 .72rem/1.5 var(--mono); font-style: normal; min-height: 0; }
+.tl-row .project-figure--card .figure-card { border: var(--hair) solid var(--rule-strong); border-radius: var(--radius); }
+.tl-row .project-figure--card .figure-card__row { font-family: var(--mono); }
+.tl-row .project-figure--card .figure-card__calc { font-family: var(--mono); border-top-style: solid; }
+.tl-row .project-figure--card .figure-card__calc .hot {
+  color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--glow); text-underline-offset: .2em;
+}
+.tl-row :is(.lf-label, .lf-text, .lf-face text) { font-family: var(--sans); }
+
+// The three tool figures (ethics-lenses, bot-abecedaire, teach-machine
+// -figure.js): flat hairline drawings, plain SVG in viewBox units. Strokes
+// stay one pixel however wide the figure is drawn. Lines and type are the
+// soft ink; what the pointer picks gets the hand's yellow ground; a thin
+// live line (red, yellow in the dark) joins the picked part to what it
+// means.
+.project-figure svg.tlf {
+  * { vector-effect: non-scaling-stroke; }
+  text { font-family: var(--sans); fill: var(--ink-soft); stroke: none; }
+  .tlf-mono { font-family: var(--mono); }
+  .tlf-head { fill: var(--ink); font-weight: 600; }
+  .tlf-line { fill: none; stroke: var(--ink-soft); stroke-width: var(--hair); stroke-linecap: round; stroke-linejoin: round; }
+  .tlf-solid { fill: var(--paper); stroke: var(--ink-soft); stroke-width: var(--hair); stroke-linejoin: round; }
+  .tlf-faint { stroke: var(--rule-strong); }
+  .tlf-strong { stroke: var(--ink); stroke-width: var(--stroke); }
+  .tlf-live { fill: none; stroke: var(--glow); stroke-width: var(--stroke); stroke-linecap: round; }
+  .tlf-shade { fill: var(--rule); stroke: none; }
+  .tlf-band { fill: transparent; stroke: none; }
+  .tlf-mark { stroke: var(--ink); }
+
+  // Lit: full ink. Picked: the hand's ground under cobalt.
+  text.tlf-on, .tlf-on text { fill: var(--ink); }
+  .tlf-on > .tlf-solid { stroke: var(--ink); }
+  .tlf-picked > .tlf-solid,
+  .tlf-on .tlf-own > .tlf-solid { fill: var(--hand); stroke: var(--on-hand); }
+  .tlf-picked > text,
+  .tlf-on .tlf-own > text { fill: var(--on-hand); }
+  .tlf-picked > .tlf-line { stroke: var(--on-hand); }
+}
+
+.tl-list-h { margin: 0 0 .3rem; }
+.tl-list { font-size: .92rem; margin-bottom: 1.4rem; }
+.tl-spec { margin-bottom: 1.2rem; dd { font-family: var(--sans); font-size: .88rem; } }
+
+// The way out: a key-like link.
+.tl-open {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: var(--stroke) solid var(--ink); border-radius: var(--radius);
+  padding: 8px 12px; text-decoration: none;
+  font: 500 .75rem/1 var(--mono);
+  &:hover, &:focus-visible { background: var(--hand); color: var(--on-hand); border-color: var(--hand); }
+}
+
+.tl-about {
+  max-width: var(--measure);
+  margin-top: 3rem; padding-top: .6rem;
+  border-top: var(--hair) solid var(--rule);
+  h2 { margin: 0 0 .6rem; }
+  p { margin: 0; }
+}
+
+@media (max-width: 720px) {
+  // Phone: the meta drops under the title instead of squeezing it.
+  .tl-row .fp-row__head {
+    grid-template-columns: 44px minmax(0, 1fr) 18px;
+    row-gap: 4px;
+  }
+  .tl-row .fp-row__m { grid-column: 2; grid-row: 2; justify-content: flex-start; }
+  .tl-row .fp-row__x { grid-column: 3; grid-row: 1; }
+  .tl-kind { min-width: 0; text-align: left; }
+  .tl-row .fp-row__body { padding-left: 4px; }
+  .tl-bar__hint { display: none; }
+}
+
+// ── 404 ─────────────────────────────────────────────────────
+.fp-404 {
+  margin-top: clamp(28px, 6vh, 56px);
+  max-width: var(--measure);
+  &__n { margin: 0 0 10px; }
+  h1 {
+    margin: 0 0 18px;
+    font: 800 clamp(2.4rem, 6.4vw, 4.4rem)/.92 var(--sans);
+    letter-spacing: -.045em; text-transform: lowercase;
+  }
+  p { margin: 0 0 .8rem; }
+  &__go { margin-top: 1.6rem !important; font: 400 .78rem/1.6 var(--mono); }
+}
+
+// Touch screens have no keys: the filter's letters go, the segments stay.
+@media (hover: none) and (pointer: coarse) {
+  .tl-bar .fp-seg__k { display: none; }
+}

@@ -9,16 +9,16 @@
 (function () {
   const root = document.getElementById('w4-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, P = window.CSI330.w4.pts;
+  const K = window.CSIKit, P = window.CSI330.w4.pts, el = K.el;
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A board plotting forty penguins, body mass against flipper length, with a straight rod pivoting on their mean point and a vertical spring from each bird to the rod. Turning the rod changes the springs and the error gauge; the least-squares line is where the springs rest.');
 
-  K.bench(svg, -6, -4, 180, 64);
-  K.plate(svg, 'PALMER PENGUINS · 40 BIRDS · BODY MASS ~ FLIPPER LENGTH', 4, 64);
+  const G = 100, S = K.stage(svg);                    // G: the plinth's top
+  K.bench(S, -6, 186, G);
+  K.plate(S, 'PALMER PENGUINS · 40 BIRDS · BODY MASS ~ FLIPPER LENGTH', 4, G);
 
-  const b = K.board(svg, 0, 132, 24, 6, 96);
+  const b = K.board(S, 0, 8, 132, 90, G);
   const sx = K.scale(170, 235, 16, 126), sy = K.scale(2500, 6500, 77, 8);
   K.axes(b.g, sx, sy, [170, 190, 210, 230], [3000, 4000, 5000, 6000], 'flipper length (mm)', 'body mass (g)', 2.8);
 
@@ -35,15 +35,10 @@
   const pivot = el('circle', { class: 'lf-line lf-strong', cx: sx(xm), cy: sy(ym), r: 1.6 }, rod);
   const ghost = el('line', { class: 'lf-line lf-faint', 'stroke-dasharray': '1.2 1' }, b.g);
 
-  const setR = K.gauge(svg, 146, 34, 'RMSE (g)', 300, 1300, v => Math.round(v) + ' g', 20);
-  const setRatio = K.gauge(svg, 146, 56, '× BEST', 1, 3, v => v.toFixed(2) + '×', 8);
-
-  function spring(x1, y1, y2) {
-    const n = Math.max(4, Math.round(Math.abs(y2 - y1) / 1.4)), w = 0.9;
-    let d = `M${x1.toFixed(2)} ${y1.toFixed(2)}`;
-    for (let k = 1; k < n; k++) d += ` L${(x1 + (k % 2 ? w : -w)).toFixed(2)} ${(y1 + (y2 - y1) * k / n).toFixed(2)}`;
-    return d + ` L${x1.toFixed(2)} ${y2.toFixed(2)}`;
-  }
+  // the two gauges side by side on their posts, neither behind the other
+  const setR = K.gauge(S, 140, 62, 'RMSE (g)', 300, 1300, v => Math.round(v) + ' g', G);
+  const setRatio = K.gauge(S, 162, 62, '× BEST', 1, 3, v => v.toFixed(2) + '×', G);
+  const spring = K.spring;
   const lineAt = (m, x) => ym + m * (x - xm);
   const st = { m: 20 };
   function update() {

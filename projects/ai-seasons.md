@@ -1,6 +1,13 @@
 ---
 layout: page
 title: AI Seasons
+short: ai seasons
+dek: "A corpus of news, papers and videos on AI's booms and busts, now the starting point for a study of how “the AI winter” has been named and dated."
+term: Fall 2024
+status: live
+from: 2024.67
+to: 2024.96
+areas: [nlp, cai]
 
 permalink: /projects/ai-seasons
 header: true
@@ -8,16 +15,25 @@ list_title: " "
 
 ---
 
-*Note: This research was conducted over a span of fall semester 2024 with Muhlenberg undergraduate student researcher, Andrew Franklin, and was merely a data collection project.*
+<div class="pj-head">
+<dl class="fp-spec pj-spec">
+  <dt>student</dt><dd>Andrew Franklin · Muhlenberg undergraduate student researcher</dd>
+  <dt>term</dt><dd>conducted over a span of fall semester 2024</dd>
+  <dt>kind</dt><dd>merely a data collection project</dd>
+  <dt>status</dt><dd><span class="pj-live"><span class="fp-live"></span>picked up again · a study of the phrase “AI winter”, in progress</span></dd>
+  <dt>sources</dt><dd>ArXiv · TechCrunch · The Verge · YouTube · The Next Web · Lifewire · PubMed Central</dd>
+  <dt>pipeline</dt><dd>Python scrapers run concurrently · MySQL</dd>
+</dl>
+</div>
 
 <script src="{{ '/assets/js/ai-seasons-corpus.js' | relative_url }}" defer></script>
 {% include project-figure.html id="seasons-figure" script="ai-seasons-corpus-figure.js" class="project-figure--shelf" fig="Plate I" title="What the scrapers gathered" hint="point at a square, a source or a year · ← →" note="Each square is one source's documents for one year, its area by count. Counts from the corpus Andrew Franklin's scrapers built, after repairing malformed rows." %}
 
-## 1. Project Overview
+## Project Overview
 
 This project was a data collection initiative designed to gather a comprehensive dataset of digital content related to the concepts of "AI Winter," "AI Summer," and general "Artificial Intelligence." The primary objective was to systematically scrape, parse, and store information from a diverse range of sources, including technology news sites, academic repositories, and video platforms. This dataset serves as a foundational resource for future research and analysis on the cyclical trends, sentiment, and discourse surrounding AI development.
 
-## 2. Methodology and Workflow
+## Methodology and Workflow
 
 The data collection process was automated through a series of Python scripts, each tailored to a specific data source. The overall workflow was managed by a master script that employed multiprocessing to run the individual scrapers concurrently, enhancing the efficiency of the data gathering process.
 
@@ -28,7 +44,7 @@ The typical workflow for each scraper was as follows:
 3. **Data Parsing & Extraction:** Key pieces of information (metadata) are parsed from the raw content. Common data points include the title, author(s), publication date, URL, summary/abstract, full text, and associated tags or keywords.
 4. **Data Storage:** The extracted information is structured and then inserted into a central MySQL database.
 
-## 3. Data Sources and Collection Scripts
+## Data Sources and Collection Scripts
 
 The project aggregated data from seven primary sources, each handled by a dedicated script:
 
@@ -44,7 +60,7 @@ The project aggregated data from seven primary sources, each handled by a dedica
 
 Scrapers were also written for Hacker News and Gizmodo, but their data did not survive into the corpus.
 
-## 4. Core System Components
+## Core System Components
 
 The project was built around a few key components that managed the overall process:
 
@@ -52,6 +68,6 @@ The project was built around a few key components that managed the overall proce
 - **Database Insertion Utility:** A standardized function was used to connect to the MySQL database and insert new records of collected data in a consistent manner.
 - **Debugging Utility:** A simple utility was available for printing command-line arguments, likely used for testing purposes during development.
 
-## 5. What Comes Next
+## What Comes Next
 
 Andrew has since graduated, and I have picked the project up again. The corpus is now the starting point for a study of the phrase "AI winter" itself: when it was coined, how its winters have been dated, and how those dates came to be repeated. That work is in progress; more here once it is published.

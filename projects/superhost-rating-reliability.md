@@ -1,6 +1,14 @@
 ---
 layout: page
 title: "Noisy Stars: Rating Reliability and the Superhost Premium"
+heading: "Noisy Stars"   # the plate shows the name; the full title is for the tab, search and link previews
+short: noisy stars
+dek: "Rating Reliability and the Superhost Premium"
+term: Summer 2026
+status: writing
+from: 2026.42
+to: 2026.67
+areas: [is]
 
 permalink: /projects/superhost-rating-reliability
 header: true
@@ -8,9 +16,30 @@ list_title: " "
 
 ---
 
-*Note: This research was conducted during Summer 2026 with Muhlenberg undergraduate student researcher, Judah Dasebre.*
+<div class="pj-head">
+<dl class="fp-spec pj-spec">
+  <dt>student</dt><dd>Judah Dasebre · Muhlenberg undergraduate student researcher</dd>
+  <dt>term</dt><dd>conducted during Summer 2026</dd>
+  <dt>status</dt><dd>analysis complete · in preparation for submission</dd>
+  <dt>data</dt><dd>Inside Airbnb · June 2026 snapshots</dd>
+  <dt>markets</dt><dd>31 US markets · 186,873 listings</dd>
+  <dt>panels</dt><dd>six-wave quarterly · Austin · Washington DC · Hawaii</dd>
+  <dt>threshold</dt><dd>Superhost: mean guest rating of at least 4.8 stars</dd>
+</dl>
+</div>
 
-{% include project-figure.html id="superhost-figure" script="superhost-figure.js" note="Schematic listings; the 4.8 line and 0.37 are the study's." %}
+<figure class="pj-fig ns-fig" id="ns-figure">
+  <div class="pj-fig__row"><span>Plate I</span><span>how many reviews before a rating means something</span></div>
+  <svg id="ns-curve" class="ns-curve" viewBox="0 0 600 196" role="img" aria-label="Reliability of a displayed rating against its number of reviews. The curve rises from near zero, passes 0.37 at the median listing's 45 reviews, and reaches the conventional 0.70 floor near 180 reviews."></svg>
+  <div class="ns-ctl">
+    <label class="sr-only" for="ns-n">Number of reviews</label>
+    <input type="range" id="ns-n" min="1" max="300" step="1" value="45">
+    <output id="ns-read" class="ns-read" for="ns-n" aria-live="polite"></output>
+  </div>
+  <svg id="ns-pins" class="ns-pins" viewBox="0 0 600 132" role="img" aria-label="Seven schematic listings near the 4.8 line, each with the range its true quality could sit in at the chosen number of reviews."></svg>
+  <figcaption class="pj-fig__cap"><span class="pj-fig__hint">drag, or focus the slider and use ← →</span>Schematic listings; the 4.8 line and 0.37 are the study's. The curve is the Spearman–Brown projection from 0.37 at 45 reviews, which crosses 0.70 at 179; the paper's figure is 181. Each range is ±1.96 standard errors of true quality at this many reviews, with listings' true quality spread 0.10 stars apart.</figcaption>
+</figure>
+<script src="{{ '/assets/js/superhost-figure.js' | relative_url }}" defer></script>
 
 ## Overview
 

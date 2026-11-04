@@ -1,27 +1,27 @@
 // CSI 330 · Week 1 · Bias and variance. A board shows forty points from a
 // noisy curve: twenty to train on (filled) and twenty held back to test
-// (rings). A selector on the bench sets the polynomial's degree, 1 to 12;
+// (rings). A selector on the plinth sets the polynomial's degree, 1 to 12;
 // the fitted curve redraws as a lit wire, two gauges read the training and
-// test error (RMSE), and a small board behind traces both against degree —
+// test error (RMSE), and a small board above them traces both against degree —
 // the training error only falls, the test error falls and then climbs.
 // Simulated data; the fits are scikit-learn's (scripts/csi330_data.py).
+// Drawn flat, in front elevation, with the kit (csi330-kit.js).
 
 (function () {
   const root = document.getElementById('w1-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, D = window.CSI330.w1;
+  const K = window.CSIKit, D = window.CSI330.w1, el = K.el;
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A board with forty points from a noisy curve and a fitted polynomial; a selector sets its degree from 1 to 12, two gauges read training and test error, and a small board traces both errors against degree.');
 
-  K.bench(svg, -6, -4, 196, 62);
-  K.plate(svg, 'SIMULATED · 20 TO TRAIN · 20 TO TEST', 4, 62);
+  const G = 100, S = K.stage(svg);                    // G: the plinth's top
+  K.bench(S, -6, 200, G);
+  K.plate(S, 'SIMULATED · 20 TO TRAIN · 20 TO TEST', 4, G);
 
-  // The error-against-degree board, behind the gauges.
-  // clear of the main board's top corner, which would otherwise cover its left edge
-  const small = K.board(svg, 142, 192, 8, 32, 66);
-  const ex = K.scale(1, 12, 10, 46), ey = K.scale(0.2, 0.7, 23, 4);
+  // The error-against-degree board, on two posts, the gauges between them.
+  const small = K.board(S, 138, 20, 58, 34, G);
+  const ex = K.scale(1, 12, 10, 53), ey = K.scale(0.2, 0.7, 23, 4);
   K.axes(small.g, ex, ey, [1, 4, 8, 12], [0.2, 0.7], 'degree', 'RMSE', 2);
   const clip = v => Math.min(0.7, v);
   const line = key => D.fits.map((f, i) => `${i ? 'L' : 'M'}${ex(f.deg).toFixed(2)} ${ey(clip(f[key])).toFixed(2)}`).join(' ');
@@ -34,7 +34,7 @@
   const markLine = el('line', { class: 'lf-line', y1: 4, y2: 23 }, mark);
 
   // The main board and its plot.
-  const b = K.board(svg, 0, 120, 24, 6, 88);
+  const b = K.board(S, 0, 16, 120, 82, G);
   const sx = K.scale(0, 1, 14, 112), sy = K.scale(-1.8, 1.8, 71, 6);
   K.axes(b.g, sx, sy, [0, 0.5, 1], [-1.5, 0, 1.5], 'x', 'y');
   D.x.forEach((x, i) => {
@@ -48,9 +48,9 @@
   el('text', { x: 33, y: 10.1, 'font-size': 2.6 }, b.g).textContent = 'test';
   const wire = el('path', { class: 'lf-line lf-strong lf-hot' }, b.g);
 
-  const setTrain = K.gauge(svg, 138, 42, 'TRAIN RMSE', 0, 0.7);
-  const setTest = K.gauge(svg, 164, 42, 'TEST RMSE', 0, 0.7, v => v > 0.7 ? v.toFixed(1) + '!' : v.toFixed(2));
-  const sel = K.selector(svg, 22, 46, D.fits.map(f => f.deg), 'DEGREE');
+  const setTrain = K.gauge(S, 148, 66, 'TRAIN RMSE', 0, 0.7, undefined, G);
+  const setTest = K.gauge(S, 168, 66, 'TEST RMSE', 0, 0.7, v => v > 0.7 ? v.toFixed(1) + '!' : v.toFixed(2), G);
+  const sel = K.selector(S, 22, G + 1.3, D.fits.map(f => f.deg), 'DEGREE');
 
   let i = 0;
   const verdict = d => d <= 2 ? 'too simple: misses the curve (bias)' : d <= 9 ? 'about right' : 'chases the noise (variance)';

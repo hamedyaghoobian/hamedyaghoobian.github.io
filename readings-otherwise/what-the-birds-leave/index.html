@@ -6,49 +6,113 @@
 <title>What the Birds Leave · Readings, Otherwise</title>
 <meta name="description" content="Attar's Conference of the Birds with every letter taken out. The 112,052 dots that remain fly as a murmuration, and come home to the verse when you stand still.">
 <script>
-  // light or dark; dark unless the visitor chose light
-  try { document.documentElement.dataset.theme = localStorage.getItem("what-the-birds-leave:theme") === "light" ? "light" : "dark"; }
-  catch (_) { document.documentElement.dataset.theme = "dark"; }
+  // First paint in the site's theme: the knob's last position (light · dark · auto), as the site keeps it.
+  (function () {
+    var s; try { s = localStorage.getItem("theme"); } catch (e) {}
+    var m = (s === "light" || s === "dark") ? s : "system";
+    var d = m === "dark" || (m === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.setAttribute("data-theme", d ? "dark" : "light");
+  })();
+  window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="flock.css?v=5">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Kufi+Arabic:wght@400;800&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css?v=fp6">
+<link rel="stylesheet" href="flock.css?v=9">
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<script src="/assets/js/faceplate.js?v=fp2" defer></script>
 </head>
-<body>
-<button id="theme" class="theme-toggle" type="button">light</button>
+<body class="fp fp-depth-2 fp-sec-6 ro-piece ro-birds">
+<a class="fp-skip" href="#frame">skip to the piece</a>
 
-<p class="kicker"><a href="../">Readings, Otherwise</a> <span>No. 2</span></p>
-
-<main class="room">
-  <figure class="frame" id="frame">
-    <canvas id="letters" aria-hidden="true"></canvas>
-    <canvas id="sky" aria-label="A murmuration made of the dots of Attar's Conference of the Birds. Stay still and the dots return to the verse."></canvas>
-    <div class="controls">
-      <button id="zoom-out" title="Zoom out (−)" aria-label="Zoom out">−</button>
-      <button id="zoom-in" title="Zoom in (+)" aria-label="Zoom in">+</button>
-      <button id="reset" title="See the whole book (0)" aria-label="See the whole book">◻</button>
-      <button id="layers" title="Take the flock apart" aria-label="Take the flock apart into its layers">≋</button>
+<header class="fp-plate ro-plate" role="banner">
+  <div class="fp-plate__row">
+    <nav class="fp-strip" aria-label="Sections">
+      <a class="fp-key" href="/" data-key="0"><span class="fp-key__n">0</span><span class="fp-key__t">home</span></a>
+      <a class="fp-key" href="/pedagogy/" data-key="1"><span class="fp-key__n">1</span><span class="fp-key__t">teaching</span></a>
+      <a class="fp-key" href="/student-research/" data-key="2"><span class="fp-key__n">2</span><span class="fp-key__t">research</span></a>
+      <a class="fp-key" href="/publications/" data-key="3"><span class="fp-key__n">3</span><span class="fp-key__t">publications</span></a>
+      <a class="fp-key" href="/news/" data-key="4"><span class="fp-key__n">4</span><span class="fp-key__t">news</span></a>
+      <a class="fp-key" href="/tools/" data-key="5"><span class="fp-key__n">5</span><span class="fp-key__t">tools</span></a>
+      <a class="fp-key is-down" href="/readings-otherwise/" data-key="6" aria-current="true"><span class="fp-key__n">6</span><span class="fp-key__t">readings</span></a>
+      <a class="fp-key" href="/poems/" data-key="7"><span class="fp-key__n">7</span><span class="fp-key__t">poems</span></a>
+    </nav>
+    <div class="fp-knob" role="group" aria-label="Theme">
+      <span class="fp-knob__marks">
+        <button type="button" data-theme-set="light" title="Light">L</button>
+        <button type="button" data-theme-set="dark" title="Dark">D</button>
+        <button type="button" data-theme-set="system" title="Auto: follow the system">A</button>
+      </span>
+      <button type="button" class="fp-knob__dial" aria-label="Turn the theme knob (\)" title="Theme · \"></button>
     </div>
-    <p class="solo" id="solo" hidden><span class="what"></span><button type="button" title="Bring the whole flock back (Esc)" aria-label="Bring the whole flock back">×</button></p>
-    <p class="hint" id="hint">stay still and the birds come home · scroll or pinch to come closer · drag to move</p>
-    <aside id="panel" aria-live="polite">
-      <p class="where" id="where"></p>
-      <p class="couplet" id="couplet" dir="rtl" lang="fa"></p>
-      <p class="count" id="count"></p>
-    </aside>
-  </figure>
+  </div>
+  <div class="fp-crumb">
+    <p class="fp-crumb__path">
+      <a href="/">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page"><span class="fp-crumb__n">02</span> what the birds leave</span>
+    </p>
+    <p class="fp-crumb__keys">
+      <a class="fp-crumb__sib" rel="prev" href="../what-capital-leaves/" title="No. 1 · What Capital Leaves"><span class="fp-k">[</span>no. 1 what capital leaves</a>
+      <a class="fp-crumb__sib" rel="next" href="../what-ferdowsi-let-in/" title="No. 3 · What Ferdowsi Let In"><span class="fp-k">]</span>no. 3 what ferdowsi let in</a>
+      <a class="fp-crumb__up" rel="up" href="../"><span class="fp-k">esc</span>up</a>
+      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">?</span>keys</button>
+    </p>
+  </div>
+</header>
 
-  <section class="label" aria-label="Wall label">
+<main class="fp-main ro-main" id="content" aria-label="What the Birds Leave">
+  <header class="ro-head">
+    <p class="ro-head__n">06.2 · No. 2 · <time datetime="2026-11-01">1 nov 2026</time></p>
     <h1>What the Birds Leave</h1>
-    <p class="meta">Farid ud-Din Attar, <em>Manteq al-Tayr</em> (<span lang="fa">منطق‌الطیر</span>), c. 1177 / 2026</p>
-    <p class="meta">Dots in flight. 112,052 dots, 4,697 couplets, one metre</p>
-    <p class="hands">Set in
-      <button type="button" data-hand="naskh" aria-pressed="false">naskh<span lang="fa">نسخ</span></button>
-      <button type="button" data-hand="nastaliq" aria-pressed="false">nastaliq<span lang="fa">نستعلیق</span></button>
-      <button type="button" data-hand="english" aria-pressed="false">English, FitzGerald</button></p>
+    <div class="ro-head__lines">
+      <p class="meta">Farid ud-Din Attar, <em>Manteq al-Tayr</em> (<span lang="fa">منطق‌الطیر</span>), c. 1177 / 2026</p>
+      <p class="meta">Dots in flight. 112,052 dots, 4,697 couplets, one metre</p>
+    </div>
+  </header>
 
+  <div class="ro-stage">
+    <figure class="ro-frame frame" id="frame" tabindex="0" data-fp-own-keys aria-label="The flock. Focus it and the keys work the piece; press Esc to give them back.">
+      <canvas id="letters" aria-hidden="true"></canvas>
+      <canvas id="sky" aria-label="A murmuration made of the dots of Attar's Conference of the Birds. Stay still and the dots return to the verse."></canvas>
+      <p class="ro-owner" aria-hidden="true">keys: page · enter to take them</p>
+      <div class="ro-caps controls">
+        <button type="button" class="ro-cap" id="zoom-out" data-ro-key="- _ −" title="Zoom out (−)" aria-label="Zoom out"><kbd>−</kbd></button>
+        <button type="button" class="ro-cap" id="zoom-in" data-ro-key="+ =" title="Zoom in (+)" aria-label="Zoom in"><kbd>+</kbd></button>
+        <button type="button" class="ro-cap" id="reset" data-ro-key="0" title="See the whole book (0)" aria-label="See the whole book">◻<kbd>0</kbd></button>
+        <button type="button" class="ro-cap" id="layers" data-ro-key="l" aria-pressed="false" title="Take the flock apart (l)" aria-label="Take the flock apart into its layers">≋<kbd>l</kbd></button>
+      </div>
+      <p class="solo" id="solo" hidden><span class="what"></span><button type="button" title="Bring the whole flock back (Esc)" aria-label="Bring the whole flock back">×</button></p>
+      <i class="sel-rule" id="sel-rule" hidden></i>
+      <p class="ro-hint hint" id="hint">stay still and the birds come home · scroll or pinch to come closer · drag to move</p>
+      <aside class="ro-panel ro-verse" id="panel" aria-live="polite">
+        <p class="where" id="where" dir="rtl" lang="fa"></p>
+        <div class="lines" id="couplet" dir="rtl" lang="fa"></div>
+        <p class="foot"><span class="count" id="count"></span></p>
+      </aside>
+    </figure>
+
+    <div class="ro-controls hands" role="group" aria-label="Set in">
+      <p class="ro-controls__lbl"><span class="fp-k">h</span>Set in</p>
+      <button type="button" class="ro-key" data-hand="naskh" aria-pressed="false"><span>naskh<span lang="fa">نسخ</span></span></button>
+      <button type="button" class="ro-key" data-hand="nastaliq" aria-pressed="false"><span>nastaliq<span lang="fa">نستعلیق</span></span></button>
+      <button type="button" class="ro-key" data-hand="english" aria-pressed="false"><span>English, FitzGerald</span></button>
+    </div>
+  </div>
+
+  <section class="bk" id="book" aria-labelledby="bk-t" hidden>
+    <div class="bk-head">
+      <h2 id="bk-t">the book, in 29 sections</h2>
+      <p class="fp-label fp-keyhint"><span class="fp-k">j</span><span class="fp-k">k</span>section · read right to left · width ∝ √dots</p>
+    </div>
+    <svg class="bk-strip" id="bk-strip" role="img" aria-label="The 29 sections of the poem, right to left, each as wide as the square root of its dots, with its gold dots marked above it"></svg>
+    <div class="bk-grid">
+      <div class="bk-map"><canvas id="bk-map" aria-hidden="true"></canvas>
+        <p class="bk-map__cap fp-label"><span>← end</span><span id="bk-map-n"></span><span>start →</span></p></div>
+      <div class="bk-readout" id="bk-readout" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="ro-label label" aria-label="Wall label">
     <div class="text">
       <p>In Persian script many letters share one body and are told apart only by their dots. Read from the right, <span lang="fa">ب پ ت ث</span> are one stroke with one, three, two and three dots. Take the strokes away and what is left of a book is a scattering of small diamonds, each one the print of a reed pen pressed once against the page.</p>
       <p>This is the whole of <em>The Conference of the Birds</em>, all 4,697 couplets, with every letter removed and only the dots kept. They are taken from the poem as the machine sets it: each line shaped in a typeface, each dot lifted from exactly where it falls. Then they are let go.</p>
@@ -68,8 +132,26 @@
   </section>
 </main>
 
+<nav class="fp-thumb" aria-label="Move">
+  <a href="../what-capital-leaves/" rel="prev">‹ prev</a>
+  <a href="../" rel="up">up · 06 readings</a>
+  <a href="../what-ferdowsi-let-in/" rel="next">next ›</a>
+</nav>
+
+<p class="ro-keys" id="ro-keys" aria-hidden="true"></p>
+
+<div class="fp-help" id="fp-help" role="dialog" aria-modal="true" aria-labelledby="fp-help-t" hidden>
+  <div class="fp-help__box">
+    <div class="fp-help__head"><h2 id="fp-help-t">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
+    <div class="fp-help__body"></div>
+    <p class="fp-help__note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
+  </div>
+</div>
+
 <noscript><p class="fallback">This piece needs JavaScript. <a href="https://ganjoor.net/attar/manteghotteyr">Read the poem on Ganjoor instead.</a></p></noscript>
 
-<script src="flock.js?v=5"></script>
+<script src="../piece.js?v=3"></script>
+<script src="flock.js?v=8"></script>
+<script src="book.js?v=3"></script>
 </body>
 </html>

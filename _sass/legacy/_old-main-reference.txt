@@ -1,0 +1,3386 @@
+---
+---
+
+@import "minima";
+$spacing-unit: 30px;
+$on-medium: 768px;
+$on-large: 1024px;
+
+
+html {
+  scrollbar-gutter: stable;
+  font-size: 15px;
+}
+
+:root {
+  --day: #faf2e2;
+  --evening: #fccc83;
+  --dusk: #db7a2a;
+  --night: #0f131c;
+  --dawn: #16132b;
+  --morning: #9fb3bf;
+
+  --light: var(--day);
+  --dark: var(--night);
+  --shadow: #1a1917;
+  --bounce-light: #f5d7a6;
+  --timing-fn: ease;
+
+  --background: var(--light);
+  --text: var(--dark);
+  --accent: #2b6cb0;
+  --accent-hover: #2c5282;
+
+  /* Palette of the Mashhad footer drawing, reused across the page */
+  --paper: #faf2e2;
+  --ink: #2749b8;
+  --ink-soft: #6b7fbe;
+  --rule: rgba(39, 73, 184, 0.16);
+  /* The one accent in the line figures: only what is live wears it */
+  --glow: #d9480f;
+}
+
+// Modern Typography
+body {
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #2c3e50;
+  margin: 0;
+  padding: 0;
+  background-color: var(--light);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &.dark {
+    --light: var(--night);
+    --dark: var(--day);
+    --shadow: #030307;
+    --bounce-light: #1b293f;
+    --background: var(--light);
+    --text: var(--dark);
+    --accent: #63b3ed;
+    --accent-hover: #90cdf4;
+    --paper: var(--night);
+    --ink: #d8b647;
+    --ink-soft: #9a8a63;
+    --rule: rgba(216, 182, 71, 0.18);
+    --glow: #ff7a3d;
+    background-color: var(--night);
+    color: #a0c4ff;
+  }
+}
+
+// Weight stays at regular here on purpose — the serif face already reads
+// as distinct from the sans body, so hierarchy comes from that contrast
+// rather than from stacking bold on top of it too.
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Newsreader', serif !important;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: #1a202c;
+  font-weight: 400;
+  font-size: 1.0em;
+  transition: color 0.3s ease;
+}
+
+h1 {
+  font-size: 1.3em;
+}
+
+h2 {
+  font-size: 1.15em;
+}
+
+h3 {
+  font-size: 1.08em;
+}
+
+.site-title {
+  font-family: 'Newsreader', serif;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+
+.site-nav {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 400;
+
+  .page-link {
+    padding: 6px 8px;
+    margin-right: 4px;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// Content Styling
+.education-item,
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  i {
+    margin-right: 1rem;
+    width: 1.5rem;
+    text-align: center;
+    color: #4a5568;
+  }
+}
+
+// Footer
+.site-footer {
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: #718096;
+  padding: 10px 0;
+  border-top: 1px solid #e8e8e8;
+  text-align: center;
+  transition: border-color 0.3s ease;
+
+  .footer-content {
+    text-align: center;
+  }
+
+  .copyright-text {
+    margin: 0;
+    line-height: 1.5;
+    font-size: inherit;
+  }
+
+  .footer-separator {
+    margin: 0 8px;
+    color: #999;
+  }
+
+  .built-with {
+    color: #777;
+
+    a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Ensure all footer links use the same size as the surrounding text (prevents iOS from enlarging link)
+  a {
+    font-size: inherit !important;
+  }
+
+  // Make footer much smaller on mobile devices
+  @media screen and (max-width: 600px) {
+    font-size: 0.7rem;
+    padding: 5px 0;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+
+    .wrapper {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .copyright-text {
+      line-height: 1.2;
+    }
+
+    .footer-separator {
+      margin: 0 4px;
+    }
+  }
+
+  // Even smaller for very small screens
+  @media screen and (max-width: 480px) {
+    font-size: 0.65rem;
+    padding: 2px 0;
+
+    .wrapper {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+
+    .copyright-text {
+      line-height: 1.1;
+    }
+
+    .footer-separator {
+      margin: 0 3px;
+    }
+  }
+}
+
+// Links
+a {
+  color: #ed8936;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #dd6b20;
+    text-decoration: none;
+  }
+}
+
+// Tables — flat, hairline-only override of minima's default boxed,
+// zebra-striped table. Minima's own version has no dark-mode styling at
+// all, so it also fixes a real bug: white/light-gray cells on the dark
+// background made data illegible.
+table {
+  width: 100%;
+  margin-bottom: $spacing-unit;
+  border-collapse: collapse;
+  border: none;
+
+  tr:nth-child(even) {
+    background: none;
+  }
+
+  th,
+  td {
+    padding: 0.6rem 1rem 0.6rem 0;
+    border: none;
+    border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+    text-align: left;
+  }
+
+  th {
+    font-weight: 600;
+    color: #1a202c;
+    background: none;
+    border-bottom: 1px solid rgba(44, 62, 80, 0.25);
+  }
+
+  body.dark & {
+    th,
+    td {
+      border-bottom-color: rgba(226, 232, 240, 0.12);
+    }
+
+    th {
+      color: #e2e8f0;
+      border-bottom-color: rgba(226, 232, 240, 0.3);
+    }
+  }
+}
+
+// Optional: Add smooth scrolling
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+// Bio Container
+.bio-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: clamp(0.3rem, 1.2vh, 1rem);
+}
+
+.bio-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: none;
+  width: 100%;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+// ─── Profile Column (left side of bio) ──────────────────────────────────────
+.profile-orbit {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  // Drives the ring and the photo below. The 250px ceiling means this is a
+  // no-op on a roomy window and only gives ground on a short one.
+  --ring-size: clamp(170px, 24vh, 250px);
+  width: var(--ring-size); // match image width
+  // extra bottom space for the icons strip + caption
+  padding-bottom: 50px;
+  z-index: 10;
+  overflow: visible;
+}
+
+// Orange ring wrapper — the visible circle border
+.profile-ring {
+  width: var(--ring-size, 250px);
+  height: var(--ring-size, 250px);
+  border-radius: 50%;
+  border: 2px solid rgba(237, 137, 54, 0.45);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
+    border-color: rgba(237, 137, 54, 0.75);
+  }
+}
+
+// The actual image — smaller than the ring so shoulders don't touch the rim
+.profile-pic {
+  width: calc(var(--ring-size, 250px) * 0.86);
+  height: calc(var(--ring-size, 250px) * 0.86);
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  z-index: 3;
+  position: relative;
+}
+
+// Curved "Drawn by ChatGPT" SVG caption — below the image
+.caption-arc {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 40px;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.caption-arc-text {
+  font-size: 7.5px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'SF Mono', monospace;
+  fill: #b0b8c8;
+  letter-spacing: 0.06em;
+
+  body.dark & {
+    fill: #4a5568;
+  }
+}
+
+// Icon strip — sits below the image, slides up on hover/pinned
+// It doesn't overlap the image at all — gap is handled by padding-bottom
+.orbit-icons {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2; // behind image (z-index:3) if they ever overlap, but layout prevents it
+  opacity: 0;
+  // start slightly lower
+  transform: translateX(-50%) translateY(8px);
+  transition:
+    opacity 0.28s ease,
+    transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+// Reveal strip on hover or pinned
+.profile-orbit:hover .orbit-icons,
+.profile-orbit.pinned .orbit-icons {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+// Each icon button — sketchy thin-border circle, warm site palette color
+.orbit-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1.5px solid currentColor;
+  // warm earthy tan — matches orange ring, site palette (forced to prevent cascade override)
+  color: #c49a6c !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+
+  body.dark & {
+    color: #c4976a !important;
+  }
+
+  &:hover {
+    color: #ed8936 !important;
+    background: rgba(237, 137, 54, 0.08);
+    transform: scale(1.12);
+
+    body.dark & {
+      color: #f6ad55 !important;
+      background: rgba(237, 137, 54, 0.12);
+    }
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+}
+
+.bio-text {
+  text-align: left;
+}
+
+// Text Justification
+p {
+  //   text-align: justify
+}
+
+// ─── Icon-only theme toggle button ──────────────────────────────────────────
+.theme-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  color: #4a5568;
+  transition: background 0.2s ease, color 0.2s ease;
+  z-index: 1001; // above nav fixed layer
+
+  body.dark & {
+    color: #cbd5e0;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+
+    body.dark & {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ed8936;
+    outline-offset: 2px;
+  }
+
+  @media screen and (min-width: 601px) {
+    margin-left: 1.5rem; // Generous margin for the divider space
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 16px;
+      background-color: rgba(0, 0, 0, 0.12);
+
+      body.dark & {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+    }
+  }
+
+  // On mobile: fixed in header, right of the hamburger (which is at right:15px)
+  @media screen and (max-width: 600px) {
+    position: fixed;
+    top: 9px;
+    right: 58px;
+    z-index: 1001;
+    margin-left: 0;
+  }
+}
+
+// All three icons overlap; the button's own data-mode (set by head.html,
+// one of light/dark/system — the user's chosen mode, not necessarily what
+// it currently resolves to) picks which is visible. Keyed off the button
+// rather than body.dark specifically because 'system' needs its own icon
+// regardless of which theme it happens to resolve to right now.
+//
+// Written as one explicit visible/hidden pair per (mode, icon) combination
+// rather than a single shared "hidden" default with per-mode overrides —
+// with three icons and three modes, a shared default needs every non-match
+// to be re-hidden individually, and it's easy to forget one (an icon that
+// silently stays visible outside its mode, doubled up with whichever one
+// is actually meant to show). Explicit is more to read but nothing to get
+// wrong. Before JS runs (data-mode unset), only the plain .theme-icon--sun
+// rule below applies, matching the 'light' column, same as today.
+.theme-icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.theme-icon--sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-icon--moon,
+.theme-icon--system {
+  opacity: 0;
+  transform: scale(0.6) rotate(-30deg);
+}
+
+.theme-icon-btn[data-mode="light"] .theme-icon--sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-icon-btn[data-mode="light"] .theme-icon--moon,
+.theme-icon-btn[data-mode="light"] .theme-icon--system {
+  opacity: 0;
+  transform: scale(0.6) rotate(-30deg);
+}
+
+.theme-icon-btn[data-mode="dark"] .theme-icon--moon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-icon-btn[data-mode="dark"] .theme-icon--sun,
+.theme-icon-btn[data-mode="dark"] .theme-icon--system {
+  opacity: 0;
+  transform: scale(0.6) rotate(30deg);
+}
+
+.theme-icon-btn[data-mode="system"] .theme-icon--system {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-icon-btn[data-mode="system"] .theme-icon--sun,
+.theme-icon-btn[data-mode="system"] .theme-icon--moon {
+  opacity: 0;
+  transform: scale(0.6) rotate(-15deg);
+}
+
+.dark-mode {
+  background-color: var(--night);
+  color: #e2e8f0;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #e2e8f0;
+  }
+
+  a {
+    color: #fbd38d;
+
+    &:hover {
+      color: #f6ad55;
+    }
+  }
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 253, 250, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  body.dark & {
+    background-color: rgba(26, 32, 44, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // Space title and nav group cleanly
+    padding: 10px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 56px;
+  }
+}
+
+.site-title {
+  font-family: 'Newsreader', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  margin-bottom: 0;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+  color: #2d3748;
+
+  body.dark & {
+    color: #e2e8f0;
+  }
+
+  &:hover {
+    color: #ed8936;
+    text-decoration: none !important;
+  }
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  
+  @media screen and (min-width: 601px) {
+    margin-left: auto;
+    
+    .trigger {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem; // Balanced, even spacing between pages
+    }
+
+    .page-link {
+      padding: 6px 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #4a5568 !important;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border-radius: 6px;
+      margin-right: 0 !important;
+
+      body.dark & {
+        color: #cbd5e0 !important;
+      }
+
+      &:hover {
+        color: #ed8936 !important;
+        background: rgba(237, 137, 54, 0.05);
+
+        body.dark & {
+          color: #f6ad55 !important;
+          background: rgba(255, 255, 255, 0.05);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    line-height: 1.5;
+    margin-left: auto;
+
+    .page-link {
+      padding: 4px 6px;
+      margin-right: 2px;
+      font-size: 0.9rem;
+      color: var(--text);
+
+      &:last-child {
+        margin-right: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+
+
+// Simplified dappled light section - Much lighter on CPU
+#dappled-light {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.6;
+}
+
+#glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, var(--bounce-light) 0%, transparent 60%);
+  transition: background 0.5s ease;
+  height: 100%;
+  width: 100%;
+}
+
+#glow-bounce {
+  display: none;
+}
+
+// Simplified dark mode styles
+body.dark {
+  background-color: var(--night);
+  color: #e2e8f0;
+
+  .site-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .site-footer {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #e2e8f0;
+  }
+
+  .site-nav .page-link {
+    color: #e2e8f0;
+  }
+
+  .site-title {
+    color: #e2e8f0;
+  }
+}
+
+// Cleaned up dappled light overrides
+
+// Simplified content styling
+.page-content {
+  background-color: transparent;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+
+  .wrapper {
+    background-color: transparent;
+    padding: 2rem 8px;
+    margin: 2rem auto;
+    max-width: 900px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    flex: 1;
+    overflow: visible;
+  }
+}
+
+body.dark .page-content .wrapper {
+  background-color: transparent;
+}
+
+// Home page specific overrides
+// DOM structure: main.page-content > div.wrapper > div.home
+// .home is not in index.markdown's own markup — it's added by minima's
+// gem layout for "layout: home", which wraps the page's rendered content in
+// a div carrying that class. (index.markdown's own top-level element is
+// .home-container, one level further in — .home is supplied by the layout
+// wrapping it, not written on the page itself.)
+// Need the wrapper to stretch, then .home to fill it and center its children.
+.page-content > .wrapper:has(.home) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // No min-height: body is a 100vh flex column and .page-content is flex:1,
+  // so this stretches to exactly the space the header and footer leave over.
+  // A hardcoded calc() here silently breaks every time the footer changes.
+  padding: clamp(0.75rem, 2.2vh, 2rem);
+  margin: 0 auto;
+  max-width: 900px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    padding: 1.5rem;
+    margin: 0 auto;
+  }
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 3.4vh, 2.5rem);
+}
+
+.site-footer {
+  background-color: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+// Ensure the main content fits within the viewport
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.bio-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.research-interests,
+.education {
+  flex: 1;
+  min-width: 300px;
+  padding: clamp(0.35rem, 1.4vh, 1rem);
+}
+
+// Home page container: naturally sized to fit all content on screen
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+// Bio row: profile + text side by side, top-aligned
+.bio-content {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  max-width: none;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+  position: relative;
+  z-index: 10; /* Ensure text and avatar sit above the sun */
+}
+
+// Bio text column
+.bio-text {
+  flex: 1;
+  min-width: 0;
+
+  h1 {
+    font-size: 1.45rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.personal-story {
+  margin-bottom: 0.75rem;
+}
+
+.personal-toggle {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.82rem;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    color: #334155;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ed8936;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+.personal-toggle__icon {
+  width: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.personal-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-4px);
+  // overflow switches back to hidden the instant the class comes off, so
+  // closing still clips correctly throughout — only opening delays it.
+  transition: max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease, transform 0.3s ease, overflow 0s linear 0s;
+
+  p {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+.personal-story.is-open {
+  .personal-content {
+    // room for both paragraphs on the narrowest phones, where they wrap longest
+    max-height: 48rem;
+    opacity: 1;
+    transform: translateY(0);
+    // Delayed past the slide-open transition above (0.38s) rather than
+    // switching immediately: while opening, overflow:hidden is still doing
+    // real work (it's what makes max-height read as a reveal instead of a
+    // jump-cut). Once open and settled it serves no purpose, so it's let go.
+    overflow: visible;
+    transition: max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease, transform 0.3s ease, overflow 0s linear 0.4s;
+  }
+}
+
+body.dark {
+  .personal-toggle {
+    color: #94a3b8;
+
+    &:hover {
+      color: #e2e8f0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .personal-content {
+    transition: none;
+  }
+}
+
+// Info-grid section: tighter padding to fit all on one page
+.info-section {
+  padding: 0.5rem 0 1rem;
+
+  h2 {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: none;
+  margin: 0 auto;
+  padding: 0;
+  font-size: 0.95rem;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .page-content .wrapper {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .bio-content {
+    flex-direction: column;
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: center;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+  }
+
+  .home-container {
+    padding: 0.75rem 1rem;
+  }
+
+
+
+  .bio-text {
+    text-align: left;
+  }
+
+  .research-interests,
+  .education {
+    padding: 1rem 0;
+  }
+}
+
+// Update mobile menu styles
+.site-nav {
+  @media screen and (max-width: 600px) {
+    position: fixed;
+    top: 9px;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    text-align: right;
+    z-index: 1000;
+
+    label[for="nav-trigger"] {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 36px;
+      z-index: 2;
+      cursor: pointer;
+      position: fixed;
+      right: 15px;
+      top: 9px;
+    }
+
+    .menu-icon {
+      display: block;
+      width: 36px;
+      height: 26px;
+      line-height: 0;
+      padding-top: 10px;
+      text-align: center;
+      background-color: transparent;
+      position: fixed;
+      right: 15px;
+      top: 9px;
+
+      >svg path {
+        fill: var(--text);
+        transition: fill 0.3s ease;
+      }
+    }
+
+    input~.trigger {
+      clear: both;
+      display: none;
+      position: fixed;
+      top: 60px;
+      right: 15px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      min-width: 200px;
+      transition: background-color 0.3s ease;
+    }
+  }
+}
+
+// Add dark mode menu styles
+body.dark {
+  .site-nav {
+    @media screen and (max-width: 600px) {
+      .menu-icon>svg path {
+        fill: #a0c4ff;
+      }
+
+      input~.trigger {
+        background-color: rgba(26, 32, 44, 0.95);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .page-link {
+        color: #a0c4ff !important;
+
+        &:hover {
+          color: #63b3ed !important;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// Add more specific mobile text styles
+@media (max-width: 480px) {
+
+  p,
+  li {
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 1.3em;
+  }
+
+  h2 {
+    font-size: 1.15em;
+  }
+
+  h3 {
+    font-size: 1.08em;
+  }
+}
+
+// Update dark mode footer
+body.dark .site-footer {
+  color: #718096;
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+// Update dark mode link styles
+body.dark {
+  a {
+    color: #fbd38d !important;
+
+    &:hover {
+      color: #f6ad55 !important;
+    }
+  }
+
+  // Exception for navigation links
+  .site-nav .page-link {
+    color: #a0c4ff !important;
+
+    &:hover {
+      color: #63b3ed !important;
+    }
+  }
+
+  // Exception for footer links: the colophon link takes the colour of the
+  // line it sits in, not the site-wide dark link colour. !important is
+  // needed only to beat the `body.dark a` rule above.
+  .site-footer .built-with a {
+    color: inherit !important;
+
+    &:hover {
+      color: inherit !important;
+    }
+  }
+}
+
+// Research Figure Styling
+.research-figure {
+  margin: 2rem auto;
+  text-align: center;
+  max-width: 100%;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    font-family: 'Instrument Sans', sans-serif;
+    line-height: 1.4;
+
+    body.dark & {
+      color: #a0a0a0;
+    }
+  }
+}
+
+// References Section Styling
+.references {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e2e8f0;
+  transition: border-color 0.3s ease;
+
+  body.dark & {
+    border-top-color: #4a5568;
+  }
+
+  p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #4a5568;
+    padding-left: 1rem;
+    text-indent: -1rem;
+
+    body.dark & {
+      color: #a0c4ff;
+    }
+  }
+}
+
+// Citation Links Styling
+sup a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+}
+
+// Improved Small Caps Styling
+.small-caps {
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Footer: the mountains above Mashhad
+// A line drawing of a range, drawn live by assets/js/mashhad-range.js in
+// the site's ink on its paper, with Mashhad's own sun or moon in the sky
+// at its true place for the hour there. The footer is its own thing: it
+// wakes when the pointer is over it (or, on a touch screen, when it comes
+// into view), and nothing elsewhere on the page sets it off.
+// ─────────────────────────────────────────────────────────────
+
+.site-footer {
+  border-top: 0 !important;
+  padding: 0;
+  margin-top: clamp(1.25rem, 3vh, 2.5rem);
+  position: relative;
+  // Below .page-content (z-index 1) so the sky reaching up behind the text
+  // above never washes over it, but still above #dappled-light.
+  z-index: 0;
+  overflow: visible;
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    padding-top: clamp(0.35rem, 0.9vh, 0.55rem);
+    padding-bottom: clamp(0.55rem, 1.7vh, 1.1rem);
+  }
+}
+
+// What the range costs the page: a band at the foot. The drawing's sky
+// reaches up out of flow into whatever clear ground is left above it
+// (sized by the script), so it never moves the layout or crosses text.
+// .footer-range sits outside .wrapper, so 100% is the full page width.
+.footer-range {
+  position: relative;
+  width: 100%;
+  height: clamp(95px, min(21.4vw, 15vh), 214px);
+  pointer-events: none;
+  user-select: none;
+
+  svg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: visible;
+    // The range dissolves at the page's edges instead of ending.
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    // Quiet at rest — a texture at the foot of the page. It settles back
+    // more slowly than it wakes.
+    opacity: 0.55;
+    transition: opacity 1.8s ease;
+  }
+}
+
+.site-footer.is-awake .footer-range svg {
+  opacity: 1;
+  transition: opacity 0.9s ease;
+}
+
+// Marks.
+.range-fill {
+  fill: var(--paper);
+  stroke: none;
+}
+
+.range-ridge {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 0.9;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+// Slopes facing the sun (or moon) take the full ink.
+.range-ridge--lit {
+  stroke: var(--ink);
+  stroke-width: 1.1;
+}
+
+.range-gully {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 0.6;
+  stroke-linecap: round;
+  opacity: 0.5;
+
+  &--lit {
+    stroke: var(--ink);
+    opacity: 0.75;
+  }
+}
+
+// By moonlight the lit faces are only a little brighter than the rest.
+.range--night {
+  .range-ridge--lit {
+    stroke-width: 0.9;
+    opacity: 0.7;
+  }
+
+  .range-gully--lit {
+    opacity: 0.6;
+  }
+}
+
+// The pointer's lamp: the same lines again in full ink, seen only through
+// a soft circle that follows the pointer while the footer is awake.
+.range-lamp {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.site-footer.is-awake .range-lamp {
+  opacity: 1;
+}
+
+.range-mist {
+  fill: var(--paper);
+  opacity: 0.9;
+}
+
+.range-mist-edge {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 0.6;
+  stroke-dasharray: 2 3.5;
+  opacity: 0.55;
+}
+
+// Mist drifts, slowly, back and forth along the valleys.
+.range-drift {
+  animation: range-drift 70s ease-in-out infinite alternate;
+}
+
+.range-drift--slow {
+  animation-duration: 110s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes range-drift {
+  from { transform: translateX(-2.5%); }
+  to { transform: translateX(2.5%); }
+}
+
+.range-sun {
+  fill: #f2c14e;
+  filter: drop-shadow(0 0 5px rgba(242, 193, 78, 0.65)) drop-shadow(0 0 14px rgba(242, 160, 60, 0.35));
+}
+
+// On paper the moon is drawn in ink; on the night page it is moonlight.
+.range-moon {
+  fill: var(--ink-soft);
+}
+
+.range-star {
+  fill: var(--ink-soft);
+  opacity: 0.6;
+}
+
+body.dark {
+  .range-moon {
+    fill: #c7d2e8;
+    filter: drop-shadow(0 0 6px rgba(199, 210, 232, 0.45));
+  }
+
+  .range-star {
+    fill: #e8edf7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .range-drift {
+    animation: none;
+  }
+
+  .footer-range svg,
+  .site-footer.is-awake .footer-range svg,
+  .range-lamp {
+    transition-duration: 0.2s;
+  }
+}
+
+// Caption: Mashhad's time, a hand-note under the drawing in the site
+// title's own voice. An italic serif at this size separates itself from
+// the colophon's plain upright type below without getting any louder. It
+// appears only while the footer is awake; at rest its line is kept, empty
+// to the eye, so waking never moves the colophon.
+.footer-place {
+  // This gap is what separates the caption from the colophon.
+  margin: 0 0 clamp(0.4rem, 1.3vh, 0.85rem);
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.015em;
+  line-height: 1.4;
+  min-height: 1.4em;
+  color: var(--ink-soft);
+  opacity: 0;
+  cursor: default;
+  // Same slow breath as the drawing, so the footer wakes as one thing.
+  transition: opacity 1.4s ease, color 1.4s ease;
+}
+
+.site-footer.is-awake .footer-place {
+  opacity: 1;
+  color: var(--ink);
+  transition: opacity 0.9s ease, color 0.9s ease;
+}
+
+// Colophon: where and how the thing was made, in one line.
+.site-footer .copyright-text {
+  margin: 0;
+  font-weight: 300;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  opacity: 0.75;
+}
+
+// Dots softer than the words they separate.
+.site-footer .footer-separator {
+  margin: 0 0.55em;
+  opacity: 0.45;
+}
+
+// Neutralises the legacy `.built-with { color: #777 }` further up, which
+// the link would otherwise inherit instead of the colophon's own colour.
+.site-footer .built-with {
+  color: inherit;
+}
+
+// The link takes the colour of the line rather than punching a coloured
+// hole in it; the underline arrives only on hover.
+.site-footer .built-with a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    text-decoration: none;
+    border-bottom-color: currentColor;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .site-footer {
+    margin-top: 1.8rem;
+
+    .wrapper {
+      padding-top: 0.45rem;
+      padding-bottom: 0.9rem;
+    }
+  }
+
+  .footer-place {
+    font-size: 0.78rem;
+  }
+}
+
+// Narrow screens: three segments will not sit on one phone line, so break
+// the colophon at its own separators rather than mid-phrase.
+@media screen and (max-width: 600px) {
+  .site-footer .footer-separator {
+    display: none;
+  }
+
+  .site-footer .colophon-item {
+    display: block;
+  }
+}
+
+// Interior pages (everything but home) get the colophon line only — no
+// crane drawing, no click-to-open, no sunrise. It inherits .site-footer's
+// spacing/z-index/wrapper padding above; this just trims the top margin,
+// since that clamp() was sized for the drawing's own height, not a single
+// line of text.
+.site-footer--minimal {
+  margin-top: 1.5rem;
+}
+
+// Line figures at the head of project pages (_includes/project-figure.html,
+// drawn by assets/js/line-figure.js). Ink on paper, the Mashhad footer's
+// palette, so each one reads as the same hand and flips with body.dark.
+// Solids are filled with the page colour, not left transparent, so what
+// stands in front hides what stands behind.
+.project-figure {
+  max-width: 360px;
+  margin: 1.5rem auto 2rem;
+  text-align: center;
+
+  &--wide {
+    max-width: 520px;
+  }
+
+  &--small {
+    max-width: 260px;
+  }
+
+  // A long timeline (the poems shelf) needs the page's full measure.
+  &--shelf {
+    max-width: 760px;
+  }
+
+  .project-figure__canvas {
+    outline: none;
+    border-radius: 4px;
+    touch-action: pan-y;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 1px var(--rule);
+    }
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    min-height: 2.6em;
+  }
+
+  .project-figure__note {
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+}
+
+// Interactive charts inside a page's research figures, drawn with the
+// same kit as the header figures.
+.chart-figure {
+  .project-figure__canvas {
+    max-width: 640px;
+    margin: 0 auto;
+    outline: none;
+    border-radius: 4px;
+    touch-action: pan-y;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 1px var(--rule);
+    }
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  &--wide .project-figure__canvas {
+    max-width: 820px;
+  }
+
+  .chart-figure__readout {
+    display: block;
+    min-height: 1.4em;
+    margin-bottom: 0.35rem;
+    color: var(--ink);
+    font-style: normal;
+  }
+}
+
+// Marks, shared by both. Anything carrying .is-lit, or inside something
+// that does, switches from the soft ink to the full one.
+.project-figure,
+.chart-figure {
+  .lf-solid polygon,
+  polygon.lf-solid,
+  circle.lf-solid,
+  ellipse.lf-solid,
+  rect.lf-solid,
+  path.lf-solid {
+    fill: var(--paper);
+    stroke: var(--ink-soft);
+    stroke-width: 0.9;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+  }
+
+  polygon.lf-sheet {
+    stroke-width: 0.6;
+  }
+
+  // Content laid onto a face with plane()/face() in line-figure.js: keep
+  // its strokes hairline however the face skews them.
+  .lf-face * {
+    vector-effect: non-scaling-stroke;
+  }
+
+  // Text on a face takes its size from the drawing (font-size in the face's
+  // own units), so no class here sets one.
+  .lf-face text {
+    font-family: 'Instrument Sans', sans-serif;
+    fill: var(--ink-soft);
+    stroke: none;
+    transition: fill 0.2s ease;
+  }
+
+  .is-lit .lf-face text,
+  .lf-face text.is-lit {
+    fill: var(--ink);
+  }
+
+  .lf-line {
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 0.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease, opacity 0.2s ease;
+  }
+
+  .lf-faint {
+    opacity: 0.55;
+  }
+
+  .lf-strong {
+    stroke-width: 1.2;
+  }
+
+  .lf-ghost polygon,
+  .lf-ghost.lf-line,
+  .lf-ghost .lf-line {
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 0.75;
+    stroke-dasharray: 1.6 1.8;
+    transition: stroke 0.2s ease;
+  }
+
+  .lf-wall {
+    fill: var(--paper);
+    stroke: none;
+  }
+
+  .lf-shade {
+    fill: var(--rule);
+    stroke: none;
+    transition: fill 0.25s ease;
+  }
+
+  .lf-band {
+    fill: transparent;
+    stroke: none;
+    transition: fill 0.25s ease;
+  }
+
+  .lf-dot {
+    fill: var(--ink-soft);
+    stroke: none;
+    transition: fill 0.2s ease;
+  }
+
+  .is-lit .lf-dot {
+    fill: var(--ink);
+  }
+
+  .lf-label {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 10px;
+    fill: var(--ink-soft);
+
+    &--head {
+      fill: var(--ink);
+      font-weight: 600;
+    }
+  }
+
+  .lf-text {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 8.5px;
+    fill: var(--ink-soft);
+
+    &--small {
+      font-size: 6.5px;
+    }
+  }
+
+  .is-lit polygon,
+  .is-lit.lf-line,
+  .is-lit .lf-line,
+  .is-lit.lf-solid,
+  .is-lit .lf-solid {
+    stroke: var(--ink);
+    opacity: 1;
+  }
+
+  .lf-band.is-lit,
+  .lf-shade.is-lit {
+    fill: var(--rule);
+    stroke: var(--ink);
+    stroke-width: 0.6;
+  }
+
+  .lf-text.is-lit {
+    fill: var(--ink);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Publications (public-interactions.md): built from Google Scholar's data
+// and _data/publications.yml, with small ASCII charts drawn by
+// assets/js/publications-ascii.js in the site's ink. Monospace for the
+// charts only; a wide chart scrolls inside itself, never the page.
+// ─────────────────────────────────────────────────────────────
+.pubs {
+  max-width: 760px;
+  margin: 0 auto;
+
+  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.pubs-overview {
+  margin: 0.5rem 0 2.5rem;
+
+  figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .pubs-stats {
+    display: block;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pubs-chart-note {
+    font-style: italic;
+  }
+}
+
+.ascii-chart {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  // Exactly one line per row, so stacked block characters meet as solid bars.
+  line-height: 1;
+  color: var(--ink);
+  overflow-x: auto;
+  white-space: pre;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.pubs-section {
+  margin: 2rem 0;
+
+  h2 {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+.pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr auto;
+  gap: 0 1rem;
+  align-items: baseline;
+  padding: 0.75rem 0;
+
+  & + & {
+    border-top: 1px solid var(--rule);
+  }
+}
+
+.pub-year {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.pub-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.pub-title {
+  font-family: 'Newsreader', serif;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.pub-authors,
+.pub-venue,
+.pub-students {
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.pub-venue {
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.pub-students {
+  color: var(--ink);
+}
+
+// What a piece is, when it isn't a paper (Poster, PhD dissertation).
+.pub-type {
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.pub-project {
+  font-size: 0.82rem;
+}
+
+.pub-cites {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+
+  &.is-drawn {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+  }
+}
+
+.pubs-source {
+  margin-top: 2.5rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+// On a phone the bar moves under the paper instead of beside it.
+@media (max-width: 600px) {
+  .pub {
+    grid-template-columns: 2.8rem 1fr;
+  }
+
+  .pub-cites {
+    grid-column: 2;
+    margin-top: 0.3rem;
+  }
+
+  .ascii-chart {
+    font-size: 9px;   // the whole chart fits a 375px phone
+  }
+}
+
+// Reachy Mini (assets/js/reachy-figure.js): the parts that are dark on the
+// real robot — its lenses, the goggle bridge, the base ring — drawn dark in
+// both themes: deep ink on paper, near-black with a gold rim on the night page.
+.project-figure {
+  .reachy-lens {
+    fill: var(--ink);
+    stroke: var(--ink);
+    stroke-width: 0.9;
+  }
+
+  .reachy-rim {
+    fill: none;
+    stroke: var(--paper);
+    stroke-width: 0.6;
+    opacity: 0.35;
+  }
+
+  .reachy-glint {
+    fill: var(--paper);
+  }
+
+  .reachy-bridge {
+    stroke: var(--ink);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
+  ellipse.reachy-base {
+    fill: var(--ink-soft);
+    fill-opacity: 0.45;
+  }
+}
+
+body.dark .project-figure {
+  .reachy-lens {
+    fill: #05070c;
+  }
+
+  .reachy-rim {
+    stroke: var(--ink);
+    opacity: 0.5;
+  }
+
+  .reachy-glint {
+    fill: var(--ink);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Anatomy-style figures: solids shaded by facing, round parts, fittings,
+// and a framed card with corner captions (Fig n, title, hint, live
+// readout). After the craft rules of Ryan's Anatomy skill
+// (github.com/wheresryan22/anatomy, MIT); drawn with this site's own kit.
+// ─────────────────────────────────────────────────────────────
+.project-figure,
+.chart-figure {
+  // Two side tones mixed from the page's ink and paper, so they follow the
+  // theme: the near side a little darker than the top, the end darker still.
+  --tone-mid: color-mix(in srgb, var(--ink) 7%, var(--paper));
+  --tone-lo: color-mix(in srgb, var(--ink) 15%, var(--paper));
+
+  .lf-solid path,
+  .lf-solid ellipse,
+  path.lf-solid {
+    fill: var(--paper);
+    stroke: var(--ink-soft);
+    stroke-width: 0.9;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+  }
+
+  .lf-shaded > polygon:nth-of-type(1),
+  .lf-shaded > path {
+    fill: var(--tone-mid);
+  }
+
+  .lf-shaded > polygon:nth-of-type(2) {
+    fill: var(--tone-lo);
+  }
+
+  .lf-screw ellipse {
+    fill: var(--paper);
+    stroke: var(--ink-soft);
+    stroke-width: 0.5;
+  }
+
+  .lf-screw circle {
+    fill: var(--ink-soft);
+  }
+
+  .is-lit path,
+  .is-lit ellipse {
+    stroke: var(--ink);
+  }
+
+  // A part in motion or in the reader's eye: the one accent.
+  .lf-accent polygon,
+  .lf-accent path,
+  .lf-accent ellipse,
+  polygon.lf-accent {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.1;
+  }
+}
+
+.project-figure--card {
+  max-width: 640px;
+
+  .figure-card {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 10px 14px 9px;
+  }
+
+  .figure-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+  }
+
+  .figure-card__fig,
+  .figure-card__title,
+  .figure-card__hint {
+    text-transform: uppercase;
+  }
+
+  .figure-card__fig {
+    text-transform: none;
+  }
+
+  .figure-card__readout {
+    text-align: right;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    max-width: 68%;
+  }
+
+  // On a phone the hint and the live caption stack, the caption full width.
+  @media screen and (max-width: 600px) {
+    .figure-card__row:has(.figure-card__readout) {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .figure-card__readout {
+      text-align: left;
+      max-width: none;
+    }
+  }
+
+  figcaption {
+    min-height: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Glow: whatever a figure lights (.is-lit — the picked item, a passing
+// checkpoint, a set letter) takes the one accent colour, and in the dark
+// theme it glows. In the light theme it stays a flat accent with no
+// radiating light. After the lighting rules of the iso-glow skill (built on
+// MrBongoC/ai-iso-skill, MIT). Swapping the ink tokens inside a lit part
+// recolours every stroke and text in it without touching each figure.
+// ─────────────────────────────────────────────────────────────
+.project-figure,
+.chart-figure {
+  .is-lit:not(svg),
+  .lf-hot {
+    --ink: var(--glow);
+    --ink-soft: var(--glow);
+  }
+}
+
+#lf-glow feFlood {
+  flood-color: var(--glow);
+}
+
+body.dark {
+  .project-figure,
+  .chart-figure {
+    .is-lit:not(svg),
+    .lf-hot {
+      filter: url(#lf-glow);
+    }
+  }
+}
+
+// The CSI 330 study page: figures a little wider, so the boards read.
+.project-figure--card.project-figure--study {
+  max-width: 760px;
+}
+
+// Under a study figure: the calculation behind its reading, written out
+// with the live numbers (the figure fills #id-calc), so the arithmetic is
+// as visible as the machine.
+.project-figure--card .figure-card__calc {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  text-align: left;
+
+  b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .hot {
+    color: var(--glow);
+    font-weight: 600;
+  }
+
+  var {
+    font-style: italic;
+  }
+}
+
+// "Try this": guided tasks under each study figure, with the answers folded.
+.study-try {
+  margin: -0.6rem auto 2.4rem;
+  max-width: 760px;
+  padding: 0.9rem 1.1rem;
+  border-left: 2px solid var(--rule);
+  font-size: 0.95rem;
+
+  > p:first-child {
+    margin-top: 0;
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  ol {
+    margin: 0 0 0.6rem;
+    padding-left: 1.3rem;
+  }
+
+  li {
+    margin-bottom: 0.35rem;
+  }
+
+  details {
+    margin-top: 0.4rem;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--ink);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Learning Machines (/tools/learning-machines/, _layouts/learning-machines.html):
+// a visual encyclopedia after Pascal Architecture. A sidebar index, an
+// article column, entries with a figure and numbered parts.
+// ─────────────────────────────────────────────────────────────
+.page-content > .wrapper:has(.lm) {
+  max-width: 1160px;
+}
+
+.lm {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
+  padding-top: 1rem;
+
+  @media (max-width: 899px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
+
+.lm-side {
+  position: sticky;
+  top: 5rem;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  font-size: 0.86rem;
+  line-height: 1.35;
+
+  @media (max-width: 899px) {
+    position: static;
+    max-height: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.6rem;
+  }
+
+  summary {
+    cursor: pointer;
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+
+    @media (min-width: 900px) {
+      display: none;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0 0 1.1rem;
+    padding: 0;
+  }
+
+  li {
+    margin: 0.32rem 0;
+  }
+
+  a {
+    color: var(--ink-soft);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--ink);
+    }
+
+    &[aria-current="page"] {
+      color: var(--ink);
+      font-weight: 600;
+    }
+  }
+}
+
+.lm-side__name {
+  margin: 0.4rem 0 0.8rem;
+  font-weight: 600;
+
+  a {
+    color: var(--ink);
+  }
+}
+
+.lm-side__group {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.4rem 0 0.2rem;
+  color: var(--ink);
+
+  span {
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+  }
+}
+
+.lm-side__list {
+  padding-left: 0.7rem !important;
+  border-left: 1px solid var(--rule);
+}
+
+.lm-main {
+  min-width: 0;
+  max-width: 820px;
+}
+
+.lm-eyebrow,
+.lm-crumbs,
+.lm-count {
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.lm-crumbs {
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 0.85rem;
+
+  a {
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  span {
+    margin: 0 0.35rem;
+    opacity: 0.6;
+  }
+
+  b {
+    color: var(--ink);
+    font-weight: 500;
+  }
+}
+
+.lm-hero {
+  font-family: 'Newsreader', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4.4vw, 2.9rem);
+  line-height: 1.1;
+  margin: 0.4rem 0 1rem;
+}
+
+.lm-title {
+  font-family: 'Newsreader', serif;
+  font-weight: 400;
+  font-size: 1.9rem;
+  margin: 0.8rem 0 0.2rem;
+}
+
+.lm-line {
+  color: var(--ink-soft);
+  margin: 0 0 1.4rem;
+}
+
+.lm-h2 {
+  font-family: 'Newsreader', serif;
+  font-weight: 400;
+  font-size: 1.45rem;
+  margin: 3rem 0 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+
+  span {
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-right: 0.6rem;
+    vertical-align: 0.25em;
+  }
+}
+
+// The figures sit in the article column; the pipeline takes its full width.
+.lm .project-figure--card {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.project-figure--card.project-figure--flow {
+  max-width: none;
+}
+
+// The numbered parts of an entry, each pointing to the entry that explains it.
+.lm-parts {
+  margin: 2rem 0;
+
+  h2 {
+    font-family: 'Newsreader', serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+  }
+
+  ol {
+    list-style: none;
+    counter-reset: part;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  li {
+    counter-increment: part;
+    display: grid;
+    grid-template-columns: 2.2rem 11rem minmax(0, 1fr);
+    gap: 0.2rem 0.8rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.92rem;
+
+    &::before {
+      content: counter(part, decimal-leading-zero);
+      font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      padding-top: 0.15rem;
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 2.2rem minmax(0, 1fr);
+    }
+  }
+}
+
+.lm-parts__name {
+  font-weight: 600;
+}
+
+.lm-parts__text {
+  color: var(--ink-soft);
+
+  @media (max-width: 600px) {
+    grid-column: 2;
+  }
+}
+
+.lm-parts__see {
+  grid-column: 3;
+  font-size: 0.85rem;
+
+  @media (max-width: 600px) {
+    grid-column: 2;
+  }
+}
+
+// An entry's prose: numbered sections.
+.lm-body {
+  counter-reset: sec;
+
+  > h2 {
+    counter-increment: sec;
+    font-family: 'Newsreader', serif;
+    font-weight: 400;
+    font-size: 1.35rem;
+    margin: 2.4rem 0 0.8rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--rule);
+
+    &::before {
+      content: counter(sec, decimal-leading-zero);
+      font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin-right: 0.6rem;
+      vertical-align: 0.25em;
+    }
+  }
+
+  .study-try {
+    margin: 1.4rem 0;
+    max-width: none;
+  }
+
+  // Code reads a size below the prose: a site rule sets <code> to 15px,
+  // so the block and its code are both pinned here.
+  pre,
+  pre code {
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  pre {
+    overflow-x: auto;
+    padding: 0.8rem 1rem;
+  }
+
+  p code,
+  li code,
+  td code {
+    font-size: 0.84em;
+  }
+}
+
+.lm-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 3rem 0 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+
+  a {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    font-family: 'Newsreader', serif;
+    font-size: 1.1rem;
+  }
+
+  span {
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+}
+
+.lm-pager__next {
+  text-align: right;
+  margin-left: auto;
+}
+
+// Home: topics, the order of building a model, the collection.
+.lm-topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.4rem 2rem;
+}
+
+.lm-topic__name {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+
+  span {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+}
+
+.lm-topic__entry {
+  display: block;
+  padding: 0.45rem 0;
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+  font-size: 0.92rem;
+
+  b {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  span {
+    display: block;
+    color: var(--ink-soft);
+    font-size: 0.84rem;
+  }
+}
+
+.lm-order {
+  list-style: none;
+  counter-reset: step;
+  margin: 1rem 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+
+  li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.2rem 12rem minmax(0, 1fr) 2rem;
+    gap: 0.2rem 0.8rem;
+    align-items: baseline;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--rule);
+
+    &::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+    }
+
+    @media (max-width: 700px) {
+      grid-template-columns: 2.2rem minmax(0, 1fr) 2rem;
+    }
+  }
+}
+
+.lm-order__name {
+  font-weight: 600;
+}
+
+.lm-order__text {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+
+  @media (max-width: 700px) {
+    grid-column: 2;
+  }
+}
+
+.lm-order__see {
+  grid-column: 3;
+  font-size: 0.85rem;
+
+  @media (max-width: 700px) {
+    grid-column: 2;
+  }
+}
+
+.lm-order__stage {
+  grid-column: 4;
+  grid-row: 1;
+  justify-self: end;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-soft);
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--glow);
+    border-color: var(--glow);
+  }
+
+  @media (max-width: 700px) {
+    grid-column: 3;
+  }
+}
+
+.lm-collection {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2 260px;
+  column-gap: 2.5rem;
+
+  li {
+    break-inside: avoid;
+    border-top: 1px solid var(--rule);
+  }
+
+  a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+    text-decoration: none;
+    color: var(--ink);
+  }
+}
+
+.lm-collection__no,
+.lm-collection__week {
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.lm-collection__week {
+  margin-left: auto;
+}
+
+.lm-why {
+  h3 {
+    font-family: 'Newsreader', serif;
+    font-weight: 400;
+    font-size: 1.3rem;
+    margin: 2.2rem 0 0.6rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--rule);
+  }
+}
+
+// The pipeline figure: flat panels in the page's ink, read left to right.
+.lm-flow {
+  .lm-t {
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    fill: var(--ink-soft);
+  }
+
+  .lm-b,
+  .lm-big {
+    fill: var(--ink);
+  }
+
+  .lm-big {
+    font-family: 'Newsreader', serif;
+  }
+
+  .lm-cap {
+    fill: var(--ink);
+    letter-spacing: 0.08em;
+  }
+
+  .lm-sub {
+    opacity: 0.85;
+  }
+
+  .lm-hot-t {
+    fill: var(--glow);
+  }
+
+  .lm-frame {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 1;
+  }
+
+  .lm-focus > .lm-frame,
+  [data-stage].lm-focus > rect {
+    stroke: var(--glow);
+    stroke-width: 1.4;
+  }
+
+  .lm-axis {
+    stroke: var(--rule);
+    stroke-width: 1;
+  }
+
+  .lm-bar {
+    fill: var(--ink-soft);
+    opacity: 0.55;
+  }
+
+  .lm-bar.lm-soft {
+    opacity: 0.25;
+  }
+
+  .lf-hot .lm-bar {
+    fill: var(--glow);
+    opacity: 0.9;
+  }
+
+  .lm-row {
+    fill: none;
+    stroke: var(--glow);
+    stroke-width: 1;
+  }
+
+  .lf-hot .lm-t {
+    fill: var(--glow);
+  }
+
+  .lm-hot-line {
+    fill: none;
+    stroke: var(--glow);
+    stroke-width: 1.5;
+  }
+
+  .lm-edge {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+
+  .lm-dots {
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 0.6;
+    opacity: 0.6;
+  }
+
+  .lm-cell {
+    fill: none;
+    stroke: var(--rule);
+  }
+
+  .lm-diag {
+    fill: color-mix(in srgb, var(--ink) 6%, transparent);
+  }
+
+  .lf-hot .lm-cell {
+    stroke: var(--glow);
+    stroke-width: 1.4;
+  }
+}
+
+// Learning Machines: the control panel under a figure, the parts list that
+// focuses parts in it, and the focus itself.
+.lm-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  margin: 0.4rem 0 0.6rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.lm-panel__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.lm-panel__label {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lm-seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+
+  button {
+    font: inherit;
+    padding: 0.25rem 0.55rem;
+    border: 0;
+    border-right: 1px solid var(--rule);
+    background: none;
+    color: var(--ink-soft);
+    cursor: pointer;
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    &:hover {
+      color: var(--ink);
+    }
+
+    &[aria-pressed="true"] {
+      color: var(--glow);
+      background: color-mix(in srgb, var(--glow) 10%, transparent);
+    }
+  }
+}
+
+.lm-panel input[type="range"] {
+  width: 140px;
+  accent-color: var(--glow);
+}
+
+.lm-panel output {
+  min-width: 4.5em;
+  color: var(--ink);
+}
+
+.lm-parts__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.2rem 1rem;
+
+  p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+}
+
+.lm-parts__clear {
+  font: inherit;
+  border: 0;
+  background: none;
+  color: var(--glow);
+  cursor: pointer;
+  padding: 0 0 0 0.4rem;
+}
+
+.lm-parts li {
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover,
+  &.is-hover {
+    background: color-mix(in srgb, var(--ink) 4%, transparent);
+  }
+
+  &.is-focused {
+    background: color-mix(in srgb, var(--glow) 9%, transparent);
+
+    .lm-parts__name {
+      color: var(--glow);
+    }
+  }
+
+  &:focus-visible {
+    outline: 1px dashed var(--rule);
+  }
+}
+
+// A focused part keeps its strokes and takes the accent; everything else fades.
+.project-figure svg.lm-focusing :is(polygon, path, line, circle, ellipse, rect, text) {
+  opacity: 0.13;
+  transition: opacity 0.2s ease;
+}
+
+.project-figure svg.lm-focusing :is(.lm-focus-on, .lm-focus-on *) {
+  opacity: 1;
+  --ink: var(--glow);
+  --ink-soft: var(--glow);
+}
+
+// Learning Machines entries: the lede, formula blocks (typeset by KaTeX),
+// tables, the decision cards and the sources.
+.lm-lede {
+  font-family: 'Newsreader', serif;
+  font-size: 1.22rem;
+  line-height: 1.5;
+  margin: 1.6rem 0 0.4rem;
+}
+
+.lm-formula {
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 1.3rem 0;
+  padding: 0.9rem 1rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  text-align: center;
+}
+
+.lm-formula__eq {
+  font-size: 1.12rem;
+  color: var(--ink);
+  max-width: 100%;
+  overflow-x: auto;
+
+  .katex-display {
+    margin: 0;
+  }
+}
+
+.lm-formula__say {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  max-width: 34rem;
+}
+
+.lm-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.4rem;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.42rem 0.6rem 0.42rem 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+
+  th {
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom-color: var(--ink-soft);
+  }
+}
+
+.lm-decide {
+  margin-bottom: 1.2rem;
+}
+
+// A two-column facts table ("The numbers in the figure") has no header.
+.lm-facts thead {
+  display: none;
+}
+
+.lm-facts td:first-child {
+  color: var(--ink-soft);
+  width: 9rem;
+}
+
+.lm-decide__q {
+  font-family: 'Newsreader', serif;
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.lm-decide__by {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0.2rem 0 1rem;
+}
+
+.lm-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+
+.lm-option {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.8rem 0.9rem;
+  font-size: 0.88rem;
+
+  h4 {
+    margin: 0 0 0.4rem;
+    font-size: 0.98rem;
+  }
+
+  p {
+    margin: 0.35rem 0;
+    color: var(--ink-soft);
+  }
+
+  b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  &.is-here {
+    border-color: var(--glow);
+  }
+}
+
+.lm-option__here {
+  margin-left: 0.4rem;
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--glow);
+  font-weight: 400;
+}
+
+.lm-sources {
+  margin-top: 2.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.88rem;
+
+  h3 {
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  span {
+    color: var(--ink-soft);
+  }
+}
+
+// Wide tables (the threshold table has eleven columns) scroll sideways on
+// a phone instead of pushing the page wider.
+@media (max-width: 700px) {
+  .lm-body table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+// Collected Poems: form across a thousand years (assets/js/poems-form-figure.js).
+.project-figure .pf-figure {
+  text {
+    font-family: 'Vazirmatn', sans-serif;
+    fill: var(--ink-soft);
+    stroke: none;
+  }
+
+  .pf-tick {
+    font-size: 12px;
+  }
+
+  .pf-note {
+    font-size: 12.5px;
+  }
+
+  .pf-sub {
+    font-size: 11px;
+  }
+
+  .pf-band {
+    fill: color-mix(in srgb, var(--ink) 6%, transparent);
+    stroke: none;
+  }
+
+  .pf-axis line {
+    stroke: var(--ink-soft);
+    stroke-width: 0.8;
+  }
+
+  .pf-axis .pf-grid {
+    stroke: var(--rule);
+    stroke-width: 0.6;
+  }
+
+  .pf-break {
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 0.8;
+  }
+
+  .pf-gap {
+    fill: var(--paper);
+  }
+
+  .pf-nima line {
+    stroke: var(--glow);
+    stroke-width: 0.9;
+    stroke-dasharray: 2 2;
+  }
+
+  .pf-nima text {
+    fill: var(--glow);
+    font-size: 13px;
+  }
+
+  .pf-nima .pf-sub {
+    font-size: 11px;
+  }
+
+  .pf-hit {
+    fill: transparent;
+    cursor: pointer;
+  }
+
+  .pf-range {
+    stroke: var(--ink-soft);
+    stroke-width: 1.4;
+  }
+
+  .pf-dot {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.3;
+  }
+
+  .is-classical .pf-dot {
+    fill: var(--ink);
+  }
+
+  &.pf-picking .pf-col:not(.is-lit) {
+    opacity: 0.3;
+  }
+
+  .pf-col {
+    transition: opacity 0.2s ease;
+  }
+
+  .pf-col.is-lit .pf-range,
+  .pf-col.is-lit .pf-dot {
+    stroke: var(--glow);
+  }
+
+  .pf-col.is-lit.is-classical .pf-dot {
+    fill: var(--glow);
+  }
+}
+
+body.dark .project-figure .pf-figure .pf-col.is-lit {
+  filter: url(#lf-glow);
+}
+
+// MASFIN: what the crews held, week by week (assets/js/masfin-holdings-figure.js).
+.project-figure .mh-figure {
+  text {
+    font-family: 'Instrument Sans', sans-serif;
+    fill: var(--ink-soft);
+    stroke: none;
+  }
+
+  .mh-week {
+    font-size: 12.5px;
+    fill: var(--ink);
+  }
+
+  .mh-date,
+  .mh-rval,
+  .mh-count {
+    font-size: 10.5px;
+  }
+
+  // drawn narrower on a phone, so the type is set larger to read the same
+  &.mh-narrow {
+    .mh-week {
+      font-size: 14px;
+    }
+
+    .mh-date {
+      font-size: 12.5px;
+    }
+
+    .mh-tick {
+      font-size: 11.5px;
+    }
+  }
+
+  .mh-tick {
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.02em;
+  }
+
+  .mh-colbg,
+  .mh-rowbg {
+    fill: transparent;
+  }
+
+  .mh-col.is-on .mh-colbg {
+    fill: color-mix(in srgb, var(--glow) 7%, transparent);
+  }
+
+  .mh-col.is-on text {
+    fill: var(--glow);
+  }
+
+  .mh-bar {
+    fill: var(--ink-soft);
+    stroke: none;
+    opacity: 0.55;
+    transition: opacity 0.15s ease, fill 0.15s ease;
+  }
+
+  .is-core .mh-bar {
+    fill: var(--ink);
+    opacity: 0.85;
+  }
+
+  .is-core .mh-tick {
+    fill: var(--ink);
+  }
+
+  .mh-join {
+    stroke: var(--ink-soft);
+    stroke-width: 0.6;
+    opacity: 0.6;
+  }
+
+  .mh-rule {
+    stroke: var(--rule);
+    stroke-dasharray: 2 2;
+  }
+
+  &.mh-picking .mh-row:not(.is-on):not(.is-gone) {
+    opacity: 0.25;
+  }
+
+  .mh-row {
+    transition: opacity 0.15s ease;
+  }
+
+  .mh-row.is-on .mh-tick {
+    fill: var(--ink);
+  }
+
+  .mh-bar.is-new {
+    fill: var(--glow);
+    opacity: 1;
+  }
+
+  .mh-out {
+    stroke: var(--glow);
+    stroke-width: 1.2;
+    fill: none;
+  }
+
+  .is-gone .mh-tick {
+    fill: var(--glow);
+  }
+
+  .mh-zero {
+    stroke: var(--ink-soft);
+    stroke-width: 0.8;
+  }
+
+  .mh-grid {
+    stroke: var(--rule);
+    stroke-width: 0.6;
+  }
+
+  .mh-mbar {
+    fill: var(--ink);
+    opacity: 0.75;
+  }
+
+  .mh-itick {
+    stroke: var(--ink-soft);
+    stroke-width: 1.3;
+  }
+
+  .mh-ret.is-on .mh-mbar {
+    fill: var(--glow);
+    opacity: 1;
+  }
+
+  .mh-ret.is-on .mh-rval {
+    fill: var(--glow);
+  }
+}
+
+// AI Seasons: the 2024 corpus by source and year (ai-seasons-corpus-figure.js).
+.project-figure .ac-figure {
+  .ac-name {
+    font-size: 12px;
+    fill: var(--ink);
+  }
+
+  .ac-year,
+  .ac-total {
+    font-size: 10.5px;
+    fill: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &.ac-narrow {
+    .ac-name {
+      font-size: 14px;
+    }
+
+    .ac-year,
+    .ac-total {
+      font-size: 12.5px;
+    }
+  }
+
+  .ac-colbg,
+  .ac-rowbg {
+    fill: transparent;
+  }
+
+  .ac-col.is-on .ac-colbg {
+    fill: var(--ink);
+    opacity: 0.06;
+  }
+
+  .ac-col.is-on .ac-year {
+    fill: var(--glow);
+  }
+
+  .ac-base {
+    stroke: var(--rule);
+    stroke-width: 0.6;
+  }
+
+  .ac-cell {
+    fill: var(--ink);
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+
+  &.ac-picking .ac-cell:not(.is-on) {
+    opacity: 0.2;
+  }
+
+  .ac-cell.is-on {
+    fill: var(--glow);
+    opacity: 1;
+  }
+
+  .ac-row.is-on .ac-name {
+    font-weight: 600;
+  }
+}

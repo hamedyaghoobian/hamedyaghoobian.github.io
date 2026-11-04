@@ -1,14 +1,14 @@
 // Walter Benjamin's correspondence (projects/walter-benjamin.md): the 326
-// letters in the dataset, one sheet each, stacked by year from 1910 to
-// 1940. Exile, from 1933, is shaded on the plate. Counts and places are
-// real, taken from the letters dataset (Date and City columns, City being
-// where Benjamin wrote from; letters with no place are counted but not
-// named).
+// letters in the dataset, one sheet each, piled by year from 1910 to
+// 1940, drawn flat as a front elevation. Exile, from 1933, is shaded on
+// the plate. Counts and places are real, taken from the letters dataset
+// (Date and City columns, City being where Benjamin wrote from; letters
+// with no place are counted but not named).
 
 (function () {
   const root = document.getElementById('benjamin-figure');
   if (!root || !window.LineFigure) return;
-  const { iso, pts, el, svg: makeSvg, box, edgeLabel, nearest, interact } = window.LineFigure;
+  const { el, svg: makeSvg, rect, line, nearest, interact } = window.LineFigure;
 
   // [year, letters, place most written from, letters from there]
   const YEARS = [
@@ -26,42 +26,37 @@
   ];
   const EXILE = 1933;
 
-  const STEP = 9;                      // world units per year
-  const W = 6;                         // a sheet's length along time
-  const V0 = 9, V1 = 21;               // a sheet's span across the plate
-  const D = 30;                        // plate depth
-  const T = 6;                         // plate thickness
-  const GAP = 2.6;                     // sheet spacing in a closed stack
-  const FAN = 0.5;                     // how far a lit stack fans open
+  // A front elevation: a plate along time, and on it a pile of sheets per
+  // year seen edge-on, one hairline a letter.
+  const STEP = 9;                      // viewBox units per year
+  const W = 6;                         // a sheet's width along time
+  const T = 5;                         // the plate's height
+  const GAP = 2.4;                     // sheet spacing in a closed pile
+  const FAN = 0.5;                     // how far a lit pile fans open
   const L = YEARS.length * STEP;
-  const uOf = i => i * STEP;
+  const xOf = i => i * STEP;
 
-  const svg = makeSvg(root, '-14 -200 300 245',
-    'Walter Benjamin\'s 326 letters from 1910 to 1940, stacked by year. The stacks peak in 1913, rise again in the early 1920s, and are tallest in exile, from 1933, with 22 letters in 1935.');
+  const svg = makeSvg(root, '-12 -92 300 116',
+    'Walter Benjamin\'s 326 letters from 1910 to 1940, piled by year. The piles peak in 1913, rise again in the early 1920s, and are tallest in exile, from 1933, with 22 letters in 1935.');
 
-  box(svg, 'lf-solid').set(-STEP / 2, 0, -T, L, D, 0);
+  rect(svg, -STEP / 2, 0, L + STEP / 2, T);
   const exileAt = YEARS.findIndex(y => y[0] === EXILE);
-  const exile = el('polygon', {
-    class: 'lf-shade',
-    points: pts([iso(uOf(exileAt) - 1.5, 0), iso(L, 0), iso(L, D), iso(uOf(exileAt) - 1.5, D)])
-  }, svg);
+  const exile = rect(svg, xOf(exileAt) - 1.5, 0, L - xOf(exileAt) + 1.5, T, 'lf-shade');
 
   [1910, 1920, 1933, 1940].forEach(year => {
-    const u = uOf(year - 1910) + W / 2;
-    const [x, y] = iso(u, D, -T);
-    el('line', { class: 'lf-line', x1: x, y1: y, x2: x, y2: y + 4 }, svg);
-    edgeLabel(svg, year, u + 1.7, D, -T - 13);
+    const x = xOf(year - 1910) + W / 2;
+    line(svg, x, T, x, T + 4);
+    const t = el('text', { class: 'lf-text', x, y: T + 14, 'text-anchor': 'middle' }, svg);
+    t.textContent = year;
   });
 
-  // Farther stacks first, so nearer ones overlap them.
-  const stacks = YEARS.map(() => null);
-  for (let i = YEARS.length - 1; i >= 0; i--) {
+  const stacks = YEARS.map((y, i) => {
     const g = el('g', {}, svg);
-    stacks[i] = Array.from({ length: YEARS[i][1] }, () => el('polygon', { class: 'lf-solid lf-sheet' }, g));
-    stacks[i].group = g;
-  }
+    const sheets = Array.from({ length: y[1] }, () => line(g, xOf(i), 0, xOf(i) + W, 0, 'lf-line lf-sheet'));
+    return { g, sheets };
+  });
 
-  const stackX = YEARS.map((_, i) => iso(uOf(i) + W / 2, (V0 + V1) / 2)[0]);
+  const stackX = YEARS.map((_, i) => xOf(i) + W / 2);
 
   interact({
     root, svg,
@@ -75,12 +70,12 @@
     draw: (glow, active) => {
       YEARS.forEach((_, i) => {
         const gap = GAP * (1 + FAN * glow[i]);
-        const u0 = uOf(i), u1 = u0 + W;
-        stacks[i].forEach((sheet, k) => {
-          const h = k * gap;
-          sheet.setAttribute('points', pts([iso(u0, V0, h), iso(u1, V0, h), iso(u1, V1, h), iso(u0, V1, h)]));
+        stacks[i].sheets.forEach((sheet, k) => {
+          const y = (-(k + 1) * gap).toFixed(2);
+          sheet.setAttribute('y1', y);
+          sheet.setAttribute('y2', y);
         });
-        stacks[i].group.classList.toggle('is-lit', i === active);
+        stacks[i].g.classList.toggle('is-lit', i === active);
       });
       exile.classList.toggle('is-lit', active >= exileAt);
     }

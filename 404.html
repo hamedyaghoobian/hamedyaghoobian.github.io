@@ -1,25 +1,17 @@
 ---
 permalink: /404.html
 layout: default
+title: Page not found
 ---
-
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
-
-<div class="container">
-  <h1>404</h1>
-
+{%- comment -%}
+  Not found: the page's number is the status code. The key strip above
+  still works (0–7); esc and the link below go to the front. Styles in
+  _sass/faceplate/pages/_tools.scss.
+{%- endcomment -%}
+<section class="fp-404" aria-labelledby="fp-404-t">
+  <p class="fp-label fp-404__n">404</p>
+  <h1 id="fp-404-t">page not found</h1>
   <p><strong>Page not found :(</strong></p>
   <p>The requested page could not be found.</p>
-</div>
+  <p class="fp-404__go"><a href="{{ '/' | relative_url }}">back to the front</a> · or press a section's number, <span class="fp-k">0</span>–<span class="fp-k">7</span></p>
+</section>

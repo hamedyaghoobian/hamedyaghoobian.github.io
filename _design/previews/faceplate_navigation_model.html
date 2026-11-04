@@ -1,0 +1,79 @@
+<h2 class="sr-only">Site navigation model: three levels (site, section, page) with a working simulator driven by keys or buttons, the full key map, and the phone layout.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+#nv{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.22);--y:#F2C500;--live:#E0362C;background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;padding:14px 20px}
+.m{font-family:'JetBrains Mono',monospace;font-size:11px}
+.sk{border:1.5px solid var(--ink);border-radius:4px;padding:3px 8px;background:transparent;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;min-width:28px}
+.sk:hover{background:var(--y);border-color:var(--y)}.sk.on{background:var(--ink);color:var(--bg)}
+.sk.flash{background:var(--y);border-color:var(--y)}
+.lv{border:1.5px solid var(--ink);border-radius:6px;padding:8px 10px;opacity:.35;transition:opacity .15s}
+.lv.on{opacity:1;box-shadow:inset 3px 0 0 var(--live)}
+.scr{border:1.5px solid var(--ink);border-radius:6px;padding:10px;min-height:172px}
+.it{padding:4px 6px;border-bottom:1px solid var(--soft);font-size:13px}.it.on{background:var(--y)}
+.km{display:grid;grid-template-columns:62px minmax(0,1fr);row-gap:4px;align-items:center}
+.km b{font-family:'JetBrains Mono';font-weight:500;font-size:10.5px;border:1px solid var(--ink);border-radius:3px;padding:1px 4px;justify-self:start}
+.ph{width:200px;border:1.5px solid var(--ink);border-radius:22px;padding:12px 10px;background:var(--bg)}
+</style>
+<div style="padding:1rem 0">
+<div id="nv">
+<div class="m" style="border-bottom:1.5px solid var(--ink);padding-bottom:6px">navigation · three levels, one set of keys · try it: type, or press the buttons</div>
+
+<div style="display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;margin-top:14px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div class="lv" id="L0"><div class="m">level 1 · site</div><div style="font-size:13px;margin-top:3px">eight sections</div><div class="m" style="opacity:.75;margin-top:3px">0–7 from anywhere</div></div>
+<div class="lv" id="L1"><div class="m">level 2 · section</div><div style="font-size:13px;margin-top:3px">a list of things</div><div class="m" style="opacity:.75;margin-top:3px">j k · enter · letters filter</div></div>
+<div class="lv" id="L2"><div class="m">level 3 · page</div><div style="font-size:13px;margin-top:3px">one thing, in parts</div><div class="m" style="opacity:.75;margin-top:3px">j k parts · [ ] siblings</div></div>
+<div class="m" style="text-align:center;opacity:.8">esc always goes up one</div>
+</div>
+<div>
+<div class="m" id="bc" style="margin-bottom:6px"></div>
+<div class="scr" id="scr"></div>
+<div class="m" id="msg" style="margin-top:6px;min-height:14px;opacity:.85"></div>
+<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px" id="pad"></div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 210px;gap:18px;margin-top:22px;border-top:1.5px solid var(--ink);padding-top:12px">
+<div><div class="m" style="margin-bottom:8px">everywhere</div><div class="km m">
+<b>0–7</b><span>go to a section</span><b>esc</b><span>up one level</span><b>/</b><span>find, in this scope</span><b>?</b><span>show this page's keys</span><b>\</b><span>theme: light, dark, auto</span><b>tab</b><span>still works, always</span></div></div>
+<div><div class="m" style="margin-bottom:8px">in lists and pages</div><div class="km m">
+<b>j k</b><span>next, previous</span><b>enter</b><span>open</span><b>[ ]</b><span>previous, next sibling</span><b>x</b><span>clear filters</span><b>a–z</b><span>this page's own: filters, layers, translate</span><b>← →</b><span>step the figure in focus</span></div>
+<p class="m" style="margin:10px 0 0;opacity:.75;line-height:1.5">keys never fire while typing, and step aside when a figure has focus.</p></div>
+<div><div class="m" style="margin-bottom:8px">on a phone</div>
+<div class="ph">
+<div class="m" style="display:flex;justify-content:space-between"><span>hy / 07 poems</span><span>◐</span></div>
+<div style="display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;margin:8px 0">
+<span class="sk" style="padding:2px 0;min-width:0;text-align:center">0</span><span class="sk" style="padding:2px 0;min-width:0;text-align:center">1</span><span class="sk" style="padding:2px 0;min-width:0;text-align:center">2</span><span class="sk" style="padding:2px 0;min-width:0;text-align:center">3</span><span class="sk" style="padding:2px 0;min-width:0;text-align:center">4</span><span class="sk" style="padding:2px 0;min-width:0;text-align:center">5</span><span class="sk" style="padding:2px 0;min-width:0;text-align:center">6</span><span class="sk on" style="padding:2px 0;min-width:0;text-align:center">7</span></div>
+<div style="font-weight:800;font-size:20px;letter-spacing:-.02em;line-height:1">collected poems</div>
+<div class="m" style="margin-top:8px;opacity:.75">rows · tap to open</div>
+<div class="it">Nima Yooshij</div><div class="it">T. S. Eliot</div><div class="it">Mahmoud Darwish</div>
+<div style="display:flex;gap:4px;margin-top:10px"><span class="sk" style="flex:1;text-align:center">‹ prev</span><span class="sk" style="flex:1;text-align:center">up</span><span class="sk" style="flex:1;text-align:center">next ›</span></div>
+</div>
+<p class="m" style="margin:8px 0 0;opacity:.75;line-height:1.5">numbers only on the strip; [ esc ] become a thumb bar on pages.</p></div>
+</div>
+</div>
+</div>
+<script>
+const S=[['home',['about','latest']],['teaching',['csi 330','learning machines','pedagogy']],['research',['nightshade/glaze','raising reachy','grammar of belief','noisy stars','ai seasons']],['news',['cacm quote, jul 2026','c&c accepted, apr 2026','neurips workshop, nov 2025']],['publications',['timecapsule','masfin','the writer in-between']],['readings',['no. 3 ferdowsi','no. 2 birds','no. 1 capital']],['tools',['ai and data ethics','bot without organs','teach the machine','learning machines']],['poems',['nima yooshij','t. s. eliot','mahmoud darwish']]];
+const PARTS=['overview','finding 1','finding 2','finding 3','status'];
+let sec=2,item=3,part=0,lvl=2;
+function render(){const s=S[sec];document.querySelectorAll('.lv').forEach((l,i)=>l.classList.toggle('on',i===lvl));
+let bc='hy';if(lvl>=1)bc+=` / 0${sec} ${s[0]}`;if(lvl>=2)bc+=` / ${s[1][item]}`;document.getElementById('bc').textContent=bc;
+let h=`<div style="display:flex;gap:3px;margin-bottom:10px">${S.map((x,i)=>`<span class="sk${i===sec&&lvl>0?' on':''}" style="padding:1px 5px;min-width:0">${i}</span>`).join('')}</div>`;
+if(lvl===0)h+=`<div style="font-weight:800;font-size:24px;letter-spacing:-.02em">hamed yaghoobian</div><div class="m" style="margin-top:6px;opacity:.75">faceplate · pick a section with 0–7</div>`;
+else if(lvl===1)h+=`<div style="font-weight:800;font-size:20px;letter-spacing:-.02em;margin-bottom:6px">${s[0]}</div>`+s[1].map((x,i)=>`<div class="it${i===item?' on':''}">${String(i+1).padStart(2,'0')} ${x}</div>`).join('');
+else h+=`<div style="font-weight:800;font-size:20px;letter-spacing:-.02em;margin-bottom:6px">${s[1][item]}</div><div style="display:flex;gap:4px;flex-wrap:wrap">${PARTS.map((p,i)=>`<span class="sk${i===part?' on':''}">${p}</span>`).join('')}</div><div class="m" style="margin-top:10px;opacity:.75">[ ${s[1][item-1]||'—'}  ·  ${s[1][item+1]||'—'} ]</div>`;
+document.getElementById('scr').innerHTML=h}
+function key(k){let m='';const s=S[sec];
+if(/^[0-7]$/.test(k)){sec=+k;lvl=sec===0?0:1;item=0;m=`${k} → ${S[sec][0]}`}
+else if(k==='j'||k==='k'){const d=k==='j'?1:-1;if(lvl===1){item=Math.max(0,Math.min(s[1].length-1,item+d));m='move in the list'}else if(lvl===2){part=Math.max(0,Math.min(PARTS.length-1,part+d));m='move between parts of the page'}else m='nothing to move through here'}
+else if(k==='Enter'){if(lvl===1){lvl=2;part=0;m='open'}else m='already open'}
+else if(k==='Escape'){if(lvl>0){lvl=lvl===1?0:1;if(lvl===0)sec=0;m='up one level'}}
+else if(k==='['||k===']'){if(lvl===2){const n=item+(k===']'?1:-1);if(s[1][n]!==undefined){item=n;part=0;m='sibling page, same section'}else m='no sibling that way'}else m='[ ] work on pages'}
+else if(k==='/')m='find: would open a search box scoped to '+(lvl===0?'the whole site':s[0]);
+else if(k==='?')m="? shows this page's keys";else return false;
+document.getElementById('msg').textContent=m;render();
+document.querySelectorAll('#pad .sk').forEach(b=>{if(b.dataset.k===k){b.classList.add('flash');setTimeout(()=>b.classList.remove('flash'),180)}});return true}
+const pad=document.getElementById('pad');[['0','0'],['2','2'],['7','7'],['j','j'],['k','k'],['Enter','enter'],['[','['],[']',']'],['Escape','esc'],['/','/']].forEach(([k,l])=>{const b=document.createElement('button');b.className='sk';b.dataset.k=k;b.textContent=l;b.onclick=()=>key(k);pad.appendChild(b)});
+document.addEventListener('keydown',e=>{if(key(e.key))e.preventDefault()});render();
+</script>

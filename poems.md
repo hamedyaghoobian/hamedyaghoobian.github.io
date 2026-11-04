@@ -2,952 +2,496 @@
 layout: page
 title: Collected Poems
 permalink: /poems/
+wide: true
+fa_serif: true
 ---
-{% include dappled-light.html %}
-
-{% include project-figure.html id="poems-figure" script="poems-form-figure.js" note="Distant reading in miniature: each poem is a column at its poet's time, each line a dot at its length in letters. The classical lines keep to a narrow band; after Nima's «Qoqnus» (1937) the lines come loose. Measured on the excerpts copied here." class="project-figure--shelf" %}
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Noto+Naskh+Arabic:wght@400..700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
-
-.poetry-container {
-    max-width: 900px;
-    margin: 0 auto;
-    direction: rtl;
-    text-align: right;
-}
-
-.page-title {
-    display: none;
-}
-
-.poetry-intro {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 1rem;
-    color: #4a5568;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-    text-align: center;
-    direction: rtl;
-    padding: 0 1rem;
-}
-
-/* No box, no shadow — whitespace and the date-header's hairline do the
-   work of separating one poem from the next. */
-.poem-card {
-    margin: 3.5rem auto;
-    direction: rtl;
-    max-width: 700px;
-}
-
-.date-header {
-    margin-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(44, 62, 80, 0.07);
-    padding-bottom: 0.75rem;
-    text-align: center;
-}
-
-.occasion-date {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.9rem;
-    color: #718096;
-    margin: 0;
-    font-weight: 400;
-}
-
-.poem-content {
-    margin: 1rem 0;
-}
-
-.poem-verses {
-    font-family: 'Lalezar', serif;
-    font-size: 1.1rem;
-    line-height: 1.75;
-    color: #2c3e50;
-    text-align: center;
-    direction: rtl;
-    margin: 0.75rem 0;
-}
-
-.verse {
-    margin: 0.6rem 0;
-    padding: 0 0.25rem;
-}
-
-/* Responsive Grid for Bilingual Arabic-Persian Poems */
-.verse:has(.inline-translation) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    align-items: center;
-    max-width: 580px;
-    margin: 0.5rem auto;
-    direction: rtl;
-}
-
-.verse .arabic-line {
-    font-family: 'Lalezar', serif;
-    font-size: 1.05rem;
-    color: #2c3e50;
-    text-align: left; /* Align right column's content to the left (towards the gutter) */
-    display: block;
-}
-
-.verse .english-line {
-    font-family: 'Newsreader', serif;
-    font-size: 1rem;
-    font-weight: 400;
-    font-style: italic;
-    color: #2c3e50;
-    text-align: left; /* Align right column's content to the left (towards the gutter) */
-    display: block;
-    direction: ltr;
-}
-
-.verse .inline-translation {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
-    color: #718096;
-    font-weight: 300;
-    text-align: right; /* Align left column's content to the right (towards the gutter) */
-    margin-right: 0;
-    display: block;
-}
-
-/* Dark mode overrides */
-body.dark .verse .arabic-line {
-    color: #e2e8f0;
-}
-
-body.dark .verse .english-line {
-    color: #e2e8f0;
-}
-
-body.dark .verse .inline-translation {
-    color: #a0aec0;
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 600px) {
-    .verse:has(.inline-translation) {
-        grid-template-columns: 1fr;
-        gap: 0.25rem;
-        text-align: center;
-        margin: 0.75rem auto;
-    }
-    
-    .verse .arabic-line {
-        text-align: center;
-    }
-    
-    .verse .english-line {
-        text-align: center;
-    }
-    
-    .verse .inline-translation {
-        text-align: center;
-        margin-top: 0.1rem;
-    }
-}
-
-.poet-attribution {
-    margin-top: 1.75rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(44, 62, 80, 0.07);
-    text-align: center;
-}
-
-.poet-name {
-    font-family: 'Lalezar', serif;
-    font-size: 1rem;
-    color: #ed8936;
-    font-weight: 600;
-    margin: 0;
-}
-
-.poem-context {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
-    color: #718096;
-    margin-top: 0.5rem;
-    line-height: 1.5;
-    font-style: italic;
-    direction: ltr;
-    text-align: center;
-}
-
-.english-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.8rem;
-    color: #a0aec0;
-    margin-top: 0.5rem;
-    direction: ltr;
-    text-align: center;
-    font-style: italic;
-}
-
-/* Dark mode styles */
-body.dark .page-title,
-body.dark .poem-verses {
-    color: #e2e8f0;
-}
-
-body.dark .poetry-intro,
-body.dark .occasion-date,
-body.dark .poem-context,
-body.dark .english-title {
-    color: #a0aec0;
-}
-
-body.dark .poet-name {
-    color: #ed8936;
-}
-
-body.dark .date-header,
-body.dark .poet-attribution {
-    border-color: rgba(226, 232, 240, 0.09);
-}
-
-/* Year marker — the only signpost in the chronological run */
-.year-marker {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    max-width: 700px;
-    margin: 3.5rem auto 1.25rem;
-    direction: rtl;
-}
-
-.year-marker::before,
-.year-marker::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(44, 62, 80, 0.1);
-}
-
-.year-marker span {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    color: #a0aec0;
-    white-space: nowrap;
-}
-
-.year-marker:first-child {
-    margin-top: 1rem;
-}
-
-body.dark .year-marker::before,
-body.dark .year-marker::after {
-    background: rgba(226, 232, 240, 0.12);
-}
-
-body.dark .year-marker span {
-    color: #718096;
-}
-
-/* Closing epigraph — a line about the collection, not a poem in it */
-.poems-coda {
-    max-width: 480px;
-    margin: 5rem auto 2rem;
-    padding: 0;
-    border: 0;
-    direction: ltr;
-    text-align: center;
-}
-
-.poems-coda::before {
-    content: '';
-    display: block;
-    width: 36px;
-    height: 1px;
-    margin: 0 auto 2.25rem;
-    background: rgba(44, 62, 80, 0.18);
-}
-
-.poems-coda blockquote {
-    font-family: 'Newsreader', serif;
-    font-size: 1.25rem;
-    font-style: italic;
-    line-height: 1.6;
-    color: #4a5568;
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-
-.poems-coda figcaption {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.7rem;
-    font-style: normal;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #a0aec0;
-    margin-top: 1.25rem;
-}
-
-body.dark .poems-coda::before {
-    background: rgba(226, 232, 240, 0.2);
-}
-
-body.dark .poems-coda blockquote {
-    color: #cbd5e0;
-}
-
-body.dark .poems-coda figcaption {
-    color: #718096;
-}
-
-/* Translation features — an indent and a thin rule, not a tinted card
-   with a colored accent bar. */
-.translation-container {
-    display: none;
-    margin-top: 1rem;
-    padding-left: 1.25rem;
-    border-left: 1px solid rgba(44, 62, 80, 0.14);
-    direction: ltr;
-    text-align: left;
-}
-
-.translation-container.expanded {
-    display: block;
-}
-
-.translation-text {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #2c3e50;
-    margin: 0;
-    font-style: italic;
-}
-
-.translation-meta {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid #e2e8f0;
-    font-size: 0.7rem;
-    color: #718096;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* A quiet inline glyph, not a CTA — translation is a secondary action,
-   so it gets no fill, no circle, just an icon that warms up on hover. */
-.translate-btn {
-    background: none;
-    color: #a0aec0;
-    border: none;
-    padding: 0.85rem; /* invisible — keeps the tap target sane while the glyph stays small */
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0.5rem auto 0 auto; /* padding above already adds most of the gap */
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.translate-btn i {
-    pointer-events: none;
-}
-
-.translate-btn:hover {
-    color: #ed8936;
-}
-
-.translate-btn:disabled {
-    color: #cbd5e0;
-    cursor: not-allowed;
-}
-
-/* Advanced Loading Animation */
-.loading-container {
-    display: none;
-    margin-top: 1rem;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 3px solid #ed8936;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.loading-container.show {
-    display: block;
-    opacity: 1;
-}
-
-.loading-text {
-    font-family: 'Vazirmatn', 'Instrument Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: #4a5568;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.02em;
-}
-
-.loading-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
-}
-
-.loading-bar {
-    height: 4px;
-    border-radius: 2px;
-    overflow: hidden;
-    background: rgba(237, 137, 54, 0.15);
-}
-
-.loading-bar:nth-child(1) {
-    width: 100%;
-}
-
-.loading-bar:nth-child(2) {
-    width: 85%;
-    margin-left: auto;
-}
-
-.loading-bar:nth-child(3) {
-    width: 70%;
-}
-
-.loading-progress {
-    height: 100%;
-    border-radius: 2px;
-    background: linear-gradient(90deg, 
-        #ed8936 0%, 
-        #f6ad55 25%, 
-        #48bb78 50%, 
-        #38b2ac 75%, 
-        #4299e1 100%
-    );
-    animation: loading-wave 2s ease-in-out infinite;
-    transform-origin: left;
-}
-
-.loading-bar:nth-child(1) .loading-progress {
-    animation-delay: 0s;
-}
-
-.loading-bar:nth-child(2) .loading-progress {
-    animation-delay: 0.3s;
-}
-
-.loading-bar:nth-child(3) .loading-progress {
-    animation-delay: 0.6s;
-}
-
-@keyframes loading-wave {
-    0% {
-        transform: scaleX(0);
-        opacity: 0.8;
-    }
-    50% {
-        transform: scaleX(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scaleX(0);
-        opacity: 0.8;
-    }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Dark mode adjustments for loading */
-body.dark .loading-container {
-    background: #2d3748;
-    border-left-color: #ed8936;
-}
-
-body.dark .loading-text {
-    color: #e2e8f0;
-}
-
-body.dark .loading-bar {
-    background: rgba(237, 137, 54, 0.2);
-}
-
-body.dark .loading-progress {
-    background: linear-gradient(90deg, 
-        #ed8936 0%, 
-        #f6ad55 25%, 
-        #68d391 50%, 
-        #4fd1c7 75%, 
-        #63b3ed 100%
-    );
-}
-
-/* Responsive loading animation */
-@media (max-width: 768px) {
-    .loading-bars {
-        max-width: 240px;
-    }
-    
-    .loading-text {
-        font-size: 0.85rem;
-        margin-bottom: 1rem;
-    }
-    
-    .loading-container {
-        padding: 1rem;
-    }
-}
-
-.dynamic-date {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.8rem;
-    color: #ed8936;
-    margin-top: 0.25rem;
-    direction: rtl;
-}
-
-/* Dark mode for translation features */
-body.dark .translation-container {
-    border-left-color: rgba(226, 232, 240, 0.16);
-}
-
-body.dark .translation-text {
-    color: #e2e8f0;
-}
-
-body.dark .translation-meta {
-    border-top-color: #4a5568;
-    color: #a0aec0;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .poetry-container {
-        padding: 0 0.75rem;
-    }
-    
-    .poem-card {
-        margin: 2.5rem 0;
-    }
-    
-    .page-title {
-        font-size: 2rem;
-    }
-    
-    .poem-verses {
-        font-size: 1rem;
-        line-height: 1.65;
-    }
-    
-    .poetry-intro {
-        padding: 0 0.75rem;
-    }
-
-    .translation-meta {
-        font-size: 0.6rem;
-    }
-}
-
-/* Print styles */
-@media print {
-    .poem-card {
-        border: 1px solid #ccc;
-        box-shadow: none;
-        page-break-inside: avoid;
-        margin: 1rem 0;
-    }
-}
-
-</style>
-
-<div class="poetry-container">
-    <h1 class="page-title">رونویسی شعر فارسی</h1>
-    
-    <div class="poetry-intro">
-        <p>برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p>
-        <p class="english-title">For writing down the poems I love.</p>
-        <p style="font-size: 0.85rem; color: #718096; margin-top: 1rem; font-style: italic; direction: ltr;">AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original verses.</p>
+{%- comment -%}
+  Collected Poems, section 07. One instrument in two parts:
+
+  · the figure (assets/js/poems-form-figure.js): every poem a column at its
+    poet's time, every line a dot at its length in letters, on a broken
+    axis running right to left; a second view plots each poem's variation.
+  · the list: the poems by the Persian year they were copied in (۱۴۰۵,
+    ۱۴۰۴ …), each row dated in both calendars (Intl, Solar Hijri and
+    Gregorian), opening in place to the verses, the AI translation and the
+    reading.
+
+  The two follow each other: hover or step a column and its row lights;
+  step a row (j / k) or a verse line (← →) and its column and dot light.
+  The newest poem wears the live dot. Data: /poems.json (not edited here).
+  Styles: _sass/faceplate/pages/_poems.scss.
+{%- endcomment -%}
+<div class="pm" id="pm">
+  <div class="pm-intro">
+    <p class="pm-intro__k pm-intro__en" aria-hidden="true">en</p>
+    <p class="pm-intro__k pm-intro__fa" aria-hidden="true">fa</p>
+    <p class="pm-intro__t pm-intro__en">copied out by hand</p>
+    <p class="pm-intro__t pm-intro__fa" lang="fa" dir="rtl">رونویسی شعر فارسی</p>
+    <p class="pm-intro__d pm-intro__en">Persian poems I love, a few lines at a time.</p>
+    <p class="pm-intro__d pm-intro__fa" lang="fa" dir="rtl">برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p>
+  </div>
+  <figure class="pm-fig" id="poems-figure" aria-labelledby="pm-fig-t">
+    <div class="pm-fig__bar">
+      <p class="fp-label pm-fig__t" id="pm-fig-t">fig. 1 · form across a thousand years</p>
+      <div class="pm-fig__legend fp-label" aria-hidden="true"><span class="pm-sw pm-sw--cl"></span>classical <span class="pm-sw"></span>modern <span class="fp-live"></span>newest <span class="pm-sw pm-sw--band"></span>classical band · <span lang="fa" dir="rtl">مصراع‌های کلاسیک</span> · <span data-pf-band></span> letters</div>
+      <div class="fp-seg pm-fig__view" role="group" aria-label="What the figure measures">
+        <button type="button" data-pf-view="len" aria-pressed="true">letters per line</button>
+        <button type="button" data-pf-view="cv" aria-pressed="false">variation <span class="fp-seg__k">v</span></button>
+      </div>
     </div>
-
-    <!-- Poems are loaded here in reverse-chronological order -->
-    <div id="poems-container">
-        <!-- Loading indicator -->
-        <div class="poem-card" id="loading-poems">
-            <div class="date-header">
-                <p class="poem-context">در حال بارگذاری اشعار...</p>
-                <p class="english-title">Loading poems...</p>
-            </div>
-        </div>
+    <div class="pm-fig__canvas" data-pf-canvas data-fp-own-keys tabindex="0" aria-label="Figure: the poems by line length and poet's time. Arrow keys step through the poems, enter opens one, v switches the measure, esc leaves." aria-describedby="pm-fig-read"></div>
+    <dl class="pm-fig__read" id="pm-fig-read" data-pf-readout aria-live="polite"></dl>
+    <figcaption class="pm-fig__note">
+      <p>Distant reading in miniature: each poem is a column at its poet's time, each line a dot at its length in letters. The classical lines keep to a narrow band; after Nima's «Qoqnus» (1937) the lines come loose. Measured on the excerpts copied here.</p>
+      <p class="pm-fig__sum" lang="fa" dir="rtl" data-pf-summary></p>
+      <p class="fp-label pm-keyhint"><span class="fp-k">f</span>or tab into the figure · <span class="fp-k">←</span><span class="fp-k">→</span>step · <span class="fp-k">enter</span>open the poem · <span class="fp-k">esc</span>back to the page</p>
+    </figcaption>
+  </figure>
+  <div class="fp-toolbar pm-tools">
+    <div class="fp-seg pm-filter" role="group" aria-label="Which poems">
+      <button type="button" data-pm-filter="all" aria-pressed="true"><span class="fp-seg__k">a</span>all <span class="fp-seg__c" data-pm-count="all"></span></button>
+      <button type="button" data-pm-filter="classical" aria-pressed="false"><span class="fp-seg__k">c</span>classical <span class="fp-seg__c" data-pm-count="classical"></span></button>
+      <button type="button" data-pm-filter="modern" aria-pressed="false"><span class="fp-seg__k">m</span>modern <span class="fp-seg__c" data-pm-count="modern"></span></button>
     </div>
+    <label class="fp-find" data-fp-find><span class="fp-k">/</span><input type="search" id="pm-q" placeholder="poet or year" aria-label="Find a poet or a year" autocomplete="off"></label>
+  </div>
+  <p class="fp-label pm-keyhint pm-keyhint--list"><span class="fp-k">j</span><span class="fp-k">k</span>poem (an open poem hands on to the next) · <span class="fp-k">←</span><span class="fp-k">→</span>line · <span class="fp-k">t</span>translate · <span class="fp-k">r</span>reading en / fa · <span class="fp-k">y</span>next year · <span class="fp-k">e</span>open all · <span class="fp-k">?</span>every key</p>
+  <p class="pm-ai">AI translations are provided for convenience but may not capture the full poetic nuance and cultural depth of the original verses.</p>
+  <div id="poems-container" class="pm-list">
+    <p class="pm-status" id="loading-poems" role="status"><span lang="fa" dir="rtl">در حال بارگذاری اشعار...</span> <span class="fp-label">Loading poems...</span></p>
+  </div>
+  <p class="pm-empty fp-label" id="pm-empty" role="status" hidden>no poem matches. <button type="button" class="pm-btn" data-pm-clear>show all</button></p>
+  <figure class="poems-coda">
+    <p class="poems-coda__k">and last</p>
+    <blockquote>
+      <p><span>I&rsquo;ve built my homeland,</span><small title="letters">18</small></p>
+      <p><span>I&rsquo;ve even founded my state</span><small title="letters">21</small></p>
+      <p><span>in my language.</span><small title="letters">12</small></p>
+    </blockquote>
+    <figcaption lang="fa" dir="rtl">محمود درویش <span lang="en" dir="ltr">mahmoud darwish</span></figcaption>
+  </figure>
 </div>
-
+<script src="{{ '/assets/js/poems-form-figure.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 <script>
-// Persian date utilities
-function toPersianDigits(str) {
-    const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
-    return str.replace(/[0-9]/g, (w) => persianDigits[+w]);
-}
+  window.PM_SRC = '{{ "/poems.json" | relative_url }}';
+</script>
+{% raw %}
+<script>
+(function () {
+  // ── Calendars ──────────────────────────────────────────────────────
+  // A poem's date ("2026-06-26") is a calendar day, not an instant. Read it
+  // as one: new Date("2026-06-26") would be midnight UTC, which is still the
+  // day before for any visitor west of London.
+  function parseDay(s) {
+    var p = String(s).split('-').map(Number);
+    return new Date(p[0], p[1] - 1, p[2]);
+  }
+  function fmt(locale, o, d) { try { return new Intl.DateTimeFormat(locale, o).format(d); } catch (e) { return ''; } }
+  function part(locale, o, d, type) {
+    try { var x = new Intl.DateTimeFormat(locale, o).formatToParts(d).find(function (q) { return q.type === type; }); return x ? x.value : ''; } catch (e) { return ''; }
+  }
+  var FA = 'fa-IR-u-ca-persian';
+  var digitsLatin = function (s) { return String(s).replace(/[۰-۹]/g, function (c) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(c); }).replace(/[٠-٩]/g, function (c) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(c); }); };
+  function dates(iso) {
+    var d = parseDay(iso);
+    var faYear = part(FA, { year: 'numeric' }, d, 'year');          // ۱۴۰۵, in Persian digits
+    var y = +digitsLatin(faYear);
+    return {
+      d: d,
+      faYear: faYear,
+      faYearN: y,
+      faSpan: y ? (y + 621) + '–' + String(y + 622).slice(2) : '',  // a Persian year runs Nowruz to Nowruz
+      faDay: fmt(FA, { day: 'numeric', month: 'long' }, d),          // ۳ آبان
+      faFull: fmt(FA, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }, d).replace(/,/g, '،'),
+      enDay: fmt('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }, d).toLowerCase(),
+      enFull: fmt('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }, d).toLowerCase().replace(',', '')
+    };
+  }
 
-// A poem's date ("2026-06-26") is a calendar day, not an instant. Read it
-// as one: new Date("2026-06-26") would be midnight UTC, which is still the
-// day before for any visitor west of London.
-function parseDay(dateString) {
-    const [y, m, d] = String(dateString).split('-').map(Number);
-    return new Date(y, m - 1, d);
-}
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-// Today as YYYY-MM-DD in the visitor's own calendar (toISOString is UTC).
-function todayString() {
-    const t = new Date();
-    return [t.getFullYear(), String(t.getMonth() + 1).padStart(2, '0'), String(t.getDate()).padStart(2, '0')].join('-');
-}
-
-function getDualCalendarDate(dateString) {
-    // If no date provided, use today's date
-    const targetDate = dateString ? parseDay(dateString) : new Date();
-    
-    // Get Persian date
-    const persianDate = targetDate.toLocaleDateString('fa-IR-u-ca-persian', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-    
-    // Get Gregorian date in Persian/English format
-    const gregorianDate = targetDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long', 
-        day: 'numeric'
-    });
-    
-    // Convert to Persian digits for Persian date
-    const persianDateFormatted = toPersianDigits(persianDate);
-    
-    return `${persianDateFormatted} / ${gregorianDate}`;
-}
-
-// Initialize dynamic dates
-function initializeDynamicDates() {
-    const dynamicDates = document.querySelectorAll('.dynamic-date');
-    
-    dynamicDates.forEach(element => {
-        // Find the parent poem card and get its date
-        const poemCard = element.closest('.poem-card');
-        let dateString = poemCard ? poemCard.getAttribute('data-date') : null;
-        
-        // If no date attribute exists, auto-assign today's date and store it
-        if (!dateString && poemCard) {
-            const today = todayString(); // YYYY-MM-DD, local
-            const poemKey = `poem_date_${getPoemIdentifier(poemCard)}`;
-            
-            // Check if we've already stored a date for this poem
-            const storedDate = localStorage.getItem(poemKey);
-            if (storedDate) {
-                dateString = storedDate;
-            } else {
-                // First time seeing this poem, store today's date
-                dateString = today;
-                localStorage.setItem(poemKey, dateString);
-            }
-        }
-        
-        // Get the dual calendar date for this specific poem
-        const dualDate = getDualCalendarDate(dateString);
-        
-        element.innerHTML = `
-            <div style="font-size: 0.75rem; color: #718096; margin-top: 0.25rem;">
-                ${dualDate}
-            </div>
-        `;
-    });
-}
-
-// Generate a unique identifier for a poem based on its content
-function getPoemIdentifier(poemCard) {
-    const poetName = poemCard.querySelector('.poet-name')?.textContent || '';
-    const firstVerse = poemCard.querySelector('.verse')?.textContent || '';
-    // Create a simple hash from poet name and first verse
-    const content = (poetName + firstVerse).replace(/\s+/g, '');
+  // ── Translation: static data from the build, cached in localStorage for
+  // offline resilience. Same cache keys as before the redesign. ────────
+  var TRANSLATION_CACHE_PREFIX = 'poem_translation_v1_';
+  function getCachedTranslation(id) { try { var r = localStorage.getItem(TRANSLATION_CACHE_PREFIX + id); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+  function setCachedTranslation(id, data) { try { localStorage.setItem(TRANSLATION_CACHE_PREFIX + id, JSON.stringify(data)); } catch (e) { /* full or blocked */ } }
+  // A poem's identifier: its poet and first verse, hashed as the old page did.
+  function poemId(p) {
+    var box = document.createElement('div');
+    box.innerHTML = (p.verses || [])[0] || '';
+    var content = (String(p.poet || '') + box.textContent).replace(/\s+/g, '');
     return btoa(unescape(encodeURIComponent(content))).slice(0, 16);
-}
+  }
 
-// Removed loading animation functions (now instantaneous)
+  // ── State ──────────────────────────────────────────────────────────
+  var P = [], M = [], D = [], rows = [], fig = null;
+  var cur = -1, line = -1, newest = 0;
+  var filt = 'all', q = '';
+  var follow = false;            // the next fp-at hands an open poem on
 
-// Translation functionality — static data from build, cached in localStorage for offline resilience
-const TRANSLATION_CACHE_PREFIX = 'poem_translation_v1_';
+  function slug(p, i) {
+    var en = (String(p.poet).split(' / ')[1] || 'poem').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+    return 'poem-' + p.date + '-' + en;
+  }
 
-function getCachedTranslation(poemId) {
-    try {
-        const raw = localStorage.getItem(TRANSLATION_CACHE_PREFIX + poemId);
-        if (!raw) return null;
-        return JSON.parse(raw);
-    } catch (e) {
-        return null;
-    }
-}
+  function measure(p) {
+    if (window.PoemsFigure) return PoemsFigure.measure(p);
+    var parts = String(p.poet || '').split(' / ');
+    return { faName: parts[0], enName: parts[1] || parts[0], perVerse: [], lens: [], classical: false };
+  }
 
-function setCachedTranslation(poemId, data) {
-    try {
-        localStorage.setItem(TRANSLATION_CACHE_PREFIX + poemId, JSON.stringify(data));
-    } catch (e) {
-        // localStorage may be full or blocked — silently ignore
-    }
-}
+  // ── The list ───────────────────────────────────────────────────────
+  function rowHTML(p, i) {
+    var m = M[i], d = D[i];
+    var n = (p.verses || []).length;
+    var lenBit = m.lens.length ? (m.min !== m.max ? m.min + '–' + m.max : m.max) + ' letters' : '';
+    var isEn = (p.verses || []).some(function (v) { return v.indexOf('english-line') >= 0; });
+    var verses = (p.verses || []).map(function (v, j) {
+      return '<p class="pm-verse" data-j="' + j + '">' +
+        '<span class="pm-verse__t">' + v + '</span>' +
+        (m.perVerse[j] ? '<span class="pm-verse__n" aria-hidden="true" title="letters in this line">' + m.perVerse[j] + '</span>' : '') +
+        '</p>';
+    }).join('');
+    var th = p.theme || {};
+    var cl = th.cluster || {};
+    var reading = th.interpretation || th.interpretationFa ? (
+      '<div class="pm-reading">' +
+        '<div class="pm-acts">' +
+          '<span class="fp-seg pm-seg" role="group" aria-label="Reading">' +
+            '<button type="button" data-act="en" aria-pressed="true">reading · en</button>' +
+            '<button type="button" data-act="fa" aria-pressed="false"><span lang="fa">خوانش</span> · fa</button>' +
+          '</span>' +
+          (cl.labelEn ? '<span class="fp-label pm-cluster">' + esc(cl.labelEn.toLowerCase()) + ' · <span lang="fa" dir="rtl">' + esc(cl.label || '') + '</span></span>' : '') +
+        '</div>' +
+        (th.interpretation ? '<p class="pm-reading__en" data-r="en">' + esc(th.interpretation) + '</p>' : '') +
+        (th.interpretationFa ? '<p class="pm-reading__fa" data-r="fa" lang="fa" dir="rtl" hidden>' + esc(th.interpretationFa) + '</p>' : '') +
+      '</div>') : '';
+    // Eliot's poem carries its own Persian under each line: no translate key.
+    var translate = p.hideTranslation ? '' : (
+      '<div class="pm-acts"><button type="button" class="pm-btn translate-btn" data-act="tr" aria-expanded="false"><span class="fp-k">t</span>translate</button></div>' +
+      '<div class="translation-container" hidden>' +
+        '<p class="translation-text"></p>' +
+        '<p class="translation-meta fp-label"><span class="translation-model"></span> · <span class="translation-time"></span></p>' +
+      '</div>');
+    var id = slug(p, i);
+    return '<li class="pm-item" data-i="' + i + '">' +
+      '<details class="fp-row pm-row" id="' + id + '" data-fp-part data-i="' + i + '"' + '>' +
+        '<summary class="fp-row__head pm-row__head">' +
+          '<span class="pm-row__d"><span lang="fa" dir="rtl">' + esc(d.faDay) + '</span><span class="pm-row__g">' + esc(d.enDay) + '</span></span>' +
+          '<span class="fp-row__t pm-row__t">' + esc(m.enName) + ' <span lang="fa" dir="rtl">' + esc(m.faName) + '</span></span>' +
+          '<span class="fp-row__m pm-row__m">' + (i === newest ? '<span class="fp-live" title="newest poem"></span>' : '') +
+            n + (n === 1 ? ' line' : ' lines') + (lenBit ? ' · ' + lenBit : '') + (m.classical ? ' · <span class="fp-tag">classical</span>' : '') + '</span>' +
+          '<span class="fp-row__x" aria-hidden="true">+</span>' +
+        '</summary>' +
+        '<div class="fp-row__body pm-poem">' +
+          '<p class="fp-label pm-poem__date"><span lang="fa" dir="rtl">' + esc(d.faFull) + '</span> · ' + esc(d.enFull) +
+            ' · <a href="#' + id + '" class="pm-poem__link">link</a></p>' +
+          '<div class="pm-verses' + (isEn ? ' pm-verses--ltr' : '') + '" dir="' + (isEn ? 'ltr' : 'rtl') + '" lang="' + (isEn ? 'en' : 'fa') + '">' + verses + '</div>' +
+          '<p class="pm-poet" lang="fa" dir="rtl">' + esc(m.faName) + '</p>' +
+          translate +
+          reading +
+        '</div>' +
+      '</details></li>';
+  }
 
-function translatePoem(button) {
-    const poemCard = button.closest('.poem-card');
-    const translationContainer = poemCard.querySelector('.translation-container');
-    const translationText = poemCard.querySelector('.translation-text');
-    const translationModel = poemCard.querySelector('.translation-model');
-    const translationTime = poemCard.querySelector('.translation-time');
+  function render() {
+    var box = document.getElementById('poems-container');
+    var html = '', g = null, open = false;
+    P.forEach(function (p, i) {
+      var y = D[i].faYear;
+      if (y !== g) {
+        if (open) html += '</ol></section>';
+        var count = D.filter(function (x) { return x.faYear === y; }).length;
+        html += '<section class="pm-year" data-year="' + D[i].faYearN + '" id="y' + D[i].faYearN + '" aria-labelledby="y' + D[i].faYearN + '-h">' +
+          '<header class="pm-year__head">' +
+            '<h2 class="pm-year__h" id="y' + D[i].faYearN + '-h"><span lang="fa">' + esc(y) + '</span><span class="sr-only"> (' + D[i].faSpan + ')</span></h2>' +
+            '<span class="fp-label pm-year__m" aria-hidden="true">' + D[i].faSpan + '</span>' +
+            '<span class="fp-label pm-year__c"><span data-pm-ycount>' + count + '</span> ' + (count === 1 ? 'poem' : 'poems') + '</span>' +
+          '</header><ol class="fp-index pm-index">';
+        g = y; open = true;
+      }
+      html += rowHTML(p, i);
+    });
+    if (open) html += '</ol></section>';
+    box.innerHTML = html;
+    rows = P.map(function (p, i) { return box.querySelector('details[data-i="' + i + '"]'); });
+    wire();
+  }
 
-    // Toggle: collapse if already expanded
-    if (translationContainer.classList.contains('expanded')) {
-        translationContainer.classList.remove('expanded');
-        return;
-    }
-
-    const poemId = getPoemIdentifier(poemCard);
-
-    // 1. Check localStorage cache first
-    const cached = getCachedTranslation(poemId);
+  // ── Acting on one poem ─────────────────────────────────────────────
+  function translatePoem(i) {
+    var row = rows[i], p = P[i];
+    if (!row || p.hideTranslation) return;
+    var btn = $('[data-act="tr"]', row);
+    var box = $('.translation-container', row);
+    var text = $('.translation-text', row), model = $('.translation-model', row), time = $('.translation-time', row);
+    // Toggle: collapse if already open
+    if (!box.hidden) { box.hidden = true; btn.setAttribute('aria-expanded', 'false'); return; }
+    var show = function () { box.hidden = false; btn.setAttribute('aria-expanded', 'true'); };
+    var id = poemId(p);
+    // 1. the localStorage cache first
+    var cached = getCachedTranslation(id);
     if (cached) {
-        translationText.textContent = cached.translation;
-        translationModel.textContent = cached.source || 'Translation';
-        translationTime.textContent = cached.date || '';
-        translationContainer.classList.add('expanded');
-        return;
+      text.textContent = cached.translation;
+      model.textContent = cached.source || 'Translation';
+      time.textContent = cached.date || '';
+      show(); return;
     }
-
-    // 2. Fall back to static translation baked in at build time
+    // 2. the static translation baked in at build time
     try {
-        const poemDataStr = decodeURIComponent(poemCard.getAttribute('data-poem'));
-        const poemData = JSON.parse(poemDataStr);
-
-        if (poemData.translation) {
-            const dateLabel = poemData.date
-                ? parseDay(poemData.date).toLocaleDateString('fa-IR')
-                : '';
-
-            translationText.textContent = poemData.translation;
-            translationModel.textContent = 'Translation';
-            translationTime.textContent = dateLabel;
-            translationContainer.classList.add('expanded');
-
-            // Cache it so future visits (or offline) are instant
-            setCachedTranslation(poemId, {
-                translation: poemData.translation,
-                source: 'Translation',
-                date: dateLabel
-            });
-        } else {
-            translationText.textContent = 'ترجمه یافت نشد / Translation not found.';
-            translationText.style.color = '#e53e3e';
-            translationModel.textContent = '';
-            translationTime.textContent = '';
-            translationContainer.classList.add('expanded');
-        }
+      if (p.translation) {
+        var dateLabel = p.date ? parseDay(p.date).toLocaleDateString('fa-IR') : '';
+        text.textContent = p.translation;
+        model.textContent = 'Translation';
+        time.textContent = dateLabel;
+        show();
+        setCachedTranslation(id, { translation: p.translation, source: 'Translation', date: dateLabel });
+      } else {
+        text.textContent = 'ترجمه یافت نشد / Translation not found.';
+        text.classList.add('is-missing');
+        model.textContent = ''; time.textContent = '';
+        show();
+      }
     } catch (err) {
-        console.error(err);
-        translationText.textContent = 'خطا در بارگزاری ترجمه / Error loading translation';
-        translationText.style.color = '#e53e3e';
-        translationContainer.classList.add('expanded');
+      console.error(err);
+      text.textContent = 'خطا در بارگزاری ترجمه / Error loading translation';
+      text.classList.add('is-missing');
+      show();
     }
-}
+  }
 
-// Load poems from JSON and generate HTML
-async function loadPoems() {
-    try {
-        console.log('Loading poems...');
-        
-        // Try multiple paths in case of path issues
-        const paths = ['/poems.json', 'poems.json', '../poems.json'];
-        let response;
-        let poems;
-        
-        for (const path of paths) {
-            try {
-                console.log(`Trying path: ${path}`);
-                response = await fetch(path);
-                console.log(`Response status for ${path}:`, response.status);
-                
-                if (response.ok) {
-                    poems = await response.json();
-                    console.log(`Success with path: ${path}`);
-                    break;
-                }
-            } catch (pathError) {
-                console.log(`Failed path ${path}:`, pathError.message);
-            }
-        }
-        
-        if (!poems) {
-            // Fallback to embedded data
-            console.log('Using fallback embedded data');
-            poems = [
-                {
-                    "verses": ["و کجا باید", "در غیبت ابدی رویا", "پناه گرفت؟"],
-                    "poet": "احمدرضا احمدی / Ahmadreza Ahmadi",
-                    "date": "2026-02-06"
-                },
-                {
-                    "verses": ["به شکل رفتن درآمده بود", "به شکل دور شدن ماه از پنجره"],
-                    "poet": "رسول یونان / Rasool Yoonan",
-                    "date": "2025-07-10"
-                },
-                {
-                    "verses": ["چند گویند مرا: صبر کن از لشکر غم؟", "بر من از گوشهٔ ناگاه بتازد چه کنم؟"],
-                    "poet": "عراقی / Iraqi",
-                    "date": "2025-07-09"
-                },
-                {
-                    "verses": ["سر‌نوشتم به بال کبوتر‌ها گره خورده", "سنگی می‌زنند", "یکی می‌میرد"],
-                    "poet": "سعید برآبادی / Saeed Baraabadi",
-                    "date": "2025-07-08"
-                },
-                {
-                    "verses": ["زان که بر ضد جهان گویم سخن", "یا جهان دیوانه باشد یا که من"],
-                    "poet": "نیما یوشیج / Nima Yooshij",
-                    "date": "2025-07-08"
-                }
-            ];
-        }
-        
-        console.log('Poems loaded:', poems.length);
-        
-        renderPoems(poems);
-        
-        // Initialize dates after poems are loaded
-        initializeDynamicDates();
-        console.log('Poems loaded successfully');
-        
-    } catch (error) {
-        console.error('Error loading poems:', error);
-        console.error('Error details:', error.message);
-        const container = document.getElementById('poems-container');
-        if (container) {
-            container.innerHTML = `
-                <div class="poem-card">
-                    <div class="date-header">
-                        <p class="poem-context">خطا در بارگذاری اشعار: ${error.message}</p>
-                        <p class="english-title">Error loading poems: ${error.message}</p>
-                    </div>
-                </div>
-            `;
-        }
+  function setReading(i, which) {
+    var row = rows[i]; if (!row) return;
+    var r = $('.pm-reading', row); if (!r) return;
+    if (which === 'cycle') which = $('[data-act="en"]', r).getAttribute('aria-pressed') === 'true' ? 'fa' : 'en';
+    $$('[data-act="en"],[data-act="fa"]', r).forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.act === which)); });
+    $$('[data-r]', r).forEach(function (p) { p.hidden = p.dataset.r !== which; });
+  }
+
+  function setLine(j, scroll) {
+    line = j;
+    if (cur < 0) return;
+    $$('.pm-verse.is-at').forEach(function (v) { v.classList.remove('is-at'); });
+    var v = j >= 0 && rows[cur] ? $('.pm-verse[data-j="' + j + '"]', rows[cur]) : null;
+    if (v) {
+      v.classList.add('is-at');
+      if (scroll) {
+        var r = v.getBoundingClientRect();
+        if (r.top < 70 || r.bottom > innerHeight - 70) v.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }
     }
-}
+    fig && fig.pick(cur, j);
+  }
 
-// Persian (Jalali) year of a date, in Persian digits — used as the only
-// signpost in the chronological run.
-function getPersianYear(dateString) {
-    if (!dateString) return '';
-    try {
-        const year = parseDay(dateString).toLocaleDateString('fa-IR-u-ca-persian', { year: 'numeric' });
-        return toPersianDigits(year).replace(/[^\u06F0-\u06F9\u0660-\u0669]/g, '');
-    } catch (e) {
-        return '';
+  function stepLine(key) {
+    if (cur < 0 || !rows[cur]) return;
+    var row = rows[cur];
+    if (!row.open) row.open = true;
+    var ltr = !!$('.pm-verses--ltr', row);
+    // forward is the way the poem reads: ← in Persian and Arabic, → in English
+    var d = (key === 'ArrowLeft') === !ltr ? 1 : -1;
+    var n = (P[cur].verses || []).length;
+    var j = line < 0 ? (d > 0 ? 0 : n - 1) : Math.max(0, Math.min(n - 1, line + d));
+    setLine(j, true);
+  }
+
+  // Make poem i the current one (figure, row light, line reset).
+  function setCur(i) {
+    if (cur !== i) { line = -1; $$('.pm-verse.is-at').forEach(function (v) { v.classList.remove('is-at'); }); }
+    cur = i;
+    rows.forEach(function (r, k) { r.classList.toggle('is-cur', k === i); });
+    fig && fig.pick(i, line);
+  }
+
+  // Go to a row as j / k would: an open poem hands on to the next.
+  function go(row) {
+    if (!row || !window.FP || !FP.setAt) return;
+    follow = true;
+    FP.setAt(row);
+    follow = false;
+  }
+
+  document.addEventListener('fp-at', function (e) {
+    var row = e.detail;
+    if (!row || !row.matches || !row.matches('.pm-row')) return;
+    var i = +row.dataset.i;
+    var was = rows[cur];
+    if (follow && was && was !== row && was.open) { was.open = false; row.open = true; }
+    setCur(i);
+  });
+  // j / k come from faceplate.js; note them on the way down so the fp-at
+  // they cause hands the open poem on.
+  window.addEventListener('keydown', function (e) {
+    if ((e.key === 'j' || e.key === 'k') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      follow = true; setTimeout(function () { follow = false; }, 0);
     }
-}
+  }, true);
 
-// Render the chronological run of poems, with a hairline year marker
-// wherever the Persian year changes, and Darwish as a closing epigraph.
-function renderPoems(poems) {
-    const container = document.getElementById('poems-container');
-    const loadingElement = document.getElementById('loading-poems');
+  // ← → for verse lines: not in faceplate.js's letters, so listened for
+  // here, with the same manners: never while typing, never over the help,
+  // never while the figure (or anything that keeps its own keys) has focus.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey || e.defaultPrevented) return;
+    var t = e.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (t && t.closest && t.closest('[data-fp-own-keys], figure [tabindex]')) return;
+    var help = document.getElementById('fp-help');
+    if (help && !help.hidden) return;
+    if (cur < 0 || !rows[cur] || rows[cur].closest('.pm-item').hidden) return;
+    e.preventDefault();
+    stepLine(e.key);
+  });
 
-    if (!container) {
-        console.error('poems-container not found');
-        return;
-    }
-
-    if (loadingElement) {
-        loadingElement.remove();
-    }
-
-    let lastYear = null;
-    poems.forEach(poem => {
-        const year = getPersianYear(poem.date);
-        if (year && year !== lastYear) {
-            container.insertAdjacentHTML('beforeend',
-                `<div class="year-marker"><span>${year}</span></div>`);
-            lastYear = year;
-        }
-        container.insertAdjacentHTML('beforeend', generatePoemHTML(poem));
+  // ── Filter and find ────────────────────────────────────────────────
+  var norm = function (s) { return digitsLatin(String(s || '').toLowerCase()).replace(/ي/g, 'ی').replace(/ك/g, 'ک').replace(/‌/g, ''); };
+  function hay(i) {
+    var p = P[i], m = M[i], d = D[i], cl = (p.theme && p.theme.cluster) || {};
+    return norm([m.enName, m.faName, d.faYear, d.faYearN, d.faSpan, d.enDay, d.faDay, cl.labelEn, cl.label].join(' '));
+  }
+  function visible(i) {
+    if (filt === 'classical' && !M[i].classical) return false;
+    if (filt === 'modern' && M[i].classical) return false;
+    return !q || hay(i).indexOf(q) >= 0;
+  }
+  function apply() {
+    var shown = [];
+    P.forEach(function (p, i) {
+      var v = visible(i);
+      rows[i].closest('.pm-item').hidden = !v;
+      if (v) shown.push(i);
     });
-
-    // Closing epigraph — not a poem, so it is not set as one.
-    container.insertAdjacentHTML('beforeend', `
-        <figure class="poems-coda">
-            <blockquote>I&rsquo;ve built my homeland, I&rsquo;ve even founded my state&mdash;in my language.</blockquote>
-            <figcaption>Mahmoud Darwish</figcaption>
-        </figure>
-    `);
-}
-
-// Generate HTML for a single poem (list view)
-function generatePoemHTML(poem) {
-    const versesHTML = poem.verses.map(verse => 
-        `<div class="verse">${verse}</div>`
-    ).join('');
-    
-    // Store entire poem data for instantaneous offline access
-    const poemDataAttr = encodeURIComponent(JSON.stringify(poem));
-    const dateAttribute = poem.date ? `data-date="${poem.date}"` : '';
-    
-    const translateButtonHTML = poem.hideTranslation ? '' : `
-            <button class="translate-btn" onclick="translatePoem(this)" title="ترجمه / Translate">
-                <i class="fas fa-language"></i>
-            </button>
-            <div class="translation-container">
-                <p class="translation-text"></p>
-                <div class="translation-meta">
-                    <span class="translation-model"></span>
-                    <span class="translation-time"></span>
-                </div>
-            </div>
-    `;
-    
-    return `
-        <div class="poem-card" ${dateAttribute} data-poem="${poemDataAttr}">
-            <div class="date-header">
-                <div class="dynamic-date"></div>
-            </div>
-            <div class="poem-content">
-                <div class="poem-verses">
-                    ${versesHTML}
-                </div>
-            </div>
-            <div class="poet-attribution">
-                <p class="poet-name">${poem.poet}</p>
-            </div>
-            ${translateButtonHTML}
-        </div>
-    `;
-}
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-    loadPoems();
-});
-
-// Handle theme changes
-const themeToggle = document.querySelector('.theme-toggle input');
-if (themeToggle) {
-    themeToggle.addEventListener('change', function() {
-        // Slight delay to ensure theme has switched
-        setTimeout(initializeDynamicDates, 100);
+    $$('.pm-year').forEach(function (s) {
+      var n = $$('.pm-item', s).filter(function (li) { return !li.hidden; }).length;
+      s.hidden = !n;
+      $('[data-pm-ycount]', s).textContent = n;
     });
-}
-</script>  
+    $$('[data-pm-filter]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pmFilter === filt)); });
+    document.getElementById('pm-empty').hidden = shown.length > 0;
+    fig && fig.filter(shown);
+  }
+  function setFilter(f) { filt = f; apply(); }
+
+  // ── Wiring ─────────────────────────────────────────────────────────
+  function wire() {
+    rows.forEach(function (row, i) {
+      var head = $('summary', row);
+      head.addEventListener('click', function () {
+        // a click on the head: this is now the poem you're on
+        // (only through j / k's marker when the row is fully in view, so a
+        // click never scrolls the row out from under the pointer)
+        var r = row.getBoundingClientRect();
+        var inView = r.top >= 70 && r.top < innerHeight - 70;
+        if (!row.classList.contains('fp-at') && inView && window.FP && FP.setAt) FP.setAt(row); else setCur(i);
+      });
+      head.addEventListener('mouseenter', function () { fig && fig.hover(i); });
+      head.addEventListener('mouseleave', function () { fig && fig.hover(-1); });
+      $$('.pm-verse', row).forEach(function (v) {
+        v.addEventListener('mouseenter', function () { fig && fig.hover(i, +v.dataset.j); });
+        v.addEventListener('mouseleave', function () { fig && fig.hover(-1); });
+      });
+      row.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-act]'); if (!b) return;
+        if (cur !== i) setCur(i);
+        if (b.dataset.act === 'tr') translatePoem(i);
+        else setReading(i, b.dataset.act);
+      });
+    });
+    var counts = { all: P.length, classical: M.filter(function (m) { return m.classical; }).length };
+    counts.modern = counts.all - counts.classical;
+    $$('[data-pm-count]').forEach(function (c) { c.textContent = counts[c.dataset.pmCount]; });
+  }
+  $$('[data-pm-filter]').forEach(function (b) { b.addEventListener('click', function () { setFilter(b.dataset.pmFilter); }); });
+  var qi = document.getElementById('pm-q');
+  qi.addEventListener('input', function () { q = norm(qi.value.trim()); apply(); });
+  document.querySelector('[data-pm-clear]').addEventListener('click', function () { qi.value = ''; q = ''; setFilter('all'); });
+
+  // ── Page letters (listed under ? automatically) ────────────────────
+  var curRow = function () { return cur >= 0 && rows[cur] && !rows[cur].closest('.pm-item').hidden ? rows[cur] : null; };
+  var shownRows = function () { return rows.filter(function (r) { return !r.closest('.pm-item').hidden; }); };
+  function yearStep(d) {
+    var secs = $$('.pm-year').filter(function (s) { return !s.hidden; });
+    var here = curRow() ? curRow().closest('.pm-year') : null;
+    var k = secs.indexOf(here);
+    var to = secs[k < 0 ? (d > 0 ? 0 : secs.length - 1) : k + d];
+    if (to) go($$('.pm-item', to).filter(function (li) { return !li.hidden; })[0].querySelector('details'));
+  }
+  if (window.FP) {
+    FP.add({ key: '← →', label: 'step the lines of the open poem, the way it reads (← in Persian)', run: function () {}, when: function () { return !!curRow(); } });
+    FP.add({ key: 't', label: 'translate this poem / hide the translation', run: function () { var r = curRow(); if (!r) return; r.open = true; translatePoem(cur); }, when: function () { return !!curRow() && !P[cur].hideTranslation; } });
+    FP.add({ key: 'r', label: 'reading: english / persian', run: function () { var r = curRow(); if (!r) return; r.open = true; setReading(cur, 'cycle'); }, when: function () { return !!curRow() && !!$('.pm-reading', curRow()); } });
+    FP.add({ key: 'y', label: 'next persian year (۱۴۰۵ → ۱۴۰۴)', run: function () { yearStep(1); } });
+    FP.add({ key: 'Y', label: 'previous persian year', run: function () { yearStep(-1); } });
+    FP.add({ key: 'g', label: 'the newest poem', run: function () { go(shownRows()[0]); } });
+    FP.add({ key: 'G', label: 'the oldest poem', run: function () { var s = shownRows(); go(s[s.length - 1]); } });
+    FP.add({ key: 'e', label: 'open every poem / close them all', run: function () {
+      var s = shownRows(), anyClosed = s.some(function (r) { return !r.open; });
+      s.forEach(function (r) { r.open = anyClosed; });
+    } });
+    FP.add({ key: 'v', label: 'figure: letters per line / variation', run: function () { fig && fig.toggleView(); } });
+    FP.add({ key: 'f', label: 'into the figure (← → step, enter opens, esc leaves)', run: function () { fig && fig.focus(); } });
+    FP.add({ key: 'a', label: 'all poems', run: function () { setFilter('all'); } });
+    FP.add({ key: 'c', label: 'classical poems only', run: function () { setFilter('classical'); } });
+    FP.add({ key: 'm', label: 'modern poems only', run: function () { setFilter('modern'); } });
+  }
+
+  // ── Load ───────────────────────────────────────────────────────────
+  function fail(error) {
+    var box = document.getElementById('poems-container');
+    box.innerHTML = '<p class="pm-status"><span lang="fa" dir="rtl">خطا در بارگذاری اشعار: ' + esc(error.message) + '</span><br><span class="fp-label">Error loading poems: ' + esc(error.message) + '</span></p>';
+  }
+  function start(poems) {
+    // newest first; the order the list reads in
+    P = poems.map(function (p, k) { return [p, k]; })
+      .sort(function (a, b) { return a[0].date < b[0].date ? 1 : a[0].date > b[0].date ? -1 : a[1] - b[1]; })
+      .map(function (x) { return x[0]; });
+    M = P.map(measure);
+    D = P.map(function (p) { return dates(p.date); });
+    newest = 0;
+    render();
+    if (window.PoemsFigure) {
+      fig = PoemsFigure.mount(document.getElementById('poems-figure'), P, {
+        newest: newest,
+        onHover: function (i) { rows.forEach(function (r, k) { r.classList.toggle('is-lit', k === i); }); },
+        onPick: function (i) { setCur(i); },
+        onStep: function (d) {
+          var s = shownRows(), k = s.indexOf(rows[cur]);
+          var to = s[Math.max(0, Math.min(s.length - 1, (k < 0 ? 0 : k + d)))];
+          if (to) setCur(+to.dataset.i);
+        },
+        onOpen: function (i) { var r = rows[i]; if (!r) return; r.open = true; if (window.FP && FP.setAt) FP.setAt(r); else setCur(i); }
+      });
+    }
+    apply();
+    // A link to one poem opens it; otherwise the newest is open.
+    var target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var row = target && target.matches('.pm-row') ? target : rows[newest];
+    row.open = true;
+    setCur(+row.dataset.i);
+    if (target === row) {
+      // instant, and again once the type and the page have settled, so the
+      // browser's own scroll restoration doesn't carry us back to the top
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      var land = function () { row.scrollIntoView({ block: 'start', behavior: 'instant' }); };
+      land();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(land);
+      if (document.readyState !== 'complete') window.addEventListener('load', land, { once: true });
+    }
+  }
+  function load() {
+    fetch(window.PM_SRC || '/poems.json')
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(start)
+      .catch(function (e) { console.error('Error loading poems:', e); fail(e); });
+  }
+  // the figure's script is deferred: it has run by DOMContentLoaded
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load); else load();
+  window.addEventListener('hashchange', function () {
+    var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (t && t.matches('.pm-row')) { t.open = true; if (window.FP && FP.setAt) FP.setAt(t); }
+  });
+})();
+</script>
+{% endraw %}

@@ -1,0 +1,214 @@
+// Carried over from the old assets/main.scss, lines 1281–1493.
+// ─────────────────────────────────────────────────────────────
+// Footer: the mountains above Mashhad
+// A line drawing of a range, drawn live by assets/js/mashhad-range.js in
+// the site's ink on its paper, with Mashhad's own sun or moon in the sky
+// at its true place for the hour there. The footer is its own thing: it
+// wakes when the pointer is over it (or, on a touch screen, when it comes
+// into view), and nothing elsewhere on the page sets it off.
+// ─────────────────────────────────────────────────────────────
+
+.site-footer {
+  border-top: 0 !important;
+  padding: 0;
+  margin-top: clamp(1.25rem, 3vh, 2.5rem);
+  position: relative;
+  // Below .page-content (z-index 1) so the sky reaching up behind the text
+  // above never washes over it, but still above #dappled-light.
+  z-index: 0;
+  overflow: visible;
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    padding-top: clamp(0.35rem, 0.9vh, 0.55rem);
+    padding-bottom: clamp(0.55rem, 1.7vh, 1.1rem);
+  }
+}
+
+// What the range costs the page: a band at the foot. The drawing's sky
+// reaches up out of flow into whatever clear ground is left above it
+// (sized by the script), so it never moves the layout or crosses text.
+// .footer-range sits outside .wrapper, so 100% is the full page width.
+.footer-range {
+  position: relative;
+  width: 100%;
+  height: clamp(95px, min(21.4vw, 15vh), 214px);
+  pointer-events: none;
+  user-select: none;
+
+  svg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: visible;
+    // The range dissolves at the page's edges instead of ending.
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    // Quiet at rest — a texture at the foot of the page. It settles back
+    // more slowly than it wakes.
+    opacity: 0.55;
+    transition: opacity 1.8s ease;
+  }
+}
+
+.site-footer.is-awake .footer-range svg {
+  opacity: 1;
+  transition: opacity 0.9s ease;
+}
+
+// Marks.
+.range-fill {
+  fill: var(--paper);
+  stroke: none;
+}
+
+.range-ridge {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 0.9;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+// Slopes facing the sun (or moon) take the full ink.
+.range-ridge--lit {
+  stroke: var(--ink);
+  stroke-width: 1.1;
+}
+
+.range-gully {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 0.6;
+  stroke-linecap: round;
+  opacity: 0.5;
+
+  &--lit {
+    stroke: var(--ink);
+    opacity: 0.75;
+  }
+}
+
+// By moonlight the lit faces are only a little brighter than the rest.
+.range--night {
+  .range-ridge--lit {
+    stroke-width: 0.9;
+    opacity: 0.7;
+  }
+
+  .range-gully--lit {
+    opacity: 0.6;
+  }
+}
+
+// The pointer's lamp: the same lines again in full ink, seen only through
+// a soft circle that follows the pointer while the footer is awake.
+.range-lamp {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.site-footer.is-awake .range-lamp {
+  opacity: 1;
+}
+
+.range-mist {
+  fill: var(--paper);
+  opacity: 0.9;
+}
+
+.range-mist-edge {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 0.6;
+  stroke-dasharray: 2 3.5;
+  opacity: 0.55;
+}
+
+// Mist drifts, slowly, back and forth along the valleys.
+.range-drift {
+  animation: range-drift 70s ease-in-out infinite alternate;
+}
+
+.range-drift--slow {
+  animation-duration: 110s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes range-drift {
+  from { transform: translateX(-2.5%); }
+  to { transform: translateX(2.5%); }
+}
+
+.range-sun {
+  fill: #f2c14e;
+  filter: drop-shadow(0 0 5px rgba(242, 193, 78, 0.65)) drop-shadow(0 0 14px rgba(242, 160, 60, 0.35));
+}
+
+// On paper the moon is drawn in ink; on the night page it is moonlight.
+.range-moon {
+  fill: var(--ink-soft);
+}
+
+.range-star {
+  fill: var(--ink-soft);
+  opacity: 0.6;
+}
+
+body.dark {
+  .range-moon {
+    fill: #c7d2e8;
+    filter: drop-shadow(0 0 6px rgba(199, 210, 232, 0.45));
+  }
+
+  .range-star {
+    fill: #e8edf7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .range-drift {
+    animation: none;
+  }
+
+  .footer-range svg,
+  .site-footer.is-awake .footer-range svg,
+  .range-lamp {
+    transition-duration: 0.2s;
+  }
+}
+
+// Caption: Mashhad's time, a hand-note under the drawing in the site
+// title's own voice. An italic serif at this size separates itself from
+// the colophon's plain upright type below without getting any louder. It
+// appears only while the footer is awake; at rest its line is kept, empty
+// to the eye, so waking never moves the colophon.
+.footer-place {
+  // This gap is what separates the caption from the colophon.
+  margin: 0 0 clamp(0.4rem, 1.3vh, 0.85rem);
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.015em;
+  line-height: 1.4;
+  min-height: 1.4em;
+  color: var(--ink-soft);
+  opacity: 0;
+  cursor: default;
+  // Same slow breath as the drawing, so the footer wakes as one thing.
+  transition: opacity 1.4s ease, color 1.4s ease;
+}
+
+.site-footer.is-awake .footer-place {
+  opacity: 1;
+  color: var(--ink);
+  transition: opacity 0.9s ease, color 0.9s ease;
+}
+

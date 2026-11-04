@@ -1,0 +1,62 @@
+<h2 class="sr-only">News page preview: a year-by-month calendar plate where each item is a glyph of its kind, with arrows from the month listed to the month it happened, kind filters with tallies, and a linked log below.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+#nw{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.22);--y:#F2C500;--live:#E0362C;background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;padding:14px 20px}
+.m{font-family:'JetBrains Mono',monospace;font-size:11px}
+.sk{border:1.5px solid var(--ink);border-radius:4px;padding:3px 9px;background:transparent;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer}
+.sk:hover{background:var(--y);border-color:var(--y)}.sk.on{background:var(--ink);color:var(--bg)}
+kbd{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-left:4px;opacity:.8}
+#cal text{font-family:'JetBrains Mono';font-size:9.5px;fill:currentColor}
+#cal .it{cursor:pointer}#cal .it.dim{opacity:.15}#cal .it.on rect.bg{fill:var(--y)}
+.lg{display:grid;grid-template-columns:72px 64px minmax(0,1fr);gap:10px;padding:8px 4px;border-bottom:1px solid var(--soft);align-items:baseline;cursor:pointer}
+.lg:hover,.lg.on{background:var(--y)}.lg.dim{display:none}
+.st{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--ink);color:var(--bg);padding:1px 6px;border-radius:3px;margin-right:4px}
+</style>
+<div style="padding:1rem 0">
+<div id="nw">
+<div class="m" style="display:flex;justify-content:space-between;border-bottom:1.5px solid var(--ink);padding-bottom:6px;flex-wrap:wrap;gap:6px"><span>hy / 03 news</span><span>j / k items · t p a n kinds · x clear</span></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:22px;align-items:end;margin:20px 0 12px">
+<div style="font-weight:800;font-size:44px;line-height:.92;letter-spacing:-.025em">news</div>
+<div class="m" id="tal" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px"></div>
+</div>
+<svg id="cal" viewBox="0 0 640 214" width="100%" style="display:block"></svg>
+<div class="m" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:4px;opacity:.85"><span>each item at the month it is listed under</span><span>⤳ to when it happened, where the page says</span><span style="color:var(--live)">● latest</span></div>
+<div id="cap" style="border:1.5px solid var(--ink);border-radius:6px;padding:10px 12px;margin:12px 0 4px;min-height:52px"></div>
+<div id="log" style="margin-top:12px;border-top:1.5px solid var(--ink)"></div>
+</div>
+</div>
+<script>
+const K={talk:['talk','talks','t'],panel:['panel','panels','p'],paper:['paper','papers','a'],press:['press','press','n']};
+const N=[[2022,6,'talk','Phenomenology of generative/predictive word processing','Oxford Connected Life 2022',null,[]],
+[2022,8,'talk','AI and the democratization of art','Dana Forum',[2022,10],[]],
+[2023,3,'panel','Configuring the (w)hole','4S 2023, Honolulu',null,[]],
+[2023,6,'talk','Plasticity of data and the problematics of containment','4S 2023, Honolulu',null,[]],
+[2024,9,'paper','Data-body machine','Journal of Somatechnics',null,[]],
+[2024,11,'paper','The writer in-between','Journal of Human-Technology Relations',null,[]],
+[2024,12,'panel','Perforating echos, with Rachel Horst','4S 2025, Seattle',[2025,9],[]],
+[2025,2,'talk','From Java to Python, with Proyash Podder','SIGCSE 2025 affiliated event, Pittsburgh',null,[]],
+[2025,3,'talk','The recursive enactment of AI','4S 2025, Seattle',[2025,9],[]],
+[2025,11,'paper','MASFIN','NeurIPS 2025 workshop, generative AI in finance',null,[["sebastian montalvo","'28"]]],
+[2026,4,'paper','TimeCapsule','ACM Creativity & Cognition 2026',null,[["hayk grigorian","'26"]]],
+[2026,7,'press','Quoted in "Are LLMs stuck in time?"','Communications of the ACM',null,[]]];
+const Y=[2022,2023,2024,2025,2026],MO='jfmamjjasond';let cur=11,filt=null;
+const cx=m=>58+(m-1)*48,cy=y=>20+(y-2022)*38;
+function glyph(k,x,y){const c='currentColor';if(k==='talk')return`<line x1="${x}" y1="${y-9}" x2="${x}" y2="${y+7}" stroke="${c}"/><path d="M${x-7},${y-9} L${x+7},${y-9} L${x+5},${y-4} L${x-5},${y-4}Z" fill="none" stroke="${c}"/><line x1="${x-6}" y1="${y+7}" x2="${x+6}" y2="${y+7}" stroke="${c}"/>`;
+if(k==='panel')return`<line x1="${x-9}" y1="${y-2}" x2="${x+9}" y2="${y-2}" stroke="${c}" stroke-width="1.5"/><line x1="${x-7}" y1="${y-2}" x2="${x-7}" y2="${y+7}" stroke="${c}"/><line x1="${x+7}" y1="${y-2}" x2="${x+7}" y2="${y+7}" stroke="${c}"/>${[-6,0,6].map(d=>`<circle cx="${x+d}" cy="${y-7}" r="2" fill="none" stroke="${c}"/>`).join('')}`;
+if(k==='paper')return[0,1,2].map(i=>`<rect x="${x-7+i*1.5}" y="${y-8+i*2.5}" width="12" height="12" fill="var(--bg)" stroke="${c}"/>`).join('');
+return`<path d="M${x-9},${y-6} L${x+9},${y-6} L${x+9},${y+7} L${x-9},${y+7}Z M${x},${y-6} L${x},${y+7}" fill="var(--bg)" stroke="${c}"/><line x1="${x-7}" y1="${y-2}" x2="${x-2}" y2="${y-2}" stroke="${c}"/><line x1="${x+2}" y1="${y-2}" x2="${x+7}" y2="${y-2}" stroke="${c}"/>`}
+function draw(){let s='';Y.forEach(y=>{s+=`<text x="2" y="${cy(y)+4}">${y}</text><line x1="40" x2="636" y1="${cy(y)+14}" y2="${cy(y)+14}" stroke="currentColor" opacity=".25"/>`});
+[...MO].forEach((m,i)=>s+=`<text x="${cx(i+1)}" y="208" text-anchor="middle">${m}</text>`);
+N.forEach((n,i)=>{if(n[5]){const x1=cx(n[1]),y1=cy(n[0]),x2=cx(n[5][1]),y2=cy(n[5][0]);s+=`<path d="M${x1+10},${y1} Q${(x1+x2)/2+10},${(y1+y2)/2-16} ${x2},${y2}" fill="none" stroke="currentColor" stroke-dasharray="2 3" opacity="${filt&&filt!==n[2]?.15:.8}"/><circle cx="${x2}" cy="${y2}" r="2.5" fill="none" stroke="currentColor"/>`}});
+N.forEach((n,i)=>{const x=cx(n[1]),y=cy(n[0]);s+=`<g class="it${i===cur?' on':''}${filt&&filt!==n[2]?' dim':''}" data-i="${i}"><rect class="bg" x="${x-16}" y="${y-14}" width="32" height="26" rx="3" fill="transparent"/>${glyph(n[2],x,y)}${i===N.length-1?`<circle cx="${x+13}" cy="${y-11}" r="3" fill="var(--live)"/>`:''}</g>`});
+const c=document.getElementById('cal');c.innerHTML=s;c.querySelectorAll('.it').forEach(g=>g.onmouseenter=()=>sel(+g.dataset.i))}
+function cap(){const n=N[cur];document.getElementById('cap').innerHTML=`<div class="m" style="display:flex;justify-content:space-between"><span>${K[n[2]][0]} · listed ${MO[n[1]-1]==='j'?'':''}${new Date(n[0],n[1]-1).toLocaleString('en-GB',{month:'short'}).toLowerCase()} ${n[0]}${n[5]?' · happened '+new Date(n[5][0],n[5][1]-1).toLocaleString('en-GB',{month:'short'}).toLowerCase()+' '+n[5][0]:''}</span><span>${cur+1} of ${N.length}</span></div><div style="font-size:16px;margin-top:4px">${n[3]}</div><div class="m" style="opacity:.8;margin-top:2px">${n[4]}${n[6].length?' · '+n[6].map(s=>`<span class="st">${s[0]} ${s[1]}</span>`).join('')+'→ project':''}</div>`}
+function log(){let h='';[...N].map((n,i)=>[n,i]).reverse().forEach(([n,i])=>{h+=`<div class="lg${i===cur?' on':''}${filt&&filt!==n[2]?' dim':''}" data-i="${i}"><span class="m">${new Date(n[0],n[1]-1).toLocaleString('en-GB',{month:'short'}).toLowerCase()} ${n[0]}</span><span class="m" style="border:1px solid var(--ink);border-radius:3px;padding:0 5px;justify-self:start">${K[n[2]][0]}</span><span><span style="font-size:14px">${n[3]}</span><br><span class="m" style="opacity:.75">${n[4]}</span></span></div>`});
+const l=document.getElementById('log');l.innerHTML=h;l.querySelectorAll('.lg').forEach(r=>r.onmouseenter=()=>sel(+r.dataset.i))}
+function sel(i){cur=i;draw();cap();document.querySelectorAll('.lg').forEach(r=>r.classList.toggle('on',+r.dataset.i===i))}
+function setF(f){filt=filt===f?null:f;tal();draw();log();if(filt&&N[cur][2]!==filt){const i=N.map((n,j)=>[n,j]).filter(([n])=>n[2]===filt).pop()[1];sel(i)}}
+function tal(){const t=document.getElementById('tal');t.innerHTML='';Object.entries(K).forEach(([k,v])=>{const n=N.filter(x=>x[2]===k).length;const b=document.createElement('button');b.className='sk'+(filt===k?' on':'');b.style.padding='5px 6px';b.innerHTML=`<div style="font-family:'Libre Franklin';font-weight:800;font-size:20px">${n}</div>${n===1?v[0]:v[1]}<kbd>${v[2]}</kbd>`;b.onclick=()=>setF(k);t.appendChild(b)})}
+document.addEventListener('keydown',e=>{const k=e.key;if(k==='j'||k==='k'){const L=N.map((n,i)=>[n,i]).filter(([n])=>!filt||n[2]===filt).map(x=>x[1]);let p=L.indexOf(cur)+(k==='j'?-1:1);p=Math.max(0,Math.min(L.length-1,p));sel(L[p])}
+const f=Object.entries(K).find(([,v])=>v[2]===k);if(f)setF(f[0]);if(k==='x'){filt=null;tal();draw();log()}});
+tal();draw();cap();log();
+</script>

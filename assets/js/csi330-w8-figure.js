@@ -1,25 +1,29 @@
 // CSI 330 · Week 8 · k-fold cross-validation. Two hundred wines stand in
 // a card tray, one card per five, divided into k folds (half red, tabbed;
 // stratified, so every fold keeps that mix). Each round lifts one fold out to validate on while
-// the model trains on the rest; the board behind records that fold's
+// the model trains on the rest; the board above records that fold's
 // accuracy as a bar. After k rounds every wine has been tested exactly
 // once, and the estimate is the mean of the k scores — with their spread,
 // which a single train/test split would hide. Scores are scikit-learn's:
 // logistic regression on alcohol and density, StratifiedKFold.
+// Drawn flat, in front elevation (csi330-kit.js): the cards stand edge-on in
+// the tray, a red wine's card with a tab on top, a numbered divider at the
+// start of each fold, and the fold being tested lifted clear of the rest.
 
 (function () {
   const root = document.getElementById('w8-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, box, iso, pts, face, onNear, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, D = window.CSI330.w8;
+  const K = window.CSIKit, D = window.CSI330.w8, el = K.el;
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A tray of 200 wine cards divided into k folds; each round lifts one fold out to validate on while the rest train, and a board records each fold’s accuracy as a bar with the mean. A selector sets k to 3, 5 or 10.');
 
-  K.bench(svg, -6, -4, 150, 66);
-  K.plate(svg, `WINE · ${D.n} BOTTLES, ONE CARD PER FIVE · RED OR WHITE FROM ALCOHOL AND DENSITY`, 4, 66);
+  const G = 100, S = K.stage(svg);                    // G: the plinth's top
+  K.bench(S, -6, 140, G);
+  K.plate(S, `WINE · ${D.n} BOTTLES, ONE CARD PER FIVE · RED OR WHITE FROM ALCOHOL AND DENSITY`, 4, G);
 
-  const b = K.board(svg, 6, 136, 16, 22, 86);
+  // The board stands high on posts outside the tray's ends, clear of a lifted fold.
+  const b = K.board(S, 6, 6, 130, 64, G, 3);
   const by = K.scale(0.5, 1, 52, 8);
   const bars = el('g', {}, b.g);
   el('path', { class: 'lf-line', d: `M12 ${by(0.5)} L122 ${by(0.5)} M12 ${by(0.5)} L12 ${by(1)}` }, b.g);
@@ -29,14 +33,14 @@
   });
   el('text', { x: 13.5, y: by(1) - 1.2, 'font-size': 2.4 }, b.g).textContent = 'accuracy on the held-out fold';
 
-  // The tray and its cards, farthest first; each fold is a group that lifts.
-  const U0 = 4, U1 = 128, V0 = 34, V1 = 44;
-  const TRG = el('g', {}, svg);                     // the tray, to name as a part
-  box(TRG, 'lf-solid lf-shaded').set(U0 - 2, V0 - 2, 0, U1 + 2, V1 + 2, 1.5);
+  // The tray and its cards; each fold is a group that lifts. The tray's
+  // front is drawn after the cards, so it hides their feet.
+  const U0 = 15, U1 = 123, FLOOR = G - 1.5, TOP = G - 11;
+  const TRG = el('g', {}, S);                       // the tray, to name as a part
   const tray = el('g', {}, TRG);
-  box(TRG, 'lf-solid lf-shaded').set(U0 - 2, V1, 0, U1 + 2, V1 + 2, 4);   // the tray's near lip
+  el('rect', { class: 'lf-solid', x: U0 - 2, y: G - 4, width: U1 - U0 + 4, height: 4, rx: 0.4 }, TRG);
   const KS = [3, 5, 10];
-  const sel = K.selector(svg, 50, 56, KS, 'K FOLDS');
+  const sel = K.selector(S, 50, G + 1.3, KS, 'K FOLDS');
 
   const st = { k: 1, fold: 0 };
   let groups = [];
@@ -46,17 +50,19 @@
     const k = KS[st.k], CARDS = D.n / 5, step = (U1 - U0) / CARDS;
     const start = f => Math.round(f * CARDS / k);            // folds as even as they can be
     groups = [];
-    for (let f = k - 1; f >= 0; f--) {
-      const g = el('g', {}, tray);
-      for (let i = start(f + 1) - 1; i >= start(f); i--) {
-        const u = U0 + i * step + 0.6, red = i % 2 === 0;
-        el('polygon', { class: 'lf-solid', points: pts([iso(u, V0, 1.5), iso(u, V1, 1.5), iso(u, V1, 11), iso(u, V0, 11)]) }, g);
-        if (red) el('polygon', { class: 'lf-solid', points: pts([iso(u, V0 + 1, 11), iso(u, V0 + 3, 11), iso(u, V0 + 3, 12.5), iso(u, V0 + 1, 12.5)]) }, g);
+    for (let f = 0; f < k; f++) {
+      const g = el('g', { style: 'cursor:pointer' }, tray);
+      const x0 = U0 + start(f) * step, x1 = U0 + start(f + 1) * step;
+      // the whole fold answers a click, not only its hairlines
+      el('rect', { x: x0, y: TOP - 4.5, width: x1 - x0, height: FLOOR - TOP + 4.5, fill: 'transparent' }, g);
+      for (let i = start(f); i < start(f + 1); i++) {
+        const x = U0 + i * step + step / 2, red = i % 2 === 0;
+        el('line', { class: 'lf-line', x1: x, y1: FLOOR, x2: x, y2: TOP }, g);
+        if (red) el('path', { class: 'lf-line', d: `M${x} ${TOP} L${x} ${TOP - 1.6} L${x + 1.3} ${TOP - 1.6} L${x + 1.3} ${TOP - 0.7}` }, g);
       }
-      // a numbered divider at the fold's near end
-      const u = U0 + start(f) * step;
-      el('polygon', { class: 'lf-solid lf-shaded', points: pts([iso(u, V0 - 1, 1.5), iso(u, V1 + 1, 1.5), iso(u, V1 + 1, 14), iso(u, V0 - 1, 14)]) }, g);
-      el('text', { x: 0, y: 2.6, 'font-size': 2.4 }, face(g, onNear(u + 0.6, V1 + 1, 16))).textContent = `${f + 1}`;
+      // a numbered divider at the fold's start, taller than the cards
+      el('line', { class: 'lf-line lf-strong', x1: x0 + 0.4, y1: FLOOR, x2: x0 + 0.4, y2: TOP - 3 }, g);
+      el('text', { x: x0 + 0.4, y: TOP - 3.8, 'font-size': 2.4, 'text-anchor': 'middle' }, g).textContent = `${f + 1}`;
       groups[f] = g;
     }
   }

@@ -1,0 +1,246 @@
+// ─────────────────────────────────────────────────────────────
+// The plate: key strip, knob, breadcrumb; the foot; the phone's thumb bar;
+// the key help. Every key here is a link or a button that also works by
+// pointer and by Tab. The keyboard is a shortcut to them, never the only way.
+// ─────────────────────────────────────────────────────────────
+
+.fp-skip {
+  position: absolute; left: 8px; top: -40px; z-index: 50;
+  background: var(--hand); color: var(--on-hand);
+  font: 500 .75rem var(--mono); padding: 6px 10px; border-radius: 4px; text-decoration: none;
+  &:focus { top: 8px; }
+}
+
+// A keycap, inline: used in the crumb, the help, the foot and pages.
+.fp-k {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.55em; height: 1.55em; padding: 0 .35em; margin-right: .4em;
+  border: var(--hair) solid var(--rule-strong); border-radius: 3px;
+  font: 500 .68rem/1 var(--mono); letter-spacing: 0;
+  vertical-align: .08em;
+  color: inherit;
+}
+
+// ── The plate ───────────────────────────────────────────────
+.fp-plate {
+  width: 100%;
+  max-width: var(--plate);
+  margin: 0 auto;
+  padding: 18px var(--gutter) 0;
+}
+.fp-plate__row {
+  display: flex; align-items: stretch; justify-content: space-between; gap: 18px;
+}
+
+.fp-strip {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 6px;
+  flex: 1;
+  max-width: 760px;
+}
+.fp-key {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+  min-height: 52px;
+  padding: 6px 8px 7px;
+  border: var(--stroke) solid var(--ink);
+  border-radius: var(--radius);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color .1s ease, color .1s ease, transform .08s ease;
+
+  &__n { font: 500 .66rem/1 var(--mono); opacity: .75; }
+  &__t { font: 500 .8rem/1.1 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  &:hover, &:focus-visible {
+    background: var(--hand); color: var(--on-hand); border-color: var(--hand);
+    outline: none;
+  }
+  // Pressed: briefly, when its number is typed.
+  &.is-pressing { transform: translateY(1px); background: var(--hand); color: var(--on-hand); border-color: var(--hand); }
+  // Held down: the section you are in.
+  &.is-down { background: var(--ink); color: var(--paper); }
+  // Its light: the one key that is on now.
+  &.is-down::after {
+    content: ""; position: absolute; top: 6px; right: 7px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--led);
+  }
+  &.is-down:hover::after { box-shadow: 0 0 0 1.5px var(--on-hand); }
+  &.is-down:hover { background: var(--hand); color: var(--on-hand); }
+}
+
+// The knob: three marked positions and a dial with a pointer. The pointer
+// is the live colour: it is the one thing on the plate you can turn.
+.fp-knob {
+  display: flex; align-items: center; gap: 8px; flex: none;
+
+  &__marks {
+    display: flex; flex-direction: column; gap: 1px;
+    button {
+      appearance: none; border: 0; background: none; color: var(--ink);
+      font: 500 .62rem/1.25 var(--mono); padding: 0 3px; cursor: pointer; opacity: .42; border-radius: 2px;
+      &[aria-pressed="true"] { opacity: 1; }
+      &:hover { background: var(--hand); color: var(--on-hand); opacity: 1; }
+    }
+  }
+  &__dial {
+    --turn: -90deg;
+    position: relative; width: 40px; height: 40px; border-radius: 50%;
+    border: var(--stroke) solid var(--ink); background: none; cursor: pointer; padding: 0;
+    transform: rotate(var(--turn)); transition: transform .25s cubic-bezier(.3, 1.4, .5, 1);
+    &::after {
+      content: ""; position: absolute; left: 50%; top: 4px; width: 2px; height: 12px;
+      background: var(--live); transform: translateX(-50%); border-radius: 1px;
+    }
+    &:hover { background: var(--hand); border-color: var(--hand); }
+  }
+}
+
+// ── The breadcrumb: where you are, and the keys that work here ──
+.fp-crumb {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  margin-top: 14px; padding-top: 7px;
+  border-top: var(--stroke) solid var(--ink);
+  font: 400 .72rem/1.5 var(--mono);
+
+  p { margin: 0; }
+  a { text-decoration: none; }
+  &__path { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  &__sep { margin: 0 .55em; opacity: .4; }
+  &__n { opacity: .7; }
+  &__here { opacity: .85; }
+  &__keys {
+    display: flex; gap: 14px; align-items: baseline; flex: none; color: var(--ink-soft);
+    a, button { color: inherit; text-decoration: none; white-space: nowrap; }
+    a:hover, button:hover { color: var(--on-hand); }
+    button { appearance: none; border: 0; background: none; font: inherit; padding: 0; cursor: pointer; }
+  }
+}
+
+// ── Page head: number, title, dek ───────────────────────────
+.fp-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+  grid-template-areas: "n n" "t d";
+  column-gap: 40px; align-items: end;
+  margin: clamp(28px, 6vh, 56px) 0 clamp(28px, 5vh, 44px);
+
+  &__n { grid-area: n; margin: 0 0 6px; font: 500 .72rem/1 var(--mono); color: var(--ink-soft); }
+}
+.fp-title {
+  grid-area: t;
+  margin: 0;
+  font: 800 clamp(2.4rem, 6.4vw, 4.4rem)/.92 var(--sans);
+  letter-spacing: -.04em;
+  text-transform: lowercase;
+  text-wrap: balance;
+}
+.fp-head--d2 .fp-title { font-size: clamp(1.9rem, 4.4vw, 3rem); line-height: .98; letter-spacing: -.03em; }
+.fp-dek { grid-area: d; margin: 0; font-size: .92rem; line-height: 1.5; }
+
+// The reading column. Pages that are plates (lists, figures) opt out with wide.
+.fp-body { max-width: var(--measure); }
+.fp-page--wide .fp-body { max-width: none; }
+.fp-body > :first-child { margin-top: 0; }
+
+// ── The foot ────────────────────────────────────────────────
+.fp-foot {
+  flex: none;
+  width: 100%;
+  margin-top: 3rem;
+}
+.fp-foot__row {
+  max-width: var(--plate);
+  margin: 0 auto;
+  padding: 10px var(--gutter) 18px;
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: baseline;
+  border-top: var(--hair) solid var(--rule);
+  font: 400 .7rem/1.6 var(--mono);
+  p { margin: 0; }
+  a { text-decoration: none; }
+  a:hover { color: var(--on-hand); }
+  button { appearance: none; border: 0; background: none; color: inherit; font: inherit; padding: 0; cursor: pointer; }
+  button:hover { background: var(--hand); color: var(--on-hand); }
+}
+.fp-foot__clock { display: flex; align-items: center; gap: 8px; }
+.fp-foot__links { display: flex; gap: 8px; span { opacity: .4; } }
+.fp-foot__colophon { text-align: right; color: var(--ink-soft); }
+.fp-foot--range { margin-top: 1rem; }
+
+// The live dot: red by day, yellow by night. It pulses once a minute.
+.fp-live {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--live); flex: none;
+}
+
+// ── Key help ────────────────────────────────────────────────
+.fp-help {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+  background: color-mix(in srgb, var(--cobalt-night) 55%, transparent);
+  &[hidden] { display: none; }
+  &__box {
+    width: min(620px, 100%); max-height: 86vh; overflow: auto;
+    background: var(--paper); color: var(--ink);
+    border: var(--stroke) solid var(--ink); border-radius: var(--radius);
+    padding: 18px 22px 16px;
+  }
+  &__head {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    h2 { margin: 0; font-size: 1.3rem; text-transform: lowercase; }
+    button { appearance: none; border: 0; background: none; color: inherit; cursor: pointer; padding: 0; }
+  }
+  &__group {
+    margin: 14px 0 4px; font: 500 .66rem/1 var(--mono); color: var(--ink-soft); text-transform: lowercase;
+  }
+  dl { display: grid; grid-template-columns: 120px 1fr; margin: 0; font: 400 .78rem/1.45 var(--mono); }
+  dt, dd { margin: 0; padding: 5px 0; border-top: var(--hair) solid var(--rule); }
+  dt { white-space: nowrap; }
+  &__note { margin: 14px 0 0; font-size: .8rem; color: var(--ink-soft); }
+}
+
+// ── Phone ───────────────────────────────────────────────────
+.fp-thumb { display: none; }
+
+@media (max-width: 720px) {
+  .fp-plate { padding-top: 10px; }
+  .fp-plate__row { gap: 10px; }
+  .fp-strip { gap: 4px; }
+  .fp-key {
+    min-height: 38px; padding: 0; align-items: center; justify-content: center;
+    &__t { display: none; }
+    &__n { font-size: .82rem; opacity: 1; }
+  }
+  .fp-knob__marks { display: none; }
+  .fp-knob__dial { width: 36px; height: 36px; }
+  .fp-crumb__keys { display: none; }
+  .fp-crumb { margin-top: 10px; }
+
+  .fp-head { grid-template-columns: 1fr; grid-template-areas: "n" "t" "d"; row-gap: 14px; }
+
+  .fp-foot__row { grid-template-columns: 1fr; gap: 4px; }
+  .fp-foot__colophon { text-align: left; }
+
+  // The thumb bar: the same three moves as [ esc ], where the thumb is.
+  .fp-depth-2 .fp-foot { padding-bottom: 56px; }
+  .fp-thumb {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    background: var(--paper); border-top: var(--stroke) solid var(--ink);
+    font: 500 .75rem/1 var(--mono);
+    a { text-decoration: none; padding: 8px 6px; border-radius: 4px; }
+    a:last-child { text-align: right; }
+    a[rel="up"] { border: var(--hair) solid var(--rule-strong); padding: 8px 12px; }
+  }
+}
+
+// On a touch screen there is no keyboard to hint at: keycaps and key
+// hints go, the things they label stay.
+@media (hover: none) and (pointer: coarse) {
+  .fp-k, .fp-keyhint, .fp-seg__k, [data-fp-help] { display: none !important; }
+}
+
+// Home's foot: two parts, links and colophon, at either end.
+.fp-foot__row--home { grid-template-columns: 1fr auto; }
+@media (max-width: 720px) { .fp-foot__row--home { grid-template-columns: 1fr; } }

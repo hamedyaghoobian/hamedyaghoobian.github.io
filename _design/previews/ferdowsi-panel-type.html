@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Ferdowsi panel type</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;800&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Noto+Naskh+Arabic:wght@400;500&family=Markazi+Text:wght@400;500&family=Scheherazade+New:wght@400;500&family=Lateef:wght@400;500&family=Mirza:wght@400;500&family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css?v=pt">
+<style>
+  @font-face { font-family: "Hand"; src: url("data/hand.woff2") format("woff2"); font-display: block; }
+  body { background: var(--paper); color: var(--ink); }
+  .to { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  .to-top { border-bottom: var(--stroke) solid var(--ink); padding-bottom: 8px; }
+  .to-top h1 { margin: 0; font: 800 1.4rem/1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .to-lede { margin: 10px 0 24px; font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); max-width: 82ch; }
+  .to h2 { margin: 34px 0 10px; font: 800 1.05rem/1.1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .opt__tag { display: flex; justify-content: space-between; gap: 12px; margin: 0 0 6px; font: 500 .7rem/1.4 var(--mono); }
+  .opt__tag b { font-weight: 500; white-space: nowrap; }
+  .opt__tag span { color: var(--ink-soft); text-align: right; }
+  .opt--rec .opt__tag b::after { content: " · recommended"; color: var(--live); }
+  .opt.is-now .opt__tag b::after { content: " · now"; color: var(--ink-soft); }
+
+  /* panel A, set tighter: no justification (it opened the gaps), each hemistich at its own
+     width, the two meeting across one gutter; a size for each face, so they stand alike */
+  .pn {
+    --m: #F2EBDA; --ms: rgba(242,235,218,.62); --mr: rgba(242,235,218,.28);
+    background: #1F2A9E; color: var(--m); border-radius: var(--radius);
+    padding: 16px 20px 16px;
+  }
+  .fa { direction: rtl; unicode-bidi: isolate; font-family: var(--f); }
+  .mono { font: 400 .64rem/1.4 var(--mono); color: var(--ms); }
+  .w { margin: 0 0 8px; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .w .fa { font-size: calc(.82rem * var(--k)); color: var(--ms); }
+  .bayt { display: flex; justify-content: center; gap: 2.2em; direction: rtl;
+          padding: 8px 0 10px; border-top: 1px solid var(--mr); border-bottom: 1px solid var(--mr);
+          font: 400 calc(1.22rem * var(--k)) / var(--lh, 1.7) var(--f); color: var(--ms); }
+  .bayt p { margin: 0; white-space: nowrap; }
+  .bayt b { font-weight: var(--bw, 400); color: var(--m); box-shadow: inset 0 -2px 0 var(--yellow); }
+  .g { margin: 10px 0 0; display: flex; align-items: baseline; gap: 12px; }
+  .g .fa { font-size: calc(1.55rem * var(--k)); line-height: 1; }
+  .g i { font: italic 400 1.02rem/1.3 var(--serif); }
+
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } .bayt { flex-direction: column; align-items: center; gap: 0; } }
+</style>
+</head>
+<body>
+<div class="to">
+  <div class="to-top"><h1>panel A · the typeface</h1></div>
+  <p class="to-lede">Two things made A look loose. The face is Amiri, a sharp, high-contrast book naskh. And the hemistichs were justified, which opened gaps between the words. Every option below drops the justification: each half-line keeps its own width and the two meet across one gutter. Each face is sized so they stand at the same height.</p>
+
+  <h2>naskh: the book hand</h2>
+  <div class="grid" id="naskh"></div>
+
+  <h2>nastaliq: the hand Persian poetry was copied in</h2>
+  <div class="grid" id="nastaliq"></div>
+</div>
+<template id="t">
+  <section class="opt">
+    <p class="opt__tag"><b></b><span></span></p>
+    <div class="pn">
+      <p class="w"><span class="mono">couplet 36,618 / 49,610</span><span class="fa">پادشاهی بهرام گور · آمدن شنگل به ایران</span></p>
+      <div class="bayt fa"><p>همه نامجوی و همه نامدار</p><p>همه پاک با <b>طوق</b> و با گوشوار</p></div>
+      <p class="g"><span class="fa">طوق</span><i>collar, torque</i><span class="mono">from Arabic</span></p>
+    </div>
+  </section>
+</template>
+<script>
+  const F = [
+    ["naskh", "Amiri, set tighter", '"Hand"', 1, 1.75, "now", "The face the piece uses now, minus the justification. Still sharp and high-contrast, with long, thin strokes."],
+    ["naskh", "Noto Naskh Arabic", '"Noto Naskh Arabic"', .92, 1.75, "rec", "Rounder and more even, with less contrast and shorter strokes. It sits close and reads well small: the most put-together naskh here."],
+    ["naskh", "Markazi Text", '"Markazi Text"', 1.08, 1.6, "", "A text naskh drawn for long reading, warm and slightly soft, with a matching Latin. Compact, a little informal."],
+    ["naskh", "Scheherazade New", '"Scheherazade New"', 1.02, 1.75, "", "A classic, generous naskh. Smoother than Amiri but still large and open."],
+    ["naskh", "Mirza", '"Mirza"', 1.06, 1.6, "", "Soft, rounded, slightly heavy, like a pen with a worn nib. The least sharp."],
+    ["naskh", "Lateef", '"Lateef"', 1.18, 1.55, "", "Soft and narrow, drawn from Sindhi naskh, so its letters are less Persian in feel."],
+    ["nastaliq", "Gulzar", '"Gulzar"', .9, 2.1, "", "A nastaliq the Birds piece already uses for one of its hands: words slope down to the left and sit together in clusters."],
+    ["nastaliq", "Noto Nastaliq Urdu", '"Noto Nastaliq Urdu"', .78, 2.4, "", "Denser and more calligraphic; it needs a lot of line height and is drawn for Urdu, so some Persian shapes differ."],
+  ];
+  const t = document.getElementById("t");
+  for (const [grp, name, fam, k, lh, flag, note] of F) {
+    const n = t.content.cloneNode(true), s = n.querySelector(".opt");
+    if (flag === "now") s.classList.add("is-now");
+    if (flag === "rec") s.classList.add("opt--rec");
+    n.querySelector("b").textContent = name;
+    n.querySelector(".opt__tag span").textContent = note;
+    const pn = n.querySelector(".pn");
+    pn.style.setProperty("--f", fam); pn.style.setProperty("--k", k); pn.style.setProperty("--lh", lh);
+    document.getElementById(grp).appendChild(n);
+  }
+</script>
+</body>
+</html>

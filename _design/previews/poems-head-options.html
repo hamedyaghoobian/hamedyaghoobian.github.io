@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Poems head options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Amiri:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css?v=ph">
+<style>
+  body { background: var(--paper); color: var(--ink); }
+  .to { max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+  .to-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: var(--stroke) solid var(--ink); padding-bottom: 8px; }
+  .to-top h1 { margin: 0; font: 800 1.4rem/1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .to-top button { font: 500 .72rem/1 var(--mono); background: none; color: var(--ink); border: var(--hair) solid var(--ink); border-radius: 3px; padding: 5px 8px; cursor: pointer; }
+  .to-top button:hover { background: var(--hand); color: var(--on-hand); border-color: var(--hand); }
+  .to h2 { margin: 48px 0 4px; font: 800 1.15rem/1.1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .to-lede { margin: 0 0 16px; font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); max-width: 78ch; }
+  .opt { border: var(--stroke) solid var(--ink); border-radius: var(--radius); padding: 12px 18px 26px; margin: 0 0 12px; min-width: 0; }
+  .opt__tag { display: flex; justify-content: space-between; gap: 16px; margin: 0 0 6px; font: 500 .7rem/1.4 var(--mono); }
+  .opt__tag b { font-weight: 500; white-space: nowrap; }
+  .opt__tag span { color: var(--ink-soft); text-align: right; max-width: 70ch; }
+  .opt--rec { border-width: 2px; }
+  .opt--rec .opt__tag b::after { content: " · recommended"; color: var(--live); }
+  .opt.is-now .opt__tag b::after { content: " · now"; color: var(--ink-soft); }
+  .opt .fp-head { margin: 22px 0 6px; }
+  .fa  { font-family: var(--fa); }
+  .fas { font-family: var(--fa-serif); }
+
+  /* ── heading: now ── */
+  .h0 .pm-intro__fa { margin: 0; font: 700 clamp(1.6rem, 4.2vw, 2.5rem)/1.4 var(--fa); text-align: left; }
+  .h0 .pm-intro__line { margin: .2rem 0 0; font: 400 1rem/1.8 var(--fa); color: var(--ink-soft); text-align: left; }
+
+  /* ── A: two scripts, one edge (the home page's name) ── */
+  .hA .fp-title { display: inline-grid; justify-items: start; }
+  .hA .fp-title .t-fa { justify-self: end; margin-top: .26em; font: 700 .5em/1.3 var(--fa); letter-spacing: 0; text-transform: none; }
+  .hA .fp-dek { font: 400 .98rem/1.8 var(--fa); text-align: right; color: var(--ink-soft); }
+
+  /* ── B: each script from its own edge ── */
+  .hB .face { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 32px; border-top: var(--hair) solid var(--rule-strong); padding-top: 10px; margin-top: 4px; }
+  .hB .face .l { margin: 0; }
+  .hB .face .l small, .hB .face .r small { display: block; font: 400 .66rem/1 var(--mono); color: var(--ink-soft); margin-bottom: 8px; }
+  .hB .face .r small { text-align: left; direction: ltr; }
+  .hB .face .l p { margin: 0; font: 800 1.3rem/1.2 var(--sans); letter-spacing: -.02em; }
+  .hB .face .l p + p { margin-top: 4px; font: 400 .95rem/1.5 var(--sans); letter-spacing: 0; color: var(--ink-soft); }
+  .hB .face .r { margin: 0; text-align: right; direction: rtl; }
+  .hB .face .r p { margin: 0; font: 700 1.5rem/1.3 var(--fa); }
+  .hB .face .r p + p { margin-top: 2px; font: 400 .98rem/1.7 var(--fa); color: var(--ink-soft); }
+  .hB .face .r small { text-align: right; direction: rtl; }
+
+  /* ── C: Persian in the dek's place, a spec line under ── */
+  .hC .fp-dek { direction: rtl; text-align: right; }
+  .hC .fp-dek b { display: block; font: 700 1.6rem/1.3 var(--fa); }
+  .hC .fp-dek span { display: block; font: 400 .95rem/1.75 var(--fa); color: var(--ink-soft); }
+  .hC .spec { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 2px 0 0; padding-top: 8px; border-top: var(--stroke) solid var(--ink); font: 400 .72rem/1.4 var(--mono); }
+  .hC .spec span + span::before { content: "·"; margin: 0 .7em; color: var(--ink-soft); }
+  .hC .spec .fa { font-size: .82rem; }
+
+  /* ── codas ── */
+  .coda-box { margin-top: 28px; }
+  .c0 .poems-coda { margin: 2rem auto .5rem; }
+
+  /* 1: the last entry, in the verse's own form */
+  .c1 { max-width: 680px; margin: 2rem 0 0 148px; }
+  .c1 .lbl { margin: 0 0 10px; font: 400 .66rem/1 var(--mono); color: var(--ink-soft); }
+  .c1 blockquote { margin: 0; padding: 0 0 0 16px; border: 0; border-left: var(--stroke) solid var(--ink); font: 400 1.3rem/1.55 var(--serif); }
+  .c1 p.by { margin: 10px 0 0; text-align: right; font: 400 1rem/1.6 var(--fa); color: var(--ink-soft); }
+  .c1 p.by span { font: 400 .7rem/1 var(--mono); margin-right: .7em; direction: ltr; unicode-bidi: isolate; }
+
+  /* 2: colophon */
+  .c2 { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; border-top: var(--stroke) solid var(--ink); padding-top: 10px; margin-top: 2rem; }
+  .c2 .lbl { grid-column: 1 / -1; margin: 0 0 -26px; font: 400 .66rem/1 var(--mono); color: var(--ink-soft); }
+  .c2 blockquote { margin: 0; padding: 0; border: 0; font: italic 400 1.25rem/1.5 var(--serif); }
+  .c2 blockquote cite { display: block; margin-top: 10px; font: normal 400 .7rem/1 var(--mono); color: var(--ink-soft); }
+  .c2 dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 16px; font: 400 .74rem/1.4 var(--mono); }
+  .c2 dt, .c2 dd { margin: 0; padding: 6px 0; border-top: var(--hair) solid var(--rule); }
+  .c2 dt { color: var(--ink-soft); }
+  .c2 dt:first-of-type, .c2 dd:first-of-type { border-top: 0; padding-top: 0; }
+
+  /* 3: both languages, centred, as now */
+  .c3 { max-width: 520px; margin: 2rem auto 0; text-align: center; }
+  .c3::before { content: ""; display: block; width: 36px; margin: 0 auto 1.6rem; border-top: var(--hair) solid var(--rule-strong); }
+  .c3 blockquote { margin: 0; padding: 0; border: 0; font: italic 400 1.25rem/1.55 var(--serif); }
+  .c3 .fa-q { margin: .5rem 0 0; font: 400 1.3rem/1.9 var(--fa-serif); color: var(--ink-soft); direction: rtl; }
+  .c3 .by { margin: 1rem 0 0; font: 400 .7rem/1.4 var(--mono); color: var(--ink-soft); }
+  .c3 .by .fa { font-size: .82rem; }
+
+  @media (max-width: 720px) {
+    .hB .face { grid-template-columns: 1fr; gap: 18px; }
+    .c1 { margin-left: 0; }
+    .c2 { grid-template-columns: 1fr; gap: 20px; }
+    .c2 .lbl { margin: 0; }
+    .opt__tag { flex-direction: column; } .opt__tag span { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="to">
+  <div class="to-top">
+    <h1>poems page · head and coda</h1>
+    <button type="button" id="th">dark / light</button>
+  </div>
+
+  <h2>the head</h2>
+  <p class="to-lede">The English dek goes in A, B and C, as you said. The Persian title is the site's own words, so it stays in Plex Sans Arabic in every option.</p>
+
+  <section class="opt is-now">
+    <p class="opt__tag"><b>0 · as it is</b><span>The English title, an English dek on the right, then the Persian title and line under it, flush left. The Persian starts at the wrong edge.</span></p>
+    <header class="fp-head fp-head--d1">
+      <p class="fp-head__n">07</p>
+      <h1 class="fp-title">collected poems</h1>
+      <p class="fp-dek">For writing down the poems I love.</p>
+    </header>
+    <p class="pm-intro__fa h0" lang="fa" dir="rtl" style="margin:0;font:700 clamp(1.6rem,4.2vw,2.5rem)/1.4 var(--fa);text-align:left">رونویسی شعر فارسی</p>
+    <p class="h0" lang="fa" dir="rtl" style="margin:.2rem 0 0;font:400 1rem/1.8 var(--fa);color:var(--ink-soft);text-align:left">برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p>
+  </section>
+
+  <section class="opt opt--rec hA">
+    <p class="opt__tag"><b>A · two scripts, one edge</b><span>Your name on the home page, used again: the Persian title sits under the English one and ends where it ends, so the two read toward each other. The Persian line takes the dek's place.</span></p>
+    <header class="fp-head fp-head--d1">
+      <p class="fp-head__n">07</p>
+      <h1 class="fp-title">collected poems<span class="t-fa" lang="fa" dir="rtl">رونویسی شعر فارسی</span></h1>
+      <p class="fp-dek" lang="fa" dir="rtl">برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p>
+    </header>
+  </section>
+
+  <section class="opt hB">
+    <p class="opt__tag"><b>B · each from its own edge</b><span>A facing page. English starts at the left margin, Persian at the right, each with its title and one line. The two meet in the middle.</span></p>
+    <header class="fp-head fp-head--d1" style="grid-template-areas:'n n' 't t'">
+      <p class="fp-head__n">07</p>
+      <h1 class="fp-title">collected poems</h1>
+    </header>
+    <div class="face">
+      <div class="l"><small>en</small><p>copied out by hand</p><p>Persian poems I love, a few lines at a time.</p></div>
+      <div class="r" lang="fa"><small>fa</small><p>رونویسی شعر فارسی</p><p>برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</p></div>
+    </div>
+  </section>
+
+  <section class="opt hC">
+    <p class="opt__tag"><b>C · Persian in the dek's place, a spec line under</b><span>The plate's own head, unchanged: title left, dek right, with the dek now in Persian and starting from the right. A spec line gives the facts the page holds.</span></p>
+    <header class="fp-head fp-head--d1">
+      <p class="fp-head__n">07</p>
+      <h1 class="fp-title">collected poems</h1>
+      <p class="fp-dek" lang="fa"><b>رونویسی شعر فارسی</b><span>برای از رو نوشتن از شعرهایی که دوست‌شان دارم.</span></p>
+    </header>
+    <p class="spec"><span>16 poems</span><span>14 poets</span><span>ferdowsi to now</span><span>copied since <span class="fa" lang="fa">تیر ۱۴۰۴</span></span></p>
+  </section>
+
+  <h2>the coda</h2>
+  <p class="to-lede">Darwish's words are someone else's, so they stay in the serif. The Persian in option 3 is my own translation from the English, not his Arabic. Check it, or swap in the original Arabic if you have it.</p>
+
+  <section class="opt is-now coda-box c0">
+    <p class="opt__tag"><b>0 · as it is</b><span>Centred, italic, a short rule above.</span></p>
+    <figure class="poems-coda">
+      <blockquote>I’ve built my homeland, I’ve even founded my state—in my language.</blockquote>
+      <figcaption>Mahmoud Darwish</figcaption>
+    </figure>
+  </section>
+
+  <section class="opt opt--rec coda-box">
+    <p class="opt__tag"><b>1 · the last entry</b><span>Set in the poems' own form: the same column and ink rule as an open poem, with the poet signed under it in Persian, as every poem here is. It closes the list instead of floating under it.</span></p>
+    <div class="c1">
+      <p class="lbl">and last</p>
+      <blockquote>I’ve built my homeland, I’ve even founded my state—in my language.</blockquote>
+      <p class="by" lang="fa" dir="rtl">محمود درویش <span lang="en" dir="ltr">mahmoud darwish</span></p>
+    </div>
+  </section>
+
+  <section class="opt coda-box">
+    <p class="opt__tag"><b>2 · colophon</b><span>The quote beside a book's colophon: where the texts come from, who translated them, the faces they are set in. The coda then does a job too.</span></p>
+    <div class="c2">
+      <p class="lbl">colophon</p>
+      <blockquote>I’ve built my homeland, I’ve even founded my state—in my language.<cite>mahmoud darwish</cite></blockquote>
+      <dl>
+        <dt>texts</dt><dd>ganjoor and the poets' books</dd>
+        <dt>translations</dt><dd>AI, marked as such</dd>
+        <dt>copied</dt><dd>16 poems since <span class="fa" lang="fa">تیر ۱۴۰۴</span></dd>
+        <dt>set in</dt><dd>amiri · newsreader · plex sans arabic</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="opt coda-box">
+    <p class="opt__tag"><b>3 · in both languages</b><span>Kept centred, with the line given in Persian under it: the language the page is about answers the quote about language.</span></p>
+    <div class="c3">
+      <blockquote>I’ve built my homeland, I’ve even founded my state—in my language.</blockquote>
+      <p class="fa-q" lang="fa">وطنم را ساخته‌ام، حتی دولتم را بنیان نهاده‌ام، در زبانم.</p>
+      <p class="by">mahmoud darwish · <span class="fa" lang="fa">محمود درویش</span></p>
+    </div>
+  </section>
+</div>
+<script>
+  document.getElementById('th').addEventListener('click', () => {
+    const r = document.documentElement;
+    r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.body.classList.toggle('dark', r.dataset.theme === 'dark');
+  });
+</script>
+</body>
+</html>

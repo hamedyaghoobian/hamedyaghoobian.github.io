@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Regression metrics · Learning Machines"
+short: "learning machines · regression metrics"
 permalink: /tools/learning-machines/regression-metrics/
 entry: regression-metrics
 ---

@@ -8,16 +8,16 @@
 (function () {
   const root = document.getElementById('w5-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, D = window.CSI330.w4, A = D.all;
+  const K = window.CSIKit, D = window.CSI330.w4, A = D.all, el = K.el;
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A board plotting all 342 penguins, body mass against flipper length, with a carriage that slides along the flipper axis; the k nearest birds light up and a bar marks their mean mass, the prediction. A selector sets k.');
 
-  K.bench(svg, -6, -4, 168, 64);
-  K.plate(svg, 'PALMER PENGUINS · 342 BIRDS · KNEIGHBORSREGRESSOR', 4, 64);
+  const G = 100, S = K.stage(svg);                    // G: the plinth's top
+  K.bench(S, -6, 138, G);
+  K.plate(S, 'PALMER PENGUINS · 342 BIRDS · KNEIGHBORSREGRESSOR', 4, G);
 
-  const b = K.board(svg, 0, 132, 24, 6, 96);
+  const b = K.board(S, 0, 8, 132, 90, G);
   const sx = K.scale(170, 235, 16, 126), sy = K.scale(2500, 6500, 77, 8);
   K.axes(b.g, sx, sy, [170, 190, 210, 230], [3000, 4000, 5000, 6000], 'flipper length (mm)', 'body mass (g)', 2.8);
   const ols = el('line', { class: 'lf-line lf-faint', x1: sx(170), y1: sy(D.b0 + D.b1 * 170), x2: sx(235), y2: sy(D.b0 + D.b1 * 235) }, b.g);
@@ -32,7 +32,7 @@
   const carriage = el('path', { class: 'lf-line lf-strong' }, hot);
 
   const KS = [1, 3, 5, 15, 45, 150];
-  const sel = K.selector(svg, 24, 48, KS, 'K NEIGHBOURS');
+  const sel = K.selector(S, 24, G + 1.3, KS, 'K NEIGHBOURS');
 
   const nearest = (q, k) => A.map((p, i) => [Math.abs(p[0] - q), i]).sort((a, c) => a[0] - c[0]).slice(0, k).map(p => p[1]);
   const predict = (q, k) => K.mean(nearest(q, k).map(i => A[i][1]));

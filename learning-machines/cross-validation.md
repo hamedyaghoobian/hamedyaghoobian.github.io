@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Cross-validation · Learning Machines"
+short: "learning machines · cross-validation"
 permalink: /tools/learning-machines/cross-validation/
 entry: cross-validation
 ---

@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "k-nearest neighbors · Learning Machines"
+short: "learning machines · k-nearest neighbors"
 permalink: /tools/learning-machines/k-nearest-neighbors/
 entry: k-nearest-neighbors
 ---

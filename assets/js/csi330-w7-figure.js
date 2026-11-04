@@ -9,17 +9,17 @@
 (function () {
   const root = document.getElementById('w7-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, D = window.CSI330.w7;
+  const K = window.CSIKit, D = window.CSI330.w7, el = K.el;
   const P0 = D.pts.map(p => p.slice());
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A board plotting thirty people, insulin against glucose, with a fixed regression line and a residual stick from each point to the line. Dragging a point changes the MAE, RMSE and R-squared gauges.');
 
-  K.bench(svg, -6, -4, 212, 64);
-  K.plate(svg, 'NHANES · 30 PEOPLE · INSULIN ~ GLUCOSE · LINE FITTED ON EVERYONE', 4, 64);
+  const G = 100, S = K.stage(svg);                    // G: the plinth's top
+  K.bench(S, -6, 208, G);
+  K.plate(S, 'NHANES · 30 PEOPLE · INSULIN ~ GLUCOSE · LINE FITTED ON EVERYONE', 4, G);
 
-  const b = K.board(svg, 0, 132, 24, 6, 96);
+  const b = K.board(S, 0, 8, 132, 90, G);
   const sx = K.scale(4, 12, 16, 126), sy = K.scale(0, 150, 77, 8);
   K.axes(b.g, sx, sy, [4, 6, 8, 10, 12], [0, 50, 100, 150], 'glucose (mmol/L)', 'insulin (µU/mL)', 2.8);
   const yhat = x => D.b0 + D.b1 * x;
@@ -28,9 +28,9 @@
   const dots = P0.map(() => el('circle', { class: 'lf-dot', r: 1.1 }, b.g));
 
   // three gauges side by side, none behind another
-  const gMAE = K.gauge(svg, 142, 40, 'MAE', 0, 40, v => v.toFixed(1), 16);
-  const gRMSE = K.gauge(svg, 164, 40, 'RMSE', 0, 40, v => v.toFixed(1), 16);
-  const gR2 = K.gauge(svg, 186, 40, 'R²', -1, 1, v => v.toFixed(2), 16);
+  const gMAE = K.gauge(S, 140, 62, 'MAE', 0, 40, v => v.toFixed(1), G);
+  const gRMSE = K.gauge(S, 162, 62, 'RMSE', 0, 40, v => v.toFixed(1), G);
+  const gR2 = K.gauge(S, 184, 62, 'R²', -1, 1, v => v.toFixed(2), G);
 
   const st = { pts: P0.map(p => p.slice()), pick: P0.reduce((bi, p, i, a) => p[0] > a[bi][0] ? i : bi, 0) };
   function update() {

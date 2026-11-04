@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Bias and variance · Learning Machines"
+short: "learning machines · bias and variance"
 permalink: /tools/learning-machines/bias-and-variance/
 entry: bias-and-variance
 ---

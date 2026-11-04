@@ -1,0 +1,42 @@
+{%- comment -%}
+  Which of the eight sections this page belongs to, and where it sits.
+  Sets, for the caller:
+    fp_key     the section's entry in _data/faceplate.yml keys (n, url, key)
+    fp_depth   0 home · 1 a section page · 2 a page inside a section
+    fp_up      the URL one level up (esc)
+    fp_prev / fp_next   siblings inside the section, for [ and ], if any
+  A page can name its section in front matter (`section: /tools/`);
+  otherwise the longest section URL that prefixes the page's URL wins.
+{%- endcomment -%}
+{%- assign fp_keys = site.data.faceplate.keys -%}
+{%- assign fp_key = fp_keys[0] -%}
+{%- assign fp_sec_url = page.section -%}
+{%- unless fp_sec_url -%}
+  {%- for k in fp_keys offset: 1 -%}
+    {%- assign plen = k.url | size -%}
+    {%- assign head = page.url | slice: 0, plen -%}
+    {%- if head == k.url -%}{%- assign fp_sec_url = k.url -%}{%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+{%- if fp_sec_url -%}
+  {%- for k in fp_keys -%}{%- if k.url == fp_sec_url -%}{%- assign fp_key = k -%}{%- endif -%}{%- endfor -%}
+{%- endif -%}
+{%- if page.url == "/" -%}
+  {%- assign fp_depth = 0 -%}{%- assign fp_up = nil -%}
+{%- elsif page.url == fp_key.url -%}
+  {%- assign fp_depth = 1 -%}{%- assign fp_up = "/" -%}
+{%- else -%}
+  {%- assign fp_depth = 2 -%}{%- assign fp_up = fp_key.url -%}
+{%- endif -%}
+{%- if page.up -%}{%- assign fp_up = page.up -%}{%- endif -%}
+{%- assign fp_prev = nil -%}{%- assign fp_next = nil -%}
+{%- if fp_key.n == 2 and fp_depth == 2 -%}
+  {%- assign fp_list = site.data.faceplate.projects -%}
+  {%- for u in fp_list -%}
+    {%- if u == page.url -%}
+      {%- assign i0 = forloop.index0 | minus: 1 -%}{%- assign i1 = forloop.index0 | plus: 1 -%}
+      {%- if i0 >= 0 -%}{%- assign fp_prev = fp_list[i0] -%}{%- endif -%}
+      {%- assign fp_next = fp_list[i1] -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}

@@ -3,23 +3,26 @@
 // their glucose level. The board lines them up by that probability, the ones
 // who have diabetes on the top row and the ones who don't below. Slide the
 // threshold: everyone to its right is predicted "yes" (filled). Four trays
-// on the bench count the confusion matrix — true positives, false negatives,
+// under the board count the confusion matrix — true positives, false negatives,
 // false positives, true negatives — and three gauges read accuracy,
 // precision and recall. Moving the threshold trades one error for the other.
+// Drawn flat, in front elevation: each tray in section, its stack rising
+// with its count, so the four read as a bar chart (csi330-kit.js).
 
 (function () {
   const root = document.getElementById('w6-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, box, face, onNear, onTop, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, D = window.CSI330.w6, S = D.scores;
+  const K = window.CSIKit, D = window.CSI330.w6, S = D.scores, el = K.el;
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A board lining up 517 people by their predicted probability of diabetes, those with diabetes on the top row; a threshold divides predicted yes from no. Four trays count true and false positives and negatives, and three gauges read accuracy, precision and recall.');
 
-  K.bench(svg, -6, -4, 188, 72);
-  K.plate(svg, `NHANES · ${D.n} HELD-OUT PEOPLE · LOGISTIC REGRESSION ON GLUCOSE`, 4, 72);
+  const G = 100, F = K.stage(svg);                    // G: the plinth's top
+  K.bench(F, -6, 208, G);
+  K.plate(F, `NHANES · ${D.n} HELD-OUT PEOPLE · LOGISTIC REGRESSION ON GLUCOSE`, 4, G);
 
-  const b = K.board(svg, 0, 132, 20, 34, 96);
+  // The board stands high on its posts; the trays sit on the plinth under it.
+  const b = K.board(F, 0, 4, 132, 62, G);
   const sx = K.scale(0, 1, 18, 126);
   K.axes(b.g, sx, K.scale(0, 1, 53, 53), [0, 0.25, 0.5, 0.75, 1], [], 'predicted probability of diabetes', '', 2.6);
   el('text', { x: 16, y: 18, 'font-size': 2.4, 'text-anchor': 'end' }, b.g).textContent = 'has diabetes';
@@ -32,31 +35,30 @@
   const bladeLine = el('line', { class: 'lf-line lf-strong', y1: 5, y2: 53 }, blade);
   const bladeTxt = el('text', { y: 4, 'font-size': 2.4, 'text-anchor': 'middle' }, blade);
 
-  // The trays: the confusion matrix's four cells in a row along the bench,
-  // paired by the truth (actual yes: TP, FN · actual no: FP, TN). In a row
-  // no stack can hide another, as a tall TN would in a 2 × 2 grid. Farthest
-  // first; each cell's name and count are printed in front of its tray.
+  // The trays: the confusion matrix's four cells in a row on the plinth,
+  // paired by the truth (actual yes: TP, FN · actual no: FP, TN), each drawn
+  // in section with a stack that rises with its count. Each cell's count and
+  // name are printed on the plinth's face under its tray.
   const TRAY = [
-    { key: 'TN', name: 'true negative', u: 84 }, { key: 'FP', name: 'false positive', u: 62 },
-    { key: 'FN', name: 'false negative', u: 36 }, { key: 'TP', name: 'true positive', u: 14 }
+    { key: 'TP', name: 'true positive', x: 14 }, { key: 'FN', name: 'false negative', x: 36 },
+    { key: 'FP', name: 'false positive', x: 62 }, { key: 'TN', name: 'true negative', x: 84 }
   ];
-  const TV = 40, TG = el('g', {}, svg);            // the trays, to name as a part
+  const TG = el('g', {}, F);                        // the trays, to name as a part
   TRAY.forEach(t => {
-    box(TG, 'lf-solid lf-shaded').set(t.u, TV, 0, t.u + 18, TV + 14, 1.5);
     t.g = el('g', {}, TG);
-    const f = face(TG, onTop(t.u, TV + 15, 0));
-    t.count = el('text', { x: 9, y: 3, 'font-size': 2.8, 'text-anchor': 'middle' }, f);
-    el('text', { x: 9, y: 5.8, 'font-size': 1.9, 'text-anchor': 'middle' }, f).textContent = t.name;
+    const x = t.x, w = 18;
+    el('path', { class: 'lf-solid', d: `M${x} ${G - 3.5} L${x} ${G} L${x + w} ${G} L${x + w} ${G - 3.5} L${x + w - 1} ${G - 3.5} L${x + w - 1} ${G - 1.2} L${x + 1} ${G - 1.2} L${x + 1} ${G - 3.5} Z` }, TG);
+    t.count = el('text', { x: x + w / 2, y: G + 3.4, 'font-size': 2.4, 'text-anchor': 'middle' }, TG);
+    el('text', { x: x + w / 2, y: G + 5.9, 'font-size': 1.7, 'text-anchor': 'middle' }, TG).textContent = t.name;
   });
-  // the truth each pair shares, printed in front of the counts
-  const pair = face(TG, onTop(14, 62.5, 0));
-  el('text', { x: 20, y: 3.4, 'font-size': 2.4, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, pair).textContent = 'ACTUAL YES';
-  el('text', { x: 70, y: 3.4, 'font-size': 2.4, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, pair).textContent = 'ACTUAL NO';
-  el('path', { class: 'lf-line lf-faint', d: 'M0 0.4 L40 0.4 M48 0.4 L88 0.4' }, pair);
+  // the truth each pair shares, printed under the counts
+  el('path', { class: 'lf-line lf-faint', d: `M14 ${G + 7.2} L54 ${G + 7.2} M62 ${G + 7.2} L102 ${G + 7.2}` }, TG);
+  el('text', { x: 34, y: G + 9.9, 'font-size': 2, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, TG).textContent = 'ACTUAL YES';
+  el('text', { x: 82, y: G + 9.9, 'font-size': 2, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, TG).textContent = 'ACTUAL NO';
 
-  const gA = K.gauge(svg, 114, 40, 'ACCURACY', 0, 1);
-  const gP = K.gauge(svg, 138, 40, 'PRECISION', 0, 1);
-  const gR = K.gauge(svg, 162, 40, 'RECALL', 0, 1);
+  const gA = K.gauge(F, 140, 62, 'ACCURACY', 0, 1, undefined, G);
+  const gP = K.gauge(F, 162, 62, 'PRECISION', 0, 1, undefined, G);
+  const gR = K.gauge(F, 184, 62, 'RECALL', 0, 1, undefined, G);
 
   const st = { t: 0.5 };
   function update() {
@@ -69,9 +71,9 @@
     const MAX = Math.max(...Object.values(c), 1);
     TRAY.forEach(t => {
       t.g.replaceChildren();
-      const h = 1.5 + 0.6 + 20 * c[t.key] / MAX, err = t.key[0] === 'F';
+      const h = 0.6 + 20 * c[t.key] / MAX, err = t.key[0] === 'F';
       const g = el('g', { class: err ? 'lf-hot' : '' }, t.g);
-      box(g, 'lf-solid lf-shaded').set(t.u + 3, TV + 3, 1.5, t.u + 15, TV + 11, h);
+      el('rect', { class: 'lf-solid', x: t.x + 3, y: G - 1.2 - h, width: 12, height: h }, g);
       t.count.textContent = `${t.key} ${c[t.key]}`;
       t.count.setAttribute('class', err ? 'lf-hot' : '');
     });

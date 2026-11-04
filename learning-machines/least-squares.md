@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Linear regression and least squares · Learning Machines"
+short: "learning machines · linear regression and least squares"
 permalink: /tools/learning-machines/least-squares/
 entry: least-squares
 ---

@@ -1,18 +1,23 @@
 // Bot Without Organs (tools.md): the A-to-Z the bot is built on, as an
-// index-card drawer. Twenty-six cards stand in an open drawer, a lettered
-// tab on each; typing a letter (or pointing at a card, or the arrow keys)
-// lifts that card out of the drawer to show its interview.
+// index-card drawer drawn flat, in front elevation. Twenty-six cards stand
+// in the drawer, one behind the other, so only their lettered tabs show
+// above its rim; typing a letter (or pointing at a tab, or the arrow keys)
+// slides that card up out of the drawer, in the plane of the drawing, to
+// show its interview.
 //
 // Data: the bot's own source, botwithoutorgans/botwithoutorgans.github.io,
 // whose audio data holds one interview per letter of L'Abécédaire de
 // Gilles Deleuze — A to W, then Z (H and P in two parts). There are no X
 // and Y interviews there, so those cards stay blank. Titles are as the
 // files give them; the English glosses are plain translations.
+//
+// Plain SVG: only el / svg / interact come from LineFigure. Styles are the
+// .tlf-* rules in _sass/faceplate/pages/_tools.scss.
 
 (function () {
   const root = document.getElementById('bot-figure');
   if (!root || !window.LineFigure) return;
-  const { iso, el, svg: makeSvg, box, onEnd, face, nearest, interact } = window.LineFigure;
+  const { el, svg: makeSvg, interact } = window.LineFigure;
 
   // [letter, title, gloss, note]
   const CARDS = [
@@ -44,63 +49,69 @@
     ['Z', 'Zig zag', 'zigzag']
   ];
 
-  const P = 4.2;                       // card to card, along u
-  const CT = 0.7;                      // card thickness
-  const V0 = 2, V1 = 24;               // a card's span across the drawer
-  const CH = 17;                       // card height
-  const TW = 7, TH = 3;                // tab width and height
-  const TABS = [V0, V0 + 7.5, V0 + 15];  // tab positions, cycling like a real file
-  const LIFT = 14;                     // how far a picked card rises
-  const WALL = 12;                     // drawer wall height
-  const L = CARDS.length * P;
+  const X0 = 4.8, P = 4.4, TW = 4;     // tabs: first edge, pitch, width
+  const CX0 = 3.6, CX1 = 120.4;        // a card's width
+  const TOP = 46, TH = 4.6;            // a card's top edge at rest; tab height
+  const CH = 34;                       // card height
+  const RIM = 50;                      // the drawer front's top edge
+  const LIFT = 28;                     // how far a picked card slides up
+  const tabX = i => X0 + i * P;
 
-  function split(t) {
-    const mid = t.length / 2;
-    let best = -1;
-    for (let k = 0; k < t.length; k++) if (t[k] === ' ' && (best < 0 || Math.abs(k - mid) < Math.abs(best - mid))) best = k;
-    return best < 0 ? [t] : [t.slice(0, best), t.slice(best + 1)];
+  function nearest(x, xs, reach) {
+    let best = -1, dist = reach;
+    xs.forEach((xi, i) => { const d = Math.abs(xi - x); if (d < dist) { best = i; dist = d; } });
+    return best;
   }
-  const uOf = i => i * P + 1;
 
-  const svg = makeSvg(root, '-8 -92 130 114',
-    'An open card-index drawer labelled Abécédaire, with twenty-six lettered cards from A to Z. Picking a letter lifts its card out to show the title of Deleuze\'s interview for that letter; X and Y are blank.');
+  const svg = makeSvg(root, '0 10 124 72',
+    'A card-index drawer labelled Abécédaire, drawn flat from the front, with twenty-six lettered tabs from A to Z above its rim. Picking a letter slides its card up to show the title of Deleuze\'s interview for that letter; X and Y are blank.');
+  svg.classList.add('tlf');
 
-  // The drawer, back to front: back wall, floor, far end.
-  box(svg, 'lf-solid').set(-3, -1, 0, L + 2, 0, WALL);
-  box(svg, 'lf-solid').set(-3, -1, -2, L + 2, V1 + 2, 0);
-  box(svg, 'lf-solid').set(L, -1, 0, L + 2, V1 + 2, WALL);
+  // A card: its tab, its face, and what is written on it.
+  function card(i, parent) {
+    const k = CARDS[i][0];
+    const g = el('g', {}, parent);
+    const x = tabX(i);
+    el('rect', { class: 'tlf-solid tlf-tab', x, y: TOP - TH, width: TW, height: TH + 1, rx: 0.6 }, g);
+    el('text', { x: x + TW / 2, y: TOP - 1.2, 'text-anchor': 'middle', 'font-size': 3, class: 'tlf-mono' }, g).textContent = k;
+    return g;
+  }
 
-  // Cards, farthest first.
-  const cards = [];
-  for (let i = CARDS.length - 1; i >= 0; i--) {
-    const g = el('g', {}, svg);
-    const body = box(g, 'lf-solid');
-    const tab = box(g, 'lf-solid');
-    const letter = face(g, '');
-    el('text', { x: TW / 2, y: TH - 0.7, 'text-anchor': 'middle', 'font-size': 2.6 }, letter).textContent = CARDS[i][0];
-    const front = face(g, '');
-    const title = CARDS[i][1];
+  // A picked card rises from the back of the drawer, so it is drawn
+  // first: the other cards' tabs, and the drawer front, stay in front of
+  // what of it is still inside. Only one is ever up (and one on its way
+  // down).
+  const lifted = el('g', {}, svg);
+
+  // The stack at rest: every card's top edge, one behind the other, and
+  // its tab.
+  el('rect', { class: 'tlf-solid', x: CX0, y: TOP, width: CX1 - CX0, height: RIM - TOP + 1 }, svg);
+  const tabs = CARDS.map((_, i) => card(i, svg));
+
+  // Each card, drawn whole.
+  const faces = CARDS.map(([k, title, gloss, note], i) => {
+    const g = el('g', { style: 'display:none' }, lifted);
+    el('rect', { class: 'tlf-solid', x: CX0, y: TOP, width: CX1 - CX0, height: CH, rx: 0.8 }, g);
+    const tab = card(i, g);
+    tab.classList.add('tlf-own');
+    [14.5, 19.5, 24.5, 29.5].forEach(dy => {
+      el('line', { class: 'tlf-line tlf-faint', x1: CX0 + 4, y1: TOP + dy, x2: CX1 - 4, y2: TOP + dy }, g);
+    });
+    el('text', { x: CX0 + 4, y: TOP + 11.5, 'font-size': 9, class: 'tlf-head' }, g).textContent = k;
     if (title) {
-      // A long title takes two lines, broken at the space nearest its middle.
-      const lines = title.length > 14 ? split(title) : [title];
-      lines.forEach((t, n) => {
-        el('text', { x: (V1 - V0) / 2, y: (lines.length > 1 ? 3.3 : 4.2) + n * 2.7, 'text-anchor': 'middle', 'font-size': lines.length > 1 ? 2.3 : 3 }, front).textContent = t;
-      });
-      el('text', { x: (V1 - V0) / 2, y: lines.length > 1 ? 8.9 : 7.6, 'text-anchor': 'middle', 'font-size': 2 }, front).textContent = CARDS[i][2];
+      el('text', { x: CX0 + 16, y: TOP + 7.5, 'font-size': 4.6, class: 'tlf-head' }, g).textContent = title;
+      el('text', { x: CX0 + 16, y: TOP + 12, 'font-size': 3.1 }, g).textContent = gloss + (note ? ` · ${note}` : '');
     }
-    el('line', { x1: 2, y1: 10.2, x2: V1 - V0 - 2, y2: 10.2, class: 'lf-line lf-faint' }, front);
-    cards[i] = { g, body, tab, letter, front };
-  }
+    return g;
+  });
 
-  // Near wall, then the drawer's front with its label holder and pull.
-  box(svg, 'lf-solid').set(-3, V1, 0, L + 2, V1 + 2, WALL);
-  box(svg, 'lf-solid').set(-5, -1, -2, -3, V1 + 2, WALL + 2);
-  const front = face(svg, onEnd(-5, -1, WALL + 2));
-  el('rect', { x: 4.5, y: 2.4, width: 19, height: 4.6, rx: 0.6, class: 'lf-line' }, front);
-  el('text', { x: 14, y: 5.5, 'text-anchor': 'middle', 'font-size': 2.1, 'letter-spacing': 0.15 }, front).textContent = 'ABÉCÉDAIRE';
-  el('path', { d: 'M10.5 10.5 Q14 13.5 17.5 10.5', class: 'lf-line lf-strong' }, front);
+  // The drawer front, with its label holder and pull.
+  el('rect', { class: 'tlf-solid', x: 1, y: RIM, width: 122, height: 30, rx: 1 }, svg);
+  el('rect', { class: 'tlf-line', x: 47, y: RIM + 5, width: 30, height: 7, rx: 0.6 }, svg);
+  el('text', { x: 62, y: RIM + 9.9, 'text-anchor': 'middle', 'font-size': 3, 'letter-spacing': 0.2, class: 'tlf-mono' }, svg).textContent = 'ABÉCÉDAIRE';
+  el('path', { d: `M54 ${RIM + 17} Q62 ${RIM + 23} 70 ${RIM + 17}`, class: 'tlf-line tlf-strong' }, svg);
 
-  const cardX = CARDS.map((_, i) => iso(uOf(i), (V0 + V1) / 2, CH)[0]);
+  const cardX = CARDS.map((_, i) => tabX(i) + TW / 2);
 
   const api = interact({
     root, svg,
@@ -114,15 +125,14 @@
     pick: x => nearest(x, cardX, P),
     draw: (glow, active) => {
       CARDS.forEach((_, i) => {
-        const c = cards[i], u = uOf(i), h = LIFT * glow[i];
-        const tv = TABS[i % 3];
-        c.body.set(u, V0, h, u + CT, V1, CH + h);
-        c.tab.set(u, tv, CH + h, u + CT, tv + TW, CH + TH + h);
-        c.letter.setAttribute('transform', onEnd(u, tv, CH + TH + h));
-        c.front.setAttribute('transform', onEnd(u, V0, CH + h));
-        c.front.style.opacity = glow[i].toFixed(2);
-        c.g.classList.toggle('is-lit', i === active);
+        const up = glow[i] > 0.002;
+        faces[i].style.display = up ? '' : 'none';
+        if (up) faces[i].setAttribute('transform', `translate(0 ${(-LIFT * glow[i]).toFixed(2)})`);
+        faces[i].classList.toggle('tlf-on', i === active);
+        tabs[i].style.visibility = up ? 'hidden' : '';   // its tab went up with it
       });
+      // The picked card rides on top of one on its way down.
+      if (active >= 0 && lifted.lastChild !== faces[active]) lifted.appendChild(faces[active]);
     }
   });
 

@@ -1,21 +1,21 @@
 // Shared drawing kit for the line figures at the head of project pages
 // (assets/js/*-figure.js, placed with _includes/project-figure.html).
 //
-// Each figure is an isometric ink drawing in the home footer's palette:
-// colours live in main.scss (.project-figure), never here, so every figure
-// flips with body.dark on its own. A figure is a list of items (eras,
-// crews, listings, years…); the pointer or the arrow keys pick one, it
-// lights and lifts, and the caption under the figure names it.
+// Each figure is a flat hairline drawing: a front elevation, a plan or a
+// plain chart, ink on paper, no projection and no faked depth. Colours live
+// in the stylesheets (_sass/legacy/_figures.scss), never here, so every
+// figure flips with the theme on its own. A figure is a list of items
+// (eras, crews, years…); the pointer or the arrow keys pick one, it lights,
+// and the caption under the figure names it.
+//
+// The kit: svg, el, pts, rect, line, text, nearest, interact. (The old
+// isometric helpers — iso, box, cylinder, screw, plane, onTop/onNear/onEnd,
+// face, edgeLabel — are retired; no figure uses them.)
 
 // Guarded: a page with several figures loads this file more than once.
 window.LineFigure = window.LineFigure || (function () {
   const NS = 'http://www.w3.org/2000/svg';
-  const C = Math.cos(Math.PI / 6);
-  const S = 0.5;
 
-  // World: u runs left-to-right and climbs (time, stages), v is depth
-  // toward the viewer, h is height.
-  const iso = (u, v, h = 0) => [(u + v) * C, (v - u) * S - h];
   const pts = list => list.map(p => p[0].toFixed(2) + ',' + p[1].toFixed(2)).join(' ');
 
   function el(name, attrs, parent) {
@@ -23,6 +23,29 @@ window.LineFigure = window.LineFigure || (function () {
     for (const k in attrs) node.setAttribute(k, attrs[k]);
     if (parent) parent.appendChild(node);
     return node;
+  }
+
+  // ── Flat helpers ────────────────────────────────────────────────────
+  // A rectangle at (x, y), w by h, in viewBox units.
+  function rect(parent, x, y, w, h, cls = 'lf-solid', rx) {
+    const a = { class: cls, x: +x.toFixed(2), y: +y.toFixed(2), width: +w.toFixed(2), height: +h.toFixed(2) };
+    if (rx) a.rx = rx;
+    return el('rect', a, parent);
+  }
+
+  // A straight hairline.
+  function line(parent, x1, y1, x2, y2, cls = 'lf-line') {
+    return el('line', { class: cls, x1: +x1.toFixed(2), y1: +y1.toFixed(2), x2: +x2.toFixed(2), y2: +y2.toFixed(2) }, parent);
+  }
+
+  // Type set in the drawing's own units: `size` is a font-size in viewBox
+  // units (class lf-type takes the face from CSS, not the size), so labels
+  // scale with the figure. Extra attributes (text-anchor, letter-spacing)
+  // pass through.
+  function text(parent, str, x, y, size, attrs = {}) {
+    const t = el('text', Object.assign({ class: 'lf-type', x, y, 'font-size': size }, attrs), parent);
+    t.textContent = str;
+    return t;
   }
 
   // One glow filter for the whole page, referenced by CSS as url(#lf-glow)
@@ -43,86 +66,6 @@ window.LineFigure = window.LineFigure || (function () {
   function svg(root, viewBox, label) {
     glowFilter();
     return el('svg', { viewBox, role: 'img', 'aria-label': label }, root);
-  }
-
-  // A box from (u0, v0, h0) to (u1, v1, h1). Only the three faces that face
-  // the viewer are drawn — the near side (v1), the left end (u0), the top —
-  // each filled with paper so it hides whatever stands behind it.
-  function box(parent, cls) {
-    const g = el('g', { class: cls }, parent);
-    const near = el('polygon', {}, g);
-    const end = el('polygon', {}, g);
-    const top = el('polygon', {}, g);
-    g.set = (u0, v0, h0, u1, v1, h1) => {
-      near.setAttribute('points', pts([iso(u0, v1, h0), iso(u1, v1, h0), iso(u1, v1, h1), iso(u0, v1, h1)]));
-      end.setAttribute('points', pts([iso(u0, v0, h0), iso(u0, v1, h0), iso(u0, v1, h1), iso(u0, v0, h1)]));
-      top.setAttribute('points', pts([iso(u0, v0, h1), iso(u1, v0, h1), iso(u1, v1, h1), iso(u0, v1, h1)]));
-      return g;
-    };
-    return g;
-  }
-
-  // Drawing flat on a face. plane(origin, U, V) is an SVG transform that
-  // lays a group's ordinary 2-D content (rect, text, path, circle) onto the
-  // plane through `origin` spanned by U and V, so screens, labels, tabs and
-  // round things sit on a face at the right angle without hand-skewed
-  // points. The faces of a box from (u0, v0, h0) to (u1, v1, h1), each with
-  // its origin at the face's top-left as seen and units in world units:
-  //   onTop(u0, v0, h1)   x along u, y along v   (lies flat)
-  //   onNear(u0, v1, h1)  x along u, y down      (the side facing the viewer)
-  //   onEnd(u0, v0, h1)   x along v, y down      (the left end)
-  // Give strokes inside such a group vector-effect: non-scaling-stroke
-  // (.lf-face does) so the skew doesn't thicken them. Technique adapted from
-  // MrBongoC/ai-iso-skill (MIT).
-  const dir = (du, dv, dh) => [(du + dv) * C, (dv - du) * S - dh];
-  function plane(origin, U, V) {
-    const [ox, oy] = iso(...origin), [a, b] = dir(...U), [c, d] = dir(...V);
-    return `matrix(${a.toFixed(4)} ${b.toFixed(4)} ${c.toFixed(4)} ${d.toFixed(4)} ${ox.toFixed(2)} ${oy.toFixed(2)})`;
-  }
-  const onTop = (u, v, h) => plane([u, v, h], [1, 0, 0], [0, 1, 0]);
-  const onNear = (u, v, h) => plane([u, v, h], [1, 0, 0], [0, 0, -1]);
-  const onEnd = (u, v, h) => plane([u, v, h], [0, 1, 0], [0, 0, -1]);
-  // A group already placed on a face: draw into it in the face's own units.
-  function face(parent, transform, cls = 'lf-face') {
-    return el('g', { class: cls, transform }, parent);
-  }
-
-  // A label lying in a vertical face that runs along u, so it reads as
-  // printed on the near edge of a plate.
-  function edgeLabel(parent, text, u, v, h, cls = 'lf-text') {
-    const [x, y] = iso(u, v, h);
-    const t = el('text', { class: cls, transform: `matrix(${C} ${-S} 0 1 ${x.toFixed(2)} ${y.toFixed(2)})` }, parent);
-    t.textContent = text;
-    return t;
-  }
-
-  // A round part standing upright on (u, v) — a post, foot, knob, drum or
-  // dial body: its side and the front half of its base, then its top. A
-  // circle of radius r on a level plane projects to an ellipse with these
-  // semi-axes in this camera. Give it 'lf-solid lf-shaded' for the side tone.
-  const RX = Math.SQRT2 * C, RY = Math.SQRT2 * S;
-  function cylinder(parent, cls) {
-    const g = el('g', { class: cls }, parent);
-    const side = el('path', {}, g);
-    const top = el('ellipse', {}, g);
-    g.set = (u, v, h0, h1, r) => {
-      const [x, yb] = iso(u, v, h0), yt = iso(u, v, h1)[1];
-      const rx = r * RX, ry = r * RY;
-      side.setAttribute('d', `M${(x - rx).toFixed(2)} ${yt.toFixed(2)}L${(x - rx).toFixed(2)} ${yb.toFixed(2)}A${rx.toFixed(2)} ${ry.toFixed(2)} 0 0 0 ${(x + rx).toFixed(2)} ${yb.toFixed(2)}L${(x + rx).toFixed(2)} ${yt.toFixed(2)}Z`);
-      top.setAttribute('cx', x.toFixed(2)); top.setAttribute('cy', yt.toFixed(2));
-      top.setAttribute('rx', rx.toFixed(2)); top.setAttribute('ry', ry.toFixed(2));
-      return g;
-    };
-    return g;
-  }
-
-  // Small fittings: a screw head as a dot with a ring, at a world point.
-  function screw(parent, u, v, h, r = 0.7) {
-    const [x, y] = iso(u, v, h);
-    const g = el('g', { class: 'lf-screw' }, parent);
-    el('ellipse', { cx: x.toFixed(2), cy: y.toFixed(2), rx: (r * RX * 1.6).toFixed(2), ry: (r * RY * 1.6).toFixed(2) }, g);
-    el('circle', { cx: x.toFixed(2), cy: y.toFixed(2), r: (r * 0.7).toFixed(2) }, g);
-    return g;
   }
 
   // Index of the x in xs nearest to x, or -1 if none is within reach.
@@ -220,5 +163,5 @@ window.LineFigure = window.LineFigure || (function () {
     return { set, toView };
   }
 
-  return { iso, pts, el, svg, box, cylinder, screw, edgeLabel, nearest, interact, plane, onTop, onNear, onEnd, face };
+  return { el, pts, svg, rect, line, text, nearest, interact };
 })();

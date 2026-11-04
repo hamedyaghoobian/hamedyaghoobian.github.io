@@ -1,0 +1,78 @@
+<h2 class="sr-only">Publications page preview: an interactive text-block citations chart, a stats readout, section keys, sort keys, and a list of papers with citation bars and student co-authors.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+#pb{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.22);--y:#F2C500;--live:#E0362C;background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;padding:14px 20px}
+.m{font-family:'JetBrains Mono',monospace;font-size:11px}
+.sk{border:1.5px solid var(--ink);border-radius:4px;padding:3px 9px;background:transparent;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer}
+.sk:hover{background:var(--y);border-color:var(--y)}.sk.on{background:var(--ink);color:var(--bg)}
+kbd{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-left:4px;opacity:.8}
+#ch{display:flex;gap:6px;align-items:flex-end;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1}
+#ch .c{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:2px 3px}
+#ch .c pre{margin:0;font:inherit;line-height:.95}
+#ch .c:hover,#ch .c.on{background:var(--y)}
+#ch .c.now pre{color:var(--live)}
+.p{display:grid;grid-template-columns:44px minmax(0,1fr) 120px;gap:10px;padding:9px 4px;border-bottom:1px solid var(--soft);align-items:baseline}
+.p:hover{background:var(--y)}.p.cur{box-shadow:inset 3px 0 0 var(--live)}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid var(--ink);padding:0 5px;border-radius:3px;margin-left:6px}
+.st{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--ink);color:var(--bg);padding:1px 6px;border-radius:3px;margin-right:4px}
+.sec{display:flex;align-items:center;gap:10px;margin:18px 0 2px}.sec i{flex:1;height:1.5px;background:var(--ink)}
+</style>
+<div style="padding:1rem 0">
+<div id="pb">
+<div class="m" style="display:flex;justify-content:space-between;border-bottom:1.5px solid var(--ink);padding-bottom:6px;flex-wrap:wrap;gap:6px"><span>hy / 04 publications</span><span>j / k · s a l x sections · y i sort · ← → years</span></div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:end;margin:22px 0 16px">
+<div><div style="font-weight:800;font-size:44px;line-height:.92;letter-spacing:-.025em">publications</div>
+<div class="m" style="margin-top:10px;display:flex;gap:18px"><span><b style="font-family:'Libre Franklin';font-weight:800;font-size:22px">93</b> citations</span><span><b style="font-family:'Libre Franklin';font-weight:800;font-size:22px">4</b> h-index</span><span><b style="font-family:'Libre Franklin';font-weight:800;font-size:22px">4</b> i10</span></div></div>
+<div>
+<div id="ch"></div>
+<div class="m" id="cr" style="border-top:1px solid var(--ink);padding-top:4px;margin-top:2px;min-height:28px"></div>
+</div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+<span style="display:flex;gap:4px;flex-wrap:wrap" id="secs"></span>
+<span style="display:flex;gap:4px"><button class="sk on" data-s="y">year<kbd>y</kbd></button><button class="sk" data-s="i">cited<kbd>i</kbd></button></span>
+</div>
+<div id="list"></div>
+<p class="m" style="margin:12px 0 0;opacity:.75">from google scholar, refreshed weekly · student names link to student research</p>
+</div>
+</div>
+<script>
+const CY={2020:1,2021:1,2022:10,2023:11,2024:17,2025:30,2026:19};
+const P=[
+['s',2026,1,'TimeCapsule: generative hallucination as a method for historical sensemaking','C&C 2026','H. Grigorian, H. Yaghoobian',[["Hayk Grigorian","'26"]],''],
+['s',2025,2,'MASFIN: a multi-agent system for decomposed financial reasoning and forecasting','arXiv 2512.21878','M. S. Montalvo, H. Yaghoobian',[["Sebastian Montalvo","'28"]],''],
+['a',2025,25,'The writer in-between: a post-phenomenological analysis of LLMs and their implications','Journal of Human-Technology Relations','H. Yaghoobian',[],''],
+['a',2025,3,'Data-body machine: a Deleuzian perspective in digital ontology','Somatechnics','H. Yaghoobian',[],''],
+['a',2021,0,'Pedagogical possibilities of critical engagement in introductory CS education','SIGCSE 2021','H. Yaghoobian',[],'poster'],
+['a',2021,0,'Structure- and context-aware NLP approaches to emotion and subjectivity','University of Georgia','H. Yaghoobian',[],'phd dissertation'],
+['l',2021,37,'Sarcasm detection: a comparative study','','H. Yaghoobian, H. R. Arabnia, K. Rasheed',[],''],
+['l',2023,11,'Students success modeling: most important factors','arXiv 2309.13052','S. Voghoei, J. M. Byars, … H. Yaghoobian, …',[],''],
+['l',2021,10,'The ethos of citation in qualitative research methodology','Reconceptualizing Educational Research Methodology','E. Kuecker, …',[],''],
+['l',2011,3,'Modeling of a robust and fast noise cancellation system','UKSim 2011','H. Yaghoobian, A. A. Khazaei, …',[],''],
+['l',2018,1,'An efficient and secure two-party key agreement protocol based on chaotic maps','arXiv 1801.02789','N. Yahyapoor, H. Yaghoobian, M. Keshtgari',[],'']];
+const S={s:'student research',a:'sole-authored',l:'collaborations'};const SK={s:'s',a:'a',l:'l'};
+let sec='x',sort='y',cur=0,yr=2026;
+const ch=document.getElementById('ch');const mx=30;
+Object.entries(CY).forEach(([y,n])=>{const h=Math.round(n/mx*8);const d=document.createElement('div');d.className='c'+(y==2026?' now':'');d.dataset.y=y;d.innerHTML=`<pre>${'█\n'.repeat(h)||'▁'}</pre><span style="font-size:10px;margin-top:3px">'${String(y).slice(2)}</span>`;d.onmouseenter=()=>setY(+y);ch.appendChild(d)});
+function setY(y){yr=y;[...ch.children].forEach(c=>c.classList.toggle('on',+c.dataset.y===y));const pubs=P.filter(p=>p[1]===y).length;
+document.getElementById('cr').innerHTML=`${y}: <b>${CY[y]}</b> citations${y===2026?' <span style="color:var(--live)">· so far</span>':''}${pubs?` · ${pubs} published`:''}`;
+document.querySelectorAll('.p').forEach(r=>r.style.outline=+r.dataset.y===y?'1.5px dashed var(--ink)':'none')}
+const secs=document.getElementById('secs');
+[['x','all',P.length],...Object.entries(S).map(([k,n])=>[k,n,P.filter(p=>p[0]===k).length])].forEach(([k,n,c])=>{const b=document.createElement('button');b.className='sk';b.dataset.k=k;b.innerHTML=`${n} ${c}<kbd>${k}</kbd>`;b.onclick=()=>setSec(k);secs.appendChild(b)});
+function bar(n){const w=Math.round(n/37*12);return '█'.repeat(w)+'░'.repeat(12-w)}
+function list(){let L=P.map((p,i)=>({p,i})).filter(o=>sec==='x'||o.p[0]===sec);
+const order=sort==='y'?(a,b)=>b.p[1]-a.p[1]||b.p[2]-a.p[2]:(a,b)=>b.p[2]-a.p[2];let h='';
+(sec==='x'&&sort==='y'?['s','a','l']:[null]).forEach(g=>{const G=L.filter(o=>!g||o.p[0]===g).sort(order);if(g)h+=`<div class="sec"><span class="m">${S[g]}</span><i></i><span class="m">${G.length}</span></div>`;
+G.forEach(({p,i})=>{h+=`<div class="p${i===cur?' cur':''}" data-i="${i}" data-y="${p[1]}"><span class="m">${p[1]}</span><span><span style="font-size:14px;line-height:1.35">${p[3]}</span>${p[7]?`<span class="tag">${p[7]}</span>`:''}<br><span class="m" style="opacity:.75">${p[5]}${p[4]?' · '+p[4]:''}</span>${p[6].length?`<br><span style="display:inline-block;margin-top:4px">${p[6].map(s=>`<span class="st">${s[0].toLowerCase()} ${s[1]}</span>`).join('')}<span class="m">→ project</span></span>`:''}</span><span class="m" style="text-align:right;white-space:nowrap">${bar(p[2])} ${p[2]}</span></div>`})});
+document.getElementById('list').innerHTML=h;document.querySelectorAll('.p').forEach(r=>r.onmouseenter=()=>setCur(+r.dataset.i))}
+function setCur(i){cur=i;document.querySelectorAll('.p').forEach(r=>r.classList.toggle('cur',+r.dataset.i===i))}
+function setSec(k){sec=k;[...secs.children].forEach(b=>b.classList.toggle('on',b.dataset.k===k));list();setY(yr)}
+function setSort(s){sort=s;document.querySelectorAll('[data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===s));list();setY(yr)}
+document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>setSort(b.dataset.s));
+document.addEventListener('keydown',e=>{const k=e.key;if('xsal'.includes(k)&&k.length===1)setSec(k);if(k==='y'||k==='i')setSort(k);
+if(k==='j'||k==='k'){const rs=[...document.querySelectorAll('.p')].map(r=>+r.dataset.i);let n=rs.indexOf(cur)+(k==='j'?1:-1);n=Math.max(0,Math.min(rs.length-1,n));setCur(rs[n])}
+const ys=Object.keys(CY).map(Number);if(k==='ArrowLeft'||k==='ArrowRight'){const n=ys.indexOf(yr)+(k==='ArrowRight'?1:-1);if(ys[n])setY(ys[n])}});
+setSec('x');setY(2026);
+</script>

@@ -1,5 +1,6 @@
 // Raising Reachy (projects/raising-reachy.md): a line drawing of Reachy
-// Mini as it actually looks — a tall rounded body on a dark base ring, a
+// Mini as it actually looks — a tall rounded body on a dark base ring, drawn
+// as a flat front elevation, a
 // wide rounded head resting off-centre and tilted on top, two big dark
 // lenses joined by a bridge like goggles, and two long thin antennas on
 // coiled springs. Its eyes follow the pointer (a glint moves in each lens),
@@ -36,13 +37,14 @@
   const svg = makeSvg(root, '-92 -206 184 216',
     'A line drawing of Reachy Mini: a tall rounded white body on a dark base, a wide rounded head tilted on top with two large dark round eyes joined like goggles, and two long thin antennas on coiled springs.');
 
-  // Base ring, then the body, its seam, and the head over them.
-  el('ellipse', { class: 'lf-solid reachy-base', cx: 0, cy: 2, rx: 27, ry: 5.5 }, svg);
+  // A flat front elevation: the base ring as a band, then the body standing
+  // on it, its seam a straight line, and the head over them.
+  el('rect', { class: 'lf-solid reachy-base', x: -29, y: -2, width: 58, height: 7, rx: 2 }, svg);
   el('path', {
     class: 'lf-solid',
-    d: 'M -30 -2 C -37 -36 -37 -70 -25 -88 Q 0 -101 25 -88 C 37 -70 37 -36 30 -2 A 30 6.5 0 0 1 -30 -2 Z'
+    d: 'M -30 -2 C -37 -36 -37 -70 -25 -88 Q 0 -101 25 -88 C 37 -70 37 -36 30 -2 Z'
   }, svg);
-  el('path', { class: 'lf-line lf-faint', d: 'M -34.2 -24 A 34.2 7 0 0 0 34.2 -24' }, svg);
+  el('line', { class: 'lf-line lf-faint', x1: -34.4, y1: -24, x2: 34.4, y2: -24 }, svg);
 
   const head = el('g', {}, svg);
   const antennas = [-1, 1].map(side => ({

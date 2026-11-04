@@ -1,12 +1,15 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Gaussian naive Bayes · Learning Machines"
+short: "learning machines · gaussian naive bayes"
 permalink: /tools/learning-machines/naive-bayes/
 entry: naive-bayes
 ---
 {%- assign base = "/tools/learning-machines/" | relative_url -%}
 
-<p class="lm-lede">Naive Bayes turns the question around. Instead of asking directly which species a bill length belongs to, it asks how likely that bill length would be for each species, and how common each species is, and weighs the two. The balance in the figure does that weighing with blocks: one per species, its footprint the prior, its height the likelihood.</p>
+<p class="lm-lede">Naive Bayes turns the question around. Instead of asking directly which species a bill length belongs to, it asks how likely that bill length would be for each species, and how common each species is, and weighs the two. The balance in the figure does that weighing with blocks: one per species, its width the prior, its height the likelihood.</p>
 
 ## Bayes' rule
 
@@ -122,7 +125,7 @@ GaussianNB(priors=[1/3, 1/3, 1/3])        # equal priors: 50 mm becomes Chinstra
 |---|---|
 | Data | the 342 Palmer penguins; one feature, bill length |
 | Model | `GaussianNB()`, fitted on all 342; means, spreads and priors as in the table above |
-| Balance | block footprint ∝ prior, height ∝ likelihood; spring stretch ∝ prior × likelihood, on one scale for every length and both priors |
+| Balance | block width ∝ prior, height ∝ likelihood; spring stretch ∝ prior × likelihood, on one scale for every length and both priors |
 | Comparison table | bill length and depth; 5-fold stratified cross-validation, seed 330; probabilities out of fold |
 {: .lm-facts}
 

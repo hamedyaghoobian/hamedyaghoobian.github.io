@@ -1,6 +1,11 @@
 ---
 layout: page
 title: "TimeCapsule: 18th Century LLM For Historical Sensemaking"
+heading: "TimeCapsule"   # the plate shows the name; the full title is for the tab, search and link previews
+short: timecapsule
+dek: "18th Century LLM For Historical Sensemaking"
+status: done
+areas: [nlp, hai, cai]
 
 permalink: /projects/timecapsule-18th-century-llm
 header: true
@@ -8,7 +13,18 @@ list_title: " "
 
 ---
 
-*In collaboration with Muhlenberg undergraduate researcher Hayk Gregorian.*
+<div class="pj-head">
+<dl class="fp-spec pj-spec">
+  <dt>in collaboration with</dt><dd>Hayk Grigorian · Muhlenberg undergraduate researcher</dd>
+  <dt>status</dt><dd>done · published</dd>
+  <dt>model</dt><dd>1.2B parameters · LLaMA architecture · trained <em>ab initio</em></dd>
+  <dt>corpus</dt><dd>British text, 1800–1875 · 136,302 documents · 89.63 GB</dd>
+  <dt>perplexity</dt><dd>37.59 on held-out Victorian prose (GPT-2: 68.83)</dd>
+  <dt>paper</dt><dd><a href="https://dl.acm.org/doi/10.1145/3803784.3807554">ACM Digital Library</a></dd>
+  <dt>press coverage</dt><dd><a href="https://cacm.acm.org/news/are-llms-unstuck-in-time/">Communications of the ACM (CACM)</a> · <em>"Are LLMs Stuck in Time?"</em></dd>
+  <dt>code &amp; model</dt><dd><a href="https://github.com/hamedyaghoobian/timecapsule">github.com/hamedyaghoobian/timecapsule</a></dd>
+</dl>
+</div>
 
 {% include project-figure.html id="timecapsule-figure" script="timecapsule-figure.js" class="project-figure--wide" %}
 
@@ -125,11 +141,3 @@ Three emergent heuristic patterns:
 3. **Hallucination as Ontological Repair:** Reframing model "errors" on anachronistic prompts as historically constrained inferences that reveal the ontological structures of 19th-century thought.
 
 4. **Archival Honesty:** Preserving historical biases (gender, empire, race) as an ethical and scholarly necessity, rather than an alignment failure, for humanistic AI research.
-
-## Resources
-
-- **Paper:** [ACM Digital Library](https://dl.acm.org/doi/10.1145/3803784.3807554)  
-- **Press Coverage:** [Communications of the ACM (CACM)](https://cacm.acm.org/news/are-llms-unstuck-in-time/) - *"Are LLMs Stuck in Time?"*  
-- **Code & Model:** [github.com/hamedyaghoobian/timecapsule](https://github.com/hamedyaghoobian/timecapsule)
-
-

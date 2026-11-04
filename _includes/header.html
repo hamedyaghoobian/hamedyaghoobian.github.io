@@ -1,70 +1,40 @@
-<header class="site-header">
-  <svg style="width: 0; height: 0; position: absolute;">
-    <defs>
-      <filter id="wind" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence type="fractalNoise" numOctaves="2" seed="1">
-          <animate attributeName="baseFrequency" dur="16s" keyTimes="0;0.33;0.66;1"
-            values="0.005 0.003;0.01 0.009;0.008 0.004;0.005 0.003" repeatCount="indefinite" />
-        </feTurbulence>
-        <feDisplacementMap in="SourceGraphic">
-          <animate attributeName="scale" dur="20s" keyTimes="0;0.25;0.5;0.75;1" values="45;55;75;55;45"
-            repeatCount="indefinite" />
-        </feDisplacementMap>
-      </filter>
-    </defs>
-  </svg>
-  <div class="wrapper">
-    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
-
-    <nav class="site-nav">
-      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
-      <label for="nav-trigger">
-        <span class="menu-icon">
-          <svg viewBox="0 0 18 15" width="18px" height="15px">
-            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
-          </svg>
-        </span>
-      </label>
-      <div class="trigger">
-        {%- for path in site.header_pages -%}
-          {%- assign my_page = site.pages | where: "path", path | first -%}
-          {%- if my_page.title -%}
-          <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
+{%- comment -%}
+  The faceplate. A strip of eight keys, one per section, each a real link
+  (0–7 on the keyboard press it). The key for the section you are in is
+  held down. The knob on the right sets the theme. Under it, a hairline and
+  the breadcrumb: where you are, and the keys that work on this page.
+{%- endcomment -%}
+<header class="fp-plate" role="banner">
+  <div class="fp-plate__row">
+    <nav class="fp-strip" aria-label="Sections">
+      {%- for k in site.data.faceplate.keys %}
+      <a class="fp-key{% if k.n == fp_key.n %} is-down{% endif %}" href="{{ k.url | relative_url }}" data-key="{{ k.n }}"{% if k.n == fp_key.n and fp_depth < 2 %} aria-current="page"{% elsif k.n == fp_key.n %} aria-current="true"{% endif %}>
+        <span class="fp-key__n">{{ k.n }}</span><span class="fp-key__t">{{ k.key }}</span>
+      </a>
+      {%- endfor %}
     </nav>
 
-    <!-- Theme toggle: fixed position on mobile (right of hamburger), inline on desktop -->
-    <button class="theme-icon-btn" id="theme-pill" aria-label="Toggle theme" title="Toggle theme">
-      <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="12" cy="12" r="4.5"/>
-        <line x1="12" y1="2" x2="12" y2="4.5"/>
-        <line x1="12" y1="19.5" x2="12" y2="22"/>
-        <line x1="4.22" y1="4.22" x2="5.96" y2="5.96"/>
-        <line x1="18.04" y1="18.04" x2="19.78" y2="19.78"/>
-        <line x1="2" y1="12" x2="4.5" y2="12"/>
-        <line x1="19.5" y1="12" x2="22" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.96" y2="18.04"/>
-        <line x1="18.04" y1="5.96" x2="19.78" y2="4.22"/>
-      </svg>
-      <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-      <!-- System mode: a plain monitor, same stroke weight as the sun and
-           moon so it reads as a third option rather than a mismatched
-           afterthought. -->
-      <svg class="theme-icon theme-icon--system" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="3" y="4.5" width="18" height="13" rx="1.5"/>
-        <line x1="8" y1="21" x2="16" y2="21"/>
-        <line x1="12" y1="17.5" x2="12" y2="21"/>
-      </svg>
-    </button>
+    <div class="fp-knob" role="group" aria-label="Theme">
+      <span class="fp-knob__marks">
+        <button type="button" data-theme-set="light" title="Light">L</button>
+        <button type="button" data-theme-set="dark" title="Dark">D</button>
+        <button type="button" data-theme-set="system" title="Auto: follow the system">A</button>
+      </span>
+      <button type="button" class="fp-knob__dial" aria-label="Turn the theme knob (\)" title="Theme · \"></button>
+    </div>
+  </div>
+
+  <div class="fp-crumb">
+    <p class="fp-crumb__path">
+      <a href="{{ '/' | relative_url }}"{% if fp_depth == 0 %} aria-current="page"{% endif %}>hamed yaghoobian</a>
+      {%- if fp_depth > 0 %}<span class="fp-crumb__sep">/</span><a href="{{ fp_key.url | relative_url }}"{% if fp_depth == 1 %} aria-current="page"{% endif %}><span class="fp-crumb__n">0{{ fp_key.n }}</span> {{ fp_key.key }}</a>{% endif %}
+      {%- if fp_depth > 1 %}<span class="fp-crumb__sep">/</span><span class="fp-crumb__here">{{ page.short | default: page.title | split: ":" | first | downcase }}</span>{% endif %}
+    </p>
+    <p class="fp-crumb__keys" aria-hidden="true">
+      {%- if fp_prev %}{% assign pp = site.pages | where: "url", fp_prev | first %}<a class="fp-crumb__sib" rel="prev" href="{{ fp_prev | relative_url }}" title="{{ pp.title }}"><span class="fp-k">[</span>{{ pp.short | default: pp.title | split: ":" | first | downcase | truncate: 28 }}</a>{% endif %}
+      {%- if fp_next %}{% assign np = site.pages | where: "url", fp_next | first %}<a class="fp-crumb__sib" rel="next" href="{{ fp_next | relative_url }}" title="{{ np.title }}"><span class="fp-k">]</span>{{ np.short | default: np.title | split: ":" | first | downcase | truncate: 28 }}</a>{% endif %}
+      {%- if fp_up %}<a class="fp-crumb__up" rel="up" href="{{ fp_up | relative_url }}" title="{% if page.up_label %}{{ page.up_label }}{% elsif fp_depth == 1 %}home{% else %}0{{ fp_key.n }} {{ fp_key.key }}{% endif %}"><span class="fp-k">esc</span>up</a>{% endif %}
+      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">?</span>keys</button>
+    </p>
   </div>
 </header>

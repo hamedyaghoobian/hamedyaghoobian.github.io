@@ -5,7 +5,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-YWJ7LC7EX8');
   </script>
 
@@ -13,200 +12,68 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title | default: site.title | escape }}</title>
-  {%- seo -%}
-  <!-- ?v= busts the browser's cache on every deploy. Without it, a visitor
-       who has main.css cached from before a deploy keeps using the stale
-       copy against the newly-fetched HTML — exactly what happened with the
-       theme-toggle icons and the Mashhad hover after this file last shipped
-       new CSS for them. site.time is the build timestamp, so it changes on
-       every build regardless of whether main.scss itself changed. -->
+  {%- seo title=false -%}
+  <!-- ?v= busts the browser's cache on every build, so new HTML never meets stale CSS. -->
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}?v={{ site.time | date: '%s' }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Type. Libre Franklin carries the interface and the headings (800,
+       lowercase, set tight); JetBrains Mono carries every label, number
+       and key; Newsreader is kept for long reading and other people's words.
+       Persian pairs the same way: IBM Plex Sans Arabic beside Franklin,
+       Amiri (loaded only where verse is quoted) beside Newsreader. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  {%- if page.fa_serif %}
+  {%- comment -%} Amiri: Persian verse, on pages that quote it (front matter fa_serif). {%- endcomment %}
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  {%- endif %}
+  {%- if page.layout == 'home' %}
+  {%- comment -%} Lalezar sets only the Persian name on the home page. {%- endcomment %}
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&text=%D8%AD%D8%A7%D9%85%D8%AF%20%DB%8C%D8%B9%D9%82%D9%88%D8%A8%DB%8C%D8%A7%D9%86&display=swap" rel="stylesheet">
+  {%- endif %}
 
   {%- feed_meta -%}
   <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
-  <style>
-    body {
-      font-family: 'Instrument Sans', sans-serif;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'Newsreader', serif;
-    }
-
-    .education-item,
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 15px;
-    }
-
-    [data-theme="dark"] a:not(.orbit-icon) {
-      color: #63b3ed;
-    }
-
-    [data-theme="dark"] a:not(.orbit-icon):hover {
-      color: #90cdf4;
-    }
-
-    [data-theme="dark"] .site-title,
-    [data-theme="dark"] .site-nav .page-link {
-      color: #f7fafc;
-    }
-
-    [data-theme="dark"] .site-nav .page-link:hover {
-      color: #90cdf4;
-    }
-
-    [data-theme="dark"] #theme-toggle {
-      filter: drop-shadow(0 0 4px rgb(255, 255, 255, .7));
-    }
-  </style>
-  <style>
-    /* ── Figure image expand on click ─────────────────────────────── */
-    figure img {
-      cursor: zoom-in;
-      transition: transform 0.15s ease;
-    }
-
-    /* Full-screen overlay */
-    #img-lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(0, 0, 0, 0.82);
-      justify-content: center;
-      align-items: center;
-      cursor: zoom-out;
-    }
-
-    #img-lightbox.open {
-      display: flex;
-    }
-
-    #img-lightbox img {
-      max-width: 92vw;
-      max-height: 92vh;
-      border-radius: 6px;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
-      object-fit: contain;
-      cursor: zoom-out;
-    }
-  </style>
+  <meta name="theme-color" content="#F2EBDA" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1F2A9E" media="(prefers-color-scheme: dark)">
 
   <script>
-    // Three modes: 'light', 'dark', 'system' — 'system' follows the OS/
-    // browser preference and keeps following it live if that changes while
-    // the tab is open. The very first paint is already handled by the tiny
-    // synchronous script at the top of <body> (default.html), which reads
-    // the same storage key and applies the class before anything renders;
-    // this script's job is everything that needs the page to exist: wiring
-    // up the button, cycling between the three modes, and reacting to a
-    // system-preference change.
-    const THEME_ORDER = ['light', 'dark', 'system'];
-    const THEME_LABEL = {
-      light: 'Light theme — click for dark',
-      dark: 'Dark theme — click for system',
-      system: 'System theme — click for light',
-    };
-    const systemPrefersDark = () =>
-      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    function resolveDark(mode) {
-      if (mode === 'dark') return true;
-      if (mode === 'light') return false;
-      return systemPrefersDark();
-    }
-
-    function getMode() {
-      const stored = localStorage.getItem('theme');
-      return THEME_ORDER.includes(stored) ? stored : 'system';
-    }
-
-    // Single source of truth: apply theme by class + data-theme together
-    function applyTheme(isDark) {
-      document.body.classList.toggle('dark', isDark);
-      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    }
-
-    function updatePillUI(mode) {
-      const pill = document.getElementById('theme-pill');
-      if (!pill) return;
-      pill.setAttribute('data-mode', mode);
-      pill.setAttribute('title', THEME_LABEL[mode]);
-      pill.setAttribute('aria-label', THEME_LABEL[mode]);
-    }
-
-    function setMode(mode) {
-      applyTheme(resolveDark(mode));
-      localStorage.setItem('theme', mode);
-      updatePillUI(mode);
-    }
-
-    function cycleMode() {
-      document.body.classList.add('animation-ready');
-      const current = getMode();
-      const next = THEME_ORDER[(THEME_ORDER.indexOf(current) + 1) % THEME_ORDER.length];
-      setMode(next);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // The early <body> script already applied the correct class; this
-      // just syncs the button's icon/label to match.
-      updatePillUI(getMode());
-
-      const pill = document.getElementById('theme-pill');
-      if (pill) pill.addEventListener('click', cycleMode);
-
-      // Live-follow the OS preference, but only while in 'system' mode — an
-      // explicit light/dark choice is never overridden by this.
-      if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-          if (getMode() === 'system') applyTheme(resolveDark('system'));
+    // Theme: three positions on the knob, light · dark · auto. Same storage
+    // key and values as before ('light', 'dark', 'system'), so a visitor's
+    // choice survives the redesign. The first paint is set by the tiny
+    // script at the top of <body>; this wires the knob and follows the OS
+    // while on auto.
+    (function () {
+      var ORDER = ['light', 'dark', 'system'];
+      var dark = function (m) { return m === 'dark' || (m === 'system' && matchMedia('(prefers-color-scheme: dark)').matches); };
+      function mode() { try { var s = localStorage.getItem('theme'); return ORDER.indexOf(s) >= 0 ? s : 'system'; } catch (e) { return 'system'; } }
+      function apply(m) {
+        document.body.classList.toggle('dark', dark(m));
+        document.documentElement.setAttribute('data-theme', dark(m) ? 'dark' : 'light');
+        document.querySelectorAll('[data-theme-set]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.themeSet === m); });
+        var knob = document.querySelector('.fp-knob__dial');
+        if (knob) knob.style.setProperty('--turn', ({ light: -68, dark: -90, system: -112 })[m] + 'deg');
+      }
+      window.FPTheme = {
+        set: function (m) { try { localStorage.setItem('theme', m); } catch (e) {} apply(m); },
+        cycle: function () { var m = mode(); this.set(ORDER[(ORDER.indexOf(m) + 1) % 3]); },
+        mode: mode
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        apply(mode());
+        document.querySelectorAll('[data-theme-set]').forEach(function (b) {
+          b.addEventListener('click', function () { FPTheme.set(b.dataset.themeSet); });
         });
-      }
-    });
-
-    // Space-bar shortcut — cycles the same three modes
-    document.addEventListener('keydown', function (event) {
-      if (event.keyCode === 32) {
-        event.preventDefault();
-        cycleMode();
-      }
-    });
+        var dial = document.querySelector('.fp-knob__dial');
+        if (dial) dial.addEventListener('click', function () { FPTheme.cycle(); });
+        matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { if (mode() === 'system') apply('system'); });
+      });
+    })();
   </script>
   <script>
-    // Figure image lightbox: click to expand, click again (or overlay) to close
-    document.addEventListener('DOMContentLoaded', () => {
-      const overlay = document.createElement('div');
-      overlay.id = 'img-lightbox';
-      const expandedImg = document.createElement('img');
-      overlay.appendChild(expandedImg);
-      document.body.appendChild(overlay);
-
-      document.querySelectorAll('figure img').forEach(img => {
-        img.addEventListener('click', () => {
-          expandedImg.src = img.src;
-          expandedImg.alt = img.alt;
-          overlay.classList.add('open');
-        });
-      });
-
-      overlay.addEventListener('click', () => overlay.classList.remove('open'));
-
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') overlay.classList.remove('open');
-      });
-    });
+    // Pages register their own letter keys before faceplate.js arrives.
+    window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
   </script>
+  <script src="{{ '/assets/js/faceplate.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </head>
