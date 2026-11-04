@@ -51,9 +51,10 @@
   .fp-panel__tr { font-size: .64rem; display: inline-flex; align-items: center; .fp-live { width: 6px; height: 6px; margin-left: 6px; } [lang="fa"] { font-family: var(--fa); font-size: .7rem; } }
   .fp-panel__br a { text-decoration: none; }
   .fp-panel__br a:hover { color: var(--on-hand); }
-  // the drawing isn't enlarged; pointing at it lights who drew it, in your hand
-  .fp-panel__bl { padding: 0 3px; margin-left: -3px; transition: background .12s, color .12s; }
-  .hm-portrait__img:hover ~ .fp-panel__bl, .fp-panel__bl:hover { background: var(--hand); color: var(--on-hand); }
+  // who drew it stays out of sight until you point at the drawing; then it comes forward in ink
+  .fp-panel__bl { opacity: 0; transition: opacity .25s, color .25s; }
+  .hm-portrait__img:hover ~ .fp-panel__bl, .fp-panel__bl:hover { opacity: 1; color: var(--ink); }
+  @media (hover: none) { .fp-panel__bl { opacity: 1; } }   // no pointer to point with: always shown
 }
 .hm-portrait__img {
   position: relative; aspect-ratio: 1; overflow: hidden; isolation: isolate;
