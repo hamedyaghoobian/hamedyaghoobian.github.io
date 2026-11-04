@@ -27,3 +27,25 @@ header_pages:
 
 # Custom variables
 google_analytics: G-R39YNYB88S  # Replace with your Measurement ID
+
+# ── Faceplate redesign ─────────────────────────────────────────────
+# Every page belongs to one of the eight sections on the key strip.
+# Pages under these paths borrow a section that isn't their own URL prefix.
+defaults:
+  - scope:
+      path: "projects"
+    values:
+      section: /student-research/
+  - scope:
+      path: "readings-otherwise"
+    values:
+      section: /readings-otherwise/
+exclude:
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - scripts
+  - package.json
+  - netlify.toml
+  - _sass/legacy/_old-main-reference.txt
+  - FACEPLATE.md

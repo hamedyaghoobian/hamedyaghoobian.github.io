@@ -1,0 +1,229 @@
+// Carried over from the old assets/main.scss, lines 1955–2215.
+// Reachy Mini (assets/js/reachy-figure.js): the parts that are dark on the
+// real robot — its lenses, the goggle bridge, the base ring — drawn dark in
+// both themes: deep ink on paper, near-black with a gold rim on the night page.
+.project-figure {
+  .reachy-lens {
+    fill: var(--ink);
+    stroke: var(--ink);
+    stroke-width: 0.9;
+  }
+
+  .reachy-rim {
+    fill: none;
+    stroke: var(--paper);
+    stroke-width: 0.6;
+    opacity: 0.35;
+  }
+
+  .reachy-glint {
+    fill: var(--paper);
+  }
+
+  .reachy-bridge {
+    stroke: var(--ink);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
+  rect.reachy-base {
+    fill: var(--ink-soft);
+    fill-opacity: 0.45;
+  }
+}
+
+body.dark .project-figure {
+  .reachy-lens {
+    fill: var(--cobalt-night);
+  }
+
+  .reachy-rim {
+    stroke: var(--ink);
+    opacity: 0.5;
+  }
+
+  .reachy-glint {
+    fill: var(--ink);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Anatomy-style figures: round solids, and a framed card with corner
+// captions (Fig n, title, hint, live readout). The figures are flat now, so
+// the old shading by facing (side tones, shaded faces) is gone. After the
+// craft rules of Ryan's Anatomy skill (github.com/wheresryan22/anatomy,
+// MIT); drawn with this site's own kit.
+// ─────────────────────────────────────────────────────────────
+.project-figure,
+.chart-figure {
+  .lf-solid path,
+  .lf-solid ellipse,
+  path.lf-solid {
+    fill: var(--paper);
+    stroke: var(--ink-soft);
+    stroke-width: 0.9;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+  }
+
+  .is-lit path,
+  .is-lit ellipse {
+    stroke: var(--ink);
+  }
+}
+
+.project-figure--card {
+  max-width: 640px;
+
+  .figure-card {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 10px 14px 9px;
+  }
+
+  .figure-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+  }
+
+  .figure-card__fig,
+  .figure-card__title,
+  .figure-card__hint {
+    text-transform: uppercase;
+  }
+
+  .figure-card__fig {
+    text-transform: none;
+  }
+
+  .figure-card__readout {
+    text-align: right;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    max-width: 68%;
+  }
+
+  // On a phone the hint and the live caption stack, the caption full width.
+  @media screen and (max-width: 600px) {
+    .figure-card__row:has(.figure-card__readout) {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .figure-card__readout {
+      text-align: left;
+      max-width: none;
+    }
+  }
+
+  figcaption {
+    min-height: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Glow: whatever a figure lights (.is-lit — the picked item, a passing
+// checkpoint, a set letter) takes the one accent colour, and in the dark
+// theme it glows. In the light theme it stays a flat accent with no
+// radiating light. After the lighting rules of the iso-glow skill (built on
+// MrBongoC/ai-iso-skill, MIT). Swapping the ink tokens inside a lit part
+// recolours every stroke and text in it without touching each figure.
+// ─────────────────────────────────────────────────────────────
+.project-figure,
+.chart-figure {
+  .is-lit:not(svg),
+  .lf-hot {
+    --ink: var(--glow);
+    --ink-soft: var(--glow);
+  }
+}
+
+#lf-glow feFlood {
+  flood-color: var(--glow);
+}
+
+body.dark {
+  .project-figure,
+  .chart-figure {
+    .is-lit:not(svg),
+    .lf-hot {
+      filter: url(#lf-glow);
+    }
+  }
+}
+
+// The CSI 330 study page: figures a little wider, so the boards read.
+.project-figure--card.project-figure--study {
+  max-width: 760px;
+}
+
+// Under a study figure: the calculation behind its reading, written out
+// with the live numbers (the figure fills #id-calc), so the arithmetic is
+// as visible as the machine.
+.project-figure--card .figure-card__calc {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  text-align: left;
+
+  b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .hot {
+    color: var(--glow);
+    font-weight: 600;
+  }
+
+  var {
+    font-style: italic;
+  }
+}
+
+// "Try this": guided tasks under each study figure, with the answers folded.
+.study-try {
+  margin: -0.6rem auto 2.4rem;
+  max-width: 760px;
+  padding: 0.9rem 1.1rem;
+  border-left: 2px solid var(--rule);
+  font-size: 0.95rem;
+
+  > p:first-child {
+    margin-top: 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  ol {
+    margin: 0 0 0.6rem;
+    padding-left: 1.3rem;
+  }
+
+  li {
+    margin-bottom: 0.35rem;
+  }
+
+  details {
+    margin-top: 0.4rem;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--ink);
+  }
+}
+

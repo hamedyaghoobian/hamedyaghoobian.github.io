@@ -1,20 +1,21 @@
 ---
 layout: learning-machines
 title: Learning Machines
+short: "learning machines"
 permalink: /tools/learning-machines/
 lm_home: true
 ---
 {%- assign LM = site.data.learning_machines -%}
 {%- assign base = "/tools/learning-machines/" | relative_url -%}
-<p class="lm-eyebrow">A visual companion to machine learning</p>
+<p class="lm-eyebrow fp-label">A visual companion to machine learning</p>
 
 <h1 class="lm-hero">Machine learning, illustrated.</h1>
 
-See how a model works, from the whole pipeline to a single weight. Follow one penguin from raw measurements to a prediction, turn the dial on a model, and compare the different ways of answering the same question. Built for Machine Learning (CSI 330) at Muhlenberg College, Fall 2026. Every number is what scikit-learn computes on the course's own data.
+<p class="lm-intro">See how a model works, from the whole pipeline to a single weight. Follow one penguin from raw measurements to a prediction, turn the dial on a model, and compare the different ways of answering the same question. Built for Machine Learning (CSI 330) at Muhlenberg College, Fall 2026. Every number is what scikit-learn computes on the course's own data.</p>
 
-{% include project-figure.html id="pipeline-figure" script="lm-pipeline-figure.js" class="project-figure--flow" calc="1" fig="No. 00" title="The whole pipeline, one bird at a time" hint="→ next bird · 1–6 a stage · click a panel" note="Three-class logistic regression on bill length and depth: 239 penguins to train, 103 to test. The page recomputes every number and agrees with scikit-learn on all 103." %}
+{% include project-figure.html id="pipeline-figure" script="lm-pipeline-figure.js" class="project-figure--flow" calc="1" fig="No. 00" title="The whole pipeline, one bird at a time" hint="focus the figure, then → next bird · 1–6 a stage · or click a panel" note="Three-class logistic regression on bill length and depth: 239 penguins to train, 103 to test. The page recomputes every number and agrees with scikit-learn on all 103." %}
 
-<p class="lm-count">{{ LM.entries.size }} entries · {{ LM.entries.size | plus: 1 }} interactive studies · weeks 1–8, a growing reference</p>
+<p class="lm-count fp-label">{{ LM.entries.size }} entries · {{ LM.entries.size | plus: 1 }} interactive studies · weeks 1–8, a growing reference</p>
 
 <h2 class="lm-h2"><span>01</span> Explore by topic</h2>
 
@@ -23,7 +24,7 @@ See how a model works, from the whole pipeline to a single weight. Follow one pe
   <div class="lm-topic">
     <p class="lm-topic__name">{{ s.name }} <span>{{ s.entries.size }} {% if s.entries.size == 1 %}entry{% else %}entries{% endif %}</span></p>
     {%- for slug in s.entries %}{% assign e = LM.entries[slug] %}
-    <a class="lm-topic__entry" href="{{ base }}{{ slug }}/"><b>{{ e.title }}</b> <span>{{ e.line }}</span></a>
+    <a class="lm-topic__entry" data-fp-part href="{{ base }}{{ slug }}/"><b>{{ e.title }}</b> <span>{{ e.line }}</span></a>
     {%- endfor %}
   </div>
 {%- endfor %}

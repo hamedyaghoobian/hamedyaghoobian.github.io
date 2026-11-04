@@ -67,7 +67,7 @@ entries:
     parts:
       - {name: The curves board, text: "One bell curve per species: how likely each bill length is, given the species."}
       - {name: The marker, text: "The bill length being weighed."}
-      - {name: The scales, text: "Each block's footprint is the prior and its height the likelihood, so it weighs prior × likelihood."}
+      - {name: The scales, text: "Each block's width is the prior and its height the likelihood, so its area weighs prior × likelihood."}
       - {name: The priors switch, text: "Priors from the data's mix, or equal for all three."}
       - {name: The posterior tape, text: "Each weight divided by the total: the probabilities. Logistic regression gets them without bell curves.", see: logistic-regression}
 

@@ -1,12 +1,16 @@
 {%- comment -%}
   Learning Machines' index: the reference pages, then every entry by
-  section with a count, the current page marked. Read from
-  _data/learning_machines.yml. On a narrow screen it folds into "Contents".
+  section with a count, the current page held down like a pressed key.
+  Read from _data/learning_machines.yml. On a narrow screen it folds into
+  "Contents", which names the page you are on so the fold still says where
+  you are.
 {%- endcomment -%}
 {%- assign LM = site.data.learning_machines -%}
 {%- assign base = "/tools/learning-machines/" | relative_url -%}
+{%- assign here = "" -%}
+{%- if page.lm_home %}{% assign here = "Explore" %}{% elsif page.lm_page == "why" %}{% assign here = "Why this, not that" %}{% elsif page.lm_page == "how" %}{% assign here = "How it is drawn" %}{% elsif page.entry %}{% assign here = LM.entries[page.entry].title %}{% endif -%}
 <details class="lm-toc" id="lm-toc">
-  <summary>Contents</summary>
+  <summary><span class="lm-toc__k">Contents</span><span class="lm-toc__here">{{ here }}</span><span class="lm-toc__x" aria-hidden="true">+</span></summary>
   <p class="lm-side__name"><a href="{{ base }}">Learning Machines</a></p>
   <ul class="lm-side__top">
     <li><a href="{{ base }}"{% if page.lm_home %} aria-current="page"{% endif %}>Explore</a></li>
@@ -19,7 +23,7 @@
   <ul class="lm-side__list">
     {%- for slug in s.entries %}
     {%- assign e = LM.entries[slug] %}
-    <li><a href="{{ base }}{{ slug }}/"{% if page.entry == slug %} aria-current="page"{% endif %}>{{ e.title }}</a></li>
+    <li><a href="{{ base }}{{ slug }}/"{% if page.entry == slug %} aria-current="page"{% endif %}><span class="lm-side__n">{% if e.num < 10 %}0{% endif %}{{ e.num }}</span>{{ e.title }}</a></li>
     {%- endfor %}
   </ul>
   {%- endfor %}

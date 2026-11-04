@@ -1,0 +1,387 @@
+// ─────────────────────────────────────────────────────────────
+// 06 Readings, Otherwise.
+//
+// Two things live here:
+//   1. The index (readings-otherwise.md): three pieces, a numbered list.
+//   2. The chrome the pieces share. Each piece is a standalone page
+//      (readings-otherwise/<piece>/index.html), not a Jekyll layout, because
+//      the artwork needs the viewport. They link this stylesheet so the
+//      plate, the keys and the tokens are the site's own; each piece keeps a
+//      small css file of its own for what only it draws.
+//
+// Inside a frame the ground is always dark (cobalt), whatever the theme: the
+// marks are cream. Yellow inside a frame is the thing the poem is looking
+// for (the Simorgh) or your hand (the word you are on). Red inside a frame
+// only where the wall label names it: Ferdowsi's deaths, and in Capital the
+// marks you give the machine.
+// ─────────────────────────────────────────────────────────────
+
+// ── 1. The index ────────────────────────────────────────────
+.ro-intro { max-width: 560px; font-size: 1.02rem; margin-bottom: 2.2rem; }
+
+.ro-index { margin-top: 6px; }
+.ro-row {
+  .fp-row__head { grid-template-columns: 52px minmax(0, 1fr) auto 18px; padding: 12px 4px 10px; }
+  .fp-row__t { font: 800 1.35rem/1.1 var(--sans); letter-spacing: -.025em; text-transform: lowercase; }
+  .fp-row__m time { white-space: nowrap; }
+  .fp-row__body { padding-bottom: 22px; }
+}
+// the one-line note: the piece's own second line
+.ro-row__line { margin: 0 0 12px; font: 500 .8rem/1.4 var(--mono); }
+.ro-spec { margin-bottom: 14px; max-width: 560px; }
+// the colour a layer is drawn in, as a swatch (red text would be lost on the dark page)
+.ro-spec .ro-red { display: inline-block; width: 14px; height: 7px; margin: 0 7px 1px 0; background: var(--red); border-radius: 1px; }
+.ro-spec .ro-gold { display: inline-block; width: 7px; height: 7px; margin: 0 6px 1px 0; background: var(--yellow); transform: rotate(45deg); outline: 1px solid var(--cobalt); }
+.ro-note { margin: 0 0 12px; font-size: .95rem; bdi { font-family: var(--fa); } }
+.ro-links {
+  display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0;
+  font: 500 .74rem/1.5 var(--mono);
+}
+// a row j / k is on, or one under the pointer: the hand
+.ro-row.fp-at {
+  .ro-spec dt, .ro-spec dd { border-top-color: var(--on-hand); }
+  .ro-spec dt { color: inherit; opacity: .75; }
+  a { color: inherit; text-decoration-color: currentColor; }
+  .fp-live { box-shadow: 0 0 0 1.5px var(--on-hand); }
+}
+
+@media (max-width: 720px) {
+  .ro-row .fp-row__head { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .ro-row .fp-row__x { display: none; }
+  .ro-row .fp-row__t { font-size: 1.15rem; }
+  .ro-row .fp-row__body { padding-left: 4px; }
+}
+
+
+// ── 2. A piece: the plate, the frame, the keys, the wall label ───
+// body.ro-piece wraps all three pieces and Capital's reading page.
+
+.ro-piece {
+  --ro-sky: var(--cobalt-deep);                 // the frame's ground, against a cream page
+  --ro-mark: var(--cream);
+  --ro-mark-soft: rgba(242, 235, 218, .62);     // cream at 62%, the same step as --ink-soft
+  --ro-mark-rule: rgba(242, 235, 218, .28);
+  --ro-veil: color-mix(in srgb, var(--cobalt-night) 88%, transparent);
+  padding-bottom: 44px;                         // room for the key strip
+}
+:root[data-theme="dark"] .ro-piece { --ro-sky: var(--cobalt-night); }   // against a deep page, a shade deeper
+
+// The plate, compact: section keys as numbers with their names, the knob, the crumb.
+.ro-plate {
+  padding-top: 12px;
+  .fp-strip { gap: 4px; max-width: 820px; }
+  .fp-key {
+    min-height: 30px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 7px;
+    padding: 4px 8px;
+  }
+  .fp-key__t { font-size: .74rem; }
+  .fp-knob__dial { width: 32px; height: 32px; &::after { top: 3px; height: 9px; } }
+  .fp-knob__marks button { font-size: .58rem; line-height: 1.1; }
+  .fp-crumb { margin-top: 10px; }
+}
+
+.ro-main { padding-bottom: 2rem; }
+
+// The head: number, title, the piece's own lines.
+.ro-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 18px; row-gap: 4px;
+  margin: clamp(14px, 3vh, 26px) 0 12px;
+  &__n { margin: 0; font: 500 .72rem/1 var(--mono); color: var(--ink-soft); flex-basis: 100%; }
+  h1 {
+    margin: 0;
+    font: 800 clamp(1.9rem, 4.6vw, 3rem)/.95 var(--sans);
+    letter-spacing: -.04em; text-transform: lowercase;
+  }
+  .meta { margin: 0; font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); }
+  .meta em, .meta i { font-style: italic; }
+  .meta [lang="fa"] { font-family: var(--fa); font-size: 1.1em; }
+}
+.ro-head__lines { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+// The frame. The ground is cobalt in both themes. It takes the keys when it has
+// focus (a click, Tab, or enter on the page): then the yellow ring, and the
+// owner label says so.
+.ro-stage {
+  // as wide as the book's own shape allows in what is left of the screen
+  --ro-w: min(100%, calc((100svh - 15.5rem) * var(--aspect, 1.45)));
+}
+.ro-frame {
+  position: relative;
+  width: var(--ro-w);
+  min-width: min(100%, 300px);
+  aspect-ratio: var(--aspect, 1.45);
+  margin: 0;
+  background: var(--ro-sky);
+  border-radius: var(--radius);
+  overflow: hidden;
+  touch-action: none;
+  color: var(--ro-mark);
+  outline: none;
+  transition: box-shadow .12s ease;
+  &:focus-visible, &.owns { outline: none; box-shadow: 0 0 0 2px var(--paper), 0 0 0 5px var(--yellow); }
+}
+
+// corner labels and keycaps, in the frame's own inks
+.ro-owner {
+  position: absolute; left: 10px; top: 10px; z-index: 3; margin: 0;
+  padding: 3px 7px; border: 1px solid var(--ro-mark-rule); border-radius: 4px;
+  font: 500 .66rem/1.2 var(--mono); color: var(--ro-mark);
+  background: var(--ro-veil);
+  pointer-events: none;
+  .ro-frame.owns & { background: var(--yellow); color: var(--cobalt); border-color: var(--yellow); }
+}
+.ro-caps {
+  position: absolute; right: 10px; top: 10px; z-index: 3;
+  display: flex; gap: 4px;
+}
+.ro-cap {
+  appearance: none; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-width: 30px; height: 28px; padding: 0 8px;
+  border: 1px solid var(--ro-mark-rule); border-radius: 4px;
+  background: var(--ro-veil); color: var(--ro-mark);
+  font: 500 .74rem/1 var(--mono);
+  kbd { font: inherit; font-size: .66rem; opacity: .7; }
+  &:hover, &:focus-visible, &[aria-pressed="true"] { background: var(--yellow); color: var(--cobalt); border-color: var(--yellow); outline: none; }
+  &:hover kbd, &:focus-visible kbd, &[aria-pressed="true"] kbd { opacity: 1; }
+  &.is-pressing { transform: translateY(1px); background: var(--yellow); color: var(--cobalt); }
+}
+.ro-hint {
+  position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); z-index: 2;
+  margin: 0; padding: 0 12px;
+  font: 400 .66rem/1.3 var(--mono); color: var(--ro-mark-soft);
+  white-space: nowrap; pointer-events: none;
+  transition: opacity 1.2s;
+  &.gone { opacity: 0; }
+}
+
+// the readout inside the frame: what is under the pointer, or under j / k
+.ro-panel {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 1.6rem 1.2rem 1rem;
+  background: linear-gradient(to top, var(--ro-veil), var(--ro-veil) 70%, transparent);
+  transform: translateY(105%);
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+  text-align: center;
+  color: var(--ro-mark);
+  &.show { transform: none; }
+  &:not(.show) { visibility: hidden; }
+  .where { margin: 0 0 .35rem; font: 500 .66rem/1.3 var(--mono); color: var(--ro-mark-soft); }
+  .count { margin: .3rem 0 0; font: 400 .66rem/1.3 var(--mono); color: var(--ro-mark-soft); }
+}
+
+// A couplet, in the verse form an open poem takes on the poems page: an ink
+// rule where the line starts (the right, in Persian), the second hemistich
+// stepping in, and at each line's end a count in mono of what the piece
+// counts (Arabic words, dots). The verse is the piece's own cut of Amiri
+// (--ro-hand), set at 1.3rem with the word space drawn in, so a hemistich
+// reads as one line. The foot: the word under your hand, and where we are.
+.ro-panel.ro-verse {
+  text-align: start;
+  > * { width: min(100%, 38rem); margin-left: auto; margin-right: auto; }
+  .where { margin-top: 0; margin-bottom: .5rem; font: 400 .9rem/1.5 var(--ro-hand, var(--fa-serif)); color: var(--ro-mark-soft); }
+  .where[dir="ltr"] { font: 400 .66rem/1.4 var(--mono); }
+  .lines {
+    margin-top: 0; margin-bottom: 0;
+    padding-inline-start: 12px; border-inline-start: 2px solid var(--ro-mark);
+    font: 400 clamp(1.1rem, 2vw, 1.3rem)/1.65 var(--ro-hand, var(--fa-serif));
+    word-spacing: -.06em; color: var(--ro-mark-soft);
+  }
+  .lines[lang="en"] { font: 400 clamp(.98rem, 1.7vw, 1.12rem)/1.55 var(--serif); word-spacing: 0; }
+  .line { display: flex; align-items: baseline; gap: 14px; margin: 0; padding: 0 4px; }
+  .line + .line { padding-inline-start: 2.2em; }
+  .line .t { flex: 1; min-width: 0; }
+  .line .n { flex: none; direction: ltr; font: 400 .6rem/1 var(--mono); color: var(--ro-mark-soft); }
+  .line b { font-weight: 400; color: var(--ro-mark); }
+  .line b.this { box-shadow: inset 0 -2px 0 var(--yellow); }     // your hand: a rule under the word
+  .foot { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 14px; flex-wrap: wrap; margin-top: .55rem; }
+  .foot .count { margin: 0; margin-inline-start: auto; }
+}
+
+// The controls that belong to the piece but sit outside its frame: the hands,
+// the deaths, the field you write in. A row of keys under the frame.
+.ro-controls {
+  display: flex; flex-wrap: wrap; align-items: stretch; gap: 0;
+  width: var(--ro-w, 100%);
+  margin: 0; padding: 0;
+  border-bottom: var(--hair) solid var(--rule);
+  font: 400 .74rem/1.4 var(--mono);
+  > .ro-controls__lbl { display: flex; align-items: center; gap: 2px; padding: 10px 14px 10px 2px; color: var(--ink-soft); margin: 0; }
+}
+.ro-key {
+  appearance: none; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  flex: 1 1 140px; min-height: 48px; padding: 8px 14px;
+  border: 0; border-left: var(--hair) solid var(--rule);
+  background: none; color: var(--ink);
+  font: 600 .9rem/1.2 var(--sans);
+  [lang="fa"] { font-family: var(--fa); font-weight: 400; margin-left: 6px; }
+  small { font: 400 .68rem/1.3 var(--mono); opacity: .75; }
+  &:hover { background: var(--hand); color: var(--on-hand); }
+  &[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  &:focus-visible { outline: 2px solid var(--hand); outline-offset: -2px; }
+}
+
+// The wall label: prose in the site's own face, as a museum label is set in a
+// Franklin Gothic. Serif stays for other people's words (the poem's English,
+// Marx's sentences, the notes), as blockquotes are set across the site.
+.ro-label {
+  max-width: var(--measure);
+  margin-top: 2.2rem;
+  .text { font: 400 1.05rem/1.62 var(--sans); }
+  .text p { margin: 0 0 .9em; }
+  .colophon {
+    margin: 2rem 0 0; padding-top: .8rem;
+    border-top: var(--stroke) solid var(--ink);
+    font: 400 .78rem/1.6 var(--mono); color: var(--ink-soft);
+    a { color: var(--ink); }
+  }
+  .colophon + .colophon { margin-top: .5rem; padding-top: 0; border-top: 0; }
+}
+
+// The key strip: who has the keys, and what they do now. Fixed at the foot.
+.ro-keys {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px;
+  padding: 8px var(--gutter);
+  background: var(--paper); border-top: var(--stroke) solid var(--ink);
+  font: 400 .7rem/1.5 var(--mono); color: var(--ink-soft);
+  margin: 0;
+  .fp-k { margin-right: .3em; color: var(--ink); }
+  &__who {
+    padding: 2px 8px; border: var(--hair) solid var(--rule-strong); border-radius: 4px;
+    color: var(--ink); font-weight: 500;
+  }
+  &.is-piece &__who { background: var(--yellow); color: var(--cobalt); border-color: var(--yellow); }
+  span { white-space: nowrap; }
+}
+
+// Help, while the piece has the keys: the site's dialog, filled by piece.js.
+
+// No keyboard, no key talk: phones and tablets get the thumb bar instead.
+@media (hover: none) and (pointer: coarse) {
+  .ro-owner, .ro-keys { display: none; }
+  .ro-piece { padding-bottom: 0; }
+}
+@media (max-width: 720px) {
+  .ro-keys { display: none; }
+  .ro-piece { padding-bottom: 64px; }          // the thumb bar
+  .ro-plate .fp-key { justify-content: center; padding: 0; }
+  .ro-stage { --ro-w: 100%; }
+  .ro-hint { width: 92%; white-space: normal; text-align: center; font-size: .6rem; }
+  .ro-owner { display: none; }
+  .ro-key { flex-basis: 100%; border-left: 0; border-top: var(--hair) solid var(--rule); }
+  .ro-controls > .ro-controls__lbl { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ro-panel, .ro-hint, .ro-frame { transition: none; }
+}
+
+// ── What the Birds Leave: the book, in 29 sections (book.js) ──
+// The whole poem as numbers, under the flock: a strip of the sections read
+// right to left, the manuscript map, and the chosen section against the book.
+.bk {
+  margin: 34px 0 10px;
+  color: var(--ink);
+  --cobalt: #2B3BD1; --yellow: #F2C500;
+}
+.bk-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  border-top: var(--stroke) solid var(--ink); padding-top: 8px; margin-bottom: 6px;
+  h2 { margin: 0; font: 800 1.2rem/1.1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  p { margin: 0; }
+}
+.bk-strip { display: block; width: 100%; overflow: visible; }
+.bk-bar { cursor: pointer; }
+.bk-bar__box { fill: none; stroke: var(--ink); stroke-width: .8; opacity: .55; }
+.bk-bar__fa { fill: var(--ink); opacity: .22; }
+.bk-bar__n { font: 400 9.5px var(--mono); fill: var(--ink); opacity: .6; text-anchor: middle; }
+.bk-bar.is-on .bk-bar__box { fill: var(--ink); opacity: 1; }
+.bk-bar.is-on .bk-bar__fa { fill: var(--paper); opacity: .35; }
+.bk-bar.is-on .bk-bar__n { opacity: 1; font-weight: 500; }
+.bk-bar:hover .bk-bar__box, .bk-bar.fp-at .bk-bar__box { fill: var(--hand); stroke: var(--hand); opacity: 1; }
+.bk-bar:hover .bk-bar__fa, .bk-bar.fp-at .bk-bar__fa { fill: var(--on-hand); opacity: .3; }
+.bk-gold { fill: var(--yellow); stroke: var(--cobalt); stroke-width: .5; }
+.bk-valleys { fill: none; stroke: var(--ink); stroke-width: .8; opacity: .7; }
+.bk-valleys__t { font: 400 10px var(--mono); fill: var(--ink); opacity: .75; text-anchor: middle; }
+
+.bk-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 32px; margin-top: 18px; align-items: start; }
+.bk-map {
+  border: var(--hair) solid var(--rule); border-radius: var(--radius); padding: 8px;
+  canvas { display: block; width: 340px; height: auto; color: var(--ink); }
+  &__cap { display: flex; justify-content: space-between; margin: 6px 0 0; }
+}
+.bk-readout {
+  > p { margin: 0; }
+  .bk-fa { font: 400 1.75rem/1.5 var(--fa-serif); text-align: left; margin-top: 4px; }
+  .bk-gl { font: 800 1.35rem/1.15 var(--sans); letter-spacing: -.02em; text-transform: lowercase; margin: 2px 0 14px; }
+}
+.bk-spec {
+  width: 100%; border-collapse: collapse; font: 400 .74rem/1.4 var(--mono); margin: 0 0 6px;
+  td { border: 0; border-top: var(--hair) solid var(--rule); padding: 6px 0; vertical-align: middle; }
+  td:first-child { color: var(--ink-soft); width: 36%; }
+  td.n { text-align: right; width: 16%; padding-right: 14px; }
+  [lang="fa"] { font-family: var(--fa); }
+}
+.bk-bk {
+  position: relative; height: 6px; background: var(--faint);
+  i { position: absolute; top: 0; bottom: 0; left: 0; background: var(--ink); }
+  u { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--ink); opacity: .6; }
+}
+.bk-goldkey { display: inline-block; width: 7px; height: 7px; margin: 0 6px 1px 1px; background: var(--yellow); outline: 1px solid var(--cobalt); transform: rotate(45deg); }
+.bk-note { margin: 12px 0 0 !important; padding-left: 12px; border-left: 3px solid var(--yellow); font: italic 1rem/1.5 var(--serif); max-width: 46ch; }
+
+@media (max-width: 760px) {
+  .bk-grid { grid-template-columns: 1fr; }
+  .bk-map canvas { width: 100%; }
+}
+
+// ── Layers, in every piece ──────────────────────────────────
+// Taken apart (l), each plane carries a label at its near corner: a key
+// (1, 2, 3 …) and a name. Point at it, press its number or click it, and
+// the piece goes back together with that layer alone; a chip in the corner
+// says which, and esc (or ×) brings the rest back.
+.layer-label {
+  appearance: none; border: 0; background: none;
+  position: absolute; left: 0; top: 0; z-index: 2;
+  display: grid; grid-template-columns: auto auto; column-gap: .5em; align-items: baseline; justify-content: start;
+  cursor: pointer; text-align: left; padding: .25rem .45rem .25rem .3rem; margin: -.25rem -.45rem -.25rem -.3rem; border-radius: 4px;
+  font: 500 .64rem/1.3 var(--mono);
+  color: var(--ro-mark); white-space: nowrap; pointer-events: none; opacity: 0;
+  .fp-k { grid-row: 1 / span 3; margin: 0; align-self: start; border-color: var(--ro-mark-rule); color: inherit; }
+  b { display: block; font-weight: 500; }
+  b::after { content: " →"; opacity: 0; transition: opacity .2s; }
+  small { display: block; grid-column: 2; font-size: .92em; opacity: .7; }
+  [lang="fa"] { font-family: var(--fa); font-size: 1.25em; }
+  &:hover, &:focus-visible, &.is-peek {
+    background: var(--yellow); color: var(--cobalt); outline: none;
+    .fp-k { border-color: currentColor; }
+    b::after, small { opacity: 1; }
+  }
+}
+body.exploded .layer-label { pointer-events: auto; }
+body.exploded .ro-hint { opacity: 0; }
+
+.solo {
+  position: absolute; left: 10px; top: 42px; z-index: 3; margin: 0;
+  display: flex; align-items: center; gap: .6rem;
+  padding: 4px 4px 4px 6px;
+  border: 1px solid var(--ro-mark); border-radius: 4px;
+  background: var(--ro-veil);
+  font: 500 .66rem/1.3 var(--mono); color: var(--ro-mark);
+  &[hidden] { display: none; }
+  .fp-k { margin-right: .5em; border-color: var(--ro-mark-rule); }
+  small { margin-left: .6em; color: var(--ro-mark-soft); }
+  small [lang="fa"] { font-family: var(--fa); font-size: 1.25em; }
+  button {
+    appearance: none; border: 1px solid var(--ro-mark-rule); background: none; cursor: pointer;
+    min-width: 24px; height: 22px; padding: 0 6px; border-radius: 3px;
+    color: var(--ro-mark); font: 500 .74rem/1 var(--mono);
+    &:hover, &:focus-visible { background: var(--yellow); color: var(--cobalt); border-color: var(--yellow); outline: none; }
+  }
+}
+@media (max-width: 720px) {
+  .solo { top: 10px; }
+  .layer-label { font-size: .52rem; }
+}

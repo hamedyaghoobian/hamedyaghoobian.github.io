@@ -6,20 +6,104 @@
 <title>What Capital Leaves · Readings, Otherwise</title>
 <meta name="description" content="The three volumes of Marx's Capital with every word removed. Only the punctuation remains.">
 <script>
-  // light or dark, shared by the painting and the page; dark unless the visitor chose light
-  try { document.documentElement.dataset.theme = localStorage.getItem("what-capital-leaves:theme") === "light" ? "light" : "dark"; }
-  catch (_) { document.documentElement.dataset.theme = "dark"; }
+  // First paint in the site's theme: the knob's last position (light · dark · auto), as the site keeps it.
+  (function () {
+    var s; try { s = localStorage.getItem("theme"); } catch (e) {}
+    var m = (s === "light" || s === "dark") ? s : "system";
+    var d = m === "dark" || (m === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.setAttribute("data-theme", d ? "dark" : "light");
+  })();
+  window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Kufi+Arabic:wght@400;800&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css?v=fp6">
 <link rel="stylesheet" href="style.css?v=3">
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<style>
+  /* The reading page in the site's inks. style.css is the page's own and is left as it was;
+     these lines put it on the faceplate: cream and cobalt (deep and cream in the dark),
+     every mark in ink, the minor ones (hyphen, apostrophe, bracket) soft, and the mark
+     under your pointer in your hand, yellow. Only the site's tokens. */
+  :root, :root[data-theme="light"] {
+    --bg: var(--cream); --ink: var(--cobalt); --muted: var(--ink-soft);
+    --rule: rgba(43, 59, 209, .24); --faint: rgba(43, 59, 209, .07);
+    --panel: color-mix(in srgb, var(--cream) 94%, transparent);
+  }
+  :root[data-theme="dark"] {
+    --bg: var(--cobalt-deep); --ink: var(--cream); --muted: var(--ink-soft);
+    --rule: rgba(242, 235, 218, .24); --faint: rgba(242, 235, 218, .07);
+    --panel: color-mix(in srgb, var(--cobalt-deep) 94%, transparent);
+  }
+  :root, :root[data-theme] {
+    --period: var(--ink); --comma: var(--ink); --semi: var(--ink); --colon: var(--ink); --dash: var(--ink);
+    --quote: var(--ink); --paren: var(--ink); --query: var(--ink); --bang: var(--ink); --ellip: var(--ink);
+    --hyphen: var(--muted); --apos: var(--muted); --bracket: var(--muted);
+  }
+  .ro-read .theme-toggle { display: none; }     /* app.js still labels it; the knob above is the switch */
+  body.ro-read { display: block; font-family: var(--serif); background: var(--bg); color: var(--ink); }
+  .ro-read .intro { padding-top: 10vh; }
+  .ro-read .kicker, .ro-read .vol-head, .ro-read .chapter > h2, .ro-read #rail .rv-label, .ro-read #scrub,
+  .ro-read #legend .n, .ro-read #panel .where { font-family: var(--mono); letter-spacing: .02em; text-transform: none; }
+  .ro-read h1 { font: 800 clamp(2.4rem, 7vw, 4.4rem)/.92 var(--sans); letter-spacing: -.04em; text-transform: lowercase; color: var(--ink); }
+  .ro-read .vol-head b { font: 400 clamp(4rem, 14vw, 9rem)/1 var(--serif); opacity: 1; }
+  .ro-read .lede strong { color: var(--ink); font-weight: 600; }
+  .ro-read .m-r { font-weight: 400; }
+  .ro-read .m-x, .ro-read .m-e { text-shadow: none; }
+  .ro-read .marks i.here, .ro-read #panel .sentence b.here { background: var(--yellow); color: var(--cobalt); text-shadow: none; border-radius: 2px; }
+  .ro-read #rail a { background: var(--rule); }
+  .ro-read #rail a:hover, .ro-read #rail a.now { background: var(--ink); }
+  .ro-read #legend button:focus-visible { outline: 2px solid var(--yellow); }
+  .ro-read #legend:hover, .ro-read #legend:focus-within { border-radius: 4px; }
+  .ro-read .chapter.fp-at { box-shadow: -14px 0 0 -10px var(--yellow); }
+  .ro-read .colophon { font: 400 .78rem/1.6 var(--mono); }
+  @media (max-width: 720px) {
+    .ro-read #legend { bottom: 54px; }
+    .ro-read #panel { bottom: calc(54px + 2.6rem); }
+    .ro-read .colophon { padding-bottom: 120px; }
+  }
+</style>
+<script src="/assets/js/faceplate.js?v=fp2" defer></script>
 </head>
-<body class="hide-h hide-a">
-<button id="theme" class="theme-toggle" type="button">light</button>
+<body class="fp fp-depth-2 fp-sec-6 ro-read hide-h hide-a">
+<a class="fp-skip" href="#book">skip to the marks</a>
+<button id="theme" class="theme-toggle" type="button" hidden>light</button>
+
+<header class="fp-plate ro-plate" role="banner">
+  <div class="fp-plate__row">
+    <nav class="fp-strip" aria-label="Sections">
+      <a class="fp-key" href="/" data-key="0"><span class="fp-key__n">0</span><span class="fp-key__t">home</span></a>
+      <a class="fp-key" href="/pedagogy/" data-key="1"><span class="fp-key__n">1</span><span class="fp-key__t">teaching</span></a>
+      <a class="fp-key" href="/student-research/" data-key="2"><span class="fp-key__n">2</span><span class="fp-key__t">research</span></a>
+      <a class="fp-key" href="/publications/" data-key="3"><span class="fp-key__n">3</span><span class="fp-key__t">publications</span></a>
+      <a class="fp-key" href="/news/" data-key="4"><span class="fp-key__n">4</span><span class="fp-key__t">news</span></a>
+      <a class="fp-key" href="/tools/" data-key="5"><span class="fp-key__n">5</span><span class="fp-key__t">tools</span></a>
+      <a class="fp-key is-down" href="/readings-otherwise/" data-key="6" aria-current="true"><span class="fp-key__n">6</span><span class="fp-key__t">readings</span></a>
+      <a class="fp-key" href="/poems/" data-key="7"><span class="fp-key__n">7</span><span class="fp-key__t">poems</span></a>
+    </nav>
+    <div class="fp-knob" role="group" aria-label="Theme">
+      <span class="fp-knob__marks">
+        <button type="button" data-theme-set="light" title="Light">L</button>
+        <button type="button" data-theme-set="dark" title="Dark">D</button>
+        <button type="button" data-theme-set="system" title="Auto: follow the system">A</button>
+      </span>
+      <button type="button" class="fp-knob__dial" aria-label="Turn the theme knob (\)" title="Theme · \"></button>
+    </div>
+  </div>
+  <div class="fp-crumb">
+    <p class="fp-crumb__path">
+      <a href="/">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../../"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><a href="../"><span class="fp-crumb__n">01</span> what capital leaves</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page"><span class="fp-crumb__n"></span> read it as a page</span>
+    </p>
+    <p class="fp-crumb__keys">
+      <a class="fp-crumb__up" rel="up" href="../"><span class="fp-k">esc</span>up</a>
+      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">?</span>keys</button>
+    </p>
+  </div>
+</header>
 
 <header class="intro">
-  <p class="kicker"><a href="../../">Readings, Otherwise</a> <span>No. 1</span> <span>· <a href="../">see it as a painting</a></span></p>
+  <p class="kicker"><span>No. 1</span> <span>· <a href="../">see it as a painting</a></span></p>
   <h1>What Capital Leaves</h1>
   <p class="lede">Take the three volumes of Marx's <em>Capital</em> and remove every word. What remains is <strong id="total">…</strong> marks: commas, full stops, the parentheses where Engels steps in to explain, the quotation marks of factory inspectors and political economists. The argument is gone. Its breathing is still here.</p>
   <p class="how">Scroll to read. Hover or tap any mark to bring back the sentence it came from. Use the legend to hide a mark, or double-click it to see only that mark. Drag along the bar on the right to race through the book.</p>
@@ -42,6 +126,27 @@
   <p>The code and data are open: <a href="https://github.com/hamedyaghoobian/what-capital-leaves">github.com/hamedyaghoobian/what-capital-leaves</a></p>
 </footer>
 
+<nav class="fp-thumb" aria-label="Move">
+  <span></span>
+  <a href="../" rel="up">up · the painting</a>
+  <span></span>
+</nav>
+
+<p class="ro-keys" id="ro-keys" aria-hidden="true"></p>
+
+<div class="fp-help" id="fp-help" role="dialog" aria-modal="true" aria-labelledby="fp-help-t" hidden>
+  <div class="fp-help__box">
+    <div class="fp-help__head"><h2 id="fp-help-t">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
+    <div class="fp-help__body"></div>
+    <p class="fp-help__note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
+  </div>
+</div>
+
+<script src="../../piece.js?v=3"></script>
+<script>
+  // j / k step through the chapters (the site's keys, /assets/js/faceplate.js)
+  document.addEventListener("DOMContentLoaded", () => { if (window.FP) FP.partsSelector = ".chapter"; });
+</script>
 <script src="app.js?v=3"></script>
 </body>
 </html>

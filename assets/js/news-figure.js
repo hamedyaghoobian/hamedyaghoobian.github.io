@@ -1,228 +1,220 @@
-// News (news.md): every item on the News page, June 2022 to July 2026, as
-// a desk calendar — months run along the plate, one row per year with 2022
-// at the back and 2026 nearest. Each item stands in its month's cell as a
-// thing of its kind: a lectern for a talk, a table with its chairs for a
-// panel organized, a stack of sheets for a paper accepted, a folded
-// newspaper for press. The back rows hold lecterns and a table; from
-// autumn 2024 the paper stacks arrive.
+// News (news.md): a four-track sequencer over the log. Months run left to
+// right on one line, January of the first year to December of this one;
+// each kind has its own track (talks, panels, papers, press), so the track
+// says the kind and the mark only has to say when. An item is a step at
+// the month it is listed under. Where its text puts the event in a later
+// month, the step is held: a line runs on to a hollow step at the month
+// it happened, a note with its length. A thin red line is now.
 //
-// Data: news.md itself. Each item sits at the month it is listed under on
-// the page (the bold date), which for some is when it was announced, not
-// when it happened — the caption gives the event date where the page does.
-// NEWS below repeats the page's bullets: add a bullet, add a line here
-// (and a year row, START…END, when a new year begins).
+// Everything is read from the log on the page (data-kind, data-listed,
+// data-held), so the figure and the counts can't drift from the list.
+// The log stays the primary list: j / k step through it, and pointing at
+// either side lights both. t p a n solo one track; x brings them all back.
 
 (function () {
-  const root = document.getElementById('news-figure');
-  if (!root || !window.LineFigure) return;
-  const { iso, pts, el, svg: makeSvg, box, edgeLabel, interact } = window.LineFigure;
+  const log = document.getElementById('nw-log');
+  const cal = document.getElementById('nw-cal');
+  const svg = document.getElementById('nw-svg');
+  const seg = document.getElementById('nw-seg');
+  const out = document.getElementById('nw-readout');
+  if (!log || !cal || !svg || !seg) return;
 
-  // Kind → [its word in the caption, one in the tally, several].
+  const NS = 'http://www.w3.org/2000/svg';
   const KINDS = {
-    talk: ['talk', 'talk', 'talks'],
-    panel: ['panel organized', 'panel', 'panels'],
-    paper: ['paper accepted', 'paper', 'papers'],
-    press: ['press', 'press mention', 'press mentions']
+    talk:  { key: 't', one: 'talk',  many: 'talks' },
+    panel: { key: 'p', one: 'panel', many: 'panels' },
+    paper: { key: 'a', one: 'paper', many: 'papers' },
+    press: { key: 'n', one: 'press', many: 'press' }
+  };
+  const ORDER = Object.keys(KINDS);
+  const MON = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  const ym = s => { const [y, m] = (s || '').split('-').map(Number); return y && m ? { y, m } : null; };
+  const say = d => `${MON[d.m - 1]} ${d.y}`;
+  const gap = (a, b) => (b.y - a.y) * 12 + b.m - a.m;
+
+  const items = [...log.querySelectorAll('.nw-item')].map((li, i) => ({
+    li, i,
+    kind: li.dataset.kind,
+    at: ym(li.dataset.listed),
+    held: ym(li.dataset.held),
+    text: (li.querySelector('.nw-t') || li).textContent.trim()
+  })).filter(it => KINDS[it.kind] && it.at);
+  if (!items.length) return;
+
+  const counts = {};
+  items.forEach(it => { counts[it.kind] = (counts[it.kind] || 0) + 1; });
+  const lanes = ORDER.filter(k => counts[k]);
+
+  // ── the plate ──
+  const now = new Date();
+  const NOW = { y: now.getFullYear(), m: now.getMonth() + 1 };
+  const years = items.map(it => it.at.y).concat(items.filter(it => it.held).map(it => it.held.y), NOW.y);
+  const Y0 = Math.min(...years), Y1 = Math.max(...years);
+  const N = (Y1 - Y0 + 1) * 12;
+  const R = 8, TOP = 22, LH = 30;
+  let W, L, CW, H, BOT, narrow;
+  const col = d => (d.y - Y0) * 12 + d.m - 1;        // 0-based month index
+  const x0 = d => L + col(d) * CW;                    // left edge of a month
+  const ly = k => TOP + lanes.indexOf(k) * LH;        // top of a track
+
+  const make = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
   };
 
-  // [year, month, kind, what the page says, in short: titles cut at the
-  // colon, the page has them in full]. Oldest first, so the
-  // arrow keys walk forward in time. An optional fifth value nudges an item
-  // across its row's depth (dv, world units, + is toward the viewer): the
-  // two lecterns a month apart in early 2025 stand back and front so they
-  // don't merge on screen (checked with the skill's iso_overlap.py).
-  const NEWS = [
-    [2022, 6, 'talk', '“Phenomenology of Generative/Predictive Word Processing” · Oxford Connected Life 2022 Conference'],
-    [2022, 8, 'talk', 'AI and the Democratization of Art · Dana Forum, October 17, 2022'],
-    [2023, 3, 'panel', '“Configuring the (w)hole” · 4S 2023, Honolulu'],
-    [2023, 6, 'talk', '“Plasticity of Data and the Problematics of Containment” · 4S 2023, Honolulu'],
-    [2024, 9, 'paper', '“Data-Body Machine” · Journal of Somatechnics'],
-    [2024, 11, 'paper', '“The Writer In-between” · Journal of Human-Technology Relations'],
-    [2024, 12, 'panel', '“Perforating echos,” co-organized with Rachel Horst · 4S 2025, Seattle'],
-    [2025, 2, 'talk', '“From Java to Python,” with Proyash Podder · SIGCSE 2025 affiliated event, Pittsburgh', -2],
-    [2025, 3, 'talk', '“The Recursive Enactment of AI” · 4S 2025, Seattle, September 2025', 3],
-    [2025, 11, 'paper', '“MASFIN,” with Sebastian Montalvo (Class of ’28) · NeurIPS 2025, Generative AI in Finance Workshop'],
-    [2026, 4, 'paper', '“TimeCapsule,” with Hayk Grigorian (Class of ’26) · ACM Creativity & Cognition 2026'],
-    [2026, 7, 'press', 'Quoted in “Are LLMs Stuck in Time?” by Samuel Greengard · Communications of the ACM']
-  ];
-  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'];
-
-  const START = 2022, END = 2026;      // one row per year
-  const CU = 10;                       // a month's width along u
-  const CV = 14;                       // a year row's depth along v
-  const T = 4;                         // plate thickness
-  const LIFT = 3;                      // how far a lit thing rises
-  const L = 12 * CU, D = (END - START + 1) * CV;
-
-  const items = NEWS.map(([year, month, kind, text, dv = 0]) => ({
-    year, month, kind, text,
-    r: year - START,
-    u: (month - 0.5) * CU,
-    v: (year - START + 0.5) * CV + dv
-  }));
-  const count = k => items.filter(it => it.kind === k).length;
-  const tally = Object.keys(KINDS).map(k => `${count(k)} ${KINDS[k][count(k) === 1 ? 1 : 2]}`).join(', ');
-
-  const svg = makeSvg(root, '-16 -66 186 118',
-    `A desk calendar of the ${items.length} items on this page, June 2022 to July 2026, each standing in its month as a lectern for a talk, a table for a panel, a stack of sheets for an accepted paper or a newspaper for press. The 2022 and 2023 rows hold talks and an organized panel; 2024 is quiet until autumn, when two accepted papers and a second panel arrive; 2025 brings two talks and a paper, and 2026 a paper and a press mention.`);
-
-  box(svg, 'lf-solid').set(0, 0, -T, L, D, 0);
-
-  // The calendar's grid, faint: year rows dashed, month columns dotted.
-  for (let r = 1; r <= END - START; r++) {
-    const [a, b] = [iso(0, r * CV), iso(L, r * CV)];
-    el('line', { class: 'lf-line lf-faint', x1: a[0], y1: a[1], x2: b[0], y2: b[1], 'stroke-dasharray': '1.5 2.5' }, svg);
-  }
-  for (let m = 1; m < 12; m++) {
-    const [a, b] = [iso(m * CU, 0), iso(m * CU, D)];
-    el('line', { class: 'lf-line lf-faint', x1: a[0], y1: a[1], x2: b[0], y2: b[1], 'stroke-dasharray': '0.4 3' }, svg);
-  }
-
-  // Each item's cell, lit with it.
-  const cells = items.map(it => {
-    const u0 = (it.month - 1) * CU, v0 = it.r * CV;
-    return el('polygon', {
-      class: 'lf-band',
-      points: pts([iso(u0, v0), iso(u0 + CU, v0), iso(u0 + CU, v0 + CV), iso(u0, v0 + CV)])
-    }, svg);
+  const labels = {};
+  // Drawn at the width it is shown, so its type is the page's own size.
+  function draw() {
+  W = Math.max(300, Math.round(cal.clientWidth || 640));
+  narrow = W < 560;                 // a phone: no key letters, a slimmer label
+  L = narrow ? 62 : 84;
+  CW = (W - L - R) / N;
+  BOT = TOP + lanes.length * LH;
+  H = BOT + 18;
+  svg.textContent = '';
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const grid = make('g', { class: 'nw-grid', 'aria-hidden': 'true' }, svg);
+  // tracks: a name and its count on the left, a hairline under each
+  lanes.forEach((k, n) => {
+    const y = ly(k);
+    if (n % 2 === 0) make('rect', { x: L, y, width: W - L - R, height: LH, class: 'nw-lane' }, grid);
+    const t = make('text', { x: 0, y: y + LH / 2 + 3.5, class: 'nw-tr' }, grid);
+    if (!narrow) make('tspan', { class: 'nw-tr__k' }, t).textContent = KINDS[k].key + ' ';
+    make('tspan', {}, t).textContent = counts[k] === 1 ? KINDS[k].one : KINDS[k].many;
+    make('tspan', { class: 'nw-tr__c', x: L - 10, 'text-anchor': 'end' }, t).textContent = counts[k];
+    labels[k] = t;
   });
-
-  // Years just before each row; month initials along the near edge.
-  const yearLabels = [];
-  for (let y = START; y <= END; y++) {
-    const [x, yy] = iso(-5, (y - START + 0.5) * CV);
-    const t = el('text', { class: 'lf-text lf-text--small', x: x.toFixed(2), y: (yy + 2.5).toFixed(2), 'text-anchor': 'end' }, svg);
+  make('line', { x1: L, x2: W - R, y1: BOT, y2: BOT, class: 'nw-axis' }, grid);
+  // years: a full rule at each January, the year and its count above
+  for (let y = Y0; y <= Y1; y++) {
+    const x = x0({ y, m: 1 });
+    make('line', { x1: x, x2: x, y1: TOP - 14, y2: BOT + 5, class: 'nw-yrule' }, grid);
+    const n = items.filter(it => it.at.y === y).length;
+    const t = make('text', { x: x + 4, y: TOP - 6, class: 'nw-yr' }, grid);
     t.textContent = y;
-    yearLabels.push(t);
+    if (!narrow) make('tspan', { class: 'nw-yr__c' }, t).textContent = n ? ` · ${n}` : '';
+    // month ticks under the axis, quarters a little longer
+    for (let m = 1; m <= 12; m++) {
+      const mx = x0({ y, m }) + CW / 2;
+      make('line', { x1: mx, x2: mx, y1: BOT, y2: BOT + (m % 3 === 1 ? 4 : 2), class: 'nw-mt' }, grid);
+    }
   }
-  const monthLabels = MONTHS.map((name, m) =>
-    edgeLabel(svg, name[0], (m + 0.5) * CU - 1.2, D, -T - 8, 'lf-text lf-text--small'));
-
-  // A paper-filled face through the given [u, v, h] corners, and a line.
-  const face = (g, cls) => {
-    const p = el('polygon', { class: cls }, g);
-    return corners => p.setAttribute('points', pts(corners.map(c => iso(...c))));
-  };
-  const line = (g, cls) => {
-    const l = el('line', { class: cls }, g);
-    return (a, b) => {
-      const [p, q] = [iso(...a), iso(...b)];
-      l.setAttribute('x1', p[0]); l.setAttribute('y1', p[1]);
-      l.setAttribute('x2', q[0]); l.setAttribute('y2', q[1]);
-    };
-  };
-
-  // Objects, each built around its cell's middle (u, v) and redrawn at a
-  // lift l. Parts are created farthest first so nearer ones hide them.
-  // A cell is 10 × 14; every object keeps inside about 8 × 10.
-  const BUILD = {
-    // A lectern facing the viewer: plinth, post, a desk sloping down
-    // toward the audience, a sheet of notes on it.
-    talk(g) {
-      const plinth = box(g, 'lf-solid'), post = box(g, 'lf-solid');
-      const end = face(g, 'lf-solid'), front = face(g, 'lf-solid'), top = face(g, 'lf-solid');
-      const notes = face(g, 'lf-solid lf-sheet');
-      return (u, v, l) => {
-        plinth.set(u - 2.4, v - 3, l, u + 2.4, v + 3, l + 1.2);
-        post.set(u - 1.3, v - 1.6, l + 1.2, u + 1.3, v + 1.6, l + 11);
-        const u0 = u - 2.8, u1 = u + 2.8, v0 = v - 3.4, v1 = v + 3.4;
-        const h0 = l + 11, hb = l + 14.5, hf = l + 12;      // desk underside, back, front
-        end([[u0, v0, h0], [u0, v1, h0], [u0, v1, hf], [u0, v0, hb]]);
-        front([[u0, v1, h0], [u1, v1, h0], [u1, v1, hf], [u0, v1, hf]]);
-        top([[u0, v0, hb], [u1, v0, hb], [u1, v1, hf], [u0, v1, hf]]);
-        const on = (du, t) => [u + du, v0 + (v1 - v0) * t, hb + (hf - hb) * t + 0.15];
-        notes([on(-1.8, 0.15), on(1.8, 0.15), on(1.8, 0.8), on(-1.8, 0.8)]);
-      };
-    },
-    // A panel table along the month, three chairs behind it.
-    panel(g) {
-      const seats = [2.6, 0, -2.6];                     // farthest (larger u) first
-      const chairs = seats.map(() => ({ back: box(g, 'lf-solid'), seat: box(g, 'lf-solid') }));
-      const legs = [box(g, 'lf-solid'), box(g, 'lf-solid')];
-      const top = box(g, 'lf-solid');
-      return (u, v, l) => {
-        seats.forEach((du, i) => {
-          chairs[i].back.set(u + du - 1, v - 4.6, l + 3, u + du + 1, v - 4, l + 7);
-          chairs[i].seat.set(u + du - 1, v - 4.6, l, u + du + 1, v - 2.6, l + 3);
-        });
-        legs[0].set(u + 3.2, v - 0.8, l, u + 3.8, v + 2.8, l + 5.5);
-        legs[1].set(u - 3.8, v - 0.8, l, u - 3.2, v + 2.8, l + 5.5);
-        top.set(u - 4.2, v - 1.4, l + 5.5, u + 4.2, v + 3.4, l + 6.5);
-      };
-    },
-    // A folded newspaper standing like a tent, its fold along u; a
-    // masthead and lines of type on the side facing the viewer.
-    press(g) {
-      const far = face(g, 'lf-solid'), near = face(g, 'lf-solid');
-      const mast = line(g, 'lf-line lf-strong');
-      const cols = [0, 1, 2, 3].map(() => line(g, 'lf-line lf-faint'));
-      return (u, v, l) => {
-        const u0 = u - 3.8, u1 = u + 3.8, H = 7, W = 3.4;
-        far([[u0, v, l + H], [u1, v, l + H], [u1, v - W, l], [u0, v - W, l]]);
-        near([[u0, v, l + H], [u1, v, l + H], [u1, v + W, l], [u0, v + W, l]]);
-        const at = (t, du) => [u + du, v + W * t, l + H * (1 - t)];
-        mast(at(0.18, -3), at(0.18, 3));
-        cols.forEach((c, i) => c(at(0.4 + i * 0.14, -3), at(0.4 + i * 0.14, i === 3 ? 0.5 : 3)));
-      };
-    },
-    // A small stack of sheets, a little askew; a title and lines of text
-    // on the top one.
-    paper(g) {
-      const turns = [0.14, -0.1, 0.03];                 // each sheet's turn, radians
-      const sheets = turns.map(() => face(g, 'lf-solid lf-sheet'));
-      const title = line(g, 'lf-line');
-      const text = [0, 1, 2, 3].map(() => line(g, 'lf-line lf-faint'));
-      return (u, v, l) => {
-        const turn = (a, du, dv, h) => [u + du * Math.cos(a) - dv * Math.sin(a), v + du * Math.sin(a) + dv * Math.cos(a), h];
-        turns.forEach((a, i) => {
-          const h = l + 0.6 + i * 0.8;
-          sheets[i]([[-2.8, -3.8], [2.8, -3.8], [2.8, 3.8], [-2.8, 3.8]].map(([du, dv]) => turn(a, du, dv, h)));
-        });
-        const top = (du, dv) => turn(turns[2], du, dv, l + 0.6 + 2 * 0.8 + 0.05);
-        title(top(-1.8, -2.6), top(1.8, -2.6));
-        text.forEach((t, i) => t(top(-1.8, -1 + i * 1.2), top(i === 3 ? 0 : 1.8, -1 + i * 1.2)));
-      };
-    }
-  };
-
-  // Farther = larger u, smaller v: build in that order.
-  const groups = [];
-  items.map((_, i) => i)
-    .sort((a, b) => (items[a].v - items[a].u) - (items[b].v - items[b].u))
-    .forEach(i => {
-      const g = el('g', {}, svg);
-      groups[i] = { g, set: BUILD[items[i].kind](g) };
-    });
-
-  // Picking: the object whose middle is nearest on screen, within reach.
-  const MID = { talk: 7, panel: 3.5, press: 3.5, paper: 1 };
-  const centres = items.map(it => iso(it.u, it.v, MID[it.kind]));
-
-  const when = it => `${MONTHS[it.month - 1]} ${it.year}`;
-
-  interact({
-    root, svg,
-    count: items.length,
-    rest: `${when(items[0])} – ${when(items[items.length - 1])} · ${tally}`,
-    describe: i => `${when(items[i])} · ${KINDS[items[i].kind][0]} · ${items[i].text}`,
-    pick: (x, y) => {
-      let best = -1, dist = 11;
-      centres.forEach(([cx, cy], i) => {
-        const d = Math.hypot(cx - x, cy - y);
-        if (d < dist) { best = i; dist = d; }
-      });
-      return best;
-    },
-    draw: (glow, active) => {
-      const it = items[active];
-      items.forEach((item, i) => {
-        groups[i].set(item.u, item.v, LIFT * glow[i]);
-        groups[i].g.classList.toggle('is-lit', i === active);
-        cells[i].classList.toggle('is-lit', i === active);
-      });
-      yearLabels.forEach((t, r) => t.classList.toggle('is-lit', !!it && it.r === r));
-      monthLabels.forEach((t, m) => t.classList.toggle('is-lit', !!it && it.month === m + 1));
-    }
+  const xe = W - R;
+  make('line', { x1: xe, x2: xe, y1: TOP - 14, y2: BOT + 5, class: 'nw-yrule' }, grid);
+  // what each month's quarter ticks mean, once, under the first year
+  ['jan', 'apr', 'jul', 'oct'].forEach((s, q) => {
+    make('text', { x: x0({ y: Y0, m: q * 3 + 1 }) + CW / 2, y: BOT + 14, 'text-anchor': 'middle', class: 'nw-mo' }, grid).textContent = s[0];
   });
+
+  // now: a thin red line through every track, at today's place in its month
+  const days = new Date(NOW.y, NOW.m, 0).getDate();
+  const nx = x0(NOW) + CW * (now.getDate() - .5) / days;
+  const nowG = make('g', { class: 'nw-now', 'aria-hidden': 'true' }, svg);
+  make('line', { x1: nx, x2: nx, y1: TOP - 14, y2: BOT + 6, class: 'nw-now__l' }, nowG);
+  make('text', { x: nx, y: BOT + 15, 'text-anchor': 'middle', class: 'nw-now__t' }, nowG).textContent = 'now';
+
+  // steps
+  const marks = make('g', { class: 'nw-marks' }, svg);
+  const SH = 12;                                     // a step's height
+  items.forEach(it => {
+    const y = ly(it.kind), cy = y + LH / 2;
+    const xa = x0(it.at), xb = it.held ? x0(it.held) : xa;
+    const later = it.held ? gap(it.at, it.held) : 0;
+    const held = it.held ? `, happened ${say(it.held)}, ${later} months later` : '';
+    const a = make('a', { href: `#${it.li.id}`, class: 'nw-g', 'data-i': it.i, 'aria-label': `${KINDS[it.kind].one}, listed ${say(it.at)}${held}` }, marks);
+    // the hand's ground: the whole note, a little proud of it
+    make('rect', { x: xa - 2, y: y + 3, width: xb - xa + CW + 4, height: LH - 6, rx: 3, class: 'nw-bg' }, a);
+    if (it.held) {
+      make('line', { x1: xa + CW - 1, x2: xb + 1, y1: cy, y2: cy, class: 'nw-hold' }, a);
+      make('rect', { x: xb + 1, y: cy - SH / 2, width: CW - 2, height: SH, rx: 1.5, class: 'nw-step nw-step--held' }, a);
+    }
+    make('rect', { x: xa + 1, y: cy - SH / 2, width: CW - 2, height: SH, rx: 1.5, class: 'nw-step' }, a);
+    if (it.li.classList.contains('is-newest')) make('circle', { cx: xa + CW / 2, cy: y + 2, r: 3, class: 'nw-live' }, a);
+    it.g = a;
+  });
+  }
+
+  // ── filter: solo one track ──
+  let filt = null;
+  const buttons = {};
+  lanes.forEach(k => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = `<span class="fp-seg__k">${KINDS[k].key}</span>${counts[k] === 1 ? KINDS[k].one : KINDS[k].many}<span class="fp-seg__c">${counts[k]}</span>`;
+    b.addEventListener('click', () => setFilter(filt === k ? null : k));
+    seg.appendChild(b);
+    buttons[k] = b;
+    window.FP && FP.add({ key: KINDS[k].key, label: `${KINDS[k].many} only · ${counts[k]}`, run: () => setFilter(filt === k ? null : k) });
+  });
+  window.FP && FP.add({ key: 'x', label: 'show every kind', run: () => setFilter(null), when: () => !!filt });
+
+  function setFilter(k) {
+    filt = k;
+    Object.entries(buttons).forEach(([kk, b]) => b.setAttribute('aria-pressed', String(kk === k)));
+    Object.entries(labels).forEach(([kk, t]) => t.classList.toggle('is-dim', !!k && kk !== k));
+    items.forEach(it => {
+      const off = !!k && it.kind !== k;
+      it.li.hidden = off;
+      it.g.classList.toggle('is-dim', off);
+    });
+    if (at && at.li.hidden) { window.FP && FP.setAt && FP.setAt(null); at = null; }
+    light(at);
+  }
+
+  // ── one item lit on both sides ──
+  let at = null;       // where j / k or a click left us
+  let lit = null;
+  const REST = 'point at a step, or step with j / k';
+  function light(it) {
+    if (lit) { lit.li.classList.remove('is-on'); lit.g.classList.remove('is-on'); }
+    lit = it;
+    if (!it) { out.textContent = REST; return; }
+    it.li.classList.add('is-on'); it.g.classList.add('is-on');
+    out.innerHTML = '';
+    const meta = document.createElement('span');
+    meta.className = 'nw-readout__m';
+    const later = it.held ? gap(it.at, it.held) : 0;
+    meta.textContent = `${KINDS[it.kind].one} · listed ${say(it.at)}${it.held ? ` · happened ${say(it.held)}, ${later} month${later === 1 ? '' : 's'} later` : ''}`;
+    out.append(meta, document.createTextNode(it.text));
+  }
+  const byLi = li => items.find(it => it.li === li);
+  const byG = g => items.find(it => it.i === +g.dataset.i);
+
+  log.addEventListener('pointerover', e => { const li = e.target.closest('.nw-item'); if (li) light(byLi(li)); });
+  log.addEventListener('pointerleave', () => light(at));
+  svg.addEventListener('pointerover', e => { const g = e.target.closest('.nw-g'); light(g ? byG(g) : at); });
+  svg.addEventListener('pointerleave', () => light(at));
+  svg.addEventListener('focusin', e => { const g = e.target.closest('.nw-g'); if (g) light(byG(g)); });
+  svg.addEventListener('focusout', () => light(at));
+  // A step takes you to its line in the log, and j / k carry on from there.
+  svg.addEventListener('click', e => {
+    const g = e.target.closest('.nw-g'); if (!g) return;
+    const it = byG(g);
+    if (window.FP && FP.setAt) { e.preventDefault(); FP.setAt(it.li); }
+  });
+  document.addEventListener('fp-at', e => {
+    const it = e.detail ? byLi(e.detail) : null;
+    at = it || null;
+    light(at);
+  });
+
+  // The log is the keyboard's list (j / k light the figure from it), so
+  // the steps stay out of the tab order rather than doubling every stop.
+  function settle() {
+    items.forEach(it => it.g.setAttribute('tabindex', '-1'));
+    if (filt) setFilter(filt); else light(at);
+  }
+  cal.hidden = false;
+  seg.hidden = false;
+  draw(); settle();
+  let rw = cal.clientWidth;
+  new ResizeObserver(() => {
+    if (Math.abs(cal.clientWidth - rw) < 2) return;
+    rw = cal.clientWidth;
+    if (lit) lit.li.classList.remove('is-on');
+    lit = null; draw(); settle();
+  }).observe(cal);
 })();

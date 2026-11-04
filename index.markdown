@@ -2,161 +2,190 @@
 layout: home
 list_title: " "
 ---
+{%- comment -%}
+  Home: the faceplate's front. The name, in both scripts, and the bio on
+  the left; on the right, the portrait in the plate's two inks. Under them,
+  one key per section, each with a small figure drawn from that section's
+  own data (j / k to step, enter to open). Then the interests, each set
+  against the projects that work on it, and the path as a line through time.
+  The newest thing on the site wears the red dot.
 
-{% include dappled-light.html %}
+  By hand: each key's one line of text (this term, the latest news, the
+  newest reading, the tool) and the path. Everything drawn is read from
+  _data/, the section pages' own front matter and markup, or poems.json.
+{%- endcomment -%}
+{%- assign S = site.data.scholar -%}
+<div class="hm" data-range-above>
 
-<div class="home-container">
-  <div class="bio-content">
+  <section class="hm-id" aria-labelledby="hm-name">
+    <p class="fp-label hm-id__role">assistant professor · director of computer science · muhlenberg college</p>
+    <h1 class="hm-name" id="hm-name"><span class="hm-name__en">hamed<br>yaghoobian</span><span class="hm-name__fa" lang="fa" dir="rtl">حامد یعقوبیان</span></h1>
 
-    <!-- Profile picture with social links below -->
-    <div class="profile-orbit" id="profile-orbit">
-
-      <!-- Orange ring wrapper; image sits comfortably inside it -->
-      <div class="profile-ring">
-        <img src="{{ '/assets/images/chatgpt_profile.png' | relative_url }}"
-             alt="Profile Picture"
-             class="profile-pic"
-             id="profile-pic">
-      </div>
-
-      <!-- Social icon strip — slides in on hover, sits BELOW the ring -->
-      <div class="orbit-icons" id="orbit-icons">
-
-        <!-- Google Scholar — mortarboard cap -->
-        {% if site.google_scholar %}
-        <a href="{{ site.google_scholar }}" target="_blank" class="orbit-icon" title="Google Scholar">
-          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 3 L2 8.5 L12 14 L22 8.5 Z"/>
-            <path d="M19.5 10.5 L19.5 16.5 Q12 20.5 4.5 16.5 L4.5 10.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="22" y1="8.5" x2="22" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="22" cy="15" r="1.2" fill="currentColor"/>
-          </svg>
-        </a>
-        {% endif %}
-
-        <!-- GitHub — Octocat outline -->
-        {% if site.github_username %}
-        <a href="https://github.com/{{ site.github_username }}" target="_blank" class="orbit-icon" title="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10Z"/>
-          </svg>
-        </a>
-        {% endif %}
-
-        <!-- Email — @ symbol -->
-        <a href="mailto:{{ site.email }}" class="orbit-icon" title="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0V12a9 9 0 1 0-3.5 7.1"/>
-          </svg>
-        </a>
-
-      </div><!-- /.orbit-icons -->
-
-      <!-- Curved "Drawn by ChatGPT" caption arc -->
-      <svg class="caption-arc" viewBox="0 0 220 36" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <path id="smallcurve" d="M 10,32 A 98,98 0 0,1 210,32"/>
-        </defs>
-        <text class="caption-arc-text">
-          <textPath href="#smallcurve" startOffset="50%" text-anchor="middle">drawn by chatgpt</textPath>
-        </text>
-      </svg>
-
-    </div><!-- /.profile-orbit -->
-
-    <div class="bio-text">
-      <h1>Welcome</h1>
+    <div class="hm-bio">
       <p>I am an Assistant Professor and Director of Computer Science at Muhlenberg College. I teach computer science. I study AI: how it shapes people, organizations, decisions, and everyday life. My work draws on Science and Technology Studies, with an interest in practices, interactions, and what emerges when people and technologies encounter one another.</p>
-      <div class="personal-story">
-        <button class="personal-toggle" type="button" aria-expanded="false" aria-controls="personal-story-content">
-          <span class="personal-toggle__icon" aria-hidden="true">+</span>
-          <span class="personal-toggle__label">A little more</span>
-        </button>
-        <div class="personal-content" id="personal-story-content">
-          <p>I was born and raised in Mashhad. Eastern Iran. The Khorasan region. Growing up, it didn't register much. Later, it became something else. Less an origin than a direction. A pull. A way of becoming-east rather than being-from-east. I now live in eastern Pennsylvania with my wife. East, still. But a different east. That earlier east did not follow me here. It works through me. Quietly. Sometimes not. From within. Still orienting. Still unfinished.</p>
-          <p>I like cooking, making sourdough, and good tea and coffee. These days, I'm learning Turkish and making things with Claude. Both make me feel alternately clever and illiterate. The bread is less judgmental.</p>
-        </div>
-      </div>
-      <p>For research, collaborations, or a chat, email me at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a>. Or visit me in the Trumbower Science Building. Room 125.</p>
+      <details class="hm-more">
+        <summary><span class="fp-k">m</span><span class="hm-more__open">a little more</span><span class="hm-more__close">a little less</span></summary>
+        <p>I was born and raised in Mashhad. Eastern Iran. The Khorasan region. Growing up, it didn't register much. Later, it became something else. Less an origin than a direction. A pull. A way of becoming-east rather than being-from-east. I now live in eastern Pennsylvania with my wife. East, still. But a different east. That earlier east did not follow me here. It works through me. Quietly. Sometimes not. From within. Still orienting. Still unfinished.</p>
+        <p>I like cooking, making sourdough, and good tea and coffee. These days, I'm learning Turkish and making things with Claude. Both make me feel alternately clever and illiterate. The bread is less judgmental.</p>
+      </details>
+      <p>For research, collaborations, or a chat, email me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>. Or visit me in the Trumbower Science Building. Room 125.</p>
     </div>
-  </div><!-- /.bio-content -->
-</div><!-- /.home-container -->
+  </section>
 
-<div class="info-section">
-  <div class="info-grid">
-    <div class="research-interests">
-      <h2>Research Interests</h2>
-      <ul>
-        <li>Textual analysis</li>
-        <li>Human-AI interaction</li>
-        <li>Philosophy and sociology of technology</li>
-      </ul>
-    </div>
-    <div class="education">
-      <h2>Education</h2>
-      <div class="education-item">
-        <i class="fas fa-graduation-cap"></i>
-        <div>
-          <strong>Ph.D. in Computer Science, 2021</strong><br>
-          University of Georgia, USA
-        </div>
-      </div>
-      <div class="education-item">
-        <i class="fas fa-university"></i>
-        <div>
-          <strong>B.Sc. in Electrical Engineering, 2011</strong><br>
-          Azad University of Mashhad, Iran
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <figure class="hm-portrait fp-panel" aria-label="Portrait">
+    <span class="fp-panel__tl">fig. 0 · portrait</span>
+    <span class="fp-panel__tr" id="hm-date"><span lang="fa" dir="rtl"></span><span></span><span class="fp-live" title="today" aria-hidden="true"></span></span>
+    <div class="hm-portrait__img"><img src="{{ '/assets/images/chatgpt_profile.png' | relative_url }}" alt="A line drawing of Hamed: curly hair, round glasses, a moustache, a dark t-shirt." data-no-zoom width="680" height="680"></div>
+    <span class="fp-panel__bl">drawn by chatgpt</span>
+    <span class="fp-panel__br"><a href="mailto:{{ site.email }}">email</a> · <a href="{{ site.google_scholar }}">scholar</a> · <a href="https://github.com/{{ site.github_username }}">github</a></span>
+  </figure>
 
-<div id="dappled-light">
-  <div id="glow"></div>
-  <div id="glow-bounce"></div>
-  <div id="progressive-blur">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <div id="leaves"></div>
+  {%- comment -%} ── What's on the plate: one key per section, each with a figure drawn from that section's own data. ── {%- endcomment -%}
+  {%- assign PED = site.pages | where: "url", "/pedagogy/" | first -%}
+  {%- assign NEWS = site.pages | where: "url", "/news/" | first -%}
+  {%- assign TOOLS = site.pages | where: "url", "/tools/" | first -%}
+  {%- assign READ = site.pages | where: "url", "/readings-otherwise/" | first -%}
+  <section class="hm-keys" aria-labelledby="hm-keys-t">
+    <div class="hm-keys__head">
+      <h2 id="hm-keys-t">what's on the plate</h2>
+      <p class="fp-label fp-keyhint"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open · or press the number</p>
+    </div>
+    <ol class="hm-keys__grid">
+
+      {%- comment -%} 1 teaching: sections taught each term, oldest to newest; this term live, the next one dashed {%- endcomment -%}
+      {%- assign terms = PED.terms | reverse -%}
+      <li data-fp-part><a href="{{ '/pedagogy/' | relative_url }}">
+        <span class="hm-key__top"><span class="hm-key__n">01</span><span class="hm-key__t">teaching</span></span>
+        <span class="hm-fig hm-fig--bars" aria-hidden="true">
+          {%- for tm in terms -%}{%- assign n = 0 -%}{%- for c in tm.courses -%}{%- assign n = n | plus: c.n -%}{%- endfor -%}
+          <i class="{% if tm.status == 'live' %}is-live{% elsif tm.status == 'scheduled' %}is-next{% endif %}" style="--v:{{ n }}" title="{{ tm.term }}: {{ n }} sections"></i>
+          {%- endfor -%}
+        </span>
+        <span class="hm-key__now">this term: CSI 102 · CSI 330</span>
+        <span class="hm-key__m">fall 2026 · {{ terms | size }} terms</span></a></li>
+
+      {%- comment -%} 2 research: one dot per project, filled while it is still going {%- endcomment -%}
+      {%- assign live = 0 -%}
+      <li data-fp-part><a href="{{ '/student-research/' | relative_url }}">
+        <span class="hm-key__top"><span class="hm-key__n">02</span><span class="hm-key__t">research</span></span>
+        <span class="hm-fig hm-fig--dots" aria-hidden="true">
+          {%- for u in site.data.faceplate.projects -%}{%- assign pj = site.pages | where: "url", u | first -%}
+          {%- if pj.status != "done" -%}{%- assign live = live | plus: 1 -%}{%- endif -%}
+          <i class="{% if pj.status != 'done' %}is-on{% endif %}" title="{{ pj.heading | default: pj.title }}"></i>
+          {%- endfor -%}
+        </span>
+        <span class="hm-key__now">{{ live }} current projects with students, {{ site.data.faceplate.projects | size | minus: live }} past</span>
+        <span class="hm-key__m">{{ site.data.students | size }} students</span></a></li>
+
+      {%- comment -%} 3 publications: citations per year {%- endcomment -%}
+      {%- assign mx = 0 -%}{%- for y in S.cites_per_year -%}{%- if y[1] > mx -%}{%- assign mx = y[1] -%}{%- endif -%}{%- endfor -%}
+      <li data-fp-part><a href="{{ '/publications/' | relative_url }}">
+        <span class="hm-key__top"><span class="hm-key__n">03</span><span class="hm-key__t">publications</span></span>
+        <span class="hm-fig hm-fig--bars hm-fig--cites" aria-hidden="true">
+          {%- for y in S.cites_per_year -%}<i class="{% if forloop.last %}is-open{% endif %}" style="--v:{{ y[1] | times: 6 | divided_by: mx }}" title="{{ y[0] }}: {{ y[1] }}"></i>{%- endfor -%}
+        </span>
+        <span class="hm-key__now">{{ S.citedby }} citations · h-index {{ S.hindex }} · i10 {{ S.i10index }}</span>
+        <span class="hm-key__m">scholar, {{ S.updated | date: "%-d %b" | downcase }}</span></a></li>
+
+      {%- comment -%} 4 news: every item at its month, 2022 to 2026 {%- endcomment -%}
+      {%- assign listed = NEWS.content | split: 'data-listed="' -%}
+      <li data-fp-part><a href="{{ '/news/' | relative_url }}">
+        <span class="hm-key__top"><span class="hm-key__n">04</span><span class="hm-key__t">news</span></span>
+        <span class="hm-fig hm-fig--line" aria-hidden="true">
+          {%- for chunk in listed offset: 1 -%}{%- assign ym = chunk | slice: 0, 7 -%}{%- assign yy = ym | slice: 0, 4 | plus: 0 -%}{%- assign mm = ym | slice: 5, 2 | plus: 0 -%}
+          {%- assign pos = yy | minus: 2022 | times: 12 | plus: mm | minus: 1 | times: 100 | divided_by: 59.0 -%}
+          <i class="{% if forloop.first %}is-live{% endif %}" style="left:{{ pos | round: 2 }}%" title="{{ ym }}"></i>
+          {%- endfor -%}
+          <b>2022</b><b>2026</b>
+        </span>
+        <span class="hm-key__now">quoted in Communications of the ACM, “Are LLMs Stuck in Time?”</span>
+        <span class="hm-key__m">jul 2026 · {{ listed | size | minus: 1 }} items</span></a></li>
+
+      {%- comment -%} 5 tools {%- endcomment -%}
+      {%- assign nt = TOOLS.content | split: '<details class="fp-row' | size | minus: 1 -%}
+      <li data-fp-part><a href="{{ '/tools/' | relative_url }}">
+        <span class="hm-key__top"><span class="hm-key__n">05</span><span class="hm-key__t">tools</span></span>
+        <span class="hm-fig hm-fig--cells" aria-hidden="true">{% for i in (1..nt) %}<i class="{% if forloop.first %}is-live{% endif %}"></i>{% endfor %}</span>
+        <span class="hm-key__now">Learning Machines: machine learning, one working machine at a time</span>
+        <span class="hm-key__m">{{ nt }} tools · one being built</span></a></li>
+
+      {%- comment -%} 6 readings: the pieces, by number; the newest is live {%- endcomment -%}
+      {%- assign nr = READ.content | split: '<li class="fp-row ro-row"' | size | minus: 1 -%}
+      <li data-fp-part><a href="{{ '/readings-otherwise/' | relative_url }}">
+        <span class="hm-key__top"><span class="hm-key__n">06</span><span class="hm-key__t">readings</span></span>
+        <span class="hm-fig hm-fig--pieces" aria-hidden="true">{% for i in (1..nr) %}<i class="{% if forloop.last %}is-live{% endif %}"><b>{{ i }}</b></i>{% endfor %}</span>
+        <span class="hm-key__now">No. {{ nr }} · What Ferdowsi Let In</span>
+        <span class="hm-key__m"><span class="fp-live" title="newest on the site"></span>2 nov 2026</span></a></li>
+
+      {%- comment -%} 7 poems: one dot per poem, grouped by Persian year (drawn from poems.json) {%- endcomment -%}
+      <li data-fp-part><a href="{{ '/poems/' | relative_url }}">
+        <span class="hm-key__top"><span class="hm-key__n">07</span><span class="hm-key__t">poems</span></span>
+        <span class="hm-fig hm-fig--poems" id="hm-poems-fig" aria-hidden="true"></span>
+        <span class="hm-key__now" id="hm-poems">collected poems, Persian and English</span>
+        <span class="hm-key__m" id="hm-poems-d"></span></a></li>
+    </ol>
+  </section>
+
+  {%- comment -%} ── Interests, each set against the projects that work on it; and the path, as a line through time. ── {%- endcomment -%}
+  {%- assign IN = "Textual analysis|nlp,Human-AI interaction|hai,Philosophy and sociology of technology|cai" | split: "," -%}
+  <section class="hm-about" aria-label="Research interests and education">
+    <div class="hm-int">
+      <h2 class="fp-label">research interests</h2>
+      <ol>
+        {%- for row in IN -%}{%- assign parts = row | split: "|" -%}{%- assign k = 0 -%}
+        <li><span class="hm-int__n">0{{ forloop.index }}</span><span class="hm-int__t">{{ parts[0] }}</span>
+          <a class="hm-int__p" href="{{ '/student-research/' | relative_url }}" title="Projects in this area">
+            {%- for u in site.data.faceplate.projects -%}{%- assign pj = site.pages | where: "url", u | first -%}
+            {%- if pj.areas contains parts[1] -%}{%- assign k = k | plus: 1 -%}<i class="{% if pj.status != 'done' %}is-on{% endif %}" title="{{ pj.heading | default: pj.title }}"></i>{%- endif -%}
+            {%- endfor -%}<span>{{ k }} projects</span></a></li>
+        {%- endfor -%}
+      </ol>
+    </div>
+
+    <div class="hm-path">
+      <h2 class="fp-label">education, and since</h2>
+      {%- assign y0 = 2010 -%}{%- assign y1 = 2027 -%}{%- assign span = y1 | minus: y0 | times: 1.0 -%}
+      <div class="hm-path__line" aria-hidden="true">
+        {%- for y in (2010..2027) -%}{%- assign m = y | modulo: 5 -%}<i class="{% if m == 0 %}is-major{% endif %}" style="left:{{ y | minus: y0 | divided_by: span | times: 100 | round: 2 }}%">{% if m == 0 %}<b>{{ y }}</b>{% endif %}</i>{%- endfor -%}
+        <span class="hm-path__run" style="left:{{ 2021.67 | minus: y0 | divided_by: span | times: 100 | round: 2 }}%;right:{{ y1 | minus: 2026.85 | divided_by: span | times: 100 | round: 2 }}%"></span>
+        <span class="hm-path__dot" style="left:{{ 2011.5 | minus: y0 | divided_by: span | times: 100 | round: 2 }}%"></span>
+        <span class="hm-path__dot" style="left:{{ 2021.4 | minus: y0 | divided_by: span | times: 100 | round: 2 }}%"></span>
+        <span class="hm-path__dot is-live" style="left:{{ 2026.85 | minus: y0 | divided_by: span | times: 100 | round: 2 }}%"></span>
+      </div>
+      <ol class="hm-path__stops">
+        <li><b>2011</b><span><strong>B.Sc. in Electrical Engineering</strong>Azad University of Mashhad, Iran</span></li>
+        <li><b>2021</b><span><strong>Ph.D. in Computer Science</strong>University of Georgia, USA</span></li>
+        <li class="is-now"><b>2021–</b><span><strong>Muhlenberg College</strong>Trumbower Science Building, room 125</span></li>
+      </ol>
+    </div>
+  </section>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const ring  = document.querySelector('.profile-ring');
-    const orbit = document.getElementById('profile-orbit');
-    const personalStory = document.querySelector('.personal-story');
-    const personalToggle = document.querySelector('.personal-toggle');
-    const personalContent = document.getElementById('personal-story-content');
-    const personalIcon = document.querySelector('.personal-toggle__icon');
-    const personalLabel = document.querySelector('.personal-toggle__label');
-
-    if (ring && orbit) {
-      // Click ring ➜ toggle pinned-open state
-      ring.addEventListener('click', e => {
-        e.stopPropagation();
-        orbit.classList.toggle('pinned');
-      });
-
-      // Click outside ➜ unpin
-      document.addEventListener('click', e => {
-        if (!orbit.contains(e.target)) orbit.classList.remove('pinned');
-      });
-    }
-
-    if (personalStory && personalToggle && personalContent && personalIcon && personalLabel) {
-      personalToggle.addEventListener('click', () => {
-        const nextExpanded = !personalStory.classList.contains('is-open');
-        personalStory.classList.toggle('is-open', nextExpanded);
-        personalToggle.setAttribute('aria-expanded', String(nextExpanded));
-        personalIcon.textContent = nextExpanded ? '-' : '+';
-        personalLabel.textContent = nextExpanded ? 'A little less' : 'A little more';
-      });
-    }
-  });
+  // Today, in both calendars, for the portrait's corner.
+  (function () {
+    var d = new Date(), el = document.getElementById('hm-date');
+    try {
+      el.children[0].textContent = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+      el.children[1].textContent = ' · ' + new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(d).toLowerCase();
+    } catch (e) { el.textContent = ''; }
+  })();
+  // The poems row reads the collection itself, so it is never out of date.
+  fetch('{{ "/poems.json" | relative_url }}').then(function (r) { return r.json(); }).then(function (p) {
+    var newest = p.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; })[0];
+    var poet = (newest.poet.split('/')[1] || newest.poet).trim();
+    document.getElementById('hm-poems').textContent = p.length + ' poems · newest: ' + poet;
+    document.getElementById('hm-poems-d').textContent = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(newest.date + 'T12:00')).toLowerCase();
+    // one dot per poem, oldest to newest, a gap where the Persian year turns
+    var fig = document.getElementById('hm-poems-fig'), fa = new Intl.DateTimeFormat('en-u-ca-persian-nu-latn', { year: 'numeric' }), last = null;
+    p.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).forEach(function (q) {
+      var y = parseInt(fa.format(new Date(q.date + 'T12:00')), 10);
+      if (last !== null && y !== last) { var s = document.createElement('b'); s.textContent = new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(y); fig.appendChild(s); }
+      else if (last === null) { var s0 = document.createElement('b'); s0.textContent = new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(y); fig.appendChild(s0); }
+      last = y;
+      var i = document.createElement('i'); if (q === newest) i.className = 'is-live'; fig.appendChild(i);
+    });
+  }).catch(function () {});
+  // m opens the longer bio.
+  window.FP && FP.add({ key: 'm', label: 'a little more / a little less', run: function () { var d = document.querySelector('.hm-more'); d.open = !d.open; } });
 </script>
-

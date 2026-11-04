@@ -12,17 +12,17 @@
 (function () {
   const root = document.getElementById('w2lr-figure');
   if (!root || !window.CSI330 || !window.CSIKit) return;
-  const { el, box, cylinder, face, onNear, svg: makeSvg } = window.LineFigure;
-  const K = window.CSIKit, B = window.CSI330.w2.birds, FIT = window.CSI330.w2lr;
+  const K = window.CSIKit, B = window.CSI330.w2.birds, FIT = window.CSI330.w2lr, el = K.el;
   const Y = B.map(b => (b[2] === 0 ? 1 : 0));               // Adelie = 1
 
-  const svg = makeSvg(root, '0 0 100 100',
+  const svg = K.svg(root,
     'A board plotting all 342 penguins by bill length, Adelie on the top row and the rest below, with an S-curve for the probability of Adelie; beside it a dial whose needle shows z on a log-odds scale and the probability on a squeezed scale, and a log-loss gauge.');
 
-  K.bench(svg, -6, -4, 206, 64);
-  K.plate(svg, 'PALMER PENGUINS · 342 BIRDS · P(ADELIE) FROM BILL LENGTH', 4, 64);
+  const G = 100, S = K.stage(svg);                    // G: the plinth's top
+  K.bench(S, -6, 204, G);
+  K.plate(S, 'PALMER PENGUINS · 342 BIRDS · P(ADELIE) FROM BILL LENGTH', 4, G);
 
-  const b = K.board(svg, 0, 132, 24, 6, 96);
+  const b = K.board(S, 0, 8, 132, 90, G);
   const sx = K.scale(32, 60, 16, 126), sy = K.scale(-0.12, 1.12, 77, 8);
   K.axes(b.g, sx, sy, [35, 40, 45, 50, 55, 60], [0, 0.5, 1], 'bill length (mm)', 'P(Adelie)', 2.8);
   el('text', { x: 125, y: sy(1) - 2.4, 'font-size': 2.4, 'text-anchor': 'end' }, b.g).textContent = 'Adelie = 1';
@@ -39,11 +39,12 @@
 
   // The squash dial: z from −6 to 6 evenly on the outer scale; inside, the
   // probability each z means, its ticks crowding toward both ends.
-  const DU = 142, DV = 36, DH = 22;
-  const DG = el('g', {}, svg);                      // the dial, to name as a part
-  cylinder(DG, 'lf-solid lf-shaded').set(DU + 17, DV - 2, 0, DH, 1.4);
-  box(DG, 'lf-solid lf-shaded').set(DU, DV - 4, DH, DU + 34, DV, DH + 29);
-  const f = face(DG, onNear(DU, DV, DH + 29));
+  // A panel 34 × 29 on a post, its face drawn flat.
+  const DX = 142, DY = 24;
+  const DG = el('g', {}, S);                        // the dial, to name as a part
+  K.post(DG, DX + 17, DY + 29, G);
+  el('rect', { class: 'lf-solid', x: DX, y: DY, width: 34, height: 29, rx: 0.8 }, DG);
+  const f = el('g', { transform: `translate(${DX} ${DY})` }, DG);
   const cx = 17, cy = 16.5, R = 12, ZMAX = 6;
   const ang = z => Math.PI * (1 - (Math.max(-ZMAX, Math.min(ZMAX, z)) + ZMAX) / (2 * ZMAX));
   const at = (z, rr) => [cx + rr * Math.cos(ang(z)), cy - rr * Math.sin(ang(z))];
@@ -70,7 +71,7 @@
   const dialTxt = el('text', { class: 'lf-hot', x: cx, y: 22.4, 'font-size': 2.4, 'text-anchor': 'middle' }, f);
   el('text', { x: cx, y: 26.2, 'font-size': 1.8, 'text-anchor': 'middle', 'letter-spacing': 0.2 }, f).textContent = 'THE SQUASH  σ(z)';
 
-  const gLoss = K.gauge(svg, 182, 46, 'LOG LOSS', 0, 0.7, v => v.toFixed(3), 14);
+  const gLoss = K.gauge(S, 180, 68, 'LOG LOSS', 0, 0.7, v => v.toFixed(3), G);
 
   const sig = z => 1 / (1 + Math.exp(-z));
   const loss = (w0, w1) => -K.mean(B.map((r, i) => {

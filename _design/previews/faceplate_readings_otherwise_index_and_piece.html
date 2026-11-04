@@ -1,0 +1,108 @@
+<h2 class="sr-only">Readings, Otherwise preview: an index where each piece is a plate with a small live specimen of its method and a spec table, followed by a piece page whose controls become keys around the untouched artwork.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500&family=Noto+Kufi+Arabic:wght@800&family=Newsreader:ital@0;1&display=swap">
+<style>
+.ro{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.25);--y:#F2C500;--live:#E0362C;background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;padding:14px 20px}
+.m{font-family:'JetBrains Mono',monospace;font-size:11px}
+.fa{font-family:'IBM Plex Sans Arabic';direction:rtl}
+.sk{border:1.5px solid var(--ink);border-radius:4px;padding:3px 9px;background:transparent;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;min-width:26px}
+.sk:hover{background:var(--y);border-color:var(--y);color:#2B3BD1}.sk.on{background:var(--ink);color:var(--bg)}
+kbd{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-left:4px;opacity:.8}
+.plate{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;padding:18px 0;border-bottom:1.5px solid var(--ink);cursor:pointer}
+.plate canvas{width:200px;height:150px;border:1.5px solid var(--ink);border-radius:4px;display:block}
+.plate.cur{box-shadow:inset 3px 0 0 var(--live);padding-left:10px}
+.spec{display:grid;grid-template-columns:96px minmax(0,1fr);row-gap:3px;margin-top:10px}
+.spec span:nth-child(odd){opacity:.6}
+.ratio{height:8px;border:1px solid var(--ink);margin-top:10px;position:relative}
+.ratio i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+</style>
+<div style="padding:1rem 0">
+<div class="ro">
+<div class="m" style="display:flex;justify-content:space-between;border-bottom:1.5px solid var(--ink);padding-bottom:6px"><span>hy / 05 readings</span><span>j / k · enter to open · p read as a page</span></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:end;margin:22px 0 8px">
+<div style="font-weight:800;font-size:44px;line-height:.92;letter-spacing:-.025em">readings,<br>otherwise</div>
+<p style="margin:0;font-size:13px;line-height:1.5">Old texts, read with new machines. Each piece takes a book apart and keeps what usually gets thrown away.</p>
+</div>
+<div class="m" style="display:flex;gap:16px;margin:10px 0 4px;opacity:.85"><span>3 pieces</span><span>■ kept</span><span>□ taken out</span><span style="color:var(--live)">● red: a second layer</span></div>
+
+<div class="plate cur" data-k="0"><canvas id="c0" width="400" height="300"></canvas><div>
+<div class="m" style="display:flex;justify-content:space-between"><span>no. 3</span><span><span class="fa">۱۱ آبان ۱۴۰۵</span> · 2 nov 2026</span></div>
+<div style="font-weight:800;font-size:24px;letter-spacing:-.015em;margin:4px 0 2px">What Ferdowsi let in</div>
+<div class="fa" style="font-size:13px;text-align:left;opacity:.8">شاهنامه · فردوسی · ۱۰۱۰</div>
+<div class="spec m"><span>source</span><span>shahnameh, ~50,000 couplets</span><span>taken out</span><span>every persian word</span><span>left</span><span>6,409 words from arabic, 1 in 90</span><span>layer</span><span style="color:var(--live)">166 sections that name a death</span></div>
+<div class="ratio" title="1 in 90 kept"><i style="width:1.1%"></i></div>
+<div class="m" style="margin-top:10px;display:flex;gap:14px"><span>see it →</span><span>ganjoor</span><span>code</span></div>
+</div></div>
+
+<div class="plate" data-k="1"><canvas id="c1" width="400" height="300"></canvas><div>
+<div class="m" style="display:flex;justify-content:space-between"><span>no. 2</span><span><span class="fa">۱۰ آبان ۱۴۰۵</span> · 1 nov 2026</span></div>
+<div style="font-weight:800;font-size:24px;letter-spacing:-.015em;margin:4px 0 2px">What the birds leave</div>
+<div class="fa" style="font-size:13px;text-align:left;opacity:.8">منطق‌الطیر · عطار نیشابوری · ۱۱۷۷</div>
+<div class="spec m"><span>source</span><span>the conference of the birds</span><span>taken out</span><span>every letter</span><span>left</span><span>112,052 dots, flying</span><span>hands</span><span>naskh · nastaliq · fitzgerald (2,840 land)</span><span>layer</span><span style="color:#B08C00">the dots that spell سیمرغ</span></div>
+<div class="m" style="margin-top:10px;display:flex;gap:14px"><span>see it →</span><span>ganjoor</span><span>code</span></div>
+</div></div>
+
+<div class="plate" data-k="2"><canvas id="c2" width="400" height="300"></canvas><div>
+<div class="m" style="display:flex;justify-content:space-between"><span>no. 1</span><span><span class="fa">۶ آبان ۱۴۰۵</span> · 28 oct 2026</span></div>
+<div style="font-weight:800;font-size:24px;letter-spacing:-.015em;margin:4px 0 2px">What Capital leaves</div>
+<div class="m" style="opacity:.8">marx · das kapital · 1867–94</div>
+<div class="spec m"><span>source</span><span>capital, all three volumes</span><span>taken out</span><span>every word</span><span>left</span><span>the punctuation, painted as a sea</span><span>layer</span><span style="color:var(--live)">your attention: the only red</span></div>
+<div class="m" style="margin-top:10px;display:flex;gap:14px"><span>see it →</span><span>read it as a page</span><span>code</span></div>
+</div></div>
+<p class="m" style="margin:10px 0 0;opacity:.75">hover a plate and its specimen runs; at rest each is still.</p>
+</div>
+
+<p class="m" style="color:var(--text-secondary);margin:22px 0 8px">inside a piece: the artwork is untouched; only its controls join the system.</p>
+
+<div class="ro" style="padding:0;overflow:hidden">
+<div class="m" style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1.5px solid var(--ink);gap:6px;flex-wrap:wrap">
+<span style="display:flex;gap:4px;align-items:center"><button class="sk">← readings<kbd>esc</kbd></button><span style="margin-left:6px">no. 3 · what ferdowsi let in</span></span>
+<span style="display:flex;gap:4px"><button class="sk" id="zo">−</button><button class="sk" id="zi">+</button><button class="sk" id="z0">0</button><button class="sk" id="dth">the deaths<kbd>d</kbd></button><button class="sk">light</button></span>
+</div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 190px">
+<div style="position:relative;height:300px;overflow:hidden;border-right:1.5px solid var(--ink)"><canvas id="art" width="900" height="600" style="width:100%;height:100%;display:block"></canvas>
+<span class="m" id="zl" style="position:absolute;left:10px;bottom:8px">zoom 1×</span></div>
+<div style="padding:12px" class="m">
+<div style="font-family:'Libre Franklin';font-weight:800;font-size:17px;letter-spacing:-.01em;margin-bottom:8px">What Ferdowsi let in</div>
+<div id="hov" style="border:1.5px solid var(--ink);border-radius:4px;padding:8px;min-height:62px;margin-bottom:10px">hover a word</div>
+<div class="spec" style="grid-template-columns:62px 1fr;margin:0"><span>words</span><span>6,409</span><span>rate</span><span>1 in 90</span><span>deaths</span><span>166</span></div>
+<div style="margin-top:12px;opacity:.8">keys<br>+ − 0 zoom<br>d the deaths<br>esc back</div>
+</div></div>
+</div>
+</div>
+<script>
+const INK='#2B3BD1',RED='#E0362C',Y='#F2C500',BG='#F2EBDA';
+let act=0;const plates=[...document.querySelectorAll('.plate')];
+plates.forEach((p,i)=>{p.onmouseenter=()=>{act=i;plates.forEach((x,j)=>x.classList.toggle('cur',j===i))}});
+document.addEventListener('keydown',e=>{if(e.key==='j'||e.key==='k'){act=Math.max(0,Math.min(2,act+(e.key==='j'?1:-1)));plates.forEach((x,j)=>x.classList.toggle('cur',j===act))}
+if(e.key==='+'||e.key==='=')zoom(1.25);if(e.key==='-')zoom(.8);if(e.key==='0')zoom(0);if(e.key==='d')deaths()});
+const W=['قیصر','عنان','عاج','سلاح','سنان','حصار','لشکر','عهد','خلعت','قلم','فرمان','نعل','طبل','قضا','حکم','کتاب'];
+const c0=document.getElementById('c0').getContext('2d');let seed=7;const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
+const F0=[];for(let i=0;i<60;i++)F0.push({x:rnd()*380+10,y:rnd()*280+10,w:W[Math.floor(rnd()*W.length)],p:rnd()*6});
+const deathBands=[[40,62],[130,140],[210,236]];
+function d0(t){c0.fillStyle=BG;c0.fillRect(0,0,400,300);deathBands.forEach(([a,b])=>{c0.fillStyle='rgba(224,54,44,.14)';c0.fillRect(0,a,400,b-a)});
+c0.font='13px "IBM Plex Sans Arabic"';c0.textAlign='center';F0.forEach(f=>{c0.globalAlpha=act===0?.55+.45*Math.sin(t/900+f.p):.7;c0.fillStyle=INK;c0.fillText(f.w,f.x,f.y)});c0.globalAlpha=1}
+const c1=document.getElementById('c1').getContext('2d');const B=[];for(let i=0;i<260;i++){B.push({x:rnd()*400,y:rnd()*300,vx:rnd()-.5,vy:rnd()-.5,tx:40+(i%52)*6.2,ty:110+Math.floor(i/52)*22+(i%3)*3,g:i%23===0})}
+function d1(t){c1.fillStyle=BG;c1.fillRect(0,0,400,300);const home=act!==1;const cx=200+Math.cos(t/1300)*110,cy=150+Math.sin(t/900)*70;
+B.forEach(b=>{if(home){b.x+=(b.tx-b.x)*.05;b.y+=(b.ty-b.y)*.05}else{b.vx+=(cx-b.x)*.0009+(Math.random()-.5)*.25;b.vy+=(cy-b.y)*.0009+(Math.random()-.5)*.25;b.vx*=.96;b.vy*=.96;b.x+=b.vx*2;b.y+=b.vy*2}
+c1.fillStyle=b.g?Y:INK;c1.beginPath();c1.arc(b.x,b.y,b.g?3:2,0,7);c1.fill()});
+if(home){c1.strokeStyle='rgba(43,59,209,.25)';[124,146,168,190,212].forEach(y=>{c1.beginPath();c1.moveTo(36,y);c1.lineTo(364,y);c1.stroke()})}}
+const c2=document.getElementById('c2').getContext('2d');const PU=[',','.',';',':','—','"','(',')','?','!',',','.',','];let mx=-99,my=-99;
+const cv2=document.getElementById('c2');cv2.onmousemove=e=>{const r=cv2.getBoundingClientRect();mx=(e.clientX-r.left)*2;my=(e.clientY-r.top)*2};cv2.onmouseleave=()=>{mx=my=-99};
+const G=[];for(let y=18;y<300;y+=16)for(let x=10;x<400;x+=14)G.push({x,y,c:PU[Math.floor(rnd()*PU.length)],w:['labour','value','day','children','hours','the','work'][Math.floor(rnd()*7)]});
+function d2(t){c2.fillStyle=BG;c2.fillRect(0,0,400,300);c2.font='12px "JetBrains Mono"';c2.textAlign='center';
+G.forEach(g=>{const d=Math.hypot(g.x-mx,g.y-my);const wave=act===2?Math.sin(t/600+g.x/40+g.y/30)*2:0;
+if(d<34){c2.fillStyle=RED;c2.fillText(g.w,g.x,g.y)}else{c2.fillStyle=INK;c2.globalAlpha=.35+.4*(g.c==='"'?1:0)+(act===2?.15:0);c2.fillText(g.c,g.x,g.y+wave);c2.globalAlpha=1}})}
+const art=document.getElementById('art'),ax=art.getContext('2d');let z=1,showD=false,ox=0,oy=0;
+const AW=[];for(let i=0;i<180;i++)AW.push({x:rnd()*900,y:rnd()*600,w:W[Math.floor(rnd()*W.length)],sec:Math.floor(rnd()*12)});
+const DS=[2,5,9];
+function dart(){ax.fillStyle=BG;ax.fillRect(0,0,900,600);ax.save();ax.translate(450,300);ax.scale(z,z);ax.translate(-450,-300);
+if(showD)DS.forEach(s=>{ax.fillStyle='rgba(224,54,44,.15)';ax.fillRect(0,s*50,900,50)});
+ax.font='15px "IBM Plex Sans Arabic"';ax.textAlign='center';AW.forEach(a=>{ax.fillStyle=INK;ax.globalAlpha=.75;ax.fillText(a.w,a.x,a.y)});ax.restore();ax.globalAlpha=1}
+function zoom(f){z=f===0?1:Math.max(1,Math.min(4,z*f));document.getElementById('zl').textContent='zoom '+z.toFixed(1).replace('.0','')+'×';dart()}
+function deaths(){showD=!showD;document.getElementById('dth').classList.toggle('on',showD);dart()}
+document.getElementById('zi').onclick=()=>zoom(1.25);document.getElementById('zo').onclick=()=>zoom(.8);document.getElementById('z0').onclick=()=>zoom(0);document.getElementById('dth').onclick=deaths;
+art.onmousemove=e=>{const r=art.getBoundingClientRect();const x=((e.clientX-r.left)/r.width*900-450)/z+450,y=((e.clientY-r.top)/r.height*600-300)/z+300;let best=null,bd=40;AW.forEach(a=>{const d=Math.hypot(a.x-x,a.y-y);if(d<bd){bd=d;best=a}});
+document.getElementById('hov').innerHTML=best?`<span class="fa" style="font-size:20px">${best.w}</span><br>section ${best.sec+1}${DS.includes(best.sec)?' · <span style="color:'+RED+'">names a death</span>':''}<br><span style="opacity:.7">its line appears here</span>`:'hover a word'};
+dart();
+function loop(t){d0(t);d1(t);d2(t);requestAnimationFrame(loop)}requestAnimationFrame(loop);
+</script>

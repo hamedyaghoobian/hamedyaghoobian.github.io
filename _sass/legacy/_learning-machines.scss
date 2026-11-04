@@ -1,0 +1,570 @@
+// ─────────────────────────────────────────────────────────────
+// Learning Machines (/tools/learning-machines/, _layouts/learning-machines.html):
+// a visual encyclopedia after Pascal Architecture. A sidebar index, an
+// article column, entries with a figure and numbered parts.
+//
+// In the faceplate: the sidebar is a key-like index, the current entry held
+// down (ink ground, paper type, like the section key above). Prose reads in
+// --serif; labels and numbers in --mono; formulas and tables in hairlines.
+// What a figure lights is --glow (red in light, yellow in dark), and only
+// as a line; your hand (hover, j / k) is the yellow ground.
+// ─────────────────────────────────────────────────────────────
+
+.lm {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+  padding-top: clamp(20px, 4vh, 40px);
+
+  @media (max-width: 899px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
+
+// ── The index ───────────────────────────────────────────────
+.lm-side {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  font-size: .84rem;
+  line-height: 1.3;
+  border-top: var(--stroke) solid var(--ink);
+  padding-top: 8px;
+
+  @media (max-width: 899px) {
+    position: static;
+    max-height: none;
+    padding-top: 0;
+    border-bottom: var(--hair) solid var(--rule);
+  }
+
+  summary {
+    display: none;
+    @media (max-width: 899px) {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) 18px;
+      gap: 12px; align-items: baseline;
+      padding: 11px 4px;
+      cursor: pointer; list-style: none;
+      font: 500 .74rem/1.2 var(--mono);
+      &::-webkit-details-marker { display: none; }
+      &:hover { background: var(--hand); color: var(--on-hand); }
+    }
+  }
+
+  ul { list-style: none; margin: 0 0 1rem; padding: 0; }
+  li { margin: 0; }
+  li::marker { content: none; }
+
+  a {
+    display: flex; gap: 8px; align-items: baseline;
+    padding: 4px 6px;
+    border-radius: 3px;
+    color: var(--ink);
+    text-decoration: none;
+
+    &:hover { background: var(--hand); color: var(--on-hand); }
+
+    // Held down: where you are.
+    &[aria-current="page"] {
+      background: var(--ink); color: var(--paper);
+      &:hover { background: var(--hand); color: var(--on-hand); }
+    }
+  }
+}
+
+.lm-toc__k { color: var(--ink-soft); }
+.lm-toc__here { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lm-toc__x { text-align: right; transition: transform .15s ease; }
+.lm-toc[open] .lm-toc__x { transform: rotate(45deg); }
+
+.lm-side__name {
+  margin: 0 0 .5rem;
+  font: 800 1rem/1.1 var(--sans);
+  letter-spacing: -.02em;
+  text-transform: lowercase;
+  a { padding-left: 6px; }
+}
+
+.lm-side__group {
+  display: flex; justify-content: space-between;
+  margin: .9rem 0 .2rem; padding: 0 6px;
+  font: 400 .68rem/1.4 var(--mono);
+  color: var(--ink-soft);
+  text-transform: lowercase;
+}
+
+.lm-side__list {
+  border-left: var(--hair) solid var(--rule);
+  margin-left: 6px !important;
+  padding-left: 4px !important;
+}
+
+.lm-side__n { font: 500 .66rem/1 var(--mono); opacity: .7; flex: none; }
+
+// ── The article ─────────────────────────────────────────────
+.lm-main { min-width: 0; max-width: 780px; }
+
+.lm-eyebrow,
+.lm-count { margin: 0 0 .8rem; }
+
+// Where in Learning Machines this page sits (the global crumb names 05 tools).
+.lm-path {
+  margin: 0 0 10px;
+  font: 400 .7rem/1.4 var(--mono);
+  color: var(--ink-soft);
+  text-transform: lowercase;
+  span { margin: 0 .3em; }
+}
+
+.lm-hero,
+.lm-title {
+  margin: 0 0 .6rem;
+  font: 800 clamp(2.2rem, 5.4vw, 3.6rem)/.95 var(--sans);
+  letter-spacing: -.045em;
+  text-transform: lowercase;
+}
+.lm-title { font-size: clamp(1.9rem, 4.4vw, 3rem); letter-spacing: -.035em; }
+
+.lm-line {
+  margin: 0 0 1.6rem;
+  font: 400 .78rem/1.5 var(--mono);
+  color: var(--ink-soft);
+}
+
+.lm-intro,
+.lm-lede {
+  max-width: var(--measure);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.55;
+}
+.lm-lede, .lm-body > .lm-lede { font-size: 1.22rem; line-height: 1.5; margin: 1.6rem 0 .4rem; }
+
+// The home's section heads, numbered by hand: the same rule and number as
+// a page's numbered h2.
+.lm-h2 {
+  display: flex; align-items: baseline; gap: .7em;
+  margin: 3rem 0 1rem; padding-top: .55rem;
+  border-top: var(--stroke) solid var(--ink);
+  font-size: 1.35rem; text-transform: lowercase;
+  scroll-margin-top: 16px;
+
+  span { font: 500 .7rem/1 var(--mono); color: var(--ink-soft); letter-spacing: 0; transform: translateY(-.25em); }
+}
+
+// ── Figures in the article ──────────────────────────────────
+.lm .project-figure--card { margin-left: 0; margin-right: 0; }
+.project-figure--card.project-figure--flow { max-width: none; }
+
+.lm .project-figure--card {
+  .figure-card { border: var(--hair) solid var(--rule-strong); border-radius: var(--radius); }
+  .figure-card__row { font-family: var(--mono); }
+  .figure-card__calc {
+    font-family: var(--mono);
+    border-top-style: solid;
+    // The live number: ink, with the lit line under it.
+    .hot { color: var(--ink); text-decoration: underline; text-decoration-color: var(--glow); text-decoration-thickness: 1.5px; text-underline-offset: .22em; }
+  }
+  figcaption { text-align: left; font: 400 .72rem/1.5 var(--mono); font-style: normal; color: var(--ink-soft); }
+}
+.lm :is(.lf-label, .lf-text, .lf-face text) { font-family: var(--sans); }
+
+// "Try this": guided tasks under the figure, answers folded.
+.lm .study-try {
+  border-left: var(--stroke) solid var(--ink);
+  > p:first-child { font: 400 .7rem/1.4 var(--mono); letter-spacing: .01em; text-transform: lowercase; }
+  summary {
+    display: inline-block; cursor: pointer;
+    font: 500 .74rem/1.4 var(--mono); padding: 2px 4px; border-radius: 3px;
+    &:hover { background: var(--hand); color: var(--on-hand); }
+  }
+}
+
+// ── The parts ───────────────────────────────────────────────
+.lm-parts {
+  margin: 2rem 0;
+
+  h2 { margin: 0; font-size: 1.1rem; text-transform: lowercase; }
+
+  ol {
+    list-style: none;
+    counter-reset: part;
+    margin: .6rem 0 0;
+    padding: 0;
+    border-top: var(--stroke) solid var(--ink);
+  }
+
+  li {
+    counter-increment: part;
+    display: grid;
+    grid-template-columns: 2.4rem 11rem minmax(0, 1fr);
+    gap: .2rem .8rem;
+    margin: 0;
+    padding: .6rem 4px;
+    border-bottom: var(--hair) solid var(--rule);
+    font-size: .92rem;
+    cursor: pointer;
+    scroll-margin-top: 16px;
+    transition: background-color .12s ease;
+
+    &::before {
+      content: counter(part, decimal-leading-zero);
+      font: 500 .7rem/1 var(--mono);
+      color: var(--ink-soft);
+      padding-top: .3rem;
+    }
+
+    @media (max-width: 600px) { grid-template-columns: 2.2rem minmax(0, 1fr); }
+
+    // The machine's pointer is over this part.
+    &.is-hover { background: var(--faint); }
+    // Your hand: pointer, keyboard focus, or j / k.
+    &:hover, &:focus-visible, &.fp-at {
+      background: var(--hand); color: var(--on-hand); box-shadow: none; outline: none;
+      &::before, .lm-parts__text { color: var(--on-hand); }
+    }
+    // Lit in the machine: a thin line of the glow at the left.
+    &.is-focused { box-shadow: inset 2px 0 0 var(--glow); }
+  }
+}
+
+.lm-parts__head {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: .2rem 1rem;
+  p { margin: 0; font: 400 .7rem/1.5 var(--mono); color: var(--ink-soft); }
+  .fp-k { margin-right: .2em; }
+}
+
+.lm-parts__name { font-weight: 600; }
+.lm-parts__text { color: var(--ink-soft); @media (max-width: 600px) { grid-column: 2; } }
+.lm-parts__see {
+  grid-column: 3;
+  justify-self: start;
+  font: 400 .72rem/1.5 var(--mono);
+  @media (max-width: 600px) { grid-column: 2; }
+}
+
+.lm-parts__clear {
+  font: 500 .7rem/1 var(--mono);
+  border: var(--hair) solid var(--rule-strong); border-radius: 3px;
+  background: none; color: var(--ink);
+  cursor: pointer;
+  padding: 3px 6px; margin-left: .4rem;
+  &:hover { background: var(--hand); color: var(--on-hand); border-color: var(--hand); }
+}
+
+// ── An entry's prose: numbered sections (the page's .fp-body h2) ──
+.lm-body {
+  max-width: none;
+
+  > p, > ul, > ol, > blockquote { max-width: var(--measure); }
+  > p, > ul, > ol { font-family: var(--serif); font-size: 1.08rem; line-height: 1.6; }
+
+  .study-try { margin: 1.4rem 0; max-width: none; font-family: var(--sans); }
+
+  pre, pre code { font-size: 12.5px; line-height: 1.55; }
+  pre { overflow-x: auto; padding: .8rem 1rem; }
+  p code, li code, td code { font-size: .84em; }
+
+  table { margin: 1rem 0 1.4rem; font-size: .86rem; }
+  td { font-family: var(--sans); }
+}
+
+// The why page's comparisons.
+.lm-why h3 {
+  margin: 2.4rem 0 .6rem; padding-top: .55rem;
+  border-top: var(--hair) solid var(--rule-strong);
+  font-size: 1.12rem; text-transform: lowercase;
+}
+.lm-why > p { max-width: var(--measure); font-family: var(--serif); font-size: 1.08rem; }
+
+// ── The pager: [ and ] ──────────────────────────────────────
+.lm-pager {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin: 3rem 0 1rem; padding-top: .55rem;
+  border-top: var(--stroke) solid var(--ink);
+
+  a {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 6px 8px; border-radius: 3px;
+    text-decoration: none;
+    font: 500 1.02rem/1.3 var(--sans);
+  }
+
+  a > span {
+    font: 400 .68rem/1 var(--mono);
+    color: var(--ink-soft);
+    text-transform: lowercase;
+  }
+  a:hover > span { color: var(--on-hand); }
+  .fp-k { margin: 0 .4em 0 0; }
+}
+.lm-pager__next {
+  text-align: right; margin-left: auto; align-items: flex-end;
+  .fp-k { margin: 0 0 0 .4em !important; }
+}
+
+// ── Home: topics, the order of building a model, the collection ──
+.lm-topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.4rem 2rem;
+}
+
+.lm-topic__name {
+  display: flex; justify-content: space-between;
+  margin: 0 0 .4rem;
+  font-weight: 600;
+  span { font: 400 .68rem/1.6 var(--mono); color: var(--ink-soft); }
+}
+
+.lm-topic__entry {
+  display: block;
+  padding: .45rem 4px;
+  border-top: var(--hair) solid var(--rule);
+  text-decoration: none;
+  font-size: .92rem;
+
+  b { font-weight: 500; }
+  span { display: block; color: var(--ink-soft); font-size: .84rem; }
+  &:hover, &.fp-at { background: var(--hand); color: var(--on-hand); box-shadow: none; span { color: var(--on-hand); } }
+}
+
+.lm-order {
+  list-style: none;
+  counter-reset: step;
+  margin: 1rem 0;
+  padding: 0;
+  border-top: var(--stroke) solid var(--ink);
+
+  li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.4rem 12rem minmax(0, 1fr) 2rem;
+    gap: .2rem .8rem;
+    align-items: baseline;
+    margin: 0;
+    padding: .65rem 0;
+    border-bottom: var(--hair) solid var(--rule);
+
+    &::marker { content: none; }
+    &::before { content: counter(step, decimal-leading-zero); font: 500 .7rem/1 var(--mono); color: var(--ink-soft); }
+
+    @media (max-width: 700px) { grid-template-columns: 2.2rem minmax(0, 1fr) 2rem; }
+  }
+}
+
+.lm-order__name { font-weight: 600; }
+.lm-order__text { color: var(--ink-soft); font-size: .92rem; @media (max-width: 700px) { grid-column: 2; } }
+.lm-order__see { grid-column: 3; font-size: .85rem; @media (max-width: 700px) { grid-column: 2; } }
+
+// The pipeline panel this step happens in: a key that focuses it.
+.lm-order__stage {
+  grid-column: 4; grid-row: 1; justify-self: end;
+  width: 1.8rem; height: 1.8rem;
+  border: var(--stroke) solid var(--ink); border-radius: var(--radius);
+  background: none; color: var(--ink);
+  font: 500 .72rem/1 var(--mono);
+  cursor: pointer;
+  &:hover { background: var(--hand); color: var(--on-hand); border-color: var(--hand); }
+  @media (max-width: 700px) { grid-column: 3; }
+}
+
+.lm-collection {
+  list-style: none;
+  margin: 0; padding: 0;
+  columns: 2 260px;
+  column-gap: 2.5rem;
+
+  li { break-inside: avoid; margin: 0; border-top: var(--hair) solid var(--rule); &::marker { content: none; } }
+  a { display: flex; align-items: baseline; gap: .8rem; padding: .5rem 4px; text-decoration: none; }
+}
+
+.lm-collection__no,
+.lm-collection__week { font: 400 .7rem/1 var(--mono); color: var(--ink-soft); }
+.lm-collection__week { margin-left: auto; }
+.lm-collection a:hover span { color: var(--on-hand); }
+
+// ── The pipeline figure: flat panels in the page's ink ──────
+.lm-flow {
+  .lm-t { font-family: var(--mono); fill: var(--ink-soft); }
+  .lm-b, .lm-big { fill: var(--ink); }
+  .lm-big { font-family: var(--sans); font-weight: 500; }
+  .lm-cap { fill: var(--ink); letter-spacing: .08em; }
+  .lm-sub { opacity: .85; }
+  .lm-hot-t { fill: var(--glow); }
+  .lm-frame { fill: none; stroke: var(--rule); stroke-width: 1; }
+  .lm-focus > .lm-frame,
+  [data-stage].lm-focus > rect { stroke: var(--glow); stroke-width: 1.4; }
+  .lm-axis { stroke: var(--rule); stroke-width: 1; }
+  .lm-bar { fill: var(--ink-soft); opacity: .55; }
+  .lm-bar.lm-soft { opacity: .25; }
+  .lf-hot .lm-bar { fill: var(--glow); opacity: .9; }
+  .lm-row { fill: none; stroke: var(--glow); stroke-width: 1; }
+  .lf-hot .lm-t { fill: var(--glow); }
+  .lm-hot-line { fill: none; stroke: var(--glow); stroke-width: 1.5; }
+  .lm-edge { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-linecap: round; }
+  .lm-dots { fill: none; stroke: var(--ink-soft); stroke-width: .6; opacity: .6; }
+  .lm-cell { fill: none; stroke: var(--rule); }
+  .lm-diag { fill: var(--faint); }
+  .lf-hot .lm-cell { stroke: var(--glow); stroke-width: 1.4; }
+}
+
+// ── The study figures (csi330-*-figure.js): flat elevations ──
+// Drawn with csi330-kit.js into one group, .lm-study: hairlines at any size
+// (strokes don't scale with the drawing), every solid paper with a soft edge
+// (.lf-solid, _figures.scss), type sized in the drawing's own units. Global,
+// not under .lm, because the Bayes balance also runs on /tools/.
+.project-figure .lm-study {
+  * { vector-effect: non-scaling-stroke; }
+
+  text {
+    font-family: var(--sans);
+    fill: var(--ink-soft);
+    stroke: none;
+    transition: fill .2s ease;
+  }
+
+  // The one fill of their own: what fills a vote tube, a faint ground under
+  // a hairline; lit, only its edge takes the glow.
+  .lm-fill {
+    fill: var(--rule);
+    stroke: var(--ink-soft);
+    stroke-width: .9;
+    transition: stroke .2s ease;
+  }
+}
+
+// ── The control panel under a figure ────────────────────────
+.lm-panel {
+  display: flex; flex-wrap: wrap;
+  gap: .5rem 1.6rem;
+  margin: .4rem 0 .6rem;
+  padding: .6rem 0;
+  border-top: var(--hair) solid var(--rule);
+  border-bottom: var(--hair) solid var(--rule);
+  font: 400 11px/1.4 var(--mono);
+  color: var(--ink-soft);
+}
+.lm-panel__row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.lm-panel__label { text-transform: lowercase; }
+
+// A figure's own segmented control: the same as .fp-seg, smaller.
+.lm-seg {
+  display: inline-flex; flex-wrap: wrap;
+  border: var(--hair) solid var(--ink); border-radius: 3px;
+  overflow: hidden;
+
+  button {
+    font: inherit;
+    padding: .25rem .55rem;
+    border: 0; border-right: var(--hair) solid var(--ink);
+    background: none; color: var(--ink);
+    cursor: pointer;
+    &:last-child { border-right: 0; }
+    &:hover { background: var(--hand); color: var(--on-hand); }
+    &[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  }
+}
+.lm-panel input[type="range"] { width: 140px; accent-color: var(--ink); }
+.lm-panel output { min-width: 4.5em; color: var(--ink); }
+
+// A focused part keeps its strokes and takes the glow; everything else fades.
+.project-figure svg.lm-focusing :is(polygon, path, line, circle, ellipse, rect, text) {
+  opacity: .13;
+  transition: opacity .2s ease;
+}
+.project-figure svg.lm-focusing :is(.lm-focus-on, .lm-focus-on *) {
+  opacity: 1;
+  --ink: var(--glow);
+  --ink-soft: var(--glow);
+}
+
+// ── Formulas (KaTeX), tables, decisions, sources ────────────
+.lm-formula {
+  max-width: 100%;
+  overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+  gap: .35rem;
+  margin: 1.3rem 0;
+  padding: .9rem 1rem .8rem;
+  border-top: var(--hair) solid var(--rule-strong);
+  border-bottom: var(--hair) solid var(--rule);
+  text-align: center;
+}
+.lm-formula__eq {
+  font-size: 1.12rem;
+  color: var(--ink);
+  max-width: 100%;
+  overflow-x: auto;
+  .katex-display { margin: 0; }
+}
+.lm-formula__say {
+  font: 400 .72rem/1.5 var(--mono);
+  color: var(--ink-soft);
+  max-width: 36rem;
+}
+
+// A two-column facts table ("The numbers in the figure") has no header.
+.lm-facts { border-top: var(--stroke) solid var(--ink); }
+.lm-facts thead { display: none; }
+.lm-facts td:first-child { width: 9rem; font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); padding-top: .7rem; }
+
+.lm-decide { margin-bottom: 1.2rem; }
+.lm-decide__q { font-family: var(--serif); font-size: 1.15rem; margin: 0; }
+.lm-decide__by { font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); margin: .2rem 0 1rem; }
+
+.lm-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .8rem;
+}
+.lm-option {
+  border: var(--hair) solid var(--rule-strong);
+  border-radius: var(--radius);
+  padding: .8rem .9rem;
+  font-size: .88rem;
+
+  h4 { margin: 0 0 .4rem; font-size: .98rem; }
+  p { margin: .35rem 0; color: var(--ink-soft); }
+  b { color: var(--ink); font-weight: 600; }
+
+  // This machine: held, like the current key.
+  &.is-here { border: var(--stroke) solid var(--ink); }
+}
+.lm-option__here {
+  display: inline-block;
+  margin-left: .4rem; padding: 1px 6px;
+  border-radius: 3px;
+  background: var(--ink); color: var(--paper);
+  font: 400 .62rem/1.5 var(--mono);
+  text-transform: lowercase;
+  vertical-align: .15em;
+}
+.lm-option__link a { font: 400 .74rem var(--mono); }
+
+.lm-sources {
+  margin-top: 2.6rem;
+  padding-top: .55rem;
+  border-top: var(--stroke) solid var(--ink);
+  font-size: .88rem;
+  max-width: var(--measure);
+
+  h3 { margin: 0 0 .8rem; font: 400 .7rem/1.4 var(--mono); color: var(--ink-soft); text-transform: lowercase; }
+  span { color: var(--ink-soft); }
+}
+
+// Wide tables (the threshold table has eleven columns) scroll sideways on
+// a phone instead of pushing the page wider.
+@media (max-width: 700px) {
+  .lm-body table { display: block; overflow-x: auto; }
+}
+
+// Touch screens have no keys to hint at.
+@media (hover: none) and (pointer: coarse) {
+  .lm-keys { display: none; }
+}

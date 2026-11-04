@@ -1,16 +1,19 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "How it is drawn · Learning Machines"
+short: "learning machines · how it is drawn"
 permalink: /tools/learning-machines/how-it-is-drawn/
 lm_page: how
 ---
 {%- assign base = "/tools/learning-machines/" | relative_url -%}
-<p class="lm-crumbs"><a href="{{ base }}">← Learning Machines</a> <span>/</span> <b>How it is drawn</b></p>
+<p class="lm-path"><a href="{{ base }}">learning machines</a> <span>/</span> reference</p>
 
 <h1 class="lm-title">How it is drawn</h1>
 <p class="lm-line">Where the numbers come from, and the conventions of the drawings</p>
 
-<div class="lm-body" markdown="1">
+<div class="lm-body fp-body" markdown="1">
 
 ## The numbers
 
@@ -18,7 +21,7 @@ Every figure runs on a dataset used in the course: the Palmer penguins (342 bird
 
 ## The drawings
 
-Each idea is drawn as a small machine on a bench, in isometric projection: boards that carry an ordinary plot on their face, gauges on posts, selectors with detents, trays and springs. Lines are hairlines in the page's ink. One accent colour marks only what is live, the part that is answering you right now; in the dark theme it glows. Under every figure, a strip writes out the calculation with the current numbers, so the arithmetic is as visible as the machine.
+Each idea is drawn as a small machine on a plinth, flat, seen from the front: boards that carry an ordinary plot on their face, gauges on posts, selectors with detents, trays and springs. Lines are hairlines in the page's ink. One accent colour marks only what is live, the part that is answering you right now; in the dark theme it glows. Under every figure, a strip writes out the calculation with the current numbers, so the arithmetic is as visible as the machine.
 
 ## Using them
 

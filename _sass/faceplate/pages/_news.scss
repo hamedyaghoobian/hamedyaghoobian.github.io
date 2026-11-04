@@ -1,0 +1,112 @@
+// ─────────────────────────────────────────────────────────────
+// News (news.md): the kind filter, a four-track sequencer (months left to
+// right, one track per kind, a step per item, held steps where the event
+// came later, a red line at now), then the log, which is the page's real
+// list. news-figure.js draws the sequencer and the filter from the log.
+// ─────────────────────────────────────────────────────────────
+
+.nw { margin-top: .5rem; }
+.nw-bar { align-items: flex-end; }
+.nw-bar__keys { margin: 0; }
+.nw-seg[hidden] { display: none; }
+
+// ── The sequencer ───────────────────────────────────────────
+.nw-cal {
+  margin: 6px 0 22px;
+  border-top: var(--stroke) solid var(--ink);
+  padding-top: 14px;
+  &[hidden] { display: none; }
+}
+// Drawn at whatever width it is given (news-figure.js), so it never scrolls.
+.nw-cal__scroll { overflow: hidden; }
+.nw-svg {
+  display: block; width: 100%; height: auto;
+  color: var(--ink); overflow: visible;
+  text { font: 400 10px var(--mono); fill: var(--ink-soft); }
+}
+.nw-lane { fill: var(--faint); }
+.nw-tr { fill: var(--ink) !important; font-weight: 500 !important; transition: opacity .15s ease; }
+.nw-tr__k, .nw-tr__c { fill: var(--ink-soft); font-weight: 400; }
+.nw-tr.is-dim { opacity: .3; }
+.nw-axis { stroke: var(--ink); stroke-width: 1; }
+.nw-yrule { stroke: var(--rule); stroke-width: 1; }
+.nw-mt { stroke: var(--ink-soft); stroke-width: 1; }
+.nw-yr { fill: var(--ink) !important; font-weight: 500 !important; }
+.nw-yr__c { fill: var(--ink-soft); font-weight: 400; }
+.nw-mo { font-size: 8.5px !important; }
+.nw-now__l { stroke: var(--live); stroke-width: 1.25; }
+.nw-now__t { fill: var(--live) !important; font-weight: 500; }
+
+.nw-g {
+  color: var(--ink); cursor: pointer; outline: none;
+  transition: opacity .15s ease;
+  .nw-bg { fill: transparent; }
+  &:hover .nw-bg, &.is-on .nw-bg { fill: var(--hand); }
+  &:hover, &.is-on { color: var(--on-hand); }
+  &:focus-visible .nw-bg { stroke: var(--hand); stroke-width: 2; }
+  &.is-dim { opacity: .12; pointer-events: none; }
+}
+.nw-step { fill: currentColor; }
+.nw-step--held { fill: var(--paper); stroke: currentColor; stroke-width: 1.25; }
+.nw-g:hover .nw-step--held, .nw-g.is-on .nw-step--held { fill: var(--hand); }
+.nw-hold { stroke: currentColor; stroke-width: 1.25; }
+.nw-live { fill: var(--live); }
+.nw-g:hover .nw-live, .nw-g.is-on .nw-live { stroke: var(--on-hand); stroke-width: 1.2; }
+
+.nw-cal__key {
+  display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 6px 0 0;
+  > span { display: inline-flex; align-items: center; gap: 6px; }
+}
+.nw-cal__mk {
+  width: 30px; height: 10px; overflow: visible; color: var(--ink);
+  &--one { width: 7px; }
+  .s { fill: currentColor; }
+  .h { fill: none; stroke: currentColor; stroke-width: 1.25; }
+}
+.nw-cal__now { display: inline-block; width: 1.5px; height: 11px; background: var(--live); }
+// What the pointer (or j / k) is on, in a line under the sequencer.
+.nw-readout {
+  min-height: 3.2em; margin: 10px 0 0; padding: 8px 0 0;
+  border-top: var(--hair) solid var(--rule);
+  font-size: .9rem; line-height: 1.45;
+  &__m { display: block; font: 400 .7rem/1.5 var(--mono); color: var(--ink-soft); }
+}
+
+// ── The log ─────────────────────────────────────────────────
+.nw-log {
+  list-style: none; margin: 0; padding: 0;
+  border-top: var(--stroke) solid var(--ink);
+}
+.nw-item {
+  display: grid;
+  grid-template-columns: 128px 58px minmax(0, var(--measure));
+  column-gap: 14px; align-items: baseline;
+  margin: 0; padding: 11px 4px;
+  border-bottom: var(--hair) solid var(--rule);
+  scroll-margin-top: 80px;
+  &::marker { content: none; }
+  &[hidden] { display: none; }
+  &:hover, &.is-on, &.fp-at { background: var(--hand); color: var(--on-hand); box-shadow: none; }
+  &:hover a, &.is-on a, &.fp-at a { color: inherit; text-decoration-color: currentColor; }
+  &:hover .fp-tag, &.is-on .fp-tag, &.fp-at .fp-tag { border-color: currentColor; }
+  // ring the live dot so it stays clear on the hand
+  &:hover .fp-live, &.is-on .fp-live, &.fp-at .fp-live { box-shadow: 0 0 0 1.5px var(--on-hand); }
+}
+.nw-d {
+  display: inline-flex; align-items: center; gap: 7px;
+  font: 500 .74rem/1.5 var(--mono); white-space: nowrap;
+}
+.nw-k { justify-self: start; }
+.nw-t { font-size: .97rem; line-height: 1.5; }
+.nw-student { font-size: .72rem; vertical-align: 1px; }
+
+@media (max-width: 640px) {
+  .nw-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+  .nw-k { justify-self: end; }
+  .nw-t { grid-column: 1 / -1; }
+  .nw-readout { min-height: 0; }
+}
+@media (hover: none) { .nw-bar__keys { display: none; } }   // no keyboard on a phone

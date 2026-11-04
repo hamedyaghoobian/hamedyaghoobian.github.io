@@ -1,6 +1,9 @@
 ---
+up: /tools/learning-machines/
+up_label: learning machines
 layout: learning-machines
 title: "Classification metrics · Learning Machines"
+short: "learning machines · classification metrics"
 permalink: /tools/learning-machines/classification-metrics/
 entry: classification-metrics
 ---

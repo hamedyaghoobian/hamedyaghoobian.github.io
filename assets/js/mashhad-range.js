@@ -15,9 +15,15 @@
 
 (function () {
   const footer = document.querySelector('.site-footer');
-  const host = footer && footer.querySelector('.footer-range');
-  if (!host) return;
+  if (!footer) return;
+  const host = footer.querySelector('.footer-range');
   const place = footer.querySelector('.footer-place');
+  // Interior pages have the clock but not the drawing: keep the caption
+  // ticking and stop there. (Faceplate redesign.)
+  if (!host) {
+    const tick = () => { if (place) place.textContent = caption(new Date()); };
+    setTimeout(() => { tick(); setInterval(tick, 30000); });
+  }
 
   // ── Mashhad's clock and sun ───────────────────────────────────────────
 
@@ -73,6 +79,8 @@
     const hours = `${whole}${ahead - whole >= 0.5 ? '½' : ''}h`;
     return `Mashhad, ${time} · ${hours} ahead`;
   }
+
+  if (!host) return;
 
   // ── The range ─────────────────────────────────────────────────────────
 
@@ -246,7 +254,7 @@
   // ── Size, waking, the lamp ────────────────────────────────────────────
 
   let lamp = null;
-  const above = [...document.querySelectorAll('.home-container, .info-section')];
+  const above = [...document.querySelectorAll('[data-range-above], .home-container, .info-section')];
 
   // The drawing's sky reaches up into the clear ground left between the
   // text above and the band, never past it.

@@ -19,12 +19,12 @@ const IDLE_MS = 2200;          // stillness before the birds come home
 const FIRST_IDLE_MS = 5500;    // the first time, let the flock be seen
 const LAND_MS = 5200;          // a full landing, swept right to left across the view
 const LIFT_MS = 900;
-const THEME_KEY = "what-the-birds-leave:theme";
 
-const PALETTES = {
-  dark:  { ink: [236, 226, 208], gold: [232, 172, 58], letters: [236, 226, 208], letterA: .34, title: [232, 172, 58] },
-  light: { ink: [24, 19, 15],    gold: [168, 104, 6],  letters: [42, 33, 28],    letterA: .30, title: [150, 96, 10] },
-};
+// The sky is cobalt in both themes (the frame's ground is CSS: --ro-sky), and the birds are cream.
+// The Simorgh's dots are yellow: inside the frame yellow is kept for the thing the poem is looking
+// for. These are the site's tokens, as numbers: cream #F2EBDA, yellow #F2C500, night #18217F.
+const CREAM = [242, 235, 218], YELLOW = [242, 197, 0], NIGHT = "rgb(24, 33, 127)";
+const PALETTE = { ink: CREAM, gold: YELLOW, letters: CREAM, letterA: .34, title: CREAM };
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -42,7 +42,7 @@ let cw = 1, ch = 1, dpr = 1;
 let view = { s: 1, x: 0, y: 0 };
 let land = 0, lastMove = performance.now() + FIRST_IDLE_MS - IDLE_MS;
 let pointer = null, startle = 0;
-let palette = PALETTES[document.documentElement.dataset.theme] || PALETTES.dark;
+const palette = PALETTE;
 let lettersKey = "";
 let running = true;
 let hand = (() => {
@@ -53,6 +53,7 @@ let hand = (() => {
 })();
 let shown = -1;
 let switching = null;          // the hand the flock is on its way to
+let ui = null;                 // the keys (../piece.js), once they are set up below
 let buf;
 
 // ---------- data ----------
@@ -322,7 +323,7 @@ function useSprite() {
 // and so is the pointer: one more dot among them
 function useCursor() {
   if (explodeTarget) { sky.style.cursor = "default"; return; }
-  const [r, g, b] = palette.ink, edge = palette === PALETTES.light ? "#f4efe6" : "#0b0a09";
+  const [r, g, b] = palette.ink, edge = NIGHT;
   const v = DOT * .62;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="${-v} ${-v} ${2 * v} ${2 * v}">` +
     `<path d="${T.page.dotPath}" fill="rgb(${r},${g},${b})" stroke="${edge}" stroke-width="${v * .09}"/></svg>`;
@@ -432,22 +433,28 @@ const labels = LAYERS.map(([title, sub], z) => {
   el.type = "button";
   el.className = "layer-label";
   el.title = "Go through this layer alone";
-  el.innerHTML = `<b>${title}</b><small>${sub}</small><small class="n"></small>`;
-  el.onpointerenter = el.onfocus = () => { peek = z; };
-  el.onpointerleave = el.onblur = () => { if (peek === z) peek = -1; };
+  el.innerHTML = `<span class="fp-k">${z + 1}</span><b>${title.split(" · ").pop()}</b><small>${sub}</small><small class="n"></small>`;
+  el.tabIndex = -1;                              // reachable only while the flock is taken apart
+  el.onpointerenter = el.onfocus = () => { peekAt(z); };
+  el.onpointerleave = el.onblur = () => { if (peek === z) peekAt(-1); };
   el.onclick = () => chooseLayer(z);
   frame.appendChild(el);
   return el;
 });
 
+function peekAt(z) {
+  peek = z;
+  labels.forEach((el, i) => el.classList.toggle("is-peek", i === z));
+}
+
 // go through one layer alone: the flock is put back together with only those birds in it
 const soloChip = document.getElementById("solo");
 function chooseLayer(z) {
   solo = z;
-  peek = -1;
+  peekAt(-1);
   if (z >= 0) {
     const [title, sub] = LAYERS[z];
-    soloChip.querySelector(".what").innerHTML = `${title}<small>${sub}</small>`;
+    soloChip.querySelector(".what").innerHTML = `<span class="fp-k">${z + 1}</span>${title.split(" · ").pop()} alone<small>${sub}</small>`;
     setExplode(false);
   }
   soloChip.hidden = z < 0;
@@ -457,6 +464,7 @@ function chooseLayer(z) {
     if (z >= 0) url.searchParams.set("layer", z + 1); else url.searchParams.delete("layer");
     history.replaceState(null, "", url);
   } catch (_) {}
+  if (ui) ui.render();
 }
 soloChip.querySelector("button").onclick = () => chooseLayer(-1);
 
@@ -467,10 +475,15 @@ function countLayers() {
 
 function setExplode(on) {
   explodeTarget = on ? 1 : 0;
+  viewGoal = null;
   fit();
   lastMove = 0;                  // the birds settle while they are being looked at from above
   document.body.classList.toggle("exploded", on);
+  document.getElementById("layers").setAttribute("aria-pressed", on);
+  labels.forEach(el => { el.tabIndex = on ? 0 : -1; });
+  if (!on) peekAt(-1);
   useCursor();
+  if (ui) ui.render();
 }
 
 // ---------- view ----------
@@ -514,6 +527,42 @@ let zoomGoal = null;
 function zoomTo(px, py, f) {
   const s = Math.min(MAX_PX_PER_EM, Math.max(fitScale(), (zoomGoal ? zoomGoal.s : view.s) * f));
   zoomGoal = { s, px, py };
+}
+
+// j / k read the book a couplet at a time: the view comes close enough to read and centres the line
+let viewGoal = null, sel = -1;
+function readStep(d) {
+  if (!T) return;
+  let r;
+  if (sel >= 0) r = lineRow[sel] + d;
+  else {                                        // start from the line nearest the middle of the view
+    const x = (cw / 2 - view.x) / view.s, y = (ch * .4 - view.y) / view.s;
+    const c = Math.min(cols - 1, Math.max(0, colAt(x)));
+    r = c * perCol + Math.min(perCol - 1, Math.max(0, Math.floor((y - MARGIN) / ROW_H)));
+  }
+  while (r >= 0 && r < rows.length && rows[r].kind !== 0) r += d;   // over the titles
+  if (r < 0 || r >= rows.length) return;        // the ends of the book
+  const row = rows[r];
+  sel = row.l;
+  if (land < .9) lastMove = 0;                  // let them come home to be read
+  const s = Math.min(MAX_PX_PER_EM, Math.max(view.s, READ_PX_PER_EM * 2.4));
+  const cx = colCentre(row.col), cy = MARGIN + row.row * ROW_H + BASE - ROW_H * .3;
+  const pw = W * s, ph = H * s;
+  let x = cw / 2 - cx * s, y = ch * .4 - cy * s;
+  x = pw <= cw ? (cw - pw) / 2 : Math.min(0, Math.max(cw - pw, x));
+  y = ph <= ch ? (ch - ph) / 2 : Math.min(0, Math.max(ch - ph, y));
+  zoomGoal = null;
+  viewGoal = { s, x, y };
+}
+function readRule() {
+  const el = document.getElementById("sel-rule");
+  if (sel < 0 || land < .9 || explode > .01) { el.hidden = true; return; }
+  const row = rows[lineRow[sel]];
+  const x0 = LTR ? slotLeft(row.col, 0) : slotLeft(row.col, PER - 1);
+  const w = PER * COL_W + (PER - 1) * GUTTER;
+  el.hidden = false;
+  el.style.width = w * view.s + "px";
+  el.style.transform = `translate(${x0 * view.s + view.x}px, ${(MARGIN + row.row * ROW_H + BASE + .35) * view.s + view.y}px)`;
 }
 
 // ---------- the letters, faint and dotless, under the resting dots ----------
@@ -641,24 +690,23 @@ function showPanel(l) {
   const sec = T.sections[row.si], poem = sec.poems[row.pi];
   const a = row.l, b = row.l + 1;
   const half = i => i === l ? `<b>${esc(T.lines[i])}</b>` : esc(T.lines[i]);
-  let n = 0;
-  for (let i = T.starts[l]; i < T.starts[l + 1]; i++) n += solo <= 0 || layerOf(dotFlags[i]) === solo;
+  // the site's verse form: each line with its dots counted at the end (only the chosen layer's, if one is)
+  const dotsIn = i => { let k = 0; for (let d = T.starts[i]; d < T.starts[i + 1]; d++) k += solo <= 0 || layerOf(dotFlags[d]) === solo; return k; };
+  const line = i => i < T.lines.length
+    ? `<p class="line"><span class="t">${half(i)}</span><span class="n" title="dots">${dotsIn(i)}</span></p>` : "";
+  const where = document.getElementById("where"), lines = document.getElementById("couplet");
+  const dir = LTR ? "ltr" : "rtl", lang = LTR ? "en" : "fa";
+  for (const el of [where, lines]) { el.dir = dir; el.lang = lang; }
+  where.textContent = `${sec.title}${poem.title !== sec.title ? " · " + poem.title : ""}`;
+  const kind = solo > 0 ? `${LAYERS[solo][0].split(" · ")[1]} ` : "";
   if (LTR) {
-    document.getElementById("where").textContent = `${sec.title} · ${poem.title}`;
-    document.getElementById("couplet").innerHTML = `<b>${esc(T.lines[l])}</b>`;
+    lines.innerHTML = line(l);
+    document.getElementById("count").textContent = `${kind}dots · line ${(l + 1).toLocaleString("en")} of ${T.lines.length.toLocaleString("en")}`;
+  } else {
+    lines.innerHTML = line(a) + line(b);
     document.getElementById("count").textContent =
-      `line ${(l + 1).toLocaleString("en")} of ${T.lines.length.toLocaleString("en")} · ${n} ${n === 1 ? "dot" : "dots"}`;
-    panel.classList.add("show");
-    return;
+      `${kind}dots per line · couplet ${((a / 2) + 1).toLocaleString("en")} of ${(T.lines.length / 2).toLocaleString("en")}`;
   }
-  document.getElementById("where").innerHTML =
-    `<span lang="fa">${esc(sec.title)}${poem.title !== sec.title ? " · " + esc(poem.title) : ""}</span>`;
-  document.getElementById("couplet").innerHTML = `${half(a)}<span class="sep">✦</span>${half(b)}`;
-  n = 0;
-  for (let i = T.starts[l]; i < T.starts[l + 1]; i++) n += solo <= 0 || layerOf(dotFlags[i]) === solo;
-  const kind = solo > 0 ? ` ${LAYERS[solo][0].split(" · ")[1]}` : "";
-  document.getElementById("count").textContent =
-    `couplet ${((a / 2) + 1).toLocaleString("en")} of ${(T.lines.length / 2).toLocaleString("en")} · ${n}${kind} ${n === 1 ? "dot" : "dots"} in this half`;
   panel.classList.add("show");
 }
 
@@ -674,7 +722,7 @@ function local(e) {
 
 sky.addEventListener("pointerdown", e => {
   sky.setPointerCapture(e.pointerId);
-  zoomGoal = null;
+  zoomGoal = viewGoal = null;
   pts.set(e.pointerId, local(e));
   if (pts.size === 1) { dragFrom = local(e); sky.classList.add("dragging"); }
   if (pts.size === 2) {
@@ -720,44 +768,69 @@ sky.addEventListener("wheel", e => {
   e.preventDefault();
   const [x, y] = local(e);
   const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+  viewGoal = null;
   zoomTo(x, y, Math.exp(-dy * (e.ctrlKey ? .01 : .0022)));   // ctrl: a trackpad pinch
 }, { passive: false });
 
 const centre = () => [cw / 2, ch / 2];
-document.getElementById("zoom-in").onclick = () => zoomTo(...centre(), 1.8);
-document.getElementById("zoom-out").onclick = () => zoomTo(...centre(), 1 / 1.8);
-document.getElementById("reset").onclick = () => { if (explodeTarget) setExplode(false); zoomGoal = null; fit(); moved(); };
-document.getElementById("layers").onclick = () => setExplode(!explodeTarget);
+document.getElementById("zoom-in").onclick = () => { viewGoal = null; zoomTo(...centre(), 1.8); };
+document.getElementById("zoom-out").onclick = () => { viewGoal = null; zoomTo(...centre(), 1 / 1.8); };
+document.getElementById("reset").onclick = () => { if (explodeTarget) setExplode(false); zoomGoal = viewGoal = null; fit(); moved(); };
+document.getElementById("layers").onclick = () => { if (!LTR) setExplode(!explodeTarget); };
 
-addEventListener("keydown", e => {
-  if (e.target.closest && e.target.closest("input, textarea")) return;
-  const r = frame.getBoundingClientRect();
-  if (r.bottom < 0 || r.top > innerHeight) return;
-  const k = e.key, step = 80;
-  if (explodeTarget) { if (k === "Escape") setExplode(false); return; }
-  if (k === "Escape" && solo >= 0) { chooseLayer(-1); return; }
-  if (k === "+" || k === "=") zoomTo(...centre(), 1.5);
-  else if (k === "-" || k === "_") zoomTo(...centre(), 1 / 1.5);
-  else if (k === "0") { zoomGoal = null; fit(); moved(); }
-  else if (k.startsWith("Arrow")) {
-    e.preventDefault();
-    view.x += k === "ArrowLeft" ? step : k === "ArrowRight" ? -step : 0;
-    view.y += k === "ArrowUp" ? step : k === "ArrowDown" ? -step : 0;
-    clampView(); moved();
-  }
+// ---------- keys: the page's until the frame has focus, then the piece's (see ../piece.js) ----------
+
+const NAMES = { naskh: "naskh", nastaliq: "nastaliq", english: "English" };
+function pieceKeys() {
+  if (explodeTarget) return [["j k", "look at a layer"], ["1–6", "one layer alone"], ["enter", "go through it alone"], ["esc", "put the flock back"]];
+  const k = [["j k", "read a couplet"], ["space", "let them fly"]];
+  if (!LTR) k.push(["l", "layers"], ["1–6", "one layer alone"]);
+  k.push(["h", `hand: ${NAMES[hand]}`], ["+ − 0", "zoom · whole book"], ["← →", "move"],
+         ["esc", solo >= 0 ? "all the birds back" : sel >= 0 ? "stop reading" : "give the keys back"]);
+  return k;
+}
+ui = window.Piece({
+  frame,
+  keys: pieceKeys,
+  help: () => [
+    ["j k", "read the next / previous couplet; the view comes close and the line shows below"],
+    ["space", "let them fly; stay still and they come home"],
+    ["l", "take the flock apart into its layers (≋)"],
+    ["1–6", "one layer alone: 1 the letters · 2 one dot · 3 two dots · 4 three dots · 5 Persian · 6 the Simorgh"],
+    ["h", "the next hand: naskh → nastaliq → English"],
+    ["+ − 0", "come closer · go back · see the whole book (◻)"],
+    ["← ↑ → ↓", "move across the book"],
+    ["", "taken apart: j k look at a layer, enter goes through it alone, esc puts the flock back"],
+  ],
+  key(e) {
+    const k = e.key, step = 80;
+    if (explodeTarget) {
+      if (k === "j" || k === "ArrowDown") { peekAt(peek <= 0 ? LAYERS.length - 1 : peek - 1); return true; }
+      if (k === "k" || k === "ArrowUp") { peekAt(peek < 0 || peek >= LAYERS.length - 1 ? 0 : peek + 1); return true; }
+      if (/^[1-6]$/.test(k)) { chooseLayer(+k - 1); return true; }
+      if (k === "Enter" && peek >= 0) { chooseLayer(peek); return true; }
+      return false;
+    }
+    if (k === "j" || k === "k") { readStep(k === "j" ? 1 : -1); return true; }
+    if (k === " ") { moved(); return true; }
+    if (/^[1-6]$/.test(k)) { if (LTR) return false; chooseLayer(solo === +k - 1 ? -1 : +k - 1); return true; }
+    if (k === "h") { const i = HANDS.indexOf(switching || hand); changeHand(HANDS[(i + 1) % HANDS.length]); return true; }
+    if (k.startsWith("Arrow")) {
+      viewGoal = null;
+      view.x += k === "ArrowLeft" ? step : k === "ArrowRight" ? -step : 0;
+      view.y += k === "ArrowUp" ? step : k === "ArrowDown" ? -step : 0;
+      clampView(); moved();
+      return true;
+    }
+    return false;
+  },
+  escape() {
+    if (explodeTarget) { setExplode(false); return true; }
+    if (solo >= 0) { chooseLayer(-1); return true; }
+    if (sel >= 0) { sel = -1; return true; }
+    return false;
+  },
 });
-
-const themeBtn = document.getElementById("theme");
-function labelTheme() { themeBtn.textContent = document.documentElement.dataset.theme === "light" ? "dark" : "light"; }
-themeBtn.onclick = () => {
-  const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
-  document.documentElement.dataset.theme = next;
-  try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
-  palette = PALETTES[next];
-  labelTheme();
-  if (gl) usePalette();
-};
-labelTheme();
 
 // ---------- the loop ----------
 
@@ -783,6 +856,12 @@ function frameLoop(now) {
   soloAmt += ((want >= 0 ? 1 : 0) - soloAmt) * (1 - Math.pow(.01, dt / 1000));
   startle += ((near ? 1 : 0) - startle) * Math.min(1, dt / 250);
 
+  if (viewGoal) {
+    const k = 1 - Math.pow(1e-4, dt / 1000);
+    view.s += (viewGoal.s - view.s) * k; view.x += (viewGoal.x - view.x) * k; view.y += (viewGoal.y - view.y) * k;
+    clampView();
+    if (Math.abs(viewGoal.s - view.s) < .01 && Math.abs(viewGoal.x - view.x) < .5 && Math.abs(viewGoal.y - view.y) < .5) viewGoal = null;
+  }
   if (zoomGoal) {
     const r = zoomGoal.s / view.s;
     if (Math.abs(Math.log(r)) < 1e-3) { zoomAt(zoomGoal.px, zoomGoal.py, r); zoomGoal = null; }
@@ -817,7 +896,9 @@ function frameLoop(now) {
   }
   gl.drawArrays(gl.POINTS, 0, Math.max(FLOCK, N));
 
-  showPanel(near && view.s >= READ_PX_PER_EM * .6 ? lineAt(...pointer) : -1);
+  const hov = near && view.s >= READ_PX_PER_EM * .6 ? lineAt(...pointer) : -1;
+  showPanel(hov >= 0 ? hov : sel >= 0 && land > .9 && !explodeTarget ? sel : -1);
+  readRule();
   if (land > .99 && now - t0 > 15000) hint.classList.add("gone");
 
   requestAnimationFrame(frameLoop);
@@ -842,6 +923,7 @@ async function changeHand(h) {
   const data = await fetchHand(h);
   while (land > 0 && running) await new Promise(r => setTimeout(r, 60));
   useHand(h, data);
+  sel = -1; viewGoal = null;
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, homes(data), gl.STATIC_DRAW);
   countLayers();
@@ -852,6 +934,7 @@ async function changeHand(h) {
   history.replaceState(null, "", url);
   switching = null;
   moved();
+  ui.render();
 }
 for (const b of document.querySelectorAll("[data-hand]")) b.onclick = () => changeHand(b.dataset.hand);
 

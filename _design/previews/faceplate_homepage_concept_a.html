@@ -1,0 +1,69 @@
+<h2 class="sr-only">Interactive faceplate homepage concept: name on a vertical spine, a display that changes with eight section keys, a speaker grille, and a knob that switches between cream and cobalt themes.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+#fp{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.28);--y:#F2C500;--r:#E0362C;background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;display:grid;grid-template-columns:64px minmax(0,1fr);transition:background .25s,color .25s}
+#fp.dark{--bg:#2B3BD1;--ink:#F2EBDA;--soft:rgba(242,235,218,.3)}
+.m{font-family:'IBM Plex Mono',monospace;font-size:11px}
+.spine{border-right:1.5px solid var(--ink);position:relative;min-height:440px}
+.spine b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);white-space:nowrap;font-weight:800;font-size:38px;letter-spacing:-.02em}
+.disp{border:1.5px solid var(--ink);border-radius:6px;padding:14px 16px;height:190px;display:flex;flex-direction:column}
+.keys{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:7px}
+.key{aspect-ratio:1;border:1.5px solid var(--ink);border-radius:5px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;background:transparent;color:inherit;font:inherit;text-align:left}
+.key:hover{background:var(--y);color:#2B3BD1;border-color:var(--y)}
+.key.on{background:var(--ink);color:var(--bg)}
+.key .lb{font-size:11.5px}
+.led{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--r)}
+.grille{display:grid;grid-template-columns:repeat(7,6px);gap:7px}
+.grille i{width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:.85}
+.knob{width:62px;height:62px;border-radius:50%;border:1.5px solid var(--ink);position:relative;cursor:pointer;transition:transform .3s}
+.knob::after{content:"";position:absolute;left:50%;top:6px;width:2px;height:16px;background:var(--r);transform:translateX(-50%)}
+.li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;padding:5px 0;border-bottom:1px solid var(--soft);font-size:13.5px;cursor:pointer}
+.li:hover{background:var(--y);color:#2B3BD1}
+</style>
+<div style="padding:1rem 0">
+<div id="fp">
+<div class="spine"><b>hamed yaghoobian</b></div>
+<div style="padding:16px 20px 14px;display:flex;flex-direction:column;gap:16px">
+
+<div class="m" style="display:flex;justify-content:space-between;align-items:center">
+<span>HY—001 · computer science / sts</span>
+<span style="display:flex;gap:7px;align-items:center"><span style="width:8px;height:8px;border-radius:50%;background:var(--r)"></span>on air · muhlenberg</span>
+</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:18px">
+<div class="disp">
+<div class="m" style="display:flex;justify-content:space-between;margin-bottom:10px"><span id="dt">01 / about</span><span id="dc" style="opacity:.7">1 of 1</span></div>
+<div id="db" style="flex:1;overflow:hidden"></div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:4px 0">
+<div class="grille" id="gr"></div>
+<div style="text-align:center"><div class="knob" id="kn" role="button" aria-label="Toggle theme"></div><div class="m" style="margin-top:6px" id="kl">light</div></div>
+</div>
+</div>
+
+<div class="keys" id="keys"></div>
+
+<div class="m" style="display:flex;justify-content:space-between;opacity:.85">
+<span>trumbower 125 · eastern pa</span>
+<span>scholar · github · email</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+const S=[
+{k:'about',t:'p',v:'I teach computer science. I study AI: how it shapes people, organizations, decisions, and everyday life. Born in Mashhad, Khorasan. East, still. But a different east.'},
+{k:'teaching',t:'l',v:[['learning machines','course'],['csi 330','course'],['pedagogy notes','notes']]},
+{k:'research',t:'l',v:[['textual analysis','area'],['human–ai interaction','area'],['student research','lab']]},
+{k:'news',t:'l',v:[['latest talk','2026'],['new paper','2026'],['archive','→']]},
+{k:'readings',t:'l',v:[['what ferdowsi let in','no. 3'],['what the birds leave','no. 2'],['no. 1','no. 1']],led:1},
+{k:'tools',t:'l',v:[['tools and projects','index'],['made with claude','tag']]},
+{k:'poems',t:'l',v:[['collected poems','index'],['newest','→']]},
+{k:'email',t:'p',v:'hamedyaghoobian@muhlenberg.edu<br><br>Or visit: Trumbower Science Building, room 125.',y:1}];
+const K=document.getElementById('keys');
+S.forEach((s,i)=>{const b=document.createElement('button');b.className='key';b.innerHTML=`<span class="m">0${i+1}</span><span class="lb">${s.k}</span>${s.led?'<span class="led"></span>':''}`;if(s.y){b.style.background='var(--y)';b.style.borderColor='var(--y)';b.style.color='#2B3BD1'}b.onclick=()=>sel(i);K.appendChild(b)});
+function sel(i){const s=S[i];[...K.children].forEach((c,j)=>c.classList.toggle('on',j===i&&!s.y));document.getElementById('dt').textContent=`0${i+1} / ${s.k}`;const d=document.getElementById('db');if(s.t==='p'){d.innerHTML=`<p style="margin:0;font-size:14px;line-height:1.55">${s.v}</p>`;document.getElementById('dc').textContent='1 of 1'}else{d.innerHTML=s.v.map((r,j)=>`<div class="li"><span class="m">${i+1}.${j+1}</span><span>${r[0]}</span><span class="m">${r[1]}</span></div>`).join('');document.getElementById('dc').textContent=s.v.length+' items'}}
+sel(0);
+const g=document.getElementById('gr');for(let i=0;i<42;i++)g.appendChild(document.createElement('i'));
+let dk=false;document.getElementById('kn').onclick=e=>{dk=!dk;document.getElementById('fp').classList.toggle('dark',dk);e.target.style.transform=`rotate(${dk?120:0}deg)`;document.getElementById('kl').textContent=dk?'dark':'light'};
+</script>

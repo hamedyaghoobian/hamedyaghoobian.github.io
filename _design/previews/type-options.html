@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Type options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=EB+Garamond:ital,wght@0,400;1,400&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&family=Noto+Kufi+Arabic:wght@800&family=Vazirmatn:wght@900&family=Lalezar&family=Noto+Nastaliq+Urdu:wght@700&family=IBM+Plex+Sans+Arabic:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css?v=type">
+<style>
+  body { background: var(--paper); color: var(--ink); }
+  .to { max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+  .to-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: var(--stroke) solid var(--ink); padding-bottom: 8px; }
+  .to-top h1 { margin: 0; font: 800 1.4rem/1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .to-top button { font: 500 .72rem/1 var(--mono); background: none; color: var(--ink); border: var(--hair) solid var(--ink); border-radius: 3px; padding: 5px 8px; cursor: pointer; }
+  .to-top button:hover { background: var(--hand); color: var(--on-hand); border-color: var(--hand); }
+  .to h2 { margin: 48px 0 4px; font: 800 1.15rem/1.1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .to-lede { margin: 0 0 16px; font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); max-width: 70ch; }
+  .to-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .opt { border: var(--stroke) solid var(--ink); border-radius: var(--radius); padding: 12px 14px 18px; min-width: 0; }
+  .opt__tag { display: flex; justify-content: space-between; gap: 8px; margin: 0 0 18px; font: 500 .7rem/1.3 var(--mono); }
+  .opt__tag b { font-weight: 500; }
+  .opt__tag span { color: var(--ink-soft); text-align: right; }
+  .opt--rec { grid-column: 1 / -1; border-width: 2px; }
+  .opt--rec .rd-text p { font-size: 1.05rem; line-height: 1.6; }
+  .opt--rec .rd-note { font-family: 'Newsreader'; }
+  .opt.is-now .opt__tag b::after { content: " · now"; color: var(--live); }
+
+  /* the name, as on the home page */
+  .opt .hm-name { font-size: clamp(2.6rem, 5.6vw, 4.6rem); margin: 0; }
+  .opt .hm-name__fa { font-family: var(--try); font-weight: var(--w, 800); }
+  .opt .fa-line { margin: 18px 0 0; padding-top: 10px; border-top: var(--hair) solid var(--rule); font: 400 .7rem/1.4 var(--mono); color: var(--ink-soft); }
+  .opt .fa-line [lang="fa"] { font-family: var(--try); font-weight: var(--w, 800); font-size: 1.9rem; color: var(--ink); display: block; margin-bottom: 4px; line-height: 1.6; }
+
+  /* a reading's wall label */
+  .opt .rd-title { margin: 0 0 6px; font: 800 1.9rem/.95 var(--sans); letter-spacing: -.035em; text-transform: lowercase; }
+  .opt .rd-meta { margin: 0 0 16px; font: 400 .7rem/1.5 var(--mono); color: var(--ink-soft); }
+  .opt .rd-meta [lang="fa"], .opt .rd-text [lang="fa"] { font-family: var(--fa); }
+  .opt .rd-text p { font: 400 1.1rem/1.6 var(--try); margin: 0 0 .8em; max-width: 60ch; }
+  .opt .rd-note { margin: 10px 0 0; padding-left: 12px; border-left: 3px solid var(--yellow); font: italic 1rem/1.5 var(--try); }
+
+  @media (max-width: 760px) { .to-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main class="to">
+  <div class="to-top">
+    <h1>type options</h1>
+    <button type="button" id="th">dark / light</button>
+  </div>
+
+  <h2>1 · your name in persian, home page</h2>
+  <p class="to-lede">The same lockup as the home page: Latin above, Persian under it, ending where the Latin ends. The line under each shows the name larger, to judge the letterforms.</p>
+  <div class="to-grid">
+    <div class="opt is-now" style="--try:'Noto Kufi Arabic'">
+      <p class="opt__tag"><b>A · Noto Kufi Arabic</b><span>geometric kufi, upright, same weight as the Latin</span></p>
+      <h1 class="hm-name"><span class="hm-name__en">hamed<br>yaghoobian</span><span class="hm-name__fa" lang="fa" dir="rtl">حامد یعقوبیان</span></h1>
+      <p class="fa-line"><span lang="fa" dir="rtl">حامد یعقوبیان</span>800</p>
+    </div>
+    <div class="opt" style="--try:'Vazirmatn'; --w:900">
+      <p class="opt__tag"><b>B · Vazirmatn</b><span>Iranian-made, the Persian web's own sans; plainer, more Helvetica</span></p>
+      <h1 class="hm-name"><span class="hm-name__en">hamed<br>yaghoobian</span><span class="hm-name__fa" lang="fa" dir="rtl">حامد یعقوبیان</span></h1>
+      <p class="fa-line"><span lang="fa" dir="rtl">حامد یعقوبیان</span>900</p>
+    </div>
+    <div class="opt" style="--try:'Lalezar'; --w:400">
+      <p class="opt__tag"><b>C · Lalezar</b><span>Tehran poster lettering, after Lalezar Street's cinema signs; loud</span></p>
+      <h1 class="hm-name"><span class="hm-name__en">hamed<br>yaghoobian</span><span class="hm-name__fa" lang="fa" dir="rtl">حامد یعقوبیان</span></h1>
+      <p class="fa-line"><span lang="fa" dir="rtl">حامد یعقوبیان</span>one weight</p>
+    </div>
+    <div class="opt" style="--try:'Noto Nastaliq Urdu'; --w:700">
+      <p class="opt__tag"><b>D · Noto Nastaliq</b><span>the hand Persian poetry is copied in; sloping, calligraphic</span></p>
+      <h1 class="hm-name"><span class="hm-name__en">hamed<br>yaghoobian</span><span class="hm-name__fa" lang="fa" dir="rtl">حامد یعقوبیان</span></h1>
+      <p class="fa-line"><span lang="fa" dir="rtl">حامد یعقوبیان</span>700</p>
+    </div>
+  </div>
+
+  <h2>2 · the text of readings, otherwise</h2>
+  <p class="to-lede">The wall label of What the Birds Leave, set in each face at the size the pieces use (1.1rem / 1.6). The title stays in Libre Franklin, as on every page; only the reading text changes.</p>
+  <div class="to-grid">
+    <div class="opt is-now" style="--try:'Newsreader'">
+      <p class="opt__tag"><b>A · Newsreader</b><span>made for screens, newspaper-like, a little narrow</span></p>
+      <div class="rd"></div>
+    </div>
+    <div class="opt" style="--try:'Source Serif 4'">
+      <p class="opt__tag"><b>B · Source Serif 4</b><span>sturdy transitional, even colour, the plainest of the four</span></p>
+      <div class="rd"></div>
+    </div>
+    <div class="opt" style="--try:'EB Garamond'">
+      <p class="opt__tag"><b>C · EB Garamond</b><span>old-style, bookish; the face the Birds piece sets FitzGerald in</span></p>
+      <div class="rd"></div>
+    </div>
+    <div class="opt" style="--try:'Literata'">
+      <p class="opt__tag"><b>D · Literata</b><span>built for long reading on screens (Google Books); warm, wide</span></p>
+      <div class="rd"></div>
+    </div>
+    <div class="opt opt--rec" style="--try:'Libre Franklin'">
+      <p class="opt__tag"><b>E · Libre Franklin, the site's own face</b><span>recommended · a museum wall label is set in a Franklin Gothic; the quoted line keeps Newsreader, as quotes do across the site</span></p>
+      <div class="rd"></div>
+    </div>
+  </div>
+</main>
+
+<template id="rd">
+  <p class="rd-title">what the birds leave</p>
+  <p class="rd-meta">Farid ud-Din Attar, <em>Manteq al-Tayr</em> (<span lang="fa">منطق‌الطیر</span>), c. 1177 / 2026</p>
+  <div class="rd-text">
+    <p>In Persian script many letters share one body and are told apart only by their dots. Read from the right, <span lang="fa">ب پ ت ث</span> are one stroke with one, three, two and three dots. Take the strokes away and what is left of a book is a scattering of small diamonds, each one the print of a reed pen pressed once against the page.</p>
+    <p>Thirty arrive, and in the presence of the Simorgh they see only themselves, thirty birds, <span lang="fa">سی مرغ</span>, <em>si morgh</em>. The whole poem is built to reach that one pun.</p>
+    <p class="rd-note">What they crossed the world to find was not somewhere else.</p>
+  </div>
+</template>
+<script>
+  const t = document.getElementById('rd');
+  document.querySelectorAll('.rd').forEach(d => d.appendChild(t.content.cloneNode(true)));
+  const r = document.documentElement;
+  document.getElementById('th').onclick = () => { r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark'; };
+</script>
+</body>
+</html>

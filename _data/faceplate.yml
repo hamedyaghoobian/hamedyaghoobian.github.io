@@ -1,0 +1,23 @@
+# The key strip, in order. Key 0 is home; 1–7 follow header_pages.
+# `key` is the label on the key; on a phone only the number shows.
+keys:
+  - { n: 0, url: /,                     key: home }
+  - { n: 1, url: /pedagogy/,            key: teaching }
+  - { n: 2, url: /student-research/,    key: research }
+  - { n: 3, url: /publications/,        key: publications }
+  - { n: 4, url: /news/,                key: news }
+  - { n: 5, url: /tools/,               key: tools }
+  - { n: 6, url: /readings-otherwise/,  key: readings }
+  - { n: 7, url: /poems/,               key: poems }
+
+# Siblings, for [ and ]: the order a section's children are read in.
+projects:
+  - /projects/nightshade-glaze-vlm-eval
+  - /projects/grammar-of-belief
+  - /projects/superhost-rating-reliability
+  - /projects/raising-reachy
+  - /projects/ai-seasons
+  - /projects/timecapsule-18th-century-llm
+  - /projects/multi-agents-llm-financial-trading-framework
+  - /projects/unmask-bias-llms
+  - /projects/walter-benjamin

@@ -1,0 +1,228 @@
+// ─────────────────────────────────────────────────────────────
+// Home (index.markdown): name and bio · portrait · the directory · the spec.
+// ─────────────────────────────────────────────────────────────
+
+.hm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  grid-template-areas:
+    "id   pic"
+    "dir  dir"
+    "spec spec";
+  column-gap: clamp(28px, 5vw, 64px);
+  margin-top: clamp(28px, 6vh, 56px);
+}
+
+// ── Name and bio ────────────────────────────────────────────
+.hm-id { grid-area: id; min-width: 0; }
+.hm-id__role { margin: 0 0 14px; }
+.hm-name {
+  margin: 0 0 clamp(22px, 4vh, 34px);
+  font: 800 clamp(3rem, 9vw, 6.6rem)/.86 var(--sans);
+  letter-spacing: -.055em;
+  text-transform: lowercase;
+}
+.hm-bio {
+  max-width: 560px;
+  font-size: 1.02rem;
+  p { margin-bottom: .9em; }
+}
+.hm-more {
+  margin: 0 0 .9em;
+  summary {
+    display: inline-flex; align-items: center; gap: 2px; cursor: pointer; list-style: none;
+    font: 500 .74rem/1 var(--mono); padding: 4px 6px 4px 0; border-radius: 3px;
+    &::-webkit-details-marker { display: none; }
+    &:hover { background: var(--hand); color: var(--on-hand); }
+  }
+  &__close { display: none; }
+  &[open] .hm-more__open { display: none; }
+  &[open] .hm-more__close { display: inline; }
+  &[open] summary { margin-bottom: .7em; }
+  p { padding-left: 14px; border-left: var(--hair) solid var(--rule-strong); }
+}
+
+// ── Portrait: the drawing in the plate's two inks ───────────
+.hm-portrait {
+  grid-area: pic;
+  margin: 26px 0 0;
+  align-self: start;
+  padding: 32px 14px 34px;
+  .fp-panel__tr { font-size: .64rem; display: inline-flex; align-items: center; .fp-live { width: 6px; height: 6px; margin-left: 6px; } [lang="fa"] { font-family: var(--fa); font-size: .7rem; } }
+  .fp-panel__br a { text-decoration: none; }
+  .fp-panel__br a:hover { color: var(--on-hand); }
+}
+.hm-portrait__img {
+  position: relative; aspect-ratio: 1; overflow: hidden; isolation: isolate;
+  background: var(--cobalt);
+  img { display: block; width: 100%; height: 100%; filter: grayscale(1) contrast(1.25); mix-blend-mode: screen; }
+  // white → cream, black lines → cobalt
+  &::after { content: ""; position: absolute; inset: 0; background: var(--cream); mix-blend-mode: darken; pointer-events: none; }
+}
+:root[data-theme="dark"] .hm-portrait__img {
+  background: var(--cream);
+  img { filter: grayscale(1) contrast(1.25) invert(1); mix-blend-mode: multiply; }
+  // black ground → deep cobalt, white lines → cream
+  &::after { background: var(--cobalt-deep); mix-blend-mode: lighten; }
+}
+
+// ── What's on the plate: one key per section ────────────────
+// Seven keys like the strip's, larger, each carrying a small figure drawn
+// from its section's data: what the key would show you if you pressed it.
+.hm-keys {
+  grid-area: dir;
+  margin-top: clamp(40px, 7vh, 64px);
+  &__head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 10px;
+    h2 { margin: 0; font-size: 1.05rem; text-transform: lowercase; }
+    p { margin: 0; }
+  }
+  &__grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px;
+  }
+  li { margin: 0; display: flex; }
+  li::marker { content: none; }
+  a {
+    flex: 1; display: grid; grid-template-rows: auto 46px 1fr auto; gap: 10px;
+    min-height: 196px; padding: 9px 10px 10px;
+    border: var(--stroke) solid var(--ink); border-radius: var(--radius);
+    text-decoration: none; color: var(--ink);
+    transition: background-color .1s ease, color .1s ease;
+  }
+  a:hover, li.fp-at a { background: var(--hand); color: var(--on-hand); border-color: var(--hand); }
+}
+.hm-key {
+  &__top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+  &__n { font: 500 .66rem/1 var(--mono); opacity: .75; }
+  &__t { font: 800 1rem/1 var(--sans); letter-spacing: -.02em; }
+  &__now { font-size: .8rem; line-height: 1.35; align-self: start; }
+  &__m { font: 400 .64rem/1.3 var(--mono); display: flex; align-items: center; gap: 6px; opacity: .85; }
+}
+
+// The figures. currentColor throughout, so a key under your hand inverts as one.
+.hm-fig {
+  position: relative; display: flex; align-items: flex-end; gap: 2px; height: 46px;
+  border-bottom: var(--hair) solid currentColor;
+  i { display: block; flex: none; }
+}
+// bars: one per term (teaching) or per year (citations); --v is the value
+.hm-fig--bars i {
+  width: 4px; height: calc(var(--v) * 7px); min-height: 2px; background: currentColor;
+  &.is-next { background: none; outline: 1px dashed currentColor; outline-offset: -1px; }
+  &.is-open { opacity: .45; }
+  &.is-live { position: relative; }
+  &.is-live::after { content: ""; position: absolute; left: 50%; top: -7px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--live); }
+}
+.hm-fig--cites { gap: 4px; i { width: 7px; } }
+// dots: one per project, filled while it is still going
+.hm-fig--dots {
+  flex-wrap: wrap; align-content: flex-end; gap: 5px; padding-bottom: 6px;
+  i { width: 9px; height: 9px; border-radius: 50%; border: 1.25px solid currentColor; }
+  i.is-on { background: currentColor; }
+}
+// a line through 2022–2026, a tick at each item's month
+.hm-fig--line {
+  i { position: absolute; bottom: 0; width: 1.5px; height: 18px; margin-left: -.75px; background: currentColor; }
+  i.is-live { height: 30px; background: var(--live); }
+  b { position: absolute; top: 0; font: 400 .58rem/1 var(--mono); opacity: .7; }
+  b:first-of-type { left: 0; } b:last-of-type { right: 0; }
+}
+// cells: one per tool; the one being built carries the live dot
+.hm-fig--cells {
+  gap: 5px; padding-bottom: 6px;
+  i { width: 16px; height: 16px; border: 1.25px solid currentColor; border-radius: 2px; position: relative; }
+  i.is-live::after { content: ""; position: absolute; right: -4px; top: -4px; width: 6px; height: 6px; border-radius: 50%; background: var(--live); }
+}
+// pieces: one panel per reading, numbered; the newest is live
+.hm-fig--pieces {
+  gap: 5px;
+  i { width: 18px; height: 38px; border: 1.25px solid currentColor; border-bottom: 0; border-radius: 2px 2px 0 0; position: relative; display: flex; align-items: flex-end; justify-content: center; }
+  b { font: 500 .6rem/1 var(--mono); padding-bottom: 3px; }
+  i.is-live::after { content: ""; position: absolute; left: 50%; top: -9px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--live); }
+}
+// poems: one dot per poem, the Persian year between
+.hm-fig--poems {
+  flex-wrap: wrap; align-content: flex-end; gap: 4px; padding-bottom: 6px;
+  i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  i.is-live { background: var(--live); }
+  b { font: 400 .62rem/1 var(--fa); margin: 0 3px; opacity: .8; }
+}
+a:hover .hm-fig .is-live::after, li.fp-at .hm-fig .is-live::after,
+a:hover .hm-fig i.is-live, li.fp-at .hm-fig i.is-live { box-shadow: 0 0 0 1.5px var(--on-hand); }
+
+// ── Interests and the path ──────────────────────────────────
+.hm-about {
+  grid-area: spec;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(28px, 5vw, 64px);
+  margin-top: 44px;
+  > div { border-top: var(--stroke) solid var(--ink); padding-top: 8px; }
+  h2.fp-label { margin: 0 0 12px; font-weight: 400; font-size: .7rem; text-transform: none; }
+}
+.hm-int ol { list-style: none; margin: 0; padding: 0; }
+.hm-int li {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 12px; align-items: baseline;
+  margin: 0; padding: 10px 0; border-bottom: var(--hair) solid var(--rule);
+  &::marker { content: none; }
+}
+.hm-int__n { font: 500 .66rem/1 var(--mono); color: var(--ink-soft); }
+.hm-int__t { font: 800 1.15rem/1.15 var(--sans); letter-spacing: -.02em; }
+.hm-int__p {
+  display: inline-flex; align-items: center; gap: 3px; text-decoration: none; padding: 2px 4px; border-radius: 3px;
+  i { width: 7px; height: 7px; border-radius: 50%; border: 1px solid currentColor; }
+  i.is-on { background: currentColor; }
+  span { font: 400 .64rem/1 var(--mono); margin-left: 6px; color: var(--ink-soft); }
+  &:hover span { color: inherit; }
+}
+
+.hm-path__line {
+  position: relative; height: 34px; margin: 6px 14px 26px;
+  border-bottom: var(--hair) solid var(--ink);
+  > i { position: absolute; bottom: 0; width: 1px; height: 4px; background: var(--ink-soft); }
+  > i.is-major { height: 8px; background: var(--ink); }
+  > i b { position: absolute; top: 12px; left: 0; transform: translateX(-50%); font: 400 .6rem/1 var(--mono); color: var(--ink-soft); }
+}
+.hm-path__run { position: absolute; bottom: -2px; height: 4px; background: var(--ink); }
+.hm-path__dot {
+  position: absolute; bottom: -5px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%;
+  background: var(--paper); border: 1.5px solid var(--ink);
+  &.is-live { background: var(--live); border-color: var(--live); }
+}
+.hm-path__stops {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;
+  li { margin: 0; display: grid; gap: 4px; }
+  li::marker { content: none; }
+  b { font: 500 .7rem/1 var(--mono); }
+  span { font-size: .86rem; line-height: 1.4; color: var(--ink-soft); }
+  strong { display: block; font-weight: 600; color: var(--ink); }
+}
+
+// ── The name, in both scripts ───────────────────────────────
+// The Persian sits under the Latin, ending where it ends: the two read
+// toward each other. Set in Lalezar, Tehran's poster lettering; one weight.
+// The site's one exception to its Persian pair: the name is a mark, not text.
+.hm-name { display: inline-grid; justify-items: start; }
+.hm-name__fa {
+  justify-self: end;
+  margin-top: .22em;
+  font: 400 .46em/1.25 "Lalezar", var(--fa);
+  letter-spacing: 0;
+}
+
+@media (max-width: 1080px) {
+  .hm-keys__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .hm { grid-template-columns: 1fr; grid-template-areas: "id" "pic" "dir" "spec"; }
+  .hm-portrait { max-width: 360px; }
+  .hm-about { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .hm-keys__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .hm-keys a { min-height: 176px; }
+  .hm-int li { grid-template-columns: 22px minmax(0, 1fr); }
+  .hm-int__p { grid-column: 2; justify-self: start; }
+  .hm-path__stops { grid-template-columns: 1fr; gap: 12px; }
+}

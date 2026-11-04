@@ -2,423 +2,160 @@
 layout: page
 title: Tools & Projects
 permalink: /tools/
+wide: true
+dek: This section showcases interactive tools and applications I've developed, exploring innovative ways to engage with textual content using artificial intelligence.
 ---
-{% include dappled-light.html %}
+{%- comment -%}
+  Tools (05): a numbered index that opens in place. Each row is a
+  <details>: title, kind, and a live dot if the tool is still being built.
+  Open, it gives the description, the tool's figure, its spec and the link
+  out. The filter is a segmented key (a all · e educational · p
+  experimental); j / k step the rows, enter opens one. Styles in
+  _sass/faceplate/pages/_tools.scss.
+{%- endcomment -%}
+<div class="tl">
 
-<style>
-.tools-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* No box, no shadow — the tool-header's hairline and generous margin
-   between cards do the work of separating one tool from the next. */
-.tool-card {
-    margin: 3rem 0;
-}
-
-.tool-header {
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 1rem;
-}
-
-.tool-title {
-    font-family: 'Newsreader', serif;
-    font-size: 1.20rem;
-    color: #1a202c;
-    margin: 0 0 0.5rem 0;
-    line-height: 1.2;
-}
-
-.tool-subtitle {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 1rem;
-    color: #718096;
-    margin: 0;
-    font-style: italic;
-}
-
-.tool-description {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-}
-
-/* An indent and a thin rule, not a tinted card with a colored accent
-   bar — the same move as a plain blockquote. */
-.feature-list {
-    margin: 1.5rem 0;
-    padding-left: 1.25rem;
-    border-left: 1px solid rgba(44, 62, 80, 0.14);
-}
-
-.feature-list h4 {
-    font-family: 'Newsreader', serif;
-    font-size: 1.0rem;
-    color: #1a202c;
-    margin: 0 0 0.85rem 0;
-}
-
-.feature-list ul {
-    margin: 0;
-    padding-left: 1.2rem;
-    list-style-type: disc;
-}
-
-.feature-list li {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.95rem;
-    color: #4a5568;
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-}
-
-.tech-stack {
-    margin: 1.5rem 0;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.9rem;
-    color: #718096;
-}
-
-/* Plain words with breathing room, not filled pills — the tech stack
-   is a list to read, not a set of clickable filter chips. */
-.tech-tag {
-    display: inline-block;
-    color: #718096;
-    margin: 0.25rem 0.75rem 0.25rem 0;
-    font-size: 0.85rem;
-}
-
-.cta-button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background: #ed8936;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-family: 'Instrument Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    margin-top: 1rem;
-}
-
-.cta-button:hover {
-    background: #dd6b20;
-    color: white;
-    text-decoration: none;
-}
-
-.source-attribution {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e2e8f0;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.9rem;
-    color: #718096;
-}
-
-.source-attribution a {
-    color: #ed8936;
-}
-
-/* A closing note, not another card — matches how the poems page treats
-   its own closing line. */
-.coming-soon {
-    text-align: center;
-    padding: 3rem 0 0;
-    margin: 3rem 0 0;
-    border-top: 1px solid rgba(44, 62, 80, 0.08);
-}
-
-.coming-soon h2 {
-    font-size: 1.10rem;
-    margin-bottom: 0.5rem;
-}
-
-.coming-soon p {
-    font-family: 'Instrument Sans', sans-serif;
-    color: #718096;
-    margin: 0;
-    font-size: 1rem;
-}
-
-.section-intro {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 1.1rem;
-    color: #4a5568;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-}
-
-.tools-filter {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.filter-btn {
-    padding: 0.5rem 1.25rem;
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    color: #4a5568;
-    border-radius: 20px;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.filter-btn:hover {
-    background: #edf2f7;
-}
-
-.filter-btn.active {
-    background: #ed8936;
-    color: white;
-    border-color: #ed8936;
-}
-
-.tool-card.hidden {
-    display: none;
-}
-</style>
-
-<style>
-body.dark .tool-title,
-body.dark .tool-subtitle,
-body.dark .tool-description,
-body.dark .feature-list li,
-body.dark .tech-stack,
-body.dark .source-attribution {
-    color: #e2e8f0;
-}
-body.dark .feature-list {
-    border-left-color: rgba(226, 232, 240, 0.16);
-}
-body.dark .tech-tag {
-    color: #a0aec0;
-}
-body.dark .cta-button {
-    background: #ed8936;
-}
-body.dark .cta-button:hover {
-    background: #dd6b20;
-}
-body.dark .coming-soon {
-    border-top-color: rgba(226, 232, 240, 0.1);
-}
-body.dark .coming-soon h2,
-body.dark .coming-soon p {
-    color: #e2e8f0;
-}
-body.dark .filter-btn {
-    background: #1a202c;
-    border-color: #2d3748;
-    color: #e2e8f0;
-}
-body.dark .filter-btn:hover {
-    background: #2d3748;
-}
-body.dark .filter-btn.active {
-    background: #ed8936;
-    color: white;
-    border-color: #ed8936;
-}
-</style>
-
-<div class="tools-container">
-
-<p class="section-intro">This section showcases interactive tools and applications I've developed, exploring innovative ways to engage with textual content using artificial intelligence.</p>
-
-<div class="tools-filter">
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="educational">Educational</button>
-  <button class="filter-btn" data-filter="experimental">Experimental</button>
+<div class="fp-toolbar tl-bar">
+  <div class="fp-seg" role="group" aria-label="Show">
+    <button type="button" data-filter="all" aria-pressed="true"><span class="fp-seg__k">a</span>all <span class="fp-seg__c">4</span></button>
+    <button type="button" data-filter="educational" aria-pressed="false"><span class="fp-seg__k">e</span>educational <span class="fp-seg__c">3</span></button>
+    <button type="button" data-filter="experimental" aria-pressed="false"><span class="fp-seg__k">p</span>experimental <span class="fp-seg__c">1</span></button>
+  </div>
+  <p class="fp-label tl-bar__hint"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open · or click a row</p>
 </div>
 
-<div class="tool-card" data-category="educational">
-  <div class="tool-header">
-    <h3 class="tool-title">AI and Data Ethics</h3>
-    <p class="tool-subtitle">Computer Science Program at Muhlenberg College</p>
+<div class="fp-index tl-index">
+
+<details class="fp-row tl-row" data-fp-part data-kind="educational" id="ai-and-data-ethics" open>
+  <summary class="fp-row__head">
+    <span class="fp-row__n">05.1</span>
+    <span class="fp-row__t">AI and Data Ethics</span>
+    <span class="fp-row__m"><span class="tl-status"><span class="fp-live" title="still being built"></span>in progress</span><span class="tl-kind">educational</span></span>
+    <span class="fp-row__x" aria-hidden="true">+</span>
+  </summary>
+  <div class="fp-row__body">
+    <p class="fp-label tl-sub">Computer Science Program at Muhlenberg College</p>
+    <p class="tl-desc">A comprehensive digital platform currently under development for the upcoming Spring 2027 course, CSI 205: AI and Data Ethics. This tool will serve as a central hub for students to engage with ethical challenges in artificial intelligence through interactive modules and case studies.</p>
+    {% include project-figure.html id="ethics-figure" script="ethics-lenses-figure.js" note="Lenses after the Markkula Center's framework for ethical decision-making · focus the figure, then 1–6" class="project-figure--wide" %}
+    <dl class="fp-spec tl-spec">
+      <dt>status</dt><dd>Work in Progress: this project is currently in active development.</dd>
+      <dt>launch</dt><dd>Spring 2027 (CSI 205: AI and Data Ethics)</dd>
+      <dt>goal</dt><dd>Enhancing computer science education with practical ethical frameworks.</dd>
+      <dt>feedback</dt><dd>We welcome your insights during this development phase. Please share your feedback or suggestions via email at <a href="mailto:hamedyaghoobian@muhlenberg.edu">hamedyaghoobian@muhlenberg.edu</a>.</dd>
+    </dl>
+    <a class="tl-open" href="https://aidataethics.github.io/" target="_blank" rel="noopener">Visit Development Site <span aria-hidden="true">↗</span></a>
   </div>
-  
-  <div class="tool-description">
-    A comprehensive digital platform currently under development for the upcoming Spring 2027 course, CSI 205: AI and Data Ethics. This tool will serve as a central hub for students to engage with ethical challenges in artificial intelligence through interactive modules and case studies.
-  </div>
+</details>
 
-  {% include project-figure.html id="ethics-figure" script="ethics-lenses-figure.js" note="Lenses after the Markkula Center's framework for ethical decision-making · keys 1–6" class="project-figure--wide" %}
-
-
-  <div class="feature-list">
-    <h4>Project Status</h4>
-    <ul>
-      <li><strong>Work in Progress:</strong> This project is currently in active development.</li>
-      <li><strong>Target Launch:</strong> Spring 2027 (CSI 205: AI and Data Ethics)</li>
-      <li><strong>Goal:</strong> Enhancing computer science education with practical ethical frameworks.</li>
-    </ul>
-  </div>
-
-  <div class="tech-stack" style="margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
-    <strong style="color: #2d3748;">Community Feedback:</strong>
-    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; color: #4a5568;">
-      We welcome your insights during this development phase. Please share your feedback or suggestions via email at <a href="mailto:hamedyaghoobian@muhlenberg.edu" style="color: #ed8936; text-decoration: none; font-weight: 500;">hamedyaghoobian@muhlenberg.edu</a>.
-    </p>
-  </div>
-
-  <a href="https://aidataethics.github.io/" class="cta-button" target="_blank">
-    Visit Development Site
-  </a>
-</div>
-
-<div class="tool-card" data-category="experimental">
-  <div class="tool-header">
-    <h3 class="tool-title">Bot Without Organs</h3>
-    <p class="tool-subtitle">Interactive AI Philosophy Companion</p>
-  </div>
-  
-  <div class="tool-description">
-    An experimental conversational AI interface that enables interactive dialogue with Gilles Deleuze's famous A-Z interviews. This tool leverages large language models to facilitate engaging conversations with English translations of Deleuze's expansive philosophical discussions.
-  </div>
-
-  {% include project-figure.html id="bot-figure" script="bot-abecedaire-figure.js" class="project-figure--wide" %}
-
-
-  <div class="feature-list">
-    <h4>Key Features</h4>
-    <ul>
+<details class="fp-row tl-row" data-fp-part data-kind="experimental" id="bot-without-organs">
+  <summary class="fp-row__head">
+    <span class="fp-row__n">05.2</span>
+    <span class="fp-row__t">Bot Without Organs</span>
+    <span class="fp-row__m"><span class="tl-kind">experimental</span></span>
+    <span class="fp-row__x" aria-hidden="true">+</span>
+  </summary>
+  <div class="fp-row__body">
+    <p class="fp-label tl-sub">Interactive AI Philosophy Companion</p>
+    <p class="tl-desc">An experimental conversational AI interface that enables interactive dialogue with Gilles Deleuze's famous A-Z interviews. This tool leverages large language models to facilitate engaging conversations with English translations of Deleuze's expansive philosophical discussions.</p>
+    {% include project-figure.html id="bot-figure" script="bot-abecedaire-figure.js" class="project-figure--wide" %}
+    <p class="fp-label tl-list-h">key features</p>
+    <ul class="tl-list">
       <li>Interactive chat interface with Deleuze's philosophical concepts</li>
       <li>Access to the complete A-Z interview series covering topics from "A for Animal" to "Z for Zigzag"</li>
       <li>Built-in Deleuze dictionary with contextual definitions</li>
       <li>Powered by high-performance Groq LLMs for responsive interactions</li>
     </ul>
+    <dl class="fp-spec tl-spec">
+      <dt>stack</dt><dd>Large Language Models · Groq API · Natural Language Processing · Interactive Web Interface</dd>
+      <dt>source</dt><dd>Based on the comprehensive <a href="https://www.imdb.com/title/tt0408472/" target="_blank" rel="noopener">Deleuze A-Z documentary</a> covering Russian literature, film philosophy, and deep insights into Deleuze's life and philosophical framework.</dd>
+    </dl>
+    <a class="tl-open" href="https://botwithoutorgans.github.io/" target="_blank" rel="noopener">Launch Tool <span aria-hidden="true">↗</span></a>
   </div>
+</details>
 
-  <div class="tech-stack">
-    <strong>Technology Stack:</strong><br>
-    <span class="tech-tag">Large Language Models</span>
-    <span class="tech-tag">Groq API</span>
-    <span class="tech-tag">Natural Language Processing</span>
-    <span class="tech-tag">Interactive Web Interface</span>
-  </div>
-
-  <a href="https://botwithoutorgans.github.io/" class="cta-button" target="_blank">
-    Launch Tool
-  </a>
-  
-  <div class="source-attribution">
-    <strong>Source Material:</strong> Based on the comprehensive <a href="https://www.imdb.com/title/tt0408472/" target="_blank">Deleuze A-Z documentary</a> covering Russian literature, film philosophy, and deep insights into Deleuze's life and philosophical framework.
-  </div>
-</div>
-
-<div class="tool-card" data-category="educational">
-  <div class="tool-header">
-    <h3 class="tool-title">Teach The Machine</h3>
-    <p class="tool-subtitle">Learn Machine Learning by Doing</p>
-  </div>
-  
-  <div class="tool-description">
-    An interactive educational tool inspired by Google's Teachable Machine, specifically designed for early-stage AI enthusiasts in junior high and high school. This platform provides students with hands-on activities to intuitively explore and understand core machine learning concepts.
-  </div>
-
-  {% include project-figure.html id="machine-figure" script="teach-machine-figure.js" note="Click a square to teach it · keys: arrows, Enter, 1 coin, 2 cube, R reset" class="project-figure--wide" %}
-
-
-  <div class="feature-list">
-    <h4>Key Features</h4>
-    <ul>
+<details class="fp-row tl-row" data-fp-part data-kind="educational" id="teach-the-machine">
+  <summary class="fp-row__head">
+    <span class="fp-row__n">05.3</span>
+    <span class="fp-row__t">Teach The Machine</span>
+    <span class="fp-row__m"><span class="tl-kind">educational</span></span>
+    <span class="fp-row__x" aria-hidden="true">+</span>
+  </summary>
+  <div class="fp-row__body">
+    <p class="fp-label tl-sub">Learn Machine Learning by Doing</p>
+    <p class="tl-desc">An interactive educational tool inspired by Google's Teachable Machine, specifically designed for early-stage AI enthusiasts in junior high and high school. This platform provides students with hands-on activities to intuitively explore and understand core machine learning concepts.</p>
+    {% include project-figure.html id="machine-figure" script="teach-machine-figure.js" note="Click a square to teach it · focus the figure, then: arrows, Enter, 1 coin, 2 cube, R reset" class="project-figure--wide" %}
+    <p class="fp-label tl-list-h">key features</p>
+    <ul class="tl-list">
       <li>Interactive, hands-on machine learning activities</li>
       <li>Designed specifically for junior high and high school students</li>
       <li>Provides intuitive visualizations of AI training processes</li>
       <li>Accessible entry point for early-stage AI enthusiasts</li>
     </ul>
+    <dl class="fp-spec tl-spec">
+      <dt>focus</dt><dd>AI Education · Machine Learning · Interactive Learning · STEM</dd>
+    </dl>
+    <a class="tl-open" href="https://teachthemachine.github.io/" target="_blank" rel="noopener">Launch Tool <span aria-hidden="true">↗</span></a>
   </div>
+</details>
 
-  <div class="tech-stack">
-    <strong>Focus Area:</strong><br>
-    <span class="tech-tag">AI Education</span>
-    <span class="tech-tag">Machine Learning</span>
-    <span class="tech-tag">Interactive Learning</span>
-    <span class="tech-tag">STEM</span>
-  </div>
-
-  <a href="https://teachthemachine.github.io/" class="cta-button" target="_blank">
-    Launch Tool
-  </a>
-</div>
-
-<div class="tool-card" data-category="educational">
-  <div class="tool-header">
-    <h3 class="tool-title">Learning Machines</h3>
-    <p class="tool-subtitle">Machine learning, one working machine at a time</p>
-  </div>
-
-  <div class="tool-description">
-    A visual encyclopedia built for Machine Learning (CSI 330): a small machine for each idea in the course, from bias and variance to cross-validation. Each runs on real data (Palmer penguins, NHANES, wine), computes what scikit-learn computes, and writes out its own arithmetic as you turn its dials. Each comes with guided tasks that ask you to predict before you look.
-  </div>
-
-  <script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
-  <script src="{{ '/assets/js/csi330-data.js' | relative_url }}" defer></script>
-  <script src="{{ '/assets/js/csi330-kit.js' | relative_url }}" defer></script>
-  {% include project-figure.html id="w3-figure" script="csi330-w3-figure.js" class="project-figure--study" fig="Preview" title="The Bayes balance" hint="move over the curves · ← → · P priors" %}
-
-  <div class="feature-list">
-    <h4>What's inside</h4>
-    <ul>
+<details class="fp-row tl-row" data-fp-part data-kind="educational" id="learning-machines">
+  <summary class="fp-row__head">
+    <span class="fp-row__n">05.4</span>
+    <span class="fp-row__t">Learning Machines</span>
+    <span class="fp-row__m"><span class="tl-kind">educational</span></span>
+    <span class="fp-row__x" aria-hidden="true">+</span>
+  </summary>
+  <div class="fp-row__body">
+    <p class="fp-label tl-sub">Machine learning, one working machine at a time</p>
+    <p class="tl-desc">A visual encyclopedia built for Machine Learning (CSI 330): a small machine for each idea in the course, from bias and variance to cross-validation. Each runs on real data (Palmer penguins, NHANES, wine), computes what scikit-learn computes, and writes out its own arithmetic as you turn its dials. Each comes with guided tasks that ask you to predict before you look.</p>
+    <script src="{{ '/assets/js/line-figure.js' | relative_url }}?v={{ site.time | date: '%s' }}\" defer></script>
+    <script src="{{ '/assets/js/csi330-data.js' | relative_url }}?v={{ site.time | date: '%s' }}\" defer></script>
+    <script src="{{ '/assets/js/csi330-kit.js' | relative_url }}?v={{ site.time | date: '%s' }}\" defer></script>
+    {% include project-figure.html id="w3-figure" script="csi330-w3-figure.js" class="project-figure--study" fig="Preview" title="The Bayes balance" hint="move over the curves · ← → · P priors" %}
+    <p class="fp-label tl-list-h">what's inside</p>
+    <ul class="tl-list">
       <li>The whole pipeline, one penguin at a time: data, split and scaling, scores, softmax, the decision map and the confusion matrix</li>
       <li>Nine machines so far, one entry each, week by week: bias–variance, k-NN, logistic regression, naive Bayes, least squares, k-NN regression, classification metrics, regression metrics, cross-validation</li>
       <li>A live calculation under every figure: the formula with the current numbers filled in</li>
       <li>"Try this" tasks with answers to open once you've tried</li>
       <li>Works with pointer or keyboard, in light or dark, on a phone</li>
     </ul>
+    <dl class="fp-spec tl-spec">
+      <dt>course</dt><dd>CSI 330: Machine Learning</dd>
+      <dt>focus</dt><dd>Machine Learning · scikit-learn · Interactive Learning · CSI 330</dd>
+    </dl>
+    <a class="tl-open" href="{{ '/tools/learning-machines/' | relative_url }}">Open Learning Machines <span aria-hidden="true">→</span></a>
   </div>
+</details>
 
-  <div class="tech-stack">
-    <strong>Focus Area:</strong><br>
-    <span class="tech-tag">Machine Learning</span>
-    <span class="tech-tag">scikit-learn</span>
-    <span class="tech-tag">Interactive Learning</span>
-    <span class="tech-tag">CSI 330</span>
-  </div>
-
-  <a href="{{ '/tools/learning-machines/' | relative_url }}" class="cta-button">
-    Open Learning Machines
-  </a>
 </div>
 
-<div class="coming-soon">
+<section class="tl-about" aria-labelledby="tl-about-t">
+  <h2 class="fp-label" id="tl-about-t">about these tools</h2>
+  <p>These projects represent explorations at the intersection of AI technology and humanistic inquiry. They aim to make complex philosophical and textual content more accessible through innovative interfaces while maintaining the depth and nuance of the original works.</p>
+</section>
 
-<h2>About These Tools</h2>
-
-<p>These projects represent explorations at the intersection of AI technology and humanistic inquiry. They aim to make complex philosophical and textual content more accessible through innovative interfaces while maintaining the depth and nuance of the original works.</p>
-
-</div> 
+</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const toolCards = document.querySelectorAll('.tool-card');
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filterValue = btn.getAttribute('data-filter');
-
-            toolCards.forEach(card => {
-                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        });
+  // The filter: one kind at a time, each segment a key. Hidden rows drop out
+  // of j / k, because faceplate.js steps only through visible parts.
+  (function () {
+    var btns = [].slice.call(document.querySelectorAll('.tl-bar [data-filter]'));
+    var rows = [].slice.call(document.querySelectorAll('.tl-row'));
+    btns.forEach(function (b) {
+      var f = b.dataset.filter;
+      b.querySelector('.fp-seg__c').textContent = rows.filter(function (r) { return f === 'all' || r.dataset.kind === f; }).length;
+      b.addEventListener('click', function () { show(f); });
     });
-});
+    function show(f) {
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.filter === f)); });
+      rows.forEach(function (r) { r.hidden = !(f === 'all' || r.dataset.kind === f); });
+      var at = document.querySelector('.tl-row.fp-at');
+      if (at && at.hidden && window.FP && FP.setAt) FP.setAt(null);
+    }
+    [['a', 'all', 'show all tools'], ['e', 'educational', 'educational only'], ['p', 'experimental', 'experimental only']].forEach(function (k) {
+      window.FP && FP.add({ key: k[0], label: k[2], run: function () { show(k[1]); } });
+    });
+  })();
 </script>

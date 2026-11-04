@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Ferdowsi panel options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css?v=po">
+<style>
+  @font-face { font-family: "Hand"; src: url("data/hand.woff2") format("woff2"); font-display: block; }
+  body { background: var(--paper); color: var(--ink); }
+  .to { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  .to-top { border-bottom: var(--stroke) solid var(--ink); padding-bottom: 8px; }
+  .to-top h1 { margin: 0; font: 800 1.4rem/1 var(--sans); letter-spacing: -.02em; text-transform: lowercase; }
+  .to-lede { margin: 10px 0 24px; font: 400 .74rem/1.5 var(--mono); color: var(--ink-soft); max-width: 80ch; }
+  .opt { margin: 0 0 26px; }
+  .opt__tag { display: flex; justify-content: space-between; gap: 16px; margin: 0 0 6px; font: 500 .7rem/1.4 var(--mono); }
+  .opt__tag b { font-weight: 500; white-space: nowrap; }
+  .opt__tag span { color: var(--ink-soft); text-align: right; max-width: 74ch; }
+  .opt--rec .opt__tag b::after { content: " · recommended"; color: var(--live); }
+  .opt.is-now .opt__tag b::after { content: " · now"; color: var(--ink-soft); }
+
+  /* the panel's ground: the field, as at the foot of the frame */
+  .pn {
+    --m: #F2EBDA; --ms: rgba(242,235,218,.62); --mr: rgba(242,235,218,.28); --mf: rgba(242,235,218,.13);
+    position: relative; overflow: hidden;
+    background: #1F2A9E; color: var(--m); border-radius: var(--radius);
+    padding: 22px 28px 20px; min-height: 150px;
+  }
+  .pn::before {   /* the book behind, as faint bars, like the field from afar */
+    content: ""; position: absolute; inset: 0; opacity: .5; pointer-events: none;
+    background: repeating-linear-gradient(90deg, transparent 0 6px, rgba(242,235,218,.05) 6px 9px);
+  }
+  .pn > * { position: relative; }
+  .fa { font-family: "Hand", serif; direction: rtl; unicode-bidi: isolate; }
+  .mono { font: 400 .66rem/1.4 var(--mono); color: var(--ms); }
+
+  /* ── 0: as it is ── */
+  .p0 { text-align: center; }
+  .p0 .w { margin: 0; font: 400 .9rem/1.6 "Hand"; color: var(--ms); }
+  .p0 .c { margin: 2px 0; font: 400 1.4rem/1.7 "Hand"; color: var(--ms); }
+  .p0 .c b { font-weight: 400; color: var(--cobalt); background: var(--yellow); border-radius: 2px; padding: 0 .15em; }
+  .p0 .c .sep { display: inline-block; margin: 0 1.2em; }
+  .p0 .g { margin: 0; font: 400 1rem/1.4 var(--serif); }
+  .p0 .g .fa { font-size: 1.2em; }
+  .p0 .g small { font: 400 .62rem/1 var(--mono); color: var(--ms); margin-left: .5em; }
+
+  /* ── A: the bayt, as the book sets it ── */
+  .pA { display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; align-items: end; }
+  .pA .w { grid-column: 1 / -1; margin: 0 0 10px; display: flex; justify-content: space-between; gap: 16px; }
+  .pA .w .fa { font-size: .92rem; color: var(--ms); }
+  .pA .bayt { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 290px) minmax(0, 290px); justify-content: center; column-gap: 3.2em; direction: rtl;
+              padding: 12px 0 14px; border-top: 1px solid var(--mr); border-bottom: 1px solid var(--mr); }
+  .pA .bayt p { margin: 0; font: 400 1.65rem/1.6 "Hand"; color: var(--ms); text-align: justify; text-align-last: justify; }
+  .pA .bayt b { font-weight: 400; color: var(--m); box-shadow: inset 0 -2px 0 var(--yellow); }
+  .pA .g { margin: 12px 0 0; display: flex; align-items: baseline; gap: 14px; }
+  .pA .g .fa { font-size: 2.1rem; line-height: 1; }
+  .pA .g i { font: italic 400 1.15rem/1.3 var(--serif); }
+  .pA .n { margin: 0; text-align: right; }
+
+  /* ── B: what is left ── */
+  .pB { text-align: center; }
+  .pB .left { margin: 6px 0 0; display: flex; justify-content: center; gap: 2.6em; direction: rtl; }
+  .pB .half { display: flex; gap: .32em; align-items: center; font: 400 1.75rem/1.6 "Hand"; }
+  .pB .bar { display: inline-block; height: .2em; border-radius: 1px; background: var(--mr); transform: translateY(-.15em); }
+  .pB .half b { font-weight: 400; color: var(--m); box-shadow: inset 0 -2px 0 var(--yellow); }
+  .pB .full { margin: 8px 0 0; font: 400 1rem/1.6 "Hand"; color: var(--ms); }
+  .pB .full .sep { display: inline-block; margin: 0 1.4em; opacity: .6; }
+  .pB .g { margin: 10px 0 0; font: 400 1rem/1.4 var(--serif); }
+  .pB .g i { font-style: italic; }
+
+  /* ── C: the margin gloss ── */
+  .pC { display: grid; grid-template-columns: 200px 1fr; gap: 0 28px; align-items: center; min-height: 190px; }
+  .pC .margin { position: relative; height: 150px; }
+  .pC .note { position: absolute; left: 6px; top: 46px; transform: rotate(-28deg); transform-origin: 0 50%; white-space: nowrap; }
+  .pC .note .fa { font-size: 1.5rem; }
+  .pC .note i { display: block; font: italic 400 1rem/1.2 var(--serif); margin-top: -2px; }
+  .pC .note small { font: 400 .58rem/1 var(--mono); color: var(--ms); }
+  .pC .page { text-align: center; }
+  .pC .page .w { margin: 0 0 6px; font: 400 .88rem/1.6 "Hand"; color: var(--ms); }
+  .pC .page p.c { margin: 0; font: 400 1.6rem/1.75 "Hand"; color: var(--ms); }
+  .pC .page b { font-weight: 400; color: var(--m); box-shadow: inset 0 -2px 0 var(--yellow); }
+  .pC .folio { margin: 8px 0 0; }
+  .pC svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+
+  /* ── D: the word let in ── */
+  .pD { text-align: center; padding-top: 16px; }
+  .pD .word { margin: 0; display: inline-flex; flex-direction: column; align-items: center; }
+  .pD .word .fa { font-size: 3rem; line-height: 1.1; color: var(--m); }
+  .pD .word i { font: italic 400 1.05rem/1.2 var(--serif); }
+  .pD .word small { margin-top: 2px; }
+  .pD .drop { width: 1px; height: 26px; margin: 6px auto 0; background: linear-gradient(var(--yellow), var(--mr)); }
+  .pD .c { margin: 0; font: 400 1.45rem/1.7 "Hand"; color: var(--ms); }
+  .pD .c .sep { display: inline-block; margin: 0 1.3em; opacity: .5; }
+  .pD .c .gap { display: inline-block; min-width: 1.7em; border-bottom: 2px solid var(--yellow); color: transparent; }
+  .pD .meta { margin: 8px 0 0; display: flex; justify-content: center; gap: 14px; }
+  .pD .meta .fa { font-size: .85rem; color: var(--ms); }
+
+  @media (max-width: 720px) {
+    .pC { grid-template-columns: 1fr; } .pC .margin { height: 110px; order: 2; }
+    .pA .bayt { grid-template-columns: 1fr; row-gap: 4px; }
+    .pB .left, .pB .full { flex-direction: column; gap: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="to">
+  <div class="to-top"><h1>what ferdowsi let in · the couplet under the pointer</h1></div>
+  <p class="to-lede">The same couplet in each option: 36,618, from Bahram Gur's reign, with one Arabic word, طوق, collar. Yellow stays where your hand is, the word you're on, but as a rule under the word rather than a box over it.</p>
+
+  <section class="opt is-now">
+    <p class="opt__tag"><b>0 · as it is</b><span>Everything centred and the same weight: a heading, the line with a yellow box, a gloss, a count.</span></p>
+    <div class="pn p0">
+      <p class="w fa">پادشاهی بهرام گور · بخش ۴۲ - آمدن شنگل به ایران، دیدار با بهرام و دختر، و بزم و نخچیر دو شاه</p>
+      <p class="c fa">همه نامجوی و همه نامدار<span class="sep">✦</span>همه پاک با <b>طوق</b> و با گوشوار</p>
+      <p class="g"><span class="fa">طوق</span>, collar, torque <small>from Arabic</small></p>
+      <p class="mono">couplet 36,618 of 49,610 · 1 Arabic word</p>
+    </div>
+  </section>
+
+  <section class="opt opt--rec">
+    <p class="opt__tag"><b>A · the bayt, as the book sets it</b><span>Set as the field sets it, and as a manuscript does: two hemistichs in two equal columns, each spread to the same width, with no ornament between them. Ruled above and below like a line on a page. The word sits under it, large, with its sense.</span></p>
+    <div class="pn pA">
+      <p class="w"><span class="mono">couplet 36,618 / 49,610</span><span class="fa">پادشاهی بهرام گور · آمدن شنگل به ایران</span></p>
+      <div class="bayt fa">
+        <p>همه نامجوی و همه نامدار</p>
+        <p>همه پاک با <b>طوق</b> و با گوشوار</p>
+      </div>
+      <p class="g"><span class="fa">طوق</span><i>collar, torque</i><span class="mono">from Arabic · 1 in this couplet</span></p>
+    </div>
+  </section>
+
+  <section class="opt">
+    <p class="opt__tag"><b>B · what is left</b><span>The couplet as the piece sees it: every Persian word a faint bar its own width, and only the Arabic written out. The whole line sits under it, small, for reading. The panel says what the piece does.</span></p>
+    <div class="pn pB">
+      <p class="mono"><span class="fa" style="font-size:.9rem">پادشاهی بهرام گور</span> · couplet 36,618 of 49,610</p>
+      <div class="left" id="left" data-h="همه نامجوی و همه نامدار|همه پاک با طوق و با گوشوار" data-ar="طوق"></div>
+      <p class="full fa">همه نامجوی و همه نامدار<span class="sep">·</span>همه پاک با طوق و با گوشوار</p>
+      <p class="g"><span class="fa">طوق</span>, <i>collar, torque</i> <span class="mono">from Arabic</span></p>
+    </div>
+  </section>
+
+  <section class="opt">
+    <p class="opt__tag"><b>C · in the margin</b><span>A manuscript's marginal note, the hashiyeh: the sense written slanting in the margin, joined to the word by a fine line. The count becomes a folio number.</span></p>
+    <div class="pn pC" id="pC">
+      <div class="margin">
+        <div class="note"><span class="fa">طوق</span><i>collar, torque</i><small>from Arabic</small></div>
+      </div>
+      <div class="page">
+        <p class="w fa">پادشاهی بهرام گور · بخش ۴۲</p>
+        <p class="c fa">همه نامجوی و همه نامدار&emsp;&emsp;همه پاک با <b id="cw">طوق</b> و با گوشوار</p>
+        <p class="folio mono">folio 36,618 of 49,610</p>
+      </div>
+      <svg aria-hidden="true"><path id="cl" fill="none" stroke="rgba(242,235,218,.5)" stroke-width="1"/></svg>
+    </div>
+  </section>
+
+  <section class="opt">
+    <p class="opt__tag"><b>D · the word let in</b><span>The word is lifted out of the line and set large above it, and a short yellow drop marks the place it left. The piece is about what Ferdowsi let in, and this shows one word coming in.</span></p>
+    <div class="pn pD">
+      <p class="word"><span class="fa">طوق</span><i>collar, torque</i><small class="mono">from Arabic</small></p>
+      <div class="drop"></div>
+      <p class="c fa">همه نامجوی و همه نامدار<span class="sep">✦</span>همه پاک با <span class="gap">طوق</span> و با گوشوار</p>
+      <p class="meta"><span class="fa">پادشاهی بهرام گور · بخش ۴۲</span><span class="mono">couplet 36,618 of 49,610</span></p>
+    </div>
+  </section>
+</div>
+<script>
+  // C: a fine curved line from the margin note to the word
+  function link() {
+    const box = document.getElementById("pC").getBoundingClientRect();
+    const w = document.getElementById("cw").getBoundingClientRect();
+    const n = document.querySelector(".pC .note .fa").getBoundingClientRect();
+    const x1 = n.right - box.left + 6, y1 = n.top - box.top + n.height / 2;
+    const x2 = w.left - box.left + w.width / 2, y2 = w.bottom - box.top + 2;
+    document.getElementById("cl").setAttribute("d", `M${x1},${y1} C${x1 + 60},${y1 + 50} ${x2 - 20},${y2 + 40} ${x2},${y2}`);
+  }
+  document.fonts.ready.then(link); addEventListener("resize", link);
+  // B: each Persian word a bar its own measured width; the Arabic written
+  document.fonts.ready.then(() => {
+    const el = document.getElementById("left"), ar = el.dataset.ar;
+    const probe = document.createElement("span");
+    probe.style.cssText = 'position:absolute;visibility:hidden;font:400 1.75rem "Hand";white-space:nowrap';
+    document.body.appendChild(probe);
+    el.innerHTML = el.dataset.h.split("|").map(h => '<span class="half">' + h.split(" ").map(w => {
+      if (w === ar) return '<b class="fa">' + w + '</b>';
+      probe.textContent = w;
+      return '<i class="bar" style="width:' + probe.getBoundingClientRect().width + 'px"></i>';
+    }).join("") + '</span>').join("");
+    probe.remove();
+  });
+</script>
+</body>
+</html>

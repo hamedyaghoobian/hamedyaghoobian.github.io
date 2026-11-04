@@ -1,0 +1,129 @@
+<h2 class="sr-only">Poems page preview, version 2: Persian typeface picker, an interactive line-length figure computed from the site's 16 poems, dual-calendar dates, and keyboard navigation.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Vazirmatn:wght@400;500;800&family=Noto+Kufi+Arabic:wght@400;500;800&family=Noto+Naskh+Arabic:wght@400;500&family=Newsreader:ital@0;1&display=swap">
+<style>
+#pp{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.25);--y:#F2C500;--live:#E0362C;--fa:'IBM Plex Sans Arabic';--fad:'Noto Kufi Arabic';background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;padding:14px 20px;outline:none}
+#pp.dark{--bg:#2B3BD1;--ink:#F2EBDA;--soft:rgba(242,235,218,.3);--live:#F2C500}
+.m{font-family:'JetBrains Mono',monospace;font-size:11px}
+.fa{font-family:var(--fa),sans-serif;direction:rtl}
+.sk{border:1.5px solid var(--ink);border-radius:4px;padding:3px 9px;background:transparent;color:inherit;font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer}
+.sk:hover{background:var(--y);border-color:var(--y);color:#2B3BD1}.sk.on{background:var(--ink);color:var(--bg)}
+kbd{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-left:4px;opacity:.8}
+.yr{display:flex;align-items:center;gap:10px;margin:20px 0 2px}.yr i{flex:1;height:1.5px;background:var(--ink)}
+.pr{border-bottom:1px solid var(--soft)}
+.ph{display:grid;grid-template-columns:150px minmax(0,1fr) 92px 16px;gap:10px;align-items:center;padding:8px 6px;cursor:pointer}
+.ph:hover{background:var(--y);color:#2B3BD1}
+.pr.cur .ph{box-shadow:inset 3px 0 0 var(--live)}
+.pb{display:none;padding:6px 6px 18px}.pr.open .pb{display:block}
+.pr.open .pm{transform:rotate(45deg)}.pm{display:inline-block;transition:transform .15s}
+.hid{display:none!important}
+.dt{display:flex;flex-direction:column;line-height:1.25}
+#fig text{font-family:'JetBrains Mono';font-size:9.5px;fill:currentColor}
+#fig .col{cursor:pointer}
+#fig.sel .col{opacity:.28}#fig.sel .col.on{opacity:1}
+#fig .col.on circle,#fig .col.on line{fill:var(--live);stroke:var(--live)}
+#help{border:1.5px solid var(--ink);border-radius:6px;padding:10px 12px;margin:10px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 14px}
+</style>
+<div style="padding:1rem 0">
+<div id="pp" tabindex="0">
+
+<div class="m" style="display:flex;justify-content:space-between;border-bottom:1.5px solid var(--ink);padding-bottom:6px;flex-wrap:wrap;gap:6px">
+<span>hy / 07 poems</span><span><button class="sk" id="hb">keys<kbd>?</kbd></button> <button class="sk" id="th">light</button></span>
+</div>
+<div id="help" class="m hid"></div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:22px;align-items:end;margin:20px 0 10px">
+<div><div style="font-weight:800;font-size:44px;line-height:.92;letter-spacing:-.025em">collected<br>poems</div>
+<div class="fa" style="font-family:var(--fad);font-weight:800;font-size:26px;text-align:left;margin-top:8px">رونویسی شعر</div></div>
+<div><p style="margin:0 0 8px;font-size:12.5px;line-height:1.5">For writing down the poems I love. Translations are by AI, for convenience.</p>
+<div class="m" style="opacity:.75;margin-bottom:4px">persian face <kbd>f</kbd></div>
+<div style="display:flex;gap:4px;flex-wrap:wrap" id="faces"></div></div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 4px;flex-wrap:wrap;gap:6px">
+<span class="m">fig. 1 · form across a thousand years</span>
+<span style="display:flex;gap:4px"><button class="sk on" data-v="len">letters per line</button><button class="sk" data-v="cv">variation</button></span>
+</div>
+<svg id="fig" viewBox="0 0 640 210" width="100%" style="display:block;color:var(--ink)" tabindex="0" aria-label="Line lengths by poet's time"></svg>
+<div id="cap" class="m" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;border-top:1px solid var(--soft);padding-top:6px;min-height:34px"></div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:8px;flex-wrap:wrap">
+<span style="display:flex;gap:4px"><button class="sk on" data-f="a">all<kbd>a</kbd></button><button class="sk" data-f="c">classical<kbd>c</kbd></button><button class="sk" data-f="m">modern<kbd>m</kbd></button></span>
+<input id="q" placeholder="poet, either script  /" style="font-family:'JetBrains Mono';font-size:11px;background:transparent;border:1.5px solid var(--ink);color:var(--ink);border-radius:4px;padding:4px 8px;width:190px">
+</div>
+<div id="list"></div>
+</div>
+</div>
+<script>
+const P=[["2026-10-25","Nima Yooshij","نیما یوشیج",[11,16],["شرمی به روی ما","که ز خود دست بسته‌ایم"],"The chains in these two lines were not forged by any jailer. Nima turns the gaze inward: the shame is not in being bound, but in having tied the knot ourselves.","Shame upon our faces,\nwe who have bound our own hands."],
+["2026-06-26","T. S. Eliot","تی. اس. الیوت",[26,28,30]],["2026-05-26","Mahmoud Darwish","محمود درویش",[10,15,10,9,8,8,12,15,12,15,12,15,12,15,12,21]],["2026-05-06","Maryam Ishaghi","مریم اسحاقی",[37,21,12,19,23]],
+["2026-03-26","Hafez","حافظ",[22,23],["هوایِ کویِ تو از سر نمیرود آری","غریب را دلِ سرگشته با وطن باشد"],"In the whispers of longing, the boundary between presence and absence dissolves, as the heart embodies the ache of distance.","The breeze of your street will never leave my mind, indeed;\nfor a wanderer, a restless heart remains with homeland."],
+["2026-03-17","Nosrat Rahmani","نصرت رحمانی",[20,14,24,18,11]],["2026-02-06","Ahmadreza Ahmadi","احمدرضا احمدی",[8,14,8]],
+["2026-01-30","Ferdowsi","فردوسی",[21],["همه شهر ایران جگر خسته‌اند"],"In the hush of each street, the body of the land sighs, its pulse dimmed by an unseen exhaustion.","Every city of Iran bears a weary liver."],
+["2025-10-13","Bidel Dehlavi","بیدل دهلوی",[25,28],["کشتی تدبیر ما توفانی حکم قضاست","جز دم تسلیم اینجا لنگری درکار نیست"],"The self is immersed in a turbulent sea where the craft of intention is subsumed by the storm of fate.","Our ship of design sails within a storm, the decree of destiny;\nhere, save a sigh of surrender, no anchor is needed."],
+["2025-09-21","Abbas Kiarostami","عباس کیارستمی",[16,14,17]],
+["2025-09-09","Hafez","حافظ",[28,28],["خدا را رحمی ای مُنْعِم‌، که درویشِ سرِ کویت","دری دیگر نمی‌داند، رهی دیگر نمی‌گیرد"],"In the depths of devotion, the self dissolves into the vast expanse of the unknown.","Have mercy, O Benevolent One: the dervish at your doorstep\nknows no other door, takes no other path."],
+["2025-08-15","Shams Langeroodi","شمس لنگرودی",[11,20,26,11]],["2025-07-10","Rasool Yoonan","رسول یونان",[18,21,15,11,28]],
+["2025-07-09","Iraqi","عراقی",[24,26],["چند گویند مرا: صبر کن از لشکر غم؟","بر من از گوشهٔ ناگاه بتازد چه کنم؟"],"The fragile boundaries between self and sorrow are revealed, disrupted by the unpredictable onslaught of grief.","How many tell me to be patient with the army of sorrow?\nWhat can I do when it ambushes me from an unseen corner?"],
+["2025-07-08","Saeed Baraabadi","سعید برآبادی",[27,10,9,15,16]],
+["2025-07-08","Nima Yooshij","نیما یوشیج",[20,22,21],["زان که بر ضد جهان گویم سخن","یا جهان دیوانه باشد یا که من","بلکه از دیوانگان هم بدترم"],"The poem lives in the trembling space where the self and the cosmos clash, each accusing the other of madness.","Since I dare to speak against the world,\neither the world is mad, or I am:\nperhaps madder than the mad."]];
+const PO={'Ferdowsi':[940,1020],'Iraqi':[1213,1289],'Hafez':[1315,1390],'Bidel Dehlavi':[1642,1720],'T. S. Eliot':[1888,1965],'Nima Yooshij':[1897,1960],'Nosrat Rahmani':[1930,2000],'Ahmadreza Ahmadi':[1940,2023],'Abbas Kiarostami':[1940,2016],'Mahmoud Darwish':[1941,2008],'Shams Langeroodi':[1950,null],'Rasool Yoonan':[1969,null]};
+const fa=s=>String(s).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const when=n=>{const p=PO[n];if(!p)return 2012;return Math.min(p[0]+40,p[1]?(p[0]+p[1])/2+8:p[0]+40)};
+const mean=a=>a.reduce((s,v)=>s+v,0)/a.length;const cv=a=>a.length<2?null:Math.sqrt(mean(a.map(v=>(v-mean(a))**2)))/mean(a);
+const pd=iso=>{const[y,m,d]=iso.split('-').map(Number);return new Date(y,m-1,d)};
+const fmt=(l,o,d)=>{try{return new Intl.DateTimeFormat(l,o).format(d)}catch(e){return''}};
+const D=P.map((p,i)=>{const d=pd(p[0]);return{i,iso:p[0],en:p[1],fa:p[2],l:p[3],v:p[4],r:p[5],t:p[6],yr:when(p[1]),cl:PO[p[1]]&&PO[p[1]][0]<1850,cv:cv(p[3]),
+faD:fmt('fa-IR-u-ca-persian',{day:'numeric',month:'long'},d),faY:fmt('fa-IR-u-ca-persian',{year:'numeric'},d).replace(/[^۰-۹0-9]/g,''),faW:fmt('fa-IR',{weekday:'long'},d),enD:fmt('en-GB',{day:'numeric',month:'short',year:'numeric'},d).toLowerCase(),enY:d.getFullYear()}});
+const pp=document.getElementById('pp');let cur=0,view='len',filt='a',q='';
+const FACES=[['IBM Plex Sans Arabic','plex'],['Vazirmatn','vazir'],['Noto Kufi Arabic','kufi'],['Noto Naskh Arabic','naskh']];let fi=0;
+const fc=document.getElementById('faces');
+FACES.forEach(([f,n],i)=>{const b=document.createElement('button');b.className='sk'+(i===0?' on':'');b.innerHTML=`${n} <span style="font-family:'${f}'">شعر</span>`;b.onclick=()=>setFace(i);fc.appendChild(b)});
+function setFace(i){fi=i;pp.style.setProperty('--fa',`'${FACES[i][0]}'`);[...fc.children].forEach((b,j)=>b.classList.toggle('on',j===i))}
+const X=y=>y>=1850?40+(2030-y)/180*390:450+(1850-y)/(1850-920)*175;
+const Yl=n=>196-n*4.4,Yc=c=>196-c*300;
+const seen={};D.forEach(p=>{const k=Math.round(p.yr);seen[k]=(seen[k]||0)+1;p.x=X(p.yr)+(seen[k]-1)*9});
+const fig=document.getElementById('fig');
+function draw(){let s='';
+s+=`<line x1="30" y1="196" x2="630" y2="196" stroke="currentColor"/><line x1="440" y1="190" x2="446" y2="202" stroke="currentColor"/><line x1="444" y1="190" x2="450" y2="202" stroke="currentColor"/>`;
+[[2025,'۱۴۰۴'],[1975,'۱۳۵۴'],[1900,'۱۲۷۹'],[1800,''],[1400,''],[1000,'']].forEach(([y,f])=>{const x=X(y);s+=`<line x1="${x}" y1="196" x2="${x}" y2="200" stroke="currentColor"/><text x="${x}" y="208" text-anchor="middle">${y}</text>`});
+if(view==='len'){s+=`<rect x="30" y="${Yl(28)}" width="600" height="${Yl(21)-Yl(28)}" fill="currentColor" opacity=".08"/><text x="632" y="${Yl(28)-3}" text-anchor="end">classical band · ۲۱ تا ۲۸ حرف</text>`;
+[10,20,30].forEach(n=>s+=`<text x="26" y="${Yl(n)+3}" text-anchor="end">${n}</text>`)}else{[.2,.4].forEach(c=>s+=`<text x="26" y="${Yc(c)+3}" text-anchor="end">${c}</text>`)}
+const bx=X(1937);s+=`<line x1="${bx}" y1="14" x2="${bx}" y2="196" stroke="currentColor" stroke-dasharray="2 3"/><text x="${bx+4}" y="22">1937 · «ققنوس»</text><text x="34" y="12">← now</text>`;
+D.forEach(p=>{s+=`<g class="col${p.i===cur?' on':''}" data-i="${p.i}"><rect x="${p.x-5}" y="10" width="10" height="186" fill="transparent"/>`;
+if(view==='len'){const a=Math.min(...p.l),b=Math.max(...p.l);s+=`<line x1="${p.x}" x2="${p.x}" y1="${Yl(b)}" y2="${Yl(a)}" stroke="currentColor" stroke-width="1"/>`;p.l.forEach(n=>s+=`<circle cx="${p.x}" cy="${Yl(n)}" r="2.3" fill="currentColor"/>`)}
+else if(p.cv!=null){s+=`<line x1="${p.x}" x2="${p.x}" y1="196" y2="${Yc(p.cv)}" stroke="currentColor"/><circle cx="${p.x}" cy="${Yc(p.cv)}" r="3" fill="currentColor"/>`}else{s+=`<text x="${p.x}" y="190" text-anchor="middle">·</text>`}
+s+='</g>'});fig.innerHTML=s;fig.classList.toggle('sel',cur>=0);
+fig.querySelectorAll('.col').forEach(g=>{g.onmouseenter=()=>sel(+g.dataset.i,false);g.onclick=()=>{sel(+g.dataset.i,true);openRow(+g.dataset.i,true)}});cap()}
+function cap(){const p=D[cur];const a=Math.min(...p.l),b=Math.max(...p.l),inb=p.l.filter(n=>n>=21&&n<=28).length;
+document.getElementById('cap').innerHTML=`<span><span class="fa" style="font-size:13px">${p.fa}</span><br>${p.en.toLowerCase()}</span><span style="opacity:.7">placed at<br><b style="font-weight:500;opacity:1">${Math.round(p.yr)}</b></span><span style="opacity:.7">lines · letters<br>${p.l.length} · ${a}–${b}</span><span style="opacity:.7">variation<br>${p.cv==null?'—':p.cv.toFixed(2)}</span><span style="opacity:.7">in band<br>${inb} of ${p.l.length}</span>`}
+function sel(i,scroll){cur=i;draw();document.querySelectorAll('.pr').forEach(r=>r.classList.toggle('cur',+r.dataset.i===i));if(scroll){const r=document.querySelector(`.pr[data-i="${i}"]`);r&&r.scrollIntoView({block:'nearest',behavior:'smooth'})}}
+function vis(p){return(filt==='a'||(filt==='c')===p.cl)&&(!q||p.en.toLowerCase().includes(q)||p.fa.includes(q))}
+function list(){let h='',g=null;const L=D.filter(vis);
+L.forEach(p=>{if(p.faY!==g){g=p.faY;const n=L.filter(x=>x.faY===g).length;h+=`<div class="yr"><span class="m"><span class="fa" style="font-size:13px">${p.faY}</span> · ${g==='۱۴۰۵'?'2026–27':'2025–26'}</span><i></i><span class="m">${n} poems <kbd>[</kbd><kbd>]</kbd></span></div>`}
+h+=`<div class="pr${p.i===cur?' cur':''}" data-i="${p.i}"><div class="ph"><span class="dt"><span class="fa" style="font-size:13px;text-align:left">${p.faD}</span><span class="m" style="opacity:.75">${p.enD}</span></span><span style="font-size:14.5px">${p.en} <span class="fa" style="font-size:13px;opacity:.75">${p.fa}</span></span><span class="m" style="opacity:.8">${p.l.length} lines${p.cl?' · cl.':''}</span><span class="m pm">+</span></div><div class="pb">`;
+if(p.v){h+=`<div class="m" style="opacity:.75;margin-bottom:8px"><span class="fa">${p.faW} ${p.faD} ${p.faY}</span> · ${p.enD}</div><div class="fa" style="font-size:23px;line-height:1.9;border-right:3px solid var(--ink);padding-right:16px">${p.v.join('<br>')}</div>
+<div style="display:flex;gap:5px;flex-wrap:wrap;margin:10px 0"><button class="sk" data-t="tr">translate<kbd>t</kbd></button><button class="sk on" data-t="en">reading · en<kbd>r</kbd></button><button class="sk" data-t="fa">خوانش · fa</button></div>
+<div data-p="tr" class="hid" style="font-family:Newsreader;font-style:italic;font-size:16.5px;line-height:1.55;white-space:pre-line">${p.t}<div class="m" style="font-style:normal;margin-top:6px;opacity:.7">ai translation · saved on the site</div></div>
+<p data-p="en" style="margin:0;font-family:Newsreader;font-size:15px;line-height:1.6;max-width:520px">${p.r}</p><p data-p="fa" class="hid fa" style="margin:0;font-size:15px;line-height:1.9">خوانش فارسی، همان‌طور که در داده‌های سایت هست.</p>`}
+else h+=`<p class="m" style="margin:0;opacity:.75">verses as on the site · ${p.l.length} lines, ${Math.min(...p.l)}–${Math.max(...p.l)} letters</p>`;
+h+='</div></div>'});
+document.getElementById('list').innerHTML=h;
+document.querySelectorAll('.pr').forEach(r=>{r.querySelector('.ph').onclick=()=>{r.classList.toggle('open');sel(+r.dataset.i,false)};
+r.querySelectorAll('[data-t]').forEach(b=>b.onclick=e=>{e.stopPropagation();act(r,b.dataset.t)})})}
+function act(r,t){const pb=r.querySelector('.pb');if(!pb.querySelector('[data-p]'))return;if(t==='tr'){pb.querySelector('[data-t=tr]').classList.toggle('on');pb.querySelector('[data-p=tr]').classList.toggle('hid')}else{if(t==='cyc')t=pb.querySelector('[data-t=en]').classList.contains('on')?'fa':'en';pb.querySelectorAll('[data-t=en],[data-t=fa]').forEach(x=>x.classList.toggle('on',x.dataset.t===t));pb.querySelector('[data-p=en]').classList.toggle('hid',t!=='en');pb.querySelector('[data-p=fa]').classList.toggle('hid',t!=='fa')}}
+function openRow(i,only){document.querySelectorAll('.pr').forEach(r=>{if(+r.dataset.i===i)r.classList.add('open');else if(only)r.classList.remove('open')})}
+function step(d){const L=D.filter(vis).map(p=>p.i);let k=L.indexOf(cur);k=Math.max(0,Math.min(L.length-1,(k<0?0:k+d)));sel(L[k],true);openRow(L[k],true)}
+function yearJump(d){const L=D.filter(vis);const g=[...new Set(L.map(p=>p.faY))];const k=g.indexOf(D[cur].faY)+d;if(g[k]){const p=L.find(x=>x.faY===g[k]);sel(p.i,true)}}
+function setF(f){filt=f;document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f===f));list()}
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>setF(b.dataset.f));
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;document.querySelectorAll('[data-v]').forEach(x=>x.classList.toggle('on',x===b));draw()});
+const qi=document.getElementById('q');qi.oninput=()=>{q=qi.value.trim().toLowerCase();list()};
+const K=[['j / k','next, previous poem'],['o · enter','open or close'],['t','translation'],['r','reading en / fa'],['[ ]','previous, next year'],['← →','step the figure'],['v','length / variation'],['a c m','all, classical, modern'],['f','persian face'],['/','find a poet'],['esc','close all'],['?','these keys']];
+document.getElementById('help').innerHTML=K.map(([k,d])=>`<span><kbd style="margin:0 6px 0 0">${k}</kbd>${d}</span>`).join('');
+const help=()=>document.getElementById('help').classList.toggle('hid');document.getElementById('hb').onclick=help;
+let dk=false;document.getElementById('th').onclick=e=>{dk=!dk;pp.classList.toggle('dark',dk);e.target.textContent=dk?'dark':'light'};
+document.addEventListener('keydown',e=>{if(e.target===qi){if(e.key==='Escape')qi.blur();return}const r=document.querySelector(`.pr[data-i="${cur}"]`);
+const map={j:()=>step(1),k:()=>step(-1),o:()=>r&&r.classList.toggle('open'),Enter:()=>r&&r.classList.toggle('open'),t:()=>r&&(r.classList.add('open'),act(r,'tr')),r:()=>r&&(r.classList.add('open'),act(r,'cyc')),'[':()=>yearJump(-1),']':()=>yearJump(1),ArrowLeft:()=>{const k=D.findIndex(p=>p.i===cur);sel(Math.max(0,cur-1),false)},ArrowRight:()=>sel(Math.min(D.length-1,cur+1),false),v:()=>document.querySelector(`[data-v="${view==='len'?'cv':'len'}"]`).click(),a:()=>setF('a'),c:()=>setF('c'),m:()=>setF('m'),f:()=>setFace((fi+1)%FACES.length),'/':()=>qi.focus(),Escape:()=>document.querySelectorAll('.pr').forEach(x=>x.classList.remove('open')),'?':help};
+if(map[e.key]){e.preventDefault();map[e.key]()}});
+draw();list();openRow(0,true);
+</script>

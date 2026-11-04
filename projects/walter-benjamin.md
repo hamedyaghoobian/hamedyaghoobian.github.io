@@ -1,6 +1,12 @@
 ---
 layout: page
 title: A Peek Into Correspondences of Walter Benjamin Using BERT
+short: walter benjamin
+term: Summer 2022
+status: done
+from: 2022.42
+to: 2022.5
+areas: [nlp, cai]
 
 permalink: /projects/walter-benjamin
 header: true
@@ -8,23 +14,31 @@ list_title: " "
 
 ---
 
-*Note: This research was conducted over a span of 4 weeks in Summer 2022 with Muhlenberg undergraduate student researcher, Christian Johansson.*
+<div class="pj-head">
+<dl class="fp-spec pj-spec">
+  <dt>student</dt><dd>Christian Johansson · Muhlenberg undergraduate student researcher</dd>
+  <dt>term</dt><dd>conducted over a span of 4 weeks in Summer 2022</dd>
+  <dt>status</dt><dd>done</dd>
+  <dt>data</dt><dd>Benjamin's letters, from <em>The Correspondence of Walter Benjamin, 1910-1940</em>, as CSV</dd>
+  <dt>models</dt><dd>BERT (topics) · DistilBERT fine-tuned on the Emotion dataset (emotions)</dd>
+</dl>
+</div>
 
 {% include project-figure.html id="benjamin-figure" script="benjamin-figure.js" note="One sheet per letter in the dataset; place is where Benjamin wrote from." %}
 
-## 1. Introduction
+## Introduction
 
 Walter Benjamin, a renowned German philosopher and critical theorist (1892-1940), is celebrated for his prolific letter-writing. His letters, which were later compiled into a book titled "The Correspondence of Walter Benjamin, 1910-1940" <sup>[1](#ref1)</sup>, provide a rich resource for exploring the writer's evolving thoughts and emotions over time. In this study, we aim to leverage advanced computational frameworks, particularly large pretrained language models, to gain deeper insights into these letters.
 
 Digital humanities has seen a growing interest in the use of language models for its ability to efficiently process large amounts of data, saving time and resources for researchers. Additionally, computational tools can offer a fresh perspective on research questions, yielding new discoveries and insights.
 
-## 2. Methods and Approach
+## Methods and Approach
 
 We started by constructing a dataset of Walter Benjamin's letters, which was manually created from the compiled letters in PDF format. The dataset was represented in a tabular form, with attributes such as recipient, date, and content, and exported as a CSV file.
 
 We then employed BERT (Bidirectional Encoder Representations from Transformers), a widely-used pretrained language model developed by Google, to perform topic and emotion analysis on the letters. Our analysis involved cleaning and preprocessing the data from the CSV file and feeding it into the BERT model.
 
-## 3. Data and Results
+## Data and Results
 
 ### 3.1 Topic Modeling using BERT
 
@@ -46,7 +60,7 @@ To perform emotion analysis, we fine-tuned the DistilBERT model using the Emotio
 
 It is important to acknowledge the limitations of current emotion recognition models, which may not accurately capture the complex emotions expressed in written text. Further refinement of the models and data used may be required to arrive at more robust results.
 
-## 4. References
+## References
 
 <div class="references">
   <p id="ref1">[1] The Correspondence of Walter Benjamin, 1910-1940. Edited by Rolf Tiedemann. Translated by Edmund Jephcott. Chicago: University of Chicago Press, 1996.</p>

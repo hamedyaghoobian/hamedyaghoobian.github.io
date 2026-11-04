@@ -6,3 +6,5 @@ vendor
 .env
 .env.local
 .env.*.local
+_site/
+.jekyll-cache/

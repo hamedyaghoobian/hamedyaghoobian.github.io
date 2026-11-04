@@ -1,47 +1,70 @@
-// Shared parts for the CSI 330 study figures (csi-330.md): a bench on
-// feet, an upright board whose near face carries an ordinary 2-D plot, dial
-// gauges on posts, a selector with detents, and a figure's own controls
-// (pointer, keys, an idle tour, the caption). Drawn with the site's line kit
-// (line-figure.js) in the manner of Ryan's Anatomy figures (github.com/
-// wheresryan22/anatomy, MIT); live parts carry the one glow accent.
+// Shared parts for the Learning Machines figures (CSI 330): flat line
+// drawings in front elevation, with hairlines. A plinth to stand things on
+// (its front face carries the selectors and a printed label), upright boards
+// that carry an ordinary 2-D plot, half-dial gauges on posts, a selector
+// rail with detents, switches and tubes, and a figure's own controls
+// (pointer, keys, an idle tour, the caption, the parts list). No isometric
+// projection and no shaded faces: every solid is paper with a hairline
+// edge, and only the live parts take the one glow accent.
+//
+// Coordinates are the SVG's own: x to the right, y down. Each figure draws
+// into stage(svg), a group whose strokes stay hairline however the drawing
+// is scaled, and whose text takes the figure type (.lm-study, in
+// _sass/legacy/_learning-machines.scss).
 
 window.CSIKit = window.CSIKit || (function () {
-  const LF = window.LineFigure;
-  const { el, box, cylinder, screw, face, onNear, onTop } = LF;
+  const NS = 'http://www.w3.org/2000/svg';
 
-  // A bench from (u0, v0) to (u1, v1), top at h = 0, on four round feet.
-  function bench(svg, u0, v0, u1, v1, t = 5) {
-    [[u0 + 4, v0 + 4], [u1 - 4, v0 + 4], [u0 + 4, v1 - 4], [u1 - 4, v1 - 4]].forEach(([u, v]) =>
-      cylinder(svg, 'lf-solid lf-shaded').set(u, v, -t - 4, -t, 2));
-    box(svg, 'lf-solid lf-shaded').set(u0, v0, -t, u1, v1, 0);
-    [[u0 + 3, v0 + 3], [u1 - 3, v0 + 3], [u0 + 3, v1 - 3], [u1 - 3, v1 - 3]].forEach(([u, v]) => screw(svg, u, v, 0));
+  function el(name, attrs, parent) {
+    const node = document.createElementNS(NS, name);
+    for (const k in attrs) node.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(node);
+    return node;
   }
 
-  // A label printed on the bench's near edge.
-  function plate(svg, text, u, v, size = 2.6) {
-    const f = face(svg, onNear(u, v, -0.9));
-    el('text', { x: 0, y: size, 'font-size': size, 'letter-spacing': 0.35 }, f).textContent = text;
-    return f;
+  // The figure's <svg> (made by the line kit when it is loaded, which adds
+  // the page's one glow filter for the dark theme), and the group to draw in.
+  function svg(root, label) {
+    if (window.LineFigure && window.LineFigure.svg) return window.LineFigure.svg(root, '0 0 100 100', label);
+    return el('svg', { viewBox: '0 0 100 100', role: 'img', 'aria-label': label }, root);
+  }
+  const stage = s => el('g', { class: 'lm-study' }, s);
+
+  // A plinth from x0 to x1, its top at y (where everything stands), its
+  // front face 15 deep: selectors and switches sit in its upper part, the
+  // printed label (plate) along its lower edge, under a faint line.
+  function bench(g, x0, x1, y) {
+    el('rect', { class: 'lf-solid', x: x0, y, width: x1 - x0, height: 15, rx: 0.8 }, g);
+    el('line', { class: 'lf-line lf-faint', x1: x0, y1: y + 11, x2: x1, y2: y + 11 }, g);
   }
 
-  // An upright board standing on the bench along u, its near face at v,
-  // from h0 to h1, with two feet. Returns { g, w, h, toFace(e) }: g is a group
-  // on the near face (x along u from 0 to w, y down from 0 to h) to draw an
-  // ordinary plot into; toFace maps a pointer event into those units.
-  function board(svg0, u0, u1, v, h0, h1, d = 3) {
-    const svg = el('g', {}, svg0);                  // the whole board, to name as a part
-    box(svg, 'lf-solid lf-shaded').set(u0 + 4, v - 10, 0, u0 + 10, v + 4, 2);
-    box(svg, 'lf-solid lf-shaded').set(u1 - 10, v - 10, 0, u1 - 4, v + 4, 2);
-    // a board raised off the bench stands on two posts
-    if (h0 > 4) [u1 - 7, u0 + 7].forEach(u => cylinder(svg, 'lf-solid lf-shaded').set(u, v - d / 2, 2, h0, 1.6));
-    box(svg, 'lf-solid lf-shaded').set(u0, v - d, h0, u1, v, h1);
-    const g = face(svg, onNear(u0, v, h1));
-    const w = u1 - u0, h = h1 - h0;
-    el('rect', { class: 'lf-line lf-faint', x: 1.5, y: 1.5, width: w - 3, height: h - 3, rx: 1 }, g);
+  // A label printed along the plinth's lower edge (y is the plinth's top).
+  function plate(g, text, x, y, size = 2.2) {
+    const t = el('text', { x, y: y + 13.8, 'font-size': size, 'letter-spacing': 0.3 }, g);
+    t.textContent = text;
+    return t;
+  }
+
+  // A post from y0 down to the plinth top at base, on a foot.
+  function post(g, x, y0, base) {
+    el('line', { class: 'lf-line', x1: x, y1: y0, x2: x, y2: base - 1.2 }, g);
+    el('rect', { class: 'lf-solid', x: x - 3, y: base - 1.2, width: 6, height: 1.2 }, g);
+  }
+
+  // An upright board with its top-left at (x, y), w by h, on two posts
+  // (inset from its ends) down to the plinth top at base. Returns { g, w, h, el, toFace(e) }: g is a
+  // group in the board's own units (x from 0 to w, y down from 0 to h) to
+  // draw an ordinary plot into; toFace maps a pointer event into those units.
+  function board(g0, x, y, w, h, base, inset = 7) {
+    const part = el('g', {}, g0);                 // the whole board, to name as a part
+    if (base != null && base > y + h) [x + inset, x + w - inset].forEach(px => post(part, px, y + h, base));
+    el('rect', { class: 'lf-solid', x, y, width: w, height: h, rx: 1 }, part);
+    const g = el('g', { transform: `translate(${x} ${y})` }, part);
+    el('rect', { class: 'lf-line lf-faint', x: 1.5, y: 1.5, width: w - 3, height: h - 3, rx: 0.6 }, g);
     return {
-      g, w, h, el: svg,
+      g, w, h, el: part,
       toFace(e) {
-        const p = svg0.createSVGPoint();
+        const p = g.ownerSVGElement.createSVGPoint();
         p.x = e.clientX; p.y = e.clientY;
         const q = p.matrixTransform(g.getScreenCTM().inverse());
         return [q.x, q.y];
@@ -80,14 +103,15 @@ window.CSIKit = window.CSIKit || (function () {
     }
   }
 
-  // A dial gauge on a post at (u, v): a half dial on a small panel facing
-  // the viewer, from lo to hi. The reading sits under the dial, the name
-  // under the reading, clear of the needle's sweep. Returns set(value).
-  function gauge(svg0, u, v, label, lo, hi, fmt = x => x.toFixed(2), hPost = 16) {
-    const svg = el('g', {}, svg0);
-    cylinder(svg, 'lf-solid lf-shaded').set(u + 9, v - 2, 0, hPost, 1.1);
-    box(svg, 'lf-solid lf-shaded').set(u, v - 4, hPost, u + 18, v, hPost + 16);
-    const f = face(svg, onNear(u, v, hPost + 16));
+  // A dial gauge: a half dial on a small panel (18 × 16) with its top-left
+  // at (x, y), from lo to hi, on a post down to the plinth top at base. The
+  // reading sits under the dial, the name under the reading, clear of the
+  // needle's sweep. Returns set(value), with set.el the whole gauge.
+  function gauge(g0, x, y, label, lo, hi, fmt = v => v.toFixed(2), base) {
+    const part = el('g', {}, g0);
+    if (base != null && base > y + 16) post(part, x + 9, y + 16, base);
+    el('rect', { class: 'lf-solid', x, y, width: 18, height: 16, rx: 0.8 }, part);
+    const f = el('g', { transform: `translate(${x} ${y})` }, part);
     const cx = 9, cy = 8.6, R = 6.2, at = (t, rr) => [cx - rr * Math.cos(t * Math.PI), cy - rr * Math.sin(t * Math.PI)];
     el('path', { class: 'lf-line', d: `M${at(0, R)} A${R} ${R} 0 0 1 ${at(1, R)}` }, f);
     for (let k = 0; k <= 10; k++) {
@@ -105,34 +129,78 @@ window.CSIKit = window.CSIKit || (function () {
       needle.setAttribute('x2', nx.toFixed(2)); needle.setAttribute('y2', ny.toFixed(2));
       val.textContent = fmt(v2);
     };
-    set.el = svg;
+    set.el = part;
     return set;
   }
 
-  // A selector on the bench: a slot with detents along u, a knob riding in
-  // it. Returns { set(i), pick(e) → i or -1 }.
-  function selector(svg0, u0, v, labels, title) {
-    const svg = el('g', {}, svg0);
-    const step = 7, u1 = u0 + step * (labels.length - 1);
-    box(svg, 'lf-solid lf-shaded').set(u0 - 4, v - 4, 0, u1 + 4, v + 4, 1.2);
-    const top = face(svg, onTop(u0 - 4, v - 4, 1.2));
-    el('rect', { class: 'lf-line lf-faint', x: 3, y: 3.4, width: u1 - u0 + 2, height: 1.2, rx: 0.6 }, top);
+  // A selector rail on the plinth's face: a slot with detents, one label
+  // under each, and the knob (a ring) in the chosen detent. The first detent
+  // is at x0; y is the rail's top. Returns { set(i), pick(e) → i or -1 }.
+  function selector(g0, x0, y, labels, title) {
+    const part = el('g', {}, g0);
+    const step = 7, span = step * (labels.length - 1);
+    const f = el('g', { transform: `translate(${x0 - 4} ${y})` }, part);
+    el('rect', { class: 'lf-solid', x: 0, y: 0, width: span + 8, height: 9.4, rx: 0.8 }, f);
+    el('rect', { class: 'lf-line lf-faint', x: 3, y: 3.4, width: span + 2, height: 1.2, rx: 0.6 }, f);
     labels.forEach((t, i) => {
-      el('text', { x: 4 + i * step, y: 7.6, 'font-size': 2.1, 'text-anchor': 'middle' }, top).textContent = t;
+      el('line', { class: 'lf-line lf-faint', x1: 4 + i * step, y1: 3, x2: 4 + i * step, y2: 5 }, f);
+      el('text', { x: 4 + i * step, y: 8.3, 'font-size': 2.1, 'text-anchor': 'middle' }, f).textContent = t;
     });
-    if (title) el('text', { x: 0.8, y: 2.2, 'font-size': 1.7, 'letter-spacing': 0.3 }, top).textContent = title;
-    const knob = cylinder(el('g', { class: 'lf-hot' }, svg), 'lf-solid lf-shaded');
-    const hit = el('rect', { x: 0, y: 0, width: u1 - u0 + 8, height: 8, fill: 'transparent' }, top);
+    if (title) el('text', { x: 0.8, y: 2.2, 'font-size': 1.7, 'letter-spacing': 0.3 }, f).textContent = title;
+    const knob = el('circle', { class: 'lf-solid', cy: 4, r: 1.7 }, el('g', { class: 'lf-hot' }, f));
+    const hit = el('rect', { x: 0, y: 0, width: span + 8, height: 9.4, fill: 'transparent' }, f);
     return {
-      set(i) { knob.set(u0 + i * step, v, 1.2, 4.2, 1.6); },
+      set(i) { knob.setAttribute('cx', 4 + i * step); },
       pick(e) {
-        const p = svg0.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
-        const q = p.matrixTransform(top.getScreenCTM().inverse());
-        if (q.y < -2 || q.y > 10 || q.x < -2 || q.x > u1 - u0 + 10) return -1;
+        const p = f.ownerSVGElement.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+        const q = p.matrixTransform(f.getScreenCTM().inverse());
+        if (q.y < -2 || q.y > 11 || q.x < -2 || q.x > span + 10) return -1;
         return Math.max(0, Math.min(labels.length - 1, Math.round((q.x - 4) / step)));
       },
-      hit, el: svg
+      hit, el: part
     };
+  }
+
+  // A two-way switch: a plate with its top-left at (x, y), w by h, naming
+  // its setting. Paper-filled, so a click anywhere on it lands. Returns
+  // { el, text }: set text.textContent to the current setting.
+  function toggle(g0, x, y, w, h, title, size = 2.4) {
+    const part = el('g', { style: 'cursor:pointer' }, g0);
+    el('rect', { class: 'lf-solid', x, y, width: w, height: h, rx: 0.8 }, part);
+    if (title) el('text', { x, y: y - 1, 'font-size': 1.7, 'letter-spacing': 0.3 }, part).textContent = title;
+    const text = el('text', { x: x + w / 2, y: y + h / 2 + size * 0.36, 'font-size': size, 'text-anchor': 'middle', 'letter-spacing': 0.25 }, part);
+    return { el: part, text };
+  }
+
+  // A glass tube on a stand, in elevation: open at the top, round at the
+  // bottom; x its centre, from top down to the plinth top at base. Returns
+  // { el, wrap, set(frac) }: the fill (in wrap) rises to frac of the tube.
+  function tube(g0, x, top, base, r = 3.4) {
+    const part = el('g', {}, g0);
+    const bot = base - 3;
+    el('rect', { class: 'lf-solid', x: x - 5, y: bot, width: 10, height: 3, rx: 0.5 }, part);
+    const wrap = el('g', {}, part);
+    const fill = el('rect', { class: 'lm-fill', x: x - r + 0.8, width: 2 * r - 1.6 }, wrap);
+    el('path', { class: 'lf-line', d: `M${x - r} ${top} L${x - r} ${bot - r} A${r} ${r} 0 0 0 ${x + r} ${bot - r} L${x + r} ${top}` }, part);
+    el('line', { class: 'lf-line', x1: x - r - 0.8, y1: top, x2: x + r + 0.8, y2: top }, part);
+    const inner = bot - 0.8 - top;
+    return {
+      el: part, wrap,
+      set(frac) {
+        const hh = Math.max(0, inner * frac);
+        fill.setAttribute('y', (bot - 0.8 - hh).toFixed(2)); fill.setAttribute('height', hh.toFixed(2));
+        fill.setAttribute('rx', Math.min(r - 0.8, hh / 2).toFixed(2));
+        fill.style.display = hh > 0.05 ? '' : 'none';
+      }
+    };
+  }
+
+  // A coil spring drawn flat: a zigzag from (x, y1) to (x, y2).
+  function spring(x, y1, y2, w = 0.9, pitch = 1.4) {
+    const n = Math.max(4, Math.round(Math.abs(y2 - y1) / pitch));
+    let d = `M${x.toFixed(2)} ${y1.toFixed(2)}`;
+    for (let k = 1; k < n; k++) d += ` L${(x + (k % 2 ? w : -w)).toFixed(2)} ${(y1 + (y2 - y1) * k / n).toFixed(2)}`;
+    return d + ` L${x.toFixed(2)} ${y2.toFixed(2)}`;
   }
 
   // A figure's controls: the caption, keys, and an idle tour that runs only
@@ -246,7 +314,7 @@ window.CSIKit = window.CSIKit || (function () {
     svg.addEventListener('pointermove', e => {
       const n = e.target.closest && e.target.closest('[data-part]');
       const i = n ? +n.getAttribute('data-part') : -1;
-      if (hint) hint.textContent = i >= 0 && names ? `${String(i + 1).padStart(2, '0')} ${names[i]}` : plain;
+      if (hint) hint.textContent = i >= 0 && names[i] ? `${String(i + 1).padStart(2, '0')} ${names[i]}` : plain;
       root.dispatchEvent(new CustomEvent('lm-part-hover', { detail: i, bubbles: true }));
     });
     svg.addEventListener('pointerleave', () => {
@@ -258,5 +326,5 @@ window.CSIKit = window.CSIKit || (function () {
 
   const mean = a => a.reduce((s, v) => s + v, 0) / a.length;
 
-  return { bench, plate, board, scale, axes, gauge, selector, controls, fit, mean, panel, parts };
+  return { el, svg, stage, bench, plate, post, board, scale, axes, gauge, selector, toggle, tube, spring, controls, fit, mean, panel, parts };
 })();

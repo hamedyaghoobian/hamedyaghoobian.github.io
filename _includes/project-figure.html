@@ -26,5 +26,5 @@
   <figcaption><span id="{{ include.id }}-readout" aria-live="polite"></span>{% if include.note %}<br><span class="project-figure__note">{{ include.note }}</span>{% endif %}</figcaption>
 </figure>
 {%- endif %}
-<script src="{{ '/assets/js/line-figure.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/' | append: include.script | relative_url }}" defer></script>
+<script src="{{ '/assets/js/line-figure.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<script src="{{ '/assets/js/' | append: include.script | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

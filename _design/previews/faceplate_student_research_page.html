@@ -1,0 +1,80 @@
+<h2 class="sr-only">Student research page preview: a patch-bay matrix of nine projects against three research areas over a term timeline, with keyboard navigation, expandable rows, and a how-to-join panel.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+#sr{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.22);--y:#F2C500;--live:#E0362C;background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;padding:14px 20px}
+.m{font-family:'JetBrains Mono',monospace;font-size:11px}
+.sk{border:1.5px solid var(--ink);border-radius:4px;padding:3px 9px;background:transparent;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer}
+.sk:hover{background:var(--y);border-color:var(--y)}.sk.on{background:var(--ink);color:var(--bg)}
+kbd{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-left:4px;opacity:.8}
+.g{display:grid;grid-template-columns:22px minmax(0,1fr) 30px 30px 30px 150px;align-items:center;gap:6px}
+.row{border-bottom:1px solid var(--soft)}
+.rh{padding:7px 4px;cursor:pointer}.rh:hover{background:var(--y)}
+.row.cur .rh{box-shadow:inset 3px 0 0 var(--live)}
+.row.dim{opacity:.25}
+.jack{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ink);margin:auto}
+.jack.on{background:var(--ink)}
+.col.hl{background:rgba(242,197,0,.45)}
+.tl{position:relative;height:14px}
+.tl i{position:absolute;top:3px;height:8px;background:var(--ink)}
+.tl i.now{background:var(--live)}
+.rb{display:none;padding:2px 4px 14px 32px}.row.open .rb{display:block}
+.spec{display:grid;grid-template-columns:80px minmax(0,1fr);row-gap:3px}.spec span:nth-child(odd){opacity:.6}
+.step{border:1.5px solid var(--ink);border-radius:6px;padding:10px}
+</style>
+<div style="padding:1rem 0">
+<div id="sr">
+<div class="m" style="display:flex;justify-content:space-between;border-bottom:1.5px solid var(--ink);padding-bottom:6px;flex-wrap:wrap;gap:6px"><span>hy / 02 research</span><span>j / k rows · enter open · n h s areas · x clear · e email</span></div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:end;margin:22px 0 16px">
+<div style="font-weight:800;font-size:44px;line-height:.92;letter-spacing:-.025em">student<br>research</div>
+<p style="margin:0;font-size:13px;line-height:1.5">Where AI meets human experience: the mutual shaping of technology, society, and culture. Nine projects, nine students since 2022.</p>
+</div>
+
+<div class="m" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px" id="areas"></div>
+
+<div class="g m" style="padding:0 4px 6px;border-bottom:1.5px solid var(--ink)">
+<span></span><span>project · student</span><span class="col" data-c="0" style="text-align:center">nlp</span><span class="col" data-c="1" style="text-align:center">hai</span><span class="col" data-c="2" style="text-align:center">cai</span>
+<span style="display:flex;justify-content:space-between"><span>'22</span><span>'24</span><span>'26</span></span>
+</div>
+<div id="rows"></div>
+<div class="m" style="display:flex;gap:16px;margin-top:8px;opacity:.85;flex-wrap:wrap"><span>● patched into an area</span><span>▬ term</span><span style="color:var(--live)">▬ running now</span><span id="cnt"></span></div>
+
+<div style="margin-top:28px;border-top:1.5px solid var(--ink);padding-top:6px" class="m">join · for muhlenberg students</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px">
+<div class="step"><div class="m">01</div><div style="font-size:15px;margin:4px 0 6px">Write to me</div><p class="m" style="margin:0 0 8px;opacity:.8;line-height:1.5">say which project, or bring your own question.</p><button class="sk" style="background:var(--y);border-color:var(--y)">email<kbd>e</kbd></button></div>
+<div class="step"><div class="m">02</div><div style="font-size:15px;margin:4px 0 6px">Pick a format</div><div class="spec m"><span>term</span><span>independent study</span><span>summer</span><span>funded research</span></div></div>
+<div class="step"><div class="m">03</div><div style="font-size:15px;margin:4px 0 6px">What helps</div><div class="spec m" style="grid-template-columns:70px 1fr"><span>curiosity</span><span>●●●</span><span>both sides</span><span>●●●</span><span>python</span><span>●○○ useful</span></div></div>
+</div>
+</div>
+</div>
+<script>
+const A=[['nlp','natural language processing','n'],['hai','human–ai interaction','h'],['cai','critical ai studies','s']];
+const R=[
+['Nightshade/Glaze VLM evaluation harness','Joseph Tsocanos','',[0,1,1],[2026.6,2027],1,'How vision-language models perceive images protected by anti-AI-training tools.','fall 2026',''],
+['Raising Reachy','Melina Sarion',"'27",[1,1,1],[2026.3,2027],1,'How undergraduates "raise" an LLM-powered Reachy Mini robot framed as a learner.','2026',''],
+['The grammar of belief','Abhilasha Talwar','',[1,0,1],[2026.4,2027],1,'Can language models separate what someone believes from what is true, in English and Turkish?','summer 2026 →',''],
+['Noisy stars: the Superhost premium','Judah Dasebre','',[0,0,1],[2026.4,2026.65],0,'Can the Superhost threshold reliably tell listings apart, and what is the badge worth? 31 markets, 186,873 listings.','summer 2026',''],
+['AI seasons','Andrew Franklin','',[1,0,1],[2024.65,2025],1,'A corpus of news, papers and videos on AI booms and busts; how "the AI winter" was named and dated.','fall 2024 →',''],
+['TimeCapsule: an 18th-century LLM','Hayk Grigorian',"'26",[1,1,0],[2025.4,2026],0,'Generative hallucination as a method for historical sensemaking.','2025–26','paper · 2026'],
+['MASFIN: multi-agent financial trading','Sebastian Montalvo',"'28",[1,0,0],[2025.4,2025.65],0,'Decomposed financial reasoning and forecasting with a crew of LLM agents.','summer 2025','arXiv · 2025'],
+['Unmasking bias in LLMs','Geoffrey Levy','',[1,0,1],[2024.4,2024.65],0,'Eight weeks probing the biases large language models carry.','summer 2024',''],
+['Walter Benjamin\'s correspondence, with BERT','Christian Johansson','',[1,0,1],[2022.4,2022.5],0,'Four weeks reading Benjamin\'s letters with a language model.','summer 2022','']];
+const X=y=>Math.max(0,Math.min(100,(y-2022)/5*100));
+let cur=0,area=-1;
+const ar=document.getElementById('areas');
+A.forEach(([k,n,key],i)=>{const n2=R.filter(r=>r[3][i]).length;const d=document.createElement('button');d.className='sk';d.style.textAlign='left';d.style.padding='8px 10px';d.innerHTML=`<div style="display:flex;justify-content:space-between"><span>${k}</span><span>${n2} projects<kbd>${key}</kbd></span></div><div style="font-family:'Libre Franklin';font-size:13px;margin-top:4px">${n}</div>`;d.onclick=()=>setA(area===i?-1:i);ar.appendChild(d)});
+const rows=document.getElementById('rows');
+R.forEach((r,i)=>{const d=document.createElement('div');d.className='row';d.dataset.i=i;
+d.innerHTML=`<div class="rh g"><span class="m">${String(i+1).padStart(2,'0')}</span><span><span style="font-size:14px">${r[0]}</span><br><span class="m" style="opacity:.75">${r[1].toLowerCase()} ${r[2]}${r[8]?' · '+r[8]:''}</span></span>${r[3].map((v,c)=>`<span class="col" data-c="${c}"><span class="jack${v?' on':''}"></span></span>`).join('')}<span class="tl"><i class="${r[5]?'now':''}" style="left:${X(r[4][0])}%;width:${Math.max(3,X(r[4][1])-X(r[4][0]))}%"></i></span></div>
+<div class="rb"><p style="margin:4px 0 10px;font-size:13.5px;line-height:1.5;max-width:480px">${r[6]}</p><div class="spec m"><span>student</span><span>${r[1]} ${r[2]}</span><span>term</span><span>${r[7]}</span><span>status</span><span>${r[5]?'<span style="color:var(--live)">● running</span>':'done'}</span><span>areas</span><span>${A.filter((a,c)=>r[3][c]).map(a=>a[0]).join(' · ')}</span>${r[8]?`<span>output</span><span>${r[8]} → publications</span>`:''}</div><p class="m" style="margin:10px 0 0">project page →</p></div>`;
+d.querySelector('.rh').onclick=()=>{d.classList.toggle('open');setC(i)};rows.appendChild(d)});
+function setC(i){cur=i;document.querySelectorAll('.row').forEach((r,j)=>r.classList.toggle('cur',j===i))}
+function setA(i){area=i;[...ar.children].forEach((b,j)=>b.classList.toggle('on',j===i));document.querySelectorAll('.col').forEach(c=>c.classList.toggle('hl',+c.dataset.c===i));
+document.querySelectorAll('.row').forEach((r,j)=>r.classList.toggle('dim',i>=0&&!R[j][3][i]));
+document.getElementById('cnt').textContent=i>=0?`${R.filter(r=>r[3][i]).length} of 9 in ${A[i][0]}`:`${R.filter(r=>r[5]).length} running · ${R.filter(r=>!r[5]).length} done`}
+document.addEventListener('keydown',e=>{const k=e.key;
+if(k==='j'||k==='k'){let i=cur;do{i=Math.max(0,Math.min(8,i+(k==='j'?1:-1)))}while(area>=0&&!R[i][3][area]&&i>0&&i<8);setC(i)}
+if(k==='Enter'||k==='o')document.querySelectorAll('.row')[cur].classList.toggle('open');
+const ai=A.findIndex(a=>a[2]===k);if(ai>=0)setA(area===ai?-1:ai);if(k==='x')setA(-1)});
+setC(0);setA(-1);
+</script>

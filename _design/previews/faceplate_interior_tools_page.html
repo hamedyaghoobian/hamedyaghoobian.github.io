@@ -1,0 +1,86 @@
+<h2 class="sr-only">Interior page preview (Tools and projects) in the faceplate system: key strip navigation with breadcrumb and three-position theme knob, filter keys, an expandable numbered index, and a footer with Mashhad's time.</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+#pg{--bg:#F2EBDA;--ink:#2B3BD1;--soft:rgba(43,59,209,.28);--y:#F2C500;--r:#E0362C;--live:#E0362C;background:var(--bg);color:var(--ink);font-family:'Libre Franklin',sans-serif;border-radius:6px;padding:14px 20px 14px;transition:background .25s,color .25s}
+#pg.dark{--bg:#2B3BD1;--ink:#F2EBDA;--soft:rgba(242,235,218,.3);--live:#F2C500}
+.m{font-family:'JetBrains Mono',monospace;font-size:11px}
+.strip{display:flex;gap:5px;align-items:stretch}
+.k{border:1.5px solid var(--ink);border-radius:4px;padding:4px 7px;min-width:34px;display:flex;flex-direction:column;gap:1px;cursor:pointer;background:transparent;color:inherit;text-align:left;font:inherit}
+.k:hover,.k:focus-visible{background:var(--y);border-color:var(--y);color:#2B3BD1;outline:none}
+.k.on{background:var(--ink);color:var(--bg)}
+.k .n{font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.75}
+.k .t{font-size:11.5px}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:4px;overflow:hidden}
+.seg button{background:transparent;border:0;border-right:1.5px solid var(--ink);color:inherit;padding:5px 11px;font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;border-radius:0}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--y);color:#2B3BD1}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.row{border-bottom:1px solid var(--soft)}
+.rh{display:grid;grid-template-columns:40px minmax(0,1fr) 110px 18px;align-items:baseline;padding:10px 0;cursor:pointer}
+.rh:hover{background:var(--y);color:#2B3BD1}
+.rb{display:none;padding:0 0 16px 40px}
+.row.open .rb{display:block}
+.row.open .pm{transform:rotate(45deg)}
+.pm{display:inline-block;transition:transform .15s}
+.knob{display:flex;align-items:center;gap:6px}
+.kd{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);position:relative;cursor:pointer;transition:transform .25s}
+.kd::after{content:"";position:absolute;left:50%;top:3px;width:2px;height:9px;background:var(--live);transform:translateX(-50%)}
+.kl span{opacity:.45;cursor:pointer}.kl span.on{opacity:1}
+</style>
+<div style="padding:1rem 0">
+<div id="pg">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div class="strip" id="strip"></div>
+<div class="knob"><div class="kl m" id="kl"><span data-v="0" class="on">L</span> <span data-v="1">D</span> <span data-v="2">A</span></div><div class="kd" id="kd" role="button" aria-label="Theme: light, dark, auto"></div></div>
+</div>
+
+<div class="m" style="margin:14px 0 0;display:flex;justify-content:space-between;border-top:1.5px solid var(--ink);padding-top:6px"><span>hy / 06 tools</span><span id="hint" style="opacity:.75">press 0–7 to jump</span></div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:24px;align-items:end;margin:26px 0 22px">
+<div style="font-weight:800;font-size:46px;line-height:.92;letter-spacing:-.025em">tools and<br>projects</div>
+<p style="margin:0;font-size:13px;line-height:1.5">Things built for teaching and for thinking with machines. Some are finished, some are still being made.</p>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px">
+<div class="seg" id="seg"><button class="on" data-f="all">all 4</button><button data-f="ed">educational 3</button><button data-f="ex">experimental 1</button></div>
+<span class="m" style="opacity:.75">click a row to open</span>
+</div>
+
+<div id="list" style="border-top:1.5px solid var(--ink)">
+<div class="row open" data-c="ed"><div class="rh"><span class="m">6.1</span><span style="font-size:15px">AI and data ethics</span><span class="m" style="display:flex;gap:6px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:var(--live)"></span>in progress</span><span class="m pm">+</span></div>
+<div class="rb">
+<p style="margin:0 0 12px;font-size:13.5px;line-height:1.55;max-width:460px">A hub for CSI 205, spring 2027: ethical challenges in AI through interactive modules and case studies.</p>
+<svg viewBox="0 0 460 90" width="100%" style="max-width:460px;display:block;margin-bottom:6px" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><circle cx="40" cy="45" r="26"/><circle cx="110" cy="45" r="26"/><circle cx="180" cy="45" r="26" stroke="var(--live)" stroke-width="1.6"/><circle cx="250" cy="45" r="26"/><circle cx="320" cy="45" r="26"/><circle cx="390" cy="45" r="26"/></g><g font-family="JetBrains Mono" font-size="10" fill="currentColor" text-anchor="middle"><text x="40" y="49">1</text><text x="110" y="49">2</text><text x="180" y="49" fill="var(--live)">3</text><text x="250" y="49">4</text><text x="320" y="49">5</text><text x="390" y="49">6</text></g></svg>
+<p class="m" style="margin:0 0 12px;opacity:.75">fig. six lenses, after the markkula center · keys 1–6</p>
+<div class="m" style="display:grid;grid-template-columns:90px 1fr;row-gap:4px;max-width:460px"><span style="opacity:.6">status</span><span>work in progress</span><span style="opacity:.6">launch</span><span>spring 2027</span><span style="opacity:.6">stack</span><span>course site · interactive figures</span></div>
+</div></div>
+<div class="row" data-c="ex"><div class="rh"><span class="m">6.2</span><span style="font-size:15px">Bot without organs</span><span class="m">experimental</span><span class="m pm">+</span></div>
+<div class="rb"><p style="margin:0 0 10px;font-size:13.5px;line-height:1.55;max-width:460px">An interactive AI philosophy companion.</p><div class="m" style="display:grid;grid-template-columns:90px 1fr;row-gap:4px"><span style="opacity:.6">stack</span><span>llms · groq api · nlp</span></div><p class="m" style="margin:10px 0 0">open →</p></div></div>
+<div class="row" data-c="ed"><div class="rh"><span class="m">6.3</span><span style="font-size:15px">Teach the machine</span><span class="m">educational</span><span class="m pm">+</span></div>
+<div class="rb"><p style="margin:0 0 10px;font-size:13.5px;line-height:1.55">Learn machine learning by doing.</p><p class="m" style="margin:0">open →</p></div></div>
+<div class="row" data-c="ed"><div class="rh"><span class="m">6.4</span><span style="font-size:15px">Learning machines</span><span class="m">csi 330</span><span class="m pm">+</span></div>
+<div class="rb"><p style="margin:0 0 10px;font-size:13.5px;line-height:1.55">Machine learning, one working machine at a time.</p><p class="m" style="margin:0">open →</p></div></div>
+</div>
+
+<div class="m" style="margin-top:34px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--soft);padding-top:8px">
+<span style="display:flex;gap:7px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:var(--live)"></span>mashhad <span id="clk">--:--</span></span>
+<span>scholar · github · email</span>
+<span style="opacity:.75">made in eastern pa</span>
+</div>
+</div>
+</div>
+<script>
+const N=['home','teaching','research','news','pubs','readings','tools','poems'];
+const st=document.getElementById('strip');
+N.forEach((n,i)=>{const b=document.createElement('button');b.className='k'+(i===6?' on':'');b.innerHTML=`<span class="n">${i}</span><span class="t">${n}</span>`;b.onclick=()=>go(i);st.appendChild(b)});
+function go(i){document.getElementById('hint').textContent=i===6?'you are here':`→ would open /${N[i]}/`;[...st.children].forEach((c,j)=>c.classList.toggle('on',j===i))}
+document.addEventListener('keydown',e=>{if(/^[0-7]$/.test(e.key))go(+e.key)});
+document.querySelectorAll('.rh').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
+document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;document.querySelectorAll('#list .row').forEach(r=>r.style.display=(f==='all'||r.dataset.c===f)?'':'none')});
+let tv=0;const pg=document.getElementById('pg');
+function setT(v){tv=v;document.querySelectorAll('#kl span').forEach(s=>s.classList.toggle('on',+s.dataset.v===v));document.getElementById('kd').style.transform=`rotate(${[-40,0,40][v]}deg)`;const d=v===1||(v===2&&matchMedia('(prefers-color-scheme: dark)').matches);pg.classList.toggle('dark',d)}
+document.getElementById('kd').onclick=()=>setT((tv+1)%3);
+document.querySelectorAll('#kl span').forEach(s=>s.onclick=()=>setT(+s.dataset.v));setT(0);
+function tick(){try{document.getElementById('clk').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(new Date())}catch(e){}}tick();setInterval(tick,30000);
+</script>

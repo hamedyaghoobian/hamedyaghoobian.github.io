@@ -1,0 +1,22 @@
+---
+layout: default
+---
+{%- comment -%}
+  A page: its number and title set large on the plate, an optional `dek`
+  (one line under the title, what the page is for), then the content.
+  `heading:` sets a shorter title for the plate than the page's full
+  `title:` (which stays in the tab, search results and link previews).
+  `wide: true` lets the content use the plate's full width instead of the
+  reading measure.
+{%- endcomment -%}
+{%- include fp-section.html -%}
+<article class="fp-page{% if page.wide %} fp-page--wide{% endif %}">
+  <header class="fp-head fp-head--d{{ fp_depth }}">
+    <p class="fp-head__n" aria-hidden="true">{% if fp_depth == 1 %}0{{ fp_key.n }}{% else %}0{{ fp_key.n }}.{% for u in site.data.faceplate.projects %}{% if u == page.url %}{{ forloop.index }}{% endif %}{% endfor %}{% endif %}</p>
+    <h1 class="fp-title">{{ page.heading | default: page.title | escape }}</h1>
+    {%- if page.dek %}<p class="fp-dek">{{ page.dek }}</p>{% endif %}
+  </header>
+  <div class="fp-body">
+    {{ content }}
+  </div>
+</article>

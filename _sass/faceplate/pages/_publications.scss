@@ -1,0 +1,181 @@
+// ─────────────────────────────────────────────────────────────
+// Publications (public-interactions.md): a readout of Scholar's numbers and
+// citations per year, then the papers by section. Each row: year · paper ·
+// citations as a short bar against the most-cited paper. All lines are
+// hairlines in the ink; the current year's bar is drawn open in the live
+// colour, because the year isn't over; the newest paper wears the live dot.
+// ─────────────────────────────────────────────────────────────
+
+.pubs { max-width: 920px; }
+
+// ── The readout ─────────────────────────────────────────────
+.pubs-readout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  grid-template-areas: "nums chart" "src chart";
+  column-gap: clamp(24px, 5vw, 64px);
+  align-items: end;
+  padding: 0 0 18px;
+  margin: 0 0 28px;
+  border-top: var(--stroke) solid var(--ink);
+  border-bottom: var(--hair) solid var(--rule);
+}
+
+.pubs-nums {
+  grid-area: nums;
+  display: flex; flex-wrap: wrap; gap: 0 clamp(20px, 4vw, 44px);
+  margin: 18px 0 12px;
+  > div { display: flex; flex-direction: column-reverse; }
+  dt { font: 400 .7rem/1.4 var(--mono); color: var(--ink-soft); margin-top: 4px; }
+  dd {
+    margin: 0;
+    font: 800 clamp(2.4rem, 6vw, 3.6rem)/.9 var(--sans);
+    letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.pubs-source {
+  grid-area: src; margin: 0;
+  a { text-decoration-color: var(--rule-strong); }
+}
+
+// Citations per year: one hairline bar per year, the value on top. The
+// scale is 0.8px per percent of the peak year, so the tallest bar is 80px.
+.pubs-chart {
+  grid-area: chart;
+  margin: 18px 0 0;
+  figcaption { margin-top: 6px; }
+}
+.pubs-chart__bars {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
+  gap: 6px; align-items: end;
+  list-style: none; margin: 0 3px; padding: 0;
+  li { margin: 0; display: flex; flex-direction: column; align-items: stretch; }
+}
+.pubs-chart__v { order: 1; font: 500 .66rem/1 var(--mono); text-align: center; margin-bottom: 4px; }
+.pubs-chart__b {
+  order: 2;
+  display: block;
+  height: calc(var(--h, 0) * .8px);
+  min-height: 1px;
+  border: var(--hair) solid var(--ink); border-bottom: 0;
+  background: var(--faint);
+}
+// The year sits under the base line; its top border is that line, run on
+// across the gaps so it reads as one axis.
+.pubs-chart__y {
+  order: 3;
+  margin: 0 -3px; padding-top: 5px;
+  border-top: var(--hair) solid var(--ink);
+  font: 400 .62rem/1 var(--mono); color: var(--ink-soft); text-align: center;
+}
+.pubs-chart .is-now {
+  .pubs-chart__b { border: var(--hair) dashed var(--live); border-bottom: 0; background: none; }
+  .pubs-chart__y { color: var(--ink); }
+}
+
+// ── The keys above the list ─────────────────────────────────
+.pubs-toolbar[hidden] { display: none; }
+.pubs-toolbar { margin-bottom: 14px; }
+.pubs-find { display: inline-flex; align-items: baseline; gap: 12px; }
+.pubs-find .fp-k { margin-right: 0; }
+.pubs-status:empty { display: none; }
+
+// ── Sections ────────────────────────────────────────────────
+.pubs-section {
+  margin: 0 0 2.2rem;
+  &[hidden] { display: none; }
+  h2 {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    margin: 0; padding: 8px 0 8px;
+    border-top: var(--stroke) solid var(--ink);
+    font-size: 1.05rem; letter-spacing: -.01em; text-transform: lowercase;
+    scroll-margin-top: 16px;
+  }
+}
+.pubs-section__n { font: 400 .7rem/1 var(--mono); color: var(--ink-soft); }
+.pubs-none { font: 400 .78rem var(--mono); color: var(--ink-soft); }
+.pubs-none[hidden] { display: none; }
+
+// ── A paper ─────────────────────────────────────────────────
+.pub-list { list-style: none; margin: 0; padding: 0; }
+.pub {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 132px;
+  gap: 0 16px; align-items: baseline;
+  margin: 0; padding: 11px 4px 12px;
+  border-top: var(--hair) solid var(--rule);
+  &::marker { content: none; }
+  &[hidden] { display: none; }   // a grid would otherwise win over [hidden]
+}
+
+.pub-year {
+  display: flex; align-items: center; gap: 6px;
+  font: 500 .74rem/1.4 var(--mono); font-variant-numeric: tabular-nums;
+  .fp-live { width: 6px; height: 6px; }
+}
+
+.pub-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pub-title {
+  font: 500 1.02rem/1.32 var(--sans);
+  text-decoration: none;
+  text-wrap: pretty;
+}
+a.pub-title:hover { text-decoration: underline; text-decoration-color: currentColor; }
+.pub-venue, .pub-authors { font-size: .84rem; line-height: 1.45; }
+.pub-venue { color: var(--ink-soft); .fp-tag { color: var(--ink); vertical-align: .08em; } }
+.pub-authors strong { font-weight: 600; }
+.pub-more {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+  margin-top: 3px; font-size: .84rem;
+}
+.pub-students { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 5px; }
+.pub-project { font: 400 .74rem/1.4 var(--mono); }
+
+// Citations: the count, and a bar scaled to the most-cited paper.
+.pub-cites {
+  display: flex; align-items: baseline; justify-content: flex-end; gap: 6px;
+  font: 400 .7rem/1.4 var(--mono); white-space: nowrap; color: var(--ink-soft);
+}
+.pub-cites__n { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.pub-cites__bar {
+  align-self: center;
+  width: 40px; height: 5px; flex: none;
+  border-bottom: var(--hair) solid var(--rule-strong);
+  i { display: block; height: 100%; background: var(--ink); }
+}
+
+// The paper j / k is on: the hand's yellow, everything in it in cobalt.
+.pub.fp-at {
+  background: var(--hand); color: var(--on-hand); box-shadow: none;
+  .pub-venue, .pub-cites, .pub-cites__n, .pub-venue .fp-tag { color: inherit; }
+  .fp-tag, .pub-cites__bar { border-color: currentColor; }
+  .pub-cites__bar i { background: currentColor; }
+  .fp-live { background: currentColor; }   // the live dot is yellow in the dark: keep it seen
+}
+
+// ── Phone ───────────────────────────────────────────────────
+@media (max-width: 720px) {
+  .pubs-readout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "nums" "chart" "src";
+  }
+  .pubs-chart { margin: 4px 0 14px; }
+  .pubs-source { margin-top: 0; }
+}
+
+@media (max-width: 600px) {
+  .pub { grid-template-columns: 44px minmax(0, 1fr); }
+  .pub-cites { grid-column: 2; justify-content: flex-start; margin-top: 6px; }
+
+  // The section keys as four keys in two rows, each its own frame.
+  .pubs-seg {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px; width: 100%;
+    border: 0; border-radius: 0; overflow: visible;
+    button { border: var(--stroke) solid var(--ink); border-radius: var(--radius); justify-content: space-between; }
+    button:last-child { border-right: var(--stroke) solid var(--ink); }
+  }
+  .pubs-find { width: 100%; justify-content: space-between; }
+  .pubs-find .fp-find { flex: 1; input { width: 100%; } }
+}
