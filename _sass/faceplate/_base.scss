@@ -132,6 +132,7 @@ th {
 
 // ── Images from markdown: a hairline frame, click to enlarge ─
 figure img { cursor: zoom-in; }
+figure a img, img[data-no-zoom], [data-no-zoom] img { cursor: auto; }   // the ones faceplate.js won't enlarge
 
 // ── Persian runs ────────────────────────────────────────────
 [lang="fa"] { font-family: var(--fa); }
