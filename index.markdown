@@ -25,7 +25,7 @@ list_title: " "
       <p>I am an Assistant Professor and Director of Computer Science at Muhlenberg College. I teach computer science. I study AI: how it shapes people, organizations, decisions, and everyday life. My work draws on Science and Technology Studies, with an interest in practices, interactions, and what emerges when people and technologies encounter one another.</p>
       <details class="hm-more">
         <summary><span class="fp-k">m</span><span class="hm-more__open">a little more</span><span class="hm-more__close">a little less</span></summary>
-        <p>I was born and raised in Mashhad. Eastern Iran. The Khorasan region. Growing up, it didn't register much. Later, it became something else. Less an origin than a direction. A pull. A way of becoming-east rather than being-from-east. I now live in eastern Pennsylvania with my wife. East, still. But a different east. That earlier east did not follow me here. It works through me. Quietly. Sometimes not. From within. Still orienting. Still unfinished.</p>
+        <p>I was born and raised in Mashhad, in the Khorasan region of eastern Iran. I now live in eastern Pennsylvania with my wife. Still east, a different one.</p>
         <p>I like cooking, making sourdough, and good tea and coffee. These days, I'm learning Turkish and making things with Claude. Both make me feel alternately clever and illiterate. The bread is less judgmental.</p>
       </details>
       <p>For research, collaborations, or a chat, email me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>. Or visit me in the Trumbower Science Building. Room 125.</p>
