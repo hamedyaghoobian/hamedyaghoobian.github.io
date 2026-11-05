@@ -101,7 +101,7 @@
     frame.addEventListener("keydown", e => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       owns = true;                                // a key that reaches the frame: the piece has them
-      const k = e.key, t = e.target;
+      const k = (e.key === "?" || e.key === "\u061F" || (e.code === "Slash" && e.shiftKey)) ? "?" : e.key, t = e.target;   // ? on any layout, the Persian ؟ too
       const h = $("#fp-help");
       if (h && !h.hidden) { if (k === "Escape" || k === "?") { e.preventDefault(); h.hidden = true; } return; }
       if (k === "Tab") return;

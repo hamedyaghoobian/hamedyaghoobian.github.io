@@ -23,6 +23,8 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const visible = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
 
+  // ? on any layout: ? itself, the Persian ؟, or shift + the / key wherever the layout puts it
+  const isHelpKey = e => e.key === '?' || e.key === '\u061F' || (e.code === 'Slash' && e.shiftKey);
   const typing = el => el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
   // Something that keeps its own keys while it has focus: a figure's
   // canvas, a readings piece, anything marked data-fp-own-keys.
@@ -132,7 +134,7 @@
   // ── the keys ──
   document.addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    const k = e.key, t = e.target;
+    const k = isHelpKey(e) ? '?' : e.key, t = e.target;
     if (typing(t)) { if (k === 'Escape') t.blur(); return; }
     if (help() && !help().hidden) { if (k === 'Escape' || k === '?') { e.preventDefault(); closeHelp(); } return; }
     if (box && !box.hidden) { if (k === 'Escape') box.hidden = true; return; }
