@@ -34,8 +34,10 @@
   {%- endif %}
 
   {%- feed_meta -%}
-  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}?v=key">
-  <link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/images/favicon.png' | relative_url }}?v=key">
+  <!-- favicon: the key. The SVG follows light/dark itself; the PNGs, for browsers that skip SVG, each say which mode is theirs. -->
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}?v=key2">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/images/favicon-light.png' | relative_url }}?v=key2" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/images/favicon-dark.png' | relative_url }}?v=key2" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
   <meta name="theme-color" content="#F2EBDA" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1F2A9E" media="(prefers-color-scheme: dark)">
