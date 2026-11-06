@@ -1,7 +1,7 @@
 // The faceplate's keys.
 //
 // Three levels, the same keys at each:
-//   site      0–7 press a section key · \ turns the theme knob · ? lists the keys
+//   site      0–7 press a section key · \ turns the theme knob · i (or ?) lists the keys
 //   section   j / k step through the list · enter opens · / finds · letters filter
 //   page      j / k step through the parts · [ ] go to the page before / after
 //   anywhere  esc goes up one level
@@ -23,8 +23,9 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const visible = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
 
-  // ? on any layout: ? itself, the Persian ؟, or shift + the / key wherever the layout puts it
-  const isHelpKey = e => e.key === '?' || e.key === '\u061F' || (e.code === 'Slash' && e.shiftKey);
+  // the guide: i, one key with no shift (a letter nothing else uses); ? too, the web's usual help key,
+  // on any layout: ? itself, the Persian ؟, or shift + the / key wherever the layout puts it
+  const isHelpKey = e => e.key === 'i' || e.key === '?' || e.key === '\u061F' || (e.code === 'Slash' && e.shiftKey);
   const typing = el => el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
   // Something that keeps its own keys while it has focus: a figure's
   // canvas, a readings piece, anything marked data-fp-own-keys.
@@ -87,7 +88,7 @@
     const site = [
       ['0–7', 'press a section key'],
       ['\\', 'turn the theme knob: light · dark · auto'],
-      ['?', 'these keys'],
+      ['i', 'these keys (? works too)'],
     ];
     const page = [];
     const n = parts().length;

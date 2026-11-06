@@ -34,7 +34,7 @@
       {%- if fp_prev %}{% assign pp = site.pages | where: "url", fp_prev | first %}<a class="fp-crumb__sib" rel="prev" href="{{ fp_prev | relative_url }}" title="{{ pp.title }}"><span class="fp-k">[</span>{{ pp.short | default: pp.title | split: ":" | first | downcase | truncate: 28 }}</a>{% endif %}
       {%- if fp_next %}{% assign np = site.pages | where: "url", fp_next | first %}<a class="fp-crumb__sib" rel="next" href="{{ fp_next | relative_url }}" title="{{ np.title }}"><span class="fp-k">]</span>{{ np.short | default: np.title | split: ":" | first | downcase | truncate: 28 }}</a>{% endif %}
       {%- if fp_up %}<a class="fp-crumb__up" rel="up" href="{{ fp_up | relative_url }}" title="{% if page.up_label %}{{ page.up_label }}{% elsif fp_depth == 1 %}home{% else %}0{{ fp_key.n }} {{ fp_key.key }}{% endif %}"><span class="fp-k">esc</span>up</a>{% endif %}
-      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">?</span>keys</button>
+      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">i</span>keys</button>
     </p>
   </div>
 </header>

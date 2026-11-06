@@ -61,7 +61,7 @@
       const p = sib("prev"), n = sib("next");
       if (p) k.push(["[", p]);
       if (n) k.push(["]", n]);
-      k.push(["esc", "up"], ["enter", "keys to the piece"], ["\\", "theme"], ["?", "keys"]);
+      k.push(["esc", "up"], ["enter", "keys to the piece"], ["\\", "theme"], ["i", "keys"]);
       return k;
     }
 
@@ -89,7 +89,7 @@
       const block = (t, ks) => `<p class="fp-help__group">${t}</p><dl>${ks.map(([k, v]) => `<dt>${caps(k)}</dt><dd>${v}</dd>`).join("")}</dl>`;
       $(".fp-help__body", h).innerHTML =
         block("the piece · while it has the keys", (o.help || o.keys)()) +
-        block("then", [["esc", "step back: close what is open, then give the keys back"], ["\\", "turn the theme knob"], ["?", "these keys"]]) +
+        block("then", [["esc", "step back: close what is open, then give the keys back"], ["\\", "turn the theme knob"], ["i", "these keys (? works too)"]]) +
         block("the page · once the keys are given back", pageKeys());
       h.hidden = false;
     }
@@ -101,7 +101,7 @@
     frame.addEventListener("keydown", e => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       owns = true;                                // a key that reaches the frame: the piece has them
-      const k = (e.key === "?" || e.key === "\u061F" || (e.code === "Slash" && e.shiftKey)) ? "?" : e.key, t = e.target;   // ? on any layout, the Persian ؟ too
+      const k = (e.key === "i" || e.key === "?" || e.key === "\u061F" || (e.code === "Slash" && e.shiftKey)) ? "?" : e.key, t = e.target;   // the guide: i, or ? on any layout (the Persian ؟ too)
       const h = $("#fp-help");
       if (h && !h.hidden) { if (k === "Escape" || k === "?") { e.preventDefault(); h.hidden = true; } return; }
       if (k === "Tab") return;

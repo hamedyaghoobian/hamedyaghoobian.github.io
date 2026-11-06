@@ -33,7 +33,7 @@ Never hard-code a hex colour in page CSS or figure JS. Use the tokens. Figures d
 - `_includes/header.html` holds the eight section keys, the theme knob (L · D · A) and the breadcrumb (`hamed yaghoobian / 02 research / noisy stars`, with the keys that work on this page).
 - `_includes/fp-section.html` works out which section a page is in (`fp_key`), how deep it is (`fp_depth`, 0–2), what is up one level (`fp_up`), and its siblings (`fp_prev` / `fp_next`, for projects from `_data/faceplate.yml`).
 - `_layouts/page.html` sets the page's number, its title (big, lowercase), and an optional `dek:` from front matter (one line saying what the page is for). `heading:` gives the plate a shorter title than `title:`, which stays in the browser tab, search results and link previews. The body is a 680px reading column; front matter `wide: true` frees it to the plate's full 1120px.
-- `_includes/footer.html` has the Mashhad clock (red dot), scholar · github · email, the colophon and `?`. The home page also gets the mountain range. On a phone, pages below a section get a thumb bar: ‹ prev · up · next ›.
+- `_includes/footer.html` has the Mashhad clock (red dot), scholar · github · email, the colophon and `i` keys. The home page also gets the mountain range. On a phone, pages below a section get a thumb bar: ‹ prev · up · next ›.
 - `assets/js/faceplate.js` is the keys.
 
 ## Keys
@@ -42,16 +42,16 @@ Three levels use the same keys:
 
 | level | keys |
 |---|---|
-| site | `0`–`7` press a section key · `\` turns the knob · `?` lists this page's keys |
+| site | `0`–`7` press a section key · `\` turns the knob · `i` (or `?`) lists this page's keys |
 | section | `j` / `k` step through the list · `enter` opens · `/` finds · letters filter |
 | page | `j` / `k` step through the parts · `[` `]` go to the previous / next page · `esc` goes up |
 
 - `j` / `k` step through elements marked `data-fp-part`. Without any, they step through the body's numbered `h2` sections. A page can set `FP.partsSelector`.
 - `enter` opens the current part: its first link, or toggles it if it is a `<details>`.
 - `/` focuses an input inside an element with `data-fp-find`. Only pages with something to find have one.
-- Page letters: `FP.add({ key: 't', label: 'talks only', run(){…}, when(){…} })`. They appear in the `?` help automatically. This works from inline scripts too, because calls are queued until faceplate.js loads.
+- Page letters: `FP.add({ key: 't', label: 'talks only', run(){…}, when(){…} })`. They appear in the `i` help automatically. This works from inline scripts too, because calls are queued until faceplate.js loads.
 - Keys never fire while you type. When a figure has focus (`.project-figure__canvas`, `[data-fp-own-keys]`, `figure [tabindex]`), its own keys come first, and `esc` gives the keys back to the page.
-- Don't bind a page letter that the site already uses: `0`–`7`, `j`, `k`, `[`, `]`, `/`, `?`, `\`.
+- Don't bind a page letter that the site already uses: `0`–`7`, `j`, `k`, `[`, `]`, `/`, `i`, `?`, `\`.
 
 ## Components (`_sass/faceplate/_components.scss`)
 
