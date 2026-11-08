@@ -1,0 +1,282 @@
+{
+ "horse": {
+  "file": "horse.png",
+  "title": "Brown Horse",
+  "by": "Mohammad Rasoulipour",
+  "collection": "Miniature Painting",
+  "source": "https://www.christies.com/img/LotImages/2012/CKS/2012_CKS_06622_0012_000(visit_to_a_dervish_signed_mahmud_muzahhib_bukhara_dated_ah_968_1560-61105036).jpg",
+  "museum": "christies.com"
+ },
+ "lion": {
+  "file": "lion.png",
+  "title": "Lion",
+  "by": "Sadaf Kazemian",
+  "collection": "Miniature Painting",
+  "source": "https://fotografia.islamoriente.com/sites/default/files/image_field/Obras_Maestras_de_la_Miniatura_Persa_-_Kelile_va_Demne_o_Panchatantra_-_3_1.jpg",
+  "museum": "fotografia.islamoriente.com"
+ },
+ "elephant": {
+  "file": "elephant.png",
+  "title": "Elephant",
+  "by": "Niloofar Karimi",
+  "collection": "Miniature Painting",
+  "source": "https://www.christies.com/img/LotImages/2017/CKS/2017_CKS_14218_0184_000(an_elephant_brought_to_the_palace_gate_a_folio_from_a_dispersed_mughal075518).jpg",
+  "museum": "christies.com"
+ },
+ "dragon": {
+  "file": "dragon.png",
+  "title": "Red Eyed Dragon",
+  "by": "Mohammad Rasoulipour",
+  "collection": "Miniature Painting",
+  "source": "https://www.christies.com/img/LotImages/2016/CKS/2016_CKS_12241_0042_000(azar_barzin_killing_a_dragon_safavid_qazvin_iran_circa_1560063130).jpg",
+  "museum": "christies.com"
+ },
+ "leopard": {
+  "file": "leopard.png",
+  "title": "Sasanian Leopard",
+  "by": "Fateme Shahverdiha",
+  "collection": "Sassanian",
+  "source": "Sasanian Leopard",
+  "museum": "Sasanian Leopard"
+ },
+ "bird": {
+  "file": "bird.png",
+  "title": "Flying Bird",
+  "by": "Sadaf Kazemian",
+  "collection": "Miniature Painting",
+  "source": "https://fotografia.islamoriente.com/sites/default/files/image_field/Obras_Maestras_de_la_Miniatura_Persa_-_1_3.jpg",
+  "museum": "fotografia.islamoriente.com"
+ },
+ "wolf": {
+  "file": "wolf.png",
+  "title": "A Wolf Running",
+  "by": "Mohammad Rasoulipour",
+  "collection": "Miniature Painting",
+  "source": "https://fotografia.islamoriente.com/sites/default/files/image_field/Obras_Maestras_de_la_Miniatura_Persa_-_9_1.jpg",
+  "museum": "fotografia.islamoriente.com"
+ },
+ "onager": {
+  "file": "onager.png",
+  "title": "Persian Zebra",
+  "by": "Mojdeh Daneshvar",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP159380.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "Simorgh": {
+  "file": "Simorgh.png",
+  "title": "Sasanian Simurgh,Simorgh",
+  "by": "Narges Nozaem",
+  "collection": "Sassanian",
+  "source": "https://collections.lacma.org/object/64265",
+  "museum": "collections.lacma.org"
+ },
+ "crow": {
+  "file": "crow.png",
+  "title": "Crow",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP234083.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "dog": {
+  "file": "dog.png",
+  "title": "Sasanian Dog",
+  "by": "Fatemehzahra Horri",
+  "collection": "Sassanian",
+  "source": "https://www.clevelandart.org/art/1962.294",
+  "museum": "clevelandart.org"
+ },
+ "fish": {
+  "file": "fish.png",
+  "title": "Sassanian Fish",
+  "by": "Negin Khorsandi",
+  "collection": "Sassanian",
+  "source": "https://hermitagemuseum.org/digital-collection/97239?lng=ru",
+  "museum": "hermitagemuseum.org"
+ },
+ "cattle": {
+  "file": "cattle.png",
+  "title": "Zebu Cow",
+  "by": "Mojdeh Daneshvar",
+  "collection": "Sassanian",
+  "source": "https://search.smb.museum/media/images/originals/360/004/4360611.I_4639-P004-M.jpg",
+  "museum": "search.smb.museum"
+ },
+ "sheep": {
+  "file": "sheep.png",
+  "title": "Sheep",
+  "by": "Mojdeh Daneshvar",
+  "collection": "",
+  "source": "https://search.smb.museum/media/images/originals/360/004/4360611.I_4639-P004-M.jpg",
+  "museum": "search.smb.museum"
+ },
+ "falcon": {
+  "file": "falcon.png",
+  "title": "Falcon",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP234083.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "gazelle": {
+  "file": "gazelle.png",
+  "title": "Two Gazelle Running",
+  "by": "Mojdeh Daneshvar",
+  "collection": "Miniature Painting",
+  "source": "https://fotografia.islamoriente.com/sites/default/files/image_field/Obras_Maestras_de_la_Miniatura_Persa_-_20_1.jpg",
+  "museum": "fotografia.islamoriente.com"
+ },
+ "eagle": {
+  "file": "eagle.png",
+  "title": "Eagle Or Hawk",
+  "by": "Mohammad Rasoulipour",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP234083.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "fox": {
+  "file": "fox.png",
+  "title": "Fox",
+  "by": "Sadaf Kazemian",
+  "collection": "Miniature Painting",
+  "source": "https://fotografia.islamoriente.com/sites/default/files/image_field/Obras_Maestras_de_la_Miniatura_Persa_-_Kelile_va_Demne_o_Panchatantra_-_5_1.jpg",
+  "museum": "fotografia.islamoriente.com"
+ },
+ "tiger": {
+  "file": "tiger.png",
+  "title": "Tiger Dish",
+  "by": "Mohammad Rasoulipour",
+  "collection": "Sassanian",
+  "source": "https://medaillesetantiques.bnf.fr/ws/catalogue/app/file/download/inv.56.365.jpg?key=D38C05u89q4dzqU9ZJOt0SBVmqR75ahc8",
+  "museum": "medaillesetantiques.bnf.fr"
+ },
+ "boar": {
+  "file": "boar.png",
+  "title": "Sassanian Boar",
+  "by": "Negin Khorsandi",
+  "collection": "Sassanian",
+  "source": "https://search.smb.museum/media/images/originals/160/005/5160714.KtO_1338-P002-M.jpg",
+  "museum": "search.smb.museum"
+ },
+ "pheasant": {
+  "file": "pheasant.png",
+  "title": "Sasanian Bird,Pheasant",
+  "by": "Narges Nozaem",
+  "collection": "Sassanian",
+  "source": "https://hermitagemuseum.org/api/files/fshow?needlePath=%2Fapi%2Fspf%2FwtVnwRsa0DtjqqFDMI_3WfIKco7Xnnw5O4FXKl3Fwazyp11Ay34Msvq5lecNMtsW.jpg%3Fw%3D1600%26h%3D1600",
+  "museum": "hermitagemuseum.org"
+ },
+ "fowl": {
+  "file": "fowl.png",
+  "title": "Rooster",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP234083.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "hoopoe": {
+  "file": "hoopoe.png",
+  "title": "Hoopoe",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP234083.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "cat": {
+  "file": "cat.png",
+  "title": "Wild Cat",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://i.imgur.com/wiL5pMn.jpg",
+  "museum": "i.imgur.com"
+ },
+ "hare": {
+  "file": "hare.png",
+  "title": "Rabbit",
+  "by": "Kimia Parang",
+  "collection": "Sassanian",
+  "source": "https://www.metmuseum.org/art/collection/search/326008",
+  "museum": "metmuseum.org"
+ },
+ "deer": {
+  "file": "deer.png",
+  "title": "Deer Jumping",
+  "by": "Mohammad Rasoulipour",
+  "collection": "Miniature Painting",
+  "source": "https://fotografia.islamoriente.com/sites/default/files/image_field/Obras_Maestras_de_la_Miniatura_Persa_-_9_1.jpg",
+  "museum": "fotografia.islamoriente.com"
+ },
+ "duck": {
+  "file": "duck.png",
+  "title": "Duck",
+  "by": "Sadaf Kazemian",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP107118.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "partridge": {
+  "file": "partridge.png",
+  "title": "Two Partridges",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://i.imgur.com/wiL5pMn.jpg",
+  "museum": "i.imgur.com"
+ },
+ "parrot": {
+  "file": "parrot.png",
+  "title": "Green Parrot",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP234083.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "crane": {
+  "file": "crane.png",
+  "title": "Crane Facing Left Breast ...",
+  "by": "Mojdeh Daneshvar",
+  "collection": "Sassanian",
+  "source": "https://search.smb.museum/media/images/originals/882/004/4882614.I_4968-P002-M.jpg",
+  "museum": "search.smb.museum"
+ },
+ "heron": {
+  "file": "heron.png",
+  "title": "Herons",
+  "by": "Zeinab Eslami",
+  "collection": "Miniature Painting",
+  "source": "https://images.metmuseum.org/CRDImages/is/original/DP234083.jpg",
+  "museum": "images.metmuseum.org"
+ },
+ "goat": {
+  "file": "goat.png",
+  "title": "Sassanian Goat",
+  "by": "Fateme Shahverdiha",
+  "collection": "Sassanian",
+  "source": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/323426/689719/main-image",
+  "museum": "collectionapi.metmuseum.org"
+ },
+ "wild sheep": {
+  "file": "wild-sheep.png",
+  "title": "Sassanian Wild Sheep",
+  "by": "Kimia Parang",
+  "collection": "Sassanian",
+  "source": "https://asia-archive.si.edu/object/S1987.125/",
+  "museum": "asia-archive.si.edu"
+ },
+ "donkey": {
+  "file": "donkey.png",
+  "title": "Sasanian Donkey Head",
+  "by": "Fatemehzahra Horri",
+  "collection": "Sassanian",
+  "source": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/325865/2011421/main-image",
+  "museum": "collectionapi.metmuseum.org"
+ },
+ "bear": {
+  "file": "bear.png",
+  "title": "Brown Bear",
+  "by": "Mohammad Rasoulipour",
+  "collection": "Miniature Painting",
+  "source": "https://fotografia.islamoriente.com/sites/default/files/image_field/Obras_Maestras_de_la_Miniatura_Persa_-_9_1.jpg",
+  "museum": "fotografia.islamoriente.com"
+ }
+}
