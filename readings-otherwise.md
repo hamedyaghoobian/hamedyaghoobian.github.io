@@ -15,16 +15,35 @@ permalink: /readings-otherwise/
 <p class="ro-intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="fp-toolbar">
-  <p class="fp-label">3 pieces · newest first</p>
+  <p class="fp-label">4 pieces · newest first</p>
   <p class="fp-label"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open</p>
 </div>
 
 <ol class="fp-index ro-index">
   <li class="fp-row ro-row" data-fp-part>
+    <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-animals-know/' | relative_url }}">
+      <span class="fp-row__n">06.4</span>
+      <span class="fp-row__t">What the Animals Know</span>
+      <span class="fp-row__m"><span class="fp-live" aria-label="newest"></span>No. 4 · <time datetime="2026-11-08">8 nov 2026</time></span>
+      <span class="fp-row__x" aria-hidden="true">→</span>
+    </a>
+    <div class="fp-row__body">
+      <p class="ro-row__line">Animals in three books, lit by the mind each text gives them. 7,254 animals, 10,457 readings</p>
+      <dl class="fp-spec ro-spec">
+        <dt>taken out</dt><dd>every word but the animals</dd>
+        <dt>left</dt><dd>7,254 animals in Kalila wa Dimna, the Conference of the Birds and the Shahnameh</dd>
+        <dt>light</dt><dd>how much mind the text gives each one, after Wagschal's <em>Minding Animals</em></dd>
+      </dl>
+      <p class="ro-note">Three books of Persian literature, <em>Kalila wa Dimna</em>, <bdi lang="fa">کلیله و دمنه</bdi>, Attar's <em>Conference of the Birds</em> and Ferdowsi's <em>Shahnameh</em>, with every word taken out but the animals, each lit by how much mind the text gives it, in the terms of Steven Wagschal's <em>Minding Animals</em>. The fables are bright: the jackals scheme with human minds. The epic is dim: its horses are counted, given and ridden, and its lions are mostly men. Of the horses given a mind, half have names.</p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-animals-know/' | relative_url }}">See it</a> <a href="{{ '/readings-otherwise/what-the-animals-know/atlas/' | relative_url }}">The atlas</a> <a href="https://github.com/hamedyaghoobian/animals-persian-lit">Code</a></p>
+    </div>
+  </li>
+
+  <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-ferdowsi-let-in/' | relative_url }}">
       <span class="fp-row__n">06.3</span>
       <span class="fp-row__t">What Ferdowsi Let In</span>
-      <span class="fp-row__m"><span class="fp-live" aria-label="newest"></span>No. 3 · <time datetime="2026-11-02">2 nov 2026</time></span>
+      <span class="fp-row__m">No. 3 · <time datetime="2026-11-02">2 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
     <div class="fp-row__body">
