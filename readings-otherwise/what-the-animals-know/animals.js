@@ -15,12 +15,11 @@ const MAX_PX_PER_EM = 110;
 const READ_PX_PER_EM = 7;      // from here on the text shows, faintly
 const WORD_PX_PER_EM = 3;      // from here on the animals are written out, not marked
 const BOOK_KEY = "what-the-animals-know:book";
-const BOOKS = ["kalila", "attar", "shahnameh"];
-const NAMES = { kalila: "Kalila wa Dimna", attar: "The Conference of the Birds", shahnameh: "The Shahnameh" };
+const BOOKS = ["kalila", "attar", "shahnameh", "masnavi"];
+const NAMES = { kalila: "Kalila wa Dimna", attar: "The Conference of the Birds", shahnameh: "The Shahnameh", masnavi: "The Masnavi" };
 const FACULTIES = ["speech", "reasoning", "knowledge", "emotion", "deception", "perception", "desire", "memory", "moral judgement", "devotion"];
 const SPECTRUM = ["", "no mind", "what its kind does", "a mind read from the animal", "a human mind"];
 const FIGURE = ["", "an animal", "an animal as a person", "said of a person or thing"];
-const CLASS_KEY = { 4: "4", 3: "5", 2: "6", 1: "7", 5: "8" };
 // the classes of light: 0 not judged, 1-4 the spectrum, 5 a figure of speech
 const CLASS_OF = r => r[1] === 3 ? 5 : r[4];
 
@@ -277,16 +276,29 @@ function under(px, py) {
   return best;
 }
 
-// a line of the passage, its animals marked, and at its end how many it has
-function lineHTML(l, here) {
-  const ws = wordsOf(l).map(esc);
-  let n = 0;
-  for (let i = lineMk[l]; i < lineMk[l + 1]; i++) {
-    n++;
-    const k = CLASS_OF(T.table[mkRow[i]]);
-    ws[mkWord[i]] = `<b class="k${k}${i === here ? " this" : ""}">${ws[mkWord[i]]}</b>`;
-  }
-  return `<p class="line"><span class="t">${ws.join(" ")}</span><span class="n">${n || ""}</span></p>`;
+// The readout. On the right the passage: a couplet as the site sets verse, or for prose a window of
+// about two lines around the animal. Every animal in it is marked in its own light, the one you are
+// on underlined in yellow (your hand), and the words the judgement rests on underlined dotted. On
+// the left a card: the animal's drawing, its name, and how it was judged.
+const bareWord = w => w.replace(/[\u064B-\u065F\u0670\u200c«»"'()،؛:.!؟?]/g, "");
+function wordHTML(l, w, here, ev) {
+  const word = esc(wordsOf(l)[w]);
+  for (let i = lineMk[l]; i < lineMk[l + 1]; i++)
+    if (mkWord[i] === w) return `<b class="k${CLASS_OF(T.table[mkRow[i]])}${i === here ? " this" : ""}">${word}</b>`;
+  return ev.has(bareWord(wordsOf(l)[w])) ? `<u>${word}</u>` : word;
+}
+function lineHTML(l, here, ev) {
+  const ws = wordsOf(l).map((_, w) => wordHTML(l, w, here, ev));
+  return `<p class="line"><span class="t">${ws.join(" ")}</span><span class="n">${lineMk[l + 1] - lineMk[l] || ""}</span></p>`;
+}
+function proseHTML(here, ev) {
+  const l = mkLine[here], r = lineRow[l];
+  const ls = [r - 1, r, r + 1].map(j => rows[j]).filter(b => b && b[0] === 3).map(b => b[1]);
+  const words = ls.flatMap(x => wordsOf(x).map((_, w) => [x, w]));
+  const at = words.findIndex(([x, w]) => x === l && w === mkWord[here]);
+  const a = Math.max(0, at - 11), z = Math.min(words.length, at + 13);
+  const t = words.slice(a, z).map(([x, w]) => wordHTML(x, w, here, ev)).join(" ");
+  return `<p class="line"><span class="t">${a > 0 ? "… " : ""}${t}${z < words.length ? " …" : ""}</span><span class="n"></span></p>`;
 }
 
 function showPanel(i) {
@@ -301,23 +313,19 @@ function showPanel(i) {
   const sec = T.sections[si], poem = sec.poems[sp] || sec.poems[0];
   const p = T.passages[pi];
   document.getElementById("where").textContent = `${sec.title}${poem && poem.title !== sec.title ? " · " + poem.title : ""}`;
-  // a couplet: its two lines; a sentence of prose: the lines it is set on
-  let html;
-  if (Array.isArray(p)) html = p.map(x => lineHTML(x, i)).join("");
-  else {
-    const ws = esc(p).split(" "), word = wordsOf(l)[mkWord[i]];
-    const at = ws.findIndex(w => w === esc(word));
-    if (at >= 0) ws[at] = `<b class="k${CLASS_OF(r)} this">${ws[at]}</b>`;
-    html = `<p class="line"><span class="t">${ws.join(" ")}</span><span class="n"></span></p>`;
-  }
-  document.getElementById("couplet").innerHTML = html;
+  const ev = new Set(String(evidence || "").split(/\s+/).map(bareWord).filter(w => w.length > 1));
+  document.getElementById("couplet").innerHTML = Array.isArray(p) ? p.map(x => lineHTML(x, i, ev)).join("") : proseHTML(i, ev);
   const fs = FACULTIES.filter((_, k) => fac & (1 << k));
-  const d = drawings[species];
-  const sil = d ? `<i class="sil" style="--m:url('data/naardoon/${esc(d.file)}')" title="${esc(d.title)}, traced by ${esc(d.by)} (NaarDoon)"></i>` : "";
-  document.getElementById("gloss").innerHTML = sil + (unjudged ? `<b>${esc(species)}</b> <em>not yet judged</em>` :
-    `<b>${esc(species)}</b> <em>${FIGURE[fig]}${mode !== "none" ? ` · ${esc(mode)}` : ""}</em>` +
-    `${spec ? ` <span class="${spec === 3 ? "y" : ""}">${SPECTRUM[spec]}</span>` : ""}${fs.length ? ` <em>· ${fs.join(", ")}</em>` : ""}${unsure ? " <em>· unsure</em>" : ""}`);
-  document.getElementById("count").innerHTML = evidence ? `<span lang="fa">«${esc(evidence)}»</span>` : "";
+  const d = drawings[species], k = CLASS_OF(r);
+  const mark = d ? `<i class="sil" style="--m:url('data/naardoon/${esc(d.file)}')" title="${esc(d.title)}, traced by ${esc(d.by)} (NaarDoon)"></i>`
+                 : `<i class="sil none" aria-hidden="true">${esc(species.slice(0, 1))}</i>`;
+  const field = (t, v) => v ? `<dt>${t}</dt><dd>${v}</dd>` : "";
+  document.getElementById("card").innerHTML =
+    `<div class="card__h">${mark}<p><b>${esc(species)}</b><small>${NAMES[book]}</small></p></div>` +
+    (unjudged ? `<dl>${field("mind", "not yet judged")}</dl>` :
+    `<dl>${field("as", FIGURE[fig])}${field("relation", mode !== "none" ? esc(mode) : "")}` +
+    `${field("mind", spec ? `<i class="sw k${k}"></i>${SPECTRUM[spec]}` : fig === 3 ? `<i class="sw k5"></i>a figure of speech` : "")}` +
+    `${field("given", fs.join(", "))}${unsure ? field("note", "the reader was unsure") : ""}</dl>`);
   panel.classList.add("show");
 }
 
@@ -411,13 +419,13 @@ function readRule() {
 
 const ui = window.Piece({
   frame,
-  keys: () => [["j k", "the next animal"], ["1 2 3", "the book"], ["4–8", only >= 0 ? "one kind alone: on" : "one kind of mind alone"],
+  keys: () => [["j k", "the next animal"], ["1–4", "the book"], ["5–9", only >= 0 ? "one kind alone: on" : "one kind of mind alone"],
     ["+ − 0", "zoom · whole book"], ["← →", "move"],
     ["esc", only >= 0 ? "every kind back" : sel >= 0 ? "stop reading" : "give the keys back"]],
   help: () => [
     ["j k", "the next / previous animal, in the order of the book: its passage, how it was judged and its drawing show below"],
-    ["1 2 3", "Kalila wa Dimna · the Conference of the Birds · the Shahnameh"],
-    ["4–8", "one kind alone: 4 a human mind · 5 a mind read from the animal · 6 what its kind does · 7 no mind · 8 said of a person"],
+    ["1–4", "Kalila wa Dimna · the Conference of the Birds · the Shahnameh · the Masnavi"],
+    ["5–9", "one kind alone: 5 a human mind · 6 a mind read from the animal · 7 what its kind does · 8 no mind · 9 said of a person"],
     ["+ − 0", "come closer · go back · see the whole book (◻)"],
     ["← ↑ → ↓", "move across the book"],
   ],
