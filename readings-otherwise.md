@@ -15,16 +15,35 @@ permalink: /readings-otherwise/
 <p class="ro-intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="fp-toolbar">
-  <p class="fp-label">4 pieces · newest first</p>
+  <p class="fp-label">5 pieces · newest first</p>
   <p class="fp-label"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open</p>
 </div>
 
 <ol class="fp-index ro-index">
   <li class="fp-row ro-row" data-fp-part>
+    <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-plants-know/' | relative_url }}">
+      <span class="fp-row__n">06.5</span>
+      <span class="fp-row__t">What the Plants Know</span>
+      <span class="fp-row__m"><span class="fp-live" aria-label="newest"></span>No. 5 · <time datetime="2026-11-08">8 nov 2026</time></span>
+      <span class="fp-row__x" aria-hidden="true">→</span>
+    </a>
+    <div class="fp-row__body">
+      <p class="ro-row__line">Plants in eight books, lit by the soul each text gives them. 5,202 plants, 6,628 readings</p>
+      <dl class="fp-spec ro-spec">
+        <dt>taken out</dt><dd>every word but the plants</dd>
+        <dt>left</dt><dd>5,202 plants in the six books of No. 4, with Saadi's Golestan and Bustan</dd>
+        <dt>light</dt><dd>the ladder of souls: a thing, plant life, the animal soul, the human soul, after Avicenna and Rumi</dd>
+      </dl>
+      <p class="ro-note">The six books of <em>What the Animals Know</em>, with Saadi's <em>Golestan</em>, <bdi lang="fa">گلستان</bdi>, and <em>Bustan</em> beside them, with every word taken out but the plants, each lit by how high the text lifts it up the tradition's own ladder: Avicenna's vegetative, animal and rational souls, and Rumi's <bdi lang="fa">از جمادی مردم و نامی شدم</bdi>, I died as mineral and became a plant. More than half the plants are not plants but people: the cypress is a stature, the rose a cheek. The rest are wood or flowers, and the poems skip the middle of the ladder: twelve plants in eight books are given a sense true to plants. When a plant speaks, it is nearly always in Parvin, whose rose answers the thorn; the <em>Shahnameh</em> has one talking tree, and it tells Alexander he will die.</p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-plants-know/' | relative_url }}">See it</a> <a href="{{ '/readings-otherwise/what-the-plants-know/atlas/' | relative_url }}">The atlas</a> <a href="https://github.com/hamedyaghoobian/what-the-plants-know">Code</a></p>
+    </div>
+  </li>
+
+  <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-animals-know/' | relative_url }}">
       <span class="fp-row__n">06.4</span>
       <span class="fp-row__t">What the Animals Know</span>
-      <span class="fp-row__m"><span class="fp-live" aria-label="newest"></span>No. 4 · <time datetime="2026-11-08">8 nov 2026</time></span>
+      <span class="fp-row__m">No. 4 · <time datetime="2026-11-08">8 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
     <div class="fp-row__body">
