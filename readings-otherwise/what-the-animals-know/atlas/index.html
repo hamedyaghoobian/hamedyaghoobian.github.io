@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Animals, Counted · Readings, Otherwise</title>
+<meta name="description" content="Every animal in Kalila wa Dimna, the Conference of the Birds and the Shahnameh, counted by the mind each text gives it.">
+<script>
+  try { document.documentElement.dataset.theme = localStorage.getItem("what-the-animals-know:theme") === "light" ? "light" : "dark"; }
+  catch (_) { document.documentElement.dataset.theme = "dark"; }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../animals.css?v=2">
+<link rel="stylesheet" href="atlas.css?v=1">
+</head>
+<body>
+<button id="theme" class="theme-toggle" type="button">light</button>
+<p class="kicker"><a href="../../">Readings, Otherwise</a> <span>No. 4</span> <span><a href="../">What the Animals Know</a></span></p>
+
+<main class="atlas">
+  <header>
+    <h1>The Animals, Counted</h1>
+    <p class="meta">Every animal in three books, by the mind the text gives it</p>
+    <p class="layers">Read
+      <button type="button" data-book="-1" aria-pressed="true">all three</button>
+      <button type="button" data-book="0" aria-pressed="false">Kalila wa Dimna</button>
+      <button type="button" data-book="1" aria-pressed="false">the Birds</button>
+      <button type="button" data-book="2" aria-pressed="false">the Shahnameh</button></p>
+    <p class="note" id="total"></p>
+  </header>
+
+  <section>
+    <h2>How much mind, animal by animal</h2>
+    <p class="lede">Each bar is one animal in one book, as an animal in the story (creature or character), divided by how much mind the text gives it. Figures of speech are counted on the right. Press an animal to list its passages below.</p>
+    <p class="legend static"><span><i style="--c: var(--k4)"></i>a human mind</span> <span><i style="--c: var(--k3)"></i>a mind read from the animal</span> <span><i style="--c: var(--k2)"></i>what its kind does</span> <span><i style="--c: var(--k1)"></i>no mind</span> <span><i class="hollow" style="--c: var(--k5)"></i>said of a person</span></p>
+    <div id="species" class="species"></div>
+  </section>
+
+  <section>
+    <h2>Who is used for what, and what they are given</h2>
+    <p class="lede">The mode of interaction against the faculties attributed: how many animals in each relation to people are given speech, reasoning, feeling, cunning. Wagschal's claim is that the first decides the second.</p>
+    <div id="matrix" class="matrix"></div>
+  </section>
+
+  <section>
+    <h2>Animals said of people</h2>
+    <p class="lede">The other direction: the hero as a lion, the army as a dragon, the soul as a bird. How often each animal is a figure of speech rather than an animal.</p>
+    <div id="figures" class="figures"></div>
+  </section>
+
+  <section>
+    <h2>Every passage</h2>
+    <div class="filters">
+      <label>animal <select id="f-species"><option value="">any</option></select></label>
+      <label>as <select id="f-figure"><option value="">any</option><option>creature</option><option>character</option><option>figure</option></select></label>
+      <label>mode <select id="f-mode"><option value="">any</option></select></label>
+      <label>mind <select id="f-spectrum"><option value="">any</option><option value="gratuitous">a human mind</option><option value="constructive">read from the animal</option><option value="species-typical">what its kind does</option><option value="anthropectomy">no mind</option><option value="none">none (figures)</option></select></label>
+      <label>given <select id="f-faculty"><option value="">any faculty</option></select></label>
+      <button type="button" id="f-clear">clear</button>
+    </div>
+    <p class="note" id="count"></p>
+    <table class="mentions"><thead><tr><th>book</th><th>animal</th><th>labels</th><th>passage</th></tr></thead><tbody id="rows"></tbody></table>
+    <p class="pager"><button type="button" id="prev">←</button> <span id="page"></span> <button type="button" id="next">→</button></p>
+  </section>
+
+  <p class="colophon">The labels were made by Claude Sonnet 5.5 under the scheme in the code repository, from the categories of Steven Wagschal, <em>Minding Animals in the Old and New Worlds</em> (Toronto, 2018). Texts from <a href="https://ganjoor.net">Ganjoor</a>. Code and data: <a href="https://github.com/hamedyaghoobian/animals-persian-lit">github.com/hamedyaghoobian/animals-persian-lit</a></p>
+</main>
+
+<script src="atlas.js?v=1"></script>
+</body>
+</html>
