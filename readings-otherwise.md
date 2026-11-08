@@ -35,7 +35,7 @@ permalink: /readings-otherwise/
         <dt>light</dt><dd>how much mind the text gives each one, after Wagschal's <em>Minding Animals</em></dd>
       </dl>
       <p class="ro-note">Three books of Persian literature, <em>Kalila wa Dimna</em>, <bdi lang="fa">کلیله و دمنه</bdi>, Attar's <em>Conference of the Birds</em> and Ferdowsi's <em>Shahnameh</em>, with every word taken out but the animals, each lit by how much mind the text gives it, in the terms of Steven Wagschal's <em>Minding Animals</em>. The fables are bright: the jackals scheme with human minds. The epic is dim: its horses are counted, given and ridden, and its lions are mostly men. Of the horses given a mind, half have names.</p>
-      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-animals-know/' | relative_url }}">See it</a> <a href="{{ '/readings-otherwise/what-the-animals-know/atlas/' | relative_url }}">The atlas</a> <a href="https://github.com/hamedyaghoobian/animals-persian-lit">Code</a></p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-animals-know/' | relative_url }}">See it</a> <a href="{{ '/readings-otherwise/what-the-animals-know/atlas/' | relative_url }}">The atlas</a> <a href="https://github.com/hamedyaghoobian/what-the-animals-know">Code</a></p>
     </div>
   </li>
 

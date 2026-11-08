@@ -1,292 +1,64 @@
+/* What the Animals Know: only what this piece draws. The plate, the frame, the keycaps, the key
+   strip and the wall label are the site's (/assets/main.css, _readings.scss). In the frame the
+   field is cobalt and the animals are cream, stronger the more mind the text gives them; yellow
+   is the rare mind read truly from the animal, and your hand (the animal you are on). An animal
+   said of a person is an outline. */
+
 @font-face {
   font-family: "Hand";
   src: url("data/hand.woff2") format("woff2");
   font-display: block;
 }
 
-:root {
-  --wall: #0b0b0c;
-  --wall-lit: #17161a;
-  --ink: #ece2d0;
-  --muted: #8d857a;
-  --gold: #d6ac60;
-  --bone: #f5ecdc;
-  --red: #c42c24;
-  --field: #050506;
-}
+.ro-label [lang="fa"], .ro-panel .where[lang="fa"] { font-family: "Hand", var(--serif); unicode-bidi: isolate; }
+.ro-label [lang="fa"] { font-size: 1.15em; }
 
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(ellipse 70% 55% at 50% 32%, var(--wall-lit), var(--wall) 70%) fixed, var(--wall);
-  color: var(--ink);
-  font-family: "EB Garamond", Garamond, Georgia, serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: inherit; }
-[lang="fa"] { font-family: "Hand", "EB Garamond", serif; unicode-bidi: isolate; }
-
-.kicker {
-  margin: 0;
-  padding: 1.6rem 1rem 0;
-  text-align: center;
-  font: 500 .72rem/1 "IBM Plex Mono", monospace;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.kicker a { text-decoration: none; border-bottom: 1px solid rgba(236, 226, 208, .25); }
-.kicker span { margin-left: .8em; }
-
-.room {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2.2rem 1rem 5rem;
-}
-
-/* ---- the frame: no frame, only a printer's crop marks at the corners ---- */
-
-.frame {
-  --w: min(92vw, calc((100vh - 9rem) * var(--aspect, 1.45)));
-  --crop: 26px;
-  --crop-ink: rgba(236, 226, 208, .5);
-  position: relative;
-  margin: 0;
-  width: var(--w);
-  aspect-ratio: var(--aspect, 1.45);
-  background: var(--field);
-  touch-action: none;
-}
-.frame::before {
-  content: "";
-  position: absolute;
-  inset: calc(var(--crop) * -1);
-  pointer-events: none;
-  background:
-    linear-gradient(var(--crop-ink), var(--crop-ink)) left 0 top var(--crop) / 16px 1px no-repeat,
-    linear-gradient(var(--crop-ink), var(--crop-ink)) left var(--crop) top 0 / 1px 16px no-repeat,
-    linear-gradient(var(--crop-ink), var(--crop-ink)) right 0 top var(--crop) / 16px 1px no-repeat,
-    linear-gradient(var(--crop-ink), var(--crop-ink)) right var(--crop) top 0 / 1px 16px no-repeat,
-    linear-gradient(var(--crop-ink), var(--crop-ink)) left 0 bottom var(--crop) / 16px 1px no-repeat,
-    linear-gradient(var(--crop-ink), var(--crop-ink)) left var(--crop) bottom 0 / 1px 16px no-repeat,
-    linear-gradient(var(--crop-ink), var(--crop-ink)) right 0 bottom var(--crop) / 16px 1px no-repeat,
-    linear-gradient(var(--crop-ink), var(--crop-ink)) right var(--crop) bottom 0 / 1px 16px no-repeat;
-}
-#panel:not(.show) { visibility: hidden; }
-
-#ghost, #words {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
+#ghost, #words { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 #words { cursor: crosshair; }
 #words.dragging { cursor: grabbing; }
 
-/* ---- controls ---- */
+/* ---- the passage under the pointer, or under j / k: the site's verse form ---- */
+.ro-panel { --ro-hand: "Hand"; }
+.ro-panel .lines .line b.k1 { color: var(--ro-mark-soft); }
+.ro-panel .lines .line b.k3 { color: var(--yellow); }
+.ro-panel .lines .line b.k5 { color: var(--ro-mark-soft); text-decoration: underline 1px; text-underline-offset: .3em; }
+.ro-panel .gloss { display: inline-flex; align-items: center; gap: .55em; font: 400 .72rem/1.3 var(--mono); color: var(--ro-mark); }
+.ro-panel .gloss:empty { display: none; }
+.ro-panel .gloss b { font: 600 .95rem/1 var(--sans); }
+.ro-panel .gloss em { font-style: normal; color: var(--ro-mark-soft); }
+.ro-panel .gloss .y { color: var(--yellow); }
+.ro-panel .count [lang="fa"] { font: 400 1rem/1 "Hand", serif; color: var(--ro-mark-soft); }
 
-.controls {
-  position: absolute;
-  right: .6rem;
-  top: .6rem;
-  display: flex;
-  gap: 4px;
-  opacity: 0;
-  transition: opacity .4s;
+/* a NaarDoon drawing, as one ink: its own shape filled with the frame's cream */
+.sil {
+  display: inline-block; flex: none; width: 2.6rem; height: 1.9rem;
+  background: currentColor;
+  -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat;
 }
-.frame:hover .controls, .frame:focus-within .controls { opacity: 1; }
-.controls button {
-  all: unset;
-  cursor: pointer;
-  width: 1.8rem;
-  height: 1.8rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(10, 9, 8, .6);
-  color: var(--ink);
-  font: 500 .95rem/1 "IBM Plex Mono", monospace;
-  backdrop-filter: blur(4px);
-}
-.controls button:hover { background: rgba(214, 172, 96, .5); }
-.controls button:focus-visible { outline: 1px solid var(--bone); }
+.ro-panel .gloss .sil { color: var(--ro-mark); }
 
-.hint {
-  position: absolute;
-  left: 50%;
-  bottom: .7rem;
-  transform: translateX(-50%);
-  margin: 0;
-  font: 400 .66rem/1 "IBM Plex Mono", monospace;
-  letter-spacing: .1em;
-  color: rgba(245, 236, 220, .7);
-  white-space: nowrap;
+/* the animal j / k is on: your hand, a yellow rule under it */
+.sel-rule {
+  position: absolute; left: 0; top: 0; z-index: 1;
+  height: 2px; background: var(--yellow); border-radius: 1px;
   pointer-events: none;
-  transition: opacity 1.2s;
-}
-.hint.gone { opacity: 0; }
-
-/* ---- the couplet under the pointer ---- */
-
-#panel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: .9rem 1.2rem 1rem;
-  background: linear-gradient(to top, rgba(5, 5, 6, .95), rgba(5, 5, 6, .86) 75%, rgba(5, 5, 6, 0));
-  transform: translateY(105%);
-  transition: transform .4s cubic-bezier(.2, .8, .2, 1);
-  pointer-events: none;
-  text-align: center;
-}
-#panel.show { transform: none; }
-#panel .where {
-  margin: 0 0 .35rem;
-  font: 500 .64rem/1.3 "IBM Plex Mono", monospace;
-  letter-spacing: .1em;
-  color: var(--muted);
-}
-#panel .where [lang="fa"] { font-size: 1.15rem; letter-spacing: 0; }
-#panel .couplet {
-  margin: 0;
-  font-family: "Hand", serif;
-  font-size: clamp(1.05rem, 2vw, 1.4rem);
-  line-height: 1.7;
-  color: #6f685f;
-}
-#panel .couplet b { font-weight: 400; color: var(--bone); }
-#panel .couplet b.this { color: var(--gold); }
-#panel .couplet .sep { display: inline-block; margin: 0 1.2em; color: var(--muted); }
-#panel .gloss { margin: .2rem 0 0; font-size: 1rem; color: var(--ink); }
-#panel .gloss:empty { display: none; }
-#panel .gloss [lang="fa"] { font-size: 1.2em; color: var(--gold); }
-#panel .gloss small { font: 400 .6rem/1 "IBM Plex Mono", monospace; letter-spacing: .08em; color: var(--muted); margin-left: .5em; }
-#panel .count {
-  margin: .25rem 0 0;
-  font: 400 .64rem/1.3 "IBM Plex Mono", monospace;
-  letter-spacing: .08em;
-  color: var(--muted);
 }
 
-/* ---- wall label ---- */
+/* the keys under the frame: each book, and each kind of mind with the mark it is drawn in */
+.ro-animals .ro-key [lang="fa"] { font-family: "Hand", var(--fa); font-size: 1.1em; }
+.ro-lights .ro-key { flex-basis: 150px; }
+.sw {
+  display: inline-block; width: 18px; height: 9px; margin-right: 8px; vertical-align: .05em;
+  border-radius: 1px; background: var(--cobalt-deep);
+  box-shadow: inset 0 0 0 1px var(--cobalt-deep);
+}
+.sw::after { content: ""; display: block; height: 100%; border-radius: 1px; }
+.sw.k4::after { background: var(--cream); }
+.sw.k3::after { background: var(--yellow); }
+.sw.k2::after { background: rgba(242, 235, 218, .58); }
+.sw.k1::after { background: rgba(242, 235, 218, .3); }
+.sw.k5::after { box-shadow: inset 0 0 0 1.5px var(--cream); margin: 1px; height: calc(100% - 2px); }
+:root[data-theme="dark"] .sw { background: var(--cobalt-night); box-shadow: inset 0 0 0 1px var(--rule-strong); }
 
-.label {
-  width: min(36rem, 100%);
-  margin-top: 3rem;
-  align-self: center;
-}
-.label h1 {
-  margin: 0;
-  font-weight: 400;
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
-  color: var(--bone);
-}
-.label .meta {
-  margin: .2rem 0 0;
-  font-size: 1.05rem;
-  color: var(--muted);
-}
-.layers { margin: .7rem 0 0; font: 400 .76rem/1.6 "IBM Plex Mono", monospace; color: var(--muted); }
-.layers button {
-  all: unset;
-  cursor: pointer;
-  margin-left: .4em;
-  padding: .1rem .6rem .15rem;
-  border: 1px solid rgba(236, 226, 208, .22);
-  border-radius: 999px;
-  letter-spacing: .08em;
-  color: var(--muted);
-  transition: background .2s, color .2s, border-color .2s;
-}
-.layers button:hover { color: var(--ink); border-color: currentColor; }
-.layers button[aria-pressed="true"] { color: var(--red); border-color: var(--red); }
-.layers button:focus-visible { outline: 1px solid var(--ink); outline-offset: 2px; }
-.label .text { margin-top: 1.6rem; font-size: 1.12rem; line-height: 1.55; }
-.label .text p { margin: 0 0 .9em; }
-.label .text [lang="fa"] { font-size: 1.15em; }
-.label .colophon {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(236, 226, 208, .14);
-  font-size: .92rem;
-  line-height: 1.5;
-  color: var(--muted);
-}
-.label .colophon + .colophon { margin-top: .4rem; padding-top: 0; border-top: 0; }
-
-.fallback { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--muted); }
-
-@media (max-width: 640px) {
-  .frame { --w: 100%; --crop: 14px; }
-  .kicker { padding-top: 3.6rem; }
-  .room { padding-left: 1.4rem; padding-right: 1.4rem; }
-  .controls { opacity: 1; }
-  .hint { width: 90%; font-size: .58rem; line-height: 1.5; text-align: center; white-space: normal; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #panel, .hint, .controls { transition: none; }
-}
-
-/* ---- light / dark switch ---- */
-.theme-toggle {
-  all: unset;
-  position: fixed;
-  top: 1.1rem;
-  right: 1.1rem;
-  z-index: 10;
-  cursor: pointer;
-  padding: .35rem .7rem;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  font: 500 .66rem/1 "IBM Plex Mono", monospace;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.theme-toggle:hover { color: var(--ink); }
-.theme-toggle:focus-visible { outline: 1px solid var(--ink); outline-offset: 2px; }
-
-/* ---- light: the field is paper, the Arabic words ink ---- */
-:root[data-theme="light"] {
-  --wall: #ebe7e0;
-  --wall-lit: #f7f4ef;
-  --ink: #2a2420;
-  --muted: #7a6f67;
-  --gold: #8c5e14;
-  --bone: #221b16;
-  --red: #aa1812;
-  --field: #f1ebe0;
-}
-:root[data-theme="light"] .frame { --crop-ink: rgba(42, 33, 28, .5); }
-:root[data-theme="light"] #panel {
-  background: linear-gradient(to top, rgba(247, 244, 239, .97), rgba(247, 244, 239, .9) 75%, rgba(247, 244, 239, 0));
-}
-:root[data-theme="light"] #panel .couplet { color: #a59a8f; }
-:root[data-theme="light"] .controls button { background: rgba(247, 244, 239, .8); }
-:root[data-theme="light"] .controls button:hover { color: #fff; }
-:root[data-theme="light"] .hint { color: rgba(42, 33, 28, .65); }
-:root[data-theme="light"] .layers button { border-color: rgba(42, 33, 28, .22); }
-
-/* ---- the books, and the legend of lights ---- */
-.layers button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
-.legend { margin: .5rem 0 0; font: 400 .72rem/1.9 "IBM Plex Mono", monospace; color: var(--muted); }
-.legend button { all: unset; cursor: pointer; margin: 0 .6em 0 0; padding: .05rem .5rem .1rem; border-radius: 999px; border: 1px solid transparent; white-space: nowrap; }
-.legend button:hover { color: var(--ink); }
-.legend button[aria-pressed="true"] { border-color: currentColor; color: var(--ink); }
-.legend button:focus-visible { outline: 1px solid var(--ink); outline-offset: 2px; }
-.legend i { display: inline-block; width: .9em; height: .45em; margin-right: .45em; vertical-align: .12em; background: var(--c); }
-.legend i.hollow { background: none; box-shadow: inset 0 0 0 1.5px var(--c); }
-:root { --k1: rgb(138,131,122); --k2: rgb(128,176,206); --k3: rgb(240,164,60); --k4: rgb(255,248,228); --k5: rgb(184,156,240); }
-:root[data-theme="light"] { --k1: rgb(176,168,158); --k2: rgb(60,108,140); --k3: rgb(196,110,10); --k4: rgb(20,14,10); --k5: rgb(112,70,176); }
-#panel .gloss .sp { font-weight: 500; }
-#panel .gloss .k1 { color: var(--k1); } #panel .gloss .k2 { color: var(--k2); } #panel .gloss .k3 { color: var(--k3); }
-#panel .gloss .k4 { color: var(--k4); } #panel .gloss .k5 { color: var(--k5); }
-#panel .gloss em { font-style: italic; }
-#panel .count [lang="fa"] { font-size: 1.1rem; letter-spacing: 0; color: var(--ink); opacity: .75; }
+.fallback { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 400 .8rem/1.5 var(--mono); color: var(--ro-mark); }
+main > .fallback, body > .fallback { position: static; }

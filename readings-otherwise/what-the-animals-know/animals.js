@@ -2,10 +2,11 @@
 // much mind the text gives it, in the terms of Steven Wagschal's Minding Animals (2018).
 //
 // A book is laid out as a manuscript of columns, read right to left: verse two half-lines to a row,
-// Kalila's prose in lines a couplet wide. The words are drawn dark; the animals are lit where they
-// fall. The light is the spectrum: dim for an animal treated as a thing, plain for one that only does
-// what its kind does, warm for a mind read truly from the animal, bright for human faculties given to
-// it. An animal said of a person, a figure of speech, is drawn in a colour of its own.
+// Kalila's prose in lines a couplet wide. The field is cobalt (the frame's ground, in both themes);
+// the words are a faint cream ghost and the animals are cream, stronger the more mind the passage
+// gives: faint for an animal treated as a thing, half for one that only does what its kind does,
+// full for human faculties given to it. Yellow is the rare mind read truly from the animal, the
+// one Wagschal looks for. An animal said of a person, a figure of speech, is an outline.
 
 const COL_GAP = 4.5;
 const MARGIN = 6;
@@ -13,26 +14,19 @@ const ASPECT = 1.45;
 const MAX_PX_PER_EM = 110;
 const READ_PX_PER_EM = 7;      // from here on the text shows, faintly
 const WORD_PX_PER_EM = 3;      // from here on the animals are written out, not marked
-const THEME_KEY = "what-the-animals-know:theme";
 const BOOK_KEY = "what-the-animals-know:book";
 const BOOKS = ["kalila", "attar", "shahnameh"];
 const NAMES = { kalila: "Kalila wa Dimna", attar: "The Conference of the Birds", shahnameh: "The Shahnameh" };
 const FACULTIES = ["speech", "reasoning", "knowledge", "emotion", "deception", "perception", "desire", "memory", "moral judgement", "devotion"];
 const SPECTRUM = ["", "no mind", "what its kind does", "a mind read from the animal", "a human mind"];
 const FIGURE = ["", "an animal", "an animal as a person", "said of a person or thing"];
+const CLASS_KEY = { 4: "4", 3: "5", 2: "6", 1: "7", 5: "8" };
 // the classes of light: 0 not judged, 1-4 the spectrum, 5 a figure of speech
 const CLASS_OF = r => r[1] === 3 ? 5 : r[4];
 
-const PALETTES = {
-  dark: {
-    ghost: [236, 226, 208], ghostA: .16, title: [214, 172, 96],
-    light: [[128, 122, 114], [138, 131, 122], [128, 176, 206], [240, 164, 60], [255, 248, 228], [184, 156, 240]],
-  },
-  light: {
-    ghost: [42, 33, 28], ghostA: .2, title: [140, 94, 20],
-    light: [[170, 162, 152], [176, 168, 158], [60, 108, 140], [196, 110, 10], [20, 14, 10], [112, 70, 176]],
-  },
-};
+// The site's tokens, as numbers: cream #F2EBDA, yellow #F2C500.
+const CREAM = [242, 235, 218], YELLOW = [242, 197, 0];
+const LIGHT = [[CREAM, .3], [CREAM, .3], [CREAM, .58], [YELLOW, 1], [CREAM, 1], [CREAM, .85]];
 
 const frame = document.getElementById("frame");
 const ghostCanvas = document.getElementById("ghost");
@@ -46,9 +40,9 @@ let mkLine, mkWord, mkX0, mkX1, mkRow;
 let cw = 1, ch = 1, dpr = 1;
 let view = { s: 1, x: 0, y: 0 };
 let pointer = null, shown = "";
-let palette = PALETTES[document.documentElement.dataset.theme] || PALETTES.dark;
 let only = -1;                  // a class shown alone, or -1 for all
 let dirty = true, switching = false;
+let drawings = {};              // species: its NaarDoon drawing and who traced it
 
 // ---------- layout ----------
 
@@ -93,7 +87,7 @@ function layout() {
   const m = T.marks, k = m.length / 5;
   mkLine = new Int32Array(k); mkWord = new Int16Array(k); mkX0 = new Float32Array(k); mkX1 = new Float32Array(k); mkRow = new Int32Array(k);
   lineMk = new Int32Array(n + 1);
-  const order = [...Array(k).keys()].sort((a, b) => m[a * 5] - m[b * 5] || m[a * 5 + 2] - m[b * 5 + 2]);
+  const order = [...Array(k).keys()].sort((a, b) => m[a * 5] - m[b * 5] || m[b * 5 + 2] - m[a * 5 + 2]);   // by line, then right to left
   order.forEach((j, i) => {
     const l = m[j * 5], f = lineS[l] / T.upem;
     mkLine[i] = l; mkWord[i] = m[j * 5 + 1]; mkRow[i] = m[j * 5 + 4];
@@ -132,10 +126,10 @@ function zoomAt(px, py, f) {
   view.x = px - (px - view.x) * s / view.s; view.y = py - (py - view.y) * s / view.s; view.s = s;
   clampView();
 }
-let zoomGoal = null;
+let zoomGoal = null, viewGoal = null;
 function zoomTo(px, py, f) {
   const s = Math.min(MAX_PX_PER_EM, Math.max(fitScale(), (zoomGoal ? zoomGoal.s : view.s) * f));
-  zoomGoal = { s, px, py };
+  zoomGoal = { s, px, py }; viewGoal = null;
 }
 
 // ---------- drawing a stretch of the book at one scale ----------
@@ -159,7 +153,7 @@ function setGhost(ctx, s, ox, oy, w, h) {
   let size = 0;
   eachRow(s, ox, oy, w, h, (row, c, rr) => {
     if (row[0] === 0 || row[0] === 3) {
-      ctx.textAlign = "left"; ctx.fillStyle = rgba(palette.ghost, palette.ghostA);
+      ctx.textAlign = "left"; ctx.fillStyle = rgba(CREAM, .2);
       for (const l of lineList(row)) {
         const px = Math.round(s * lineS[l] * 100) / 100;
         if (px !== size) { ctx.font = `${px}px "Hand"`; size = px; }
@@ -168,7 +162,7 @@ function setGhost(ctx, s, ox, oy, w, h) {
     } else {
       const sec = T.sections[row[1]], title = row[0] === 2 ? sec.title : sec.poems[row[2]].title;
       ctx.font = `${s * (row[0] === 2 ? 1.25 : .85)}px "Hand"`; size = 0;
-      ctx.textAlign = "center"; ctx.fillStyle = rgba(palette.title, row[0] === 2 ? .8 : .55);
+      ctx.textAlign = "center"; ctx.fillStyle = rgba(CREAM, row[0] === 2 ? .8 : .55);
       ctx.fillText(title, colCentre(c) * s + ox, (MARGIN + rr * ROW_H + BASE) * s + oy);
     }
   });
@@ -177,20 +171,20 @@ function setGhost(ctx, s, ox, oy, w, h) {
 function setWords(ctx, s, ox, oy, w, h) {
   ctx.direction = "rtl"; ctx.textBaseline = "alphabetic"; ctx.textAlign = "left";
   const write = s >= WORD_PX_PER_EM;
-  const fills = palette.light.map((c, k) => rgba(c, only < 0 || only === k ? 1 : .12));
+  const fills = LIGHT.map(([c, a], k) => rgba(c, only < 0 || only === k ? a : a * .14));
   let size = 0;
   eachRow(s, ox, oy, w, h, row => {
     for (const l of lineList(row)) for (let i = lineMk[l]; i < lineMk[l + 1]; i++) {
-      const r = T.table[mkRow[i]], k = CLASS_OF(r), x = mkX0[i] * s + ox, y = lineY[l] * s + oy;
+      const k = CLASS_OF(T.table[mkRow[i]]), x = mkX0[i] * s + ox, y = lineY[l] * s + oy, wd = (mkX1[i] - mkX0[i]) * s;
       ctx.fillStyle = fills[k];
       if (write) {
         const px = Math.round(s * lineS[l] * 100) / 100;
         if (px !== size) { ctx.font = `${px}px "Hand"`; size = px; }
         ctx.fillText(wordsOf(l)[mkWord[i]], x, y);
-        if (k === 5) { ctx.fillRect(x, y + .2 * s, (mkX1[i] - mkX0[i]) * s, Math.max(.6, .05 * s)); }   // a figure, underlined
+        if (k === 5) ctx.fillRect(x, y + .2 * s, wd, Math.max(.6, .05 * s));   // a figure, underlined
       } else {
-        const ww = Math.max(1.8, (mkX1[i] - mkX0[i]) * s), hh = Math.max(1.8, .42 * s);
-        const xx = x + ((mkX1[i] - mkX0[i]) * s - ww) / 2, yy = y - .38 * s - hh / 2;
+        const ww = Math.max(1.8, wd), hh = Math.max(1.8, .42 * s);
+        const xx = x + (wd - ww) / 2, yy = y - .38 * s - hh / 2;
         if (k === 5 && hh >= 3.5) {   // a figure of speech: an outline, an animal the text does not mean
           ctx.strokeStyle = fills[k]; ctx.lineWidth = Math.max(.7, .06 * s);
           ctx.strokeRect(xx + ctx.lineWidth / 2, yy + ctx.lineWidth / 2, Math.max(.6, ww - ctx.lineWidth), Math.max(.6, hh - ctx.lineWidth));
@@ -204,8 +198,8 @@ function setWords(ctx, s, ox, oy, w, h) {
 
 const TILE = 256, TILE_MS = 6;
 function TileLayer(canvas, set, tag) { return { canvas, ctx: canvas.getContext("2d"), set, tag, tiles: new Map(), for: "", pending: false, key: "" }; }
-const ghost = TileLayer(ghostCanvas, setGhost, () => `${book} ${document.documentElement.dataset.theme}`);
-const words = TileLayer(wordCanvas, setWords, () => `${book} ${document.documentElement.dataset.theme} ${only}`);
+const ghost = TileLayer(ghostCanvas, setGhost, () => book);
+const words = TileLayer(wordCanvas, setWords, () => `${book} ${only}`);
 
 function tile(L, ts, tx, ty, make, keep) {
   const k = `${ts} ${tx} ${ty}`, t = L.tiles.get(k);
@@ -258,9 +252,10 @@ function drawLayer(L, alpha, until) {
   lctx.globalAlpha = 1;
 }
 
-// ---------- the animal under the pointer ----------
+// ---------- the animal under the pointer, or under j / k ----------
 
-const esc = s => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const shows = i => only < 0 || CLASS_OF(T.table[mkRow[i]]) === only;
 
 function under(px, py) {
   if (!T) return -1;
@@ -273,7 +268,7 @@ function under(px, py) {
     const row = rows[c * perCol + rr];
     if (!row) continue;
     for (const l of lineList(row)) for (let i = lineMk[l]; i < lineMk[l + 1]; i++) {
-      if (only >= 0 && CLASS_OF(T.table[mkRow[i]]) !== only) continue;
+      if (!shows(i)) continue;
       const dx = x < mkX0[i] ? mkX0[i] - x : x > mkX1[i] ? x - mkX1[i] : 0;
       const d = Math.hypot(dx, y - (lineY[l] - .38));
       if (d < bd) { bd = d; best = i; }
@@ -282,30 +277,48 @@ function under(px, py) {
   return best;
 }
 
+// a line of the passage, its animals marked, and at its end how many it has
+function lineHTML(l, here) {
+  const ws = wordsOf(l).map(esc);
+  let n = 0;
+  for (let i = lineMk[l]; i < lineMk[l + 1]; i++) {
+    n++;
+    const k = CLASS_OF(T.table[mkRow[i]]);
+    ws[mkWord[i]] = `<b class="k${k}${i === here ? " this" : ""}">${ws[mkWord[i]]}</b>`;
+  }
+  return `<p class="line"><span class="t">${ws.join(" ")}</span><span class="n">${n || ""}</span></p>`;
+}
+
 function showPanel(i) {
   const key = i >= 0 ? `${book} ${i}` : "";
   if (key === shown) return;
   shown = key;
   if (i < 0) { panel.classList.remove("show"); return; }
-  const r = T.table[mkRow[i]], l = mkLine[i], row = rows[lineRow[l]];
+  const r = T.table[mkRow[i]], l = mkLine[i];
   const [species, fig, mode, fac, spec, evidence, pi, unsure, unjudged] = r;
-  // the section this line is in: the last heading row above it
-  let si = 0, sp = 0;
+  let si = 0, sp = 0;   // the section this line is in: the last heading row above it
   for (let j = lineRow[l]; j >= 0; j--) { const b = rows[j]; if (b[0] === 1) { si = b[1]; sp = b[2]; break; } if (b[0] === 2) { si = b[1]; sp = 0; break; } }
   const sec = T.sections[si], poem = sec.poems[sp] || sec.poems[0];
   const p = T.passages[pi];
-  const word = wordsOf(l)[mkWord[i]];
-  const mark = t => esc(t).split(esc(word)).join(`<b>${esc(word)}</b>`);
-  const passage = Array.isArray(p) ? p.map(x => mark(T.lines[x])).join('<span class="sep">✦</span>') : mark(p);
-  document.getElementById("where").innerHTML = `${esc(NAMES[book])} · <span lang="fa">${esc(sec.title)}${poem && poem.title !== sec.title ? " · " + esc(poem.title) : ""}</span>`;
-  document.getElementById("couplet").innerHTML = passage;
+  document.getElementById("where").textContent = `${sec.title}${poem && poem.title !== sec.title ? " · " + poem.title : ""}`;
+  // a couplet: its two lines; a sentence of prose: the lines it is set on
+  let html;
+  if (Array.isArray(p)) html = p.map(x => lineHTML(x, i)).join("");
+  else {
+    const ws = esc(p).split(" "), word = wordsOf(l)[mkWord[i]];
+    const at = ws.findIndex(w => w === esc(word));
+    if (at >= 0) ws[at] = `<b class="k${CLASS_OF(r)} this">${ws[at]}</b>`;
+    html = `<p class="line"><span class="t">${ws.join(" ")}</span><span class="n"></span></p>`;
+  }
+  document.getElementById("couplet").innerHTML = html;
   const fs = FACULTIES.filter((_, k) => fac & (1 << k));
-  document.getElementById("gloss").innerHTML = unjudged ? `<span class="sp">${esc(species)}</span> <small>not yet judged</small>` :
-    `<span class="sp k${CLASS_OF(r)}">${esc(species)}</span> · ${FIGURE[fig]}${mode !== "none" ? ` · ${esc(mode)}` : ""}` +
-    `${spec ? ` · <em>${SPECTRUM[spec]}</em>` : ""}${fs.length ? ` · ${fs.join(", ")}` : ""}${unsure ? " · <small>unsure</small>" : ""}`;
+  const d = drawings[species];
+  const sil = d ? `<i class="sil" style="--m:url('data/naardoon/${esc(d.file)}')" title="${esc(d.title)}, traced by ${esc(d.by)} (NaarDoon)"></i>` : "";
+  document.getElementById("gloss").innerHTML = sil + (unjudged ? `<b>${esc(species)}</b> <em>not yet judged</em>` :
+    `<b>${esc(species)}</b> <em>${FIGURE[fig]}${mode !== "none" ? ` · ${esc(mode)}` : ""}</em>` +
+    `${spec ? ` <span class="${spec === 3 ? "y" : ""}">${SPECTRUM[spec]}</span>` : ""}${fs.length ? ` <em>· ${fs.join(", ")}</em>` : ""}${unsure ? " <em>· unsure</em>" : ""}`);
   document.getElementById("count").innerHTML = evidence ? `<span lang="fa">«${esc(evidence)}»</span>` : "";
   panel.classList.add("show");
-  if (poem) panel.dataset.url = poem.url;
 }
 
 // ---------- input ----------
@@ -314,7 +327,7 @@ const pts = new Map();
 let pinch = null, dragFrom = null;
 const local = e => { const r = frame.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
 wordCanvas.addEventListener("pointerdown", e => {
-  wordCanvas.setPointerCapture(e.pointerId); zoomGoal = null;
+  wordCanvas.setPointerCapture(e.pointerId); zoomGoal = viewGoal = null;
   pts.set(e.pointerId, local(e));
   if (pts.size === 1) { dragFrom = local(e); wordCanvas.classList.add("dragging"); }
   if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) }; }
@@ -349,41 +362,83 @@ wordCanvas.addEventListener("wheel", e => {
 const centre = () => [cw / 2, ch / 2];
 document.getElementById("zoom-in").onclick = () => zoomTo(...centre(), 1.8);
 document.getElementById("zoom-out").onclick = () => zoomTo(...centre(), 1 / 1.8);
-document.getElementById("reset").onclick = () => { zoomGoal = null; fit(); };
+document.getElementById("reset").onclick = () => { zoomGoal = viewGoal = null; fit(); };
 
 function useOnly(k) {
   only = only === k ? -1 : k;
   for (const b of document.querySelectorAll("[data-class]")) b.setAttribute("aria-pressed", +b.dataset.class === only);
+  if (sel >= 0 && !shows(sel)) sel = -1;
   shown = ""; dirty = true;
+  if (ui) ui.render();
 }
 for (const b of document.querySelectorAll("[data-class]")) b.onclick = () => useOnly(+b.dataset.class);
 
-addEventListener("keydown", e => {
-  if (e.target.closest && e.target.closest("input, textarea")) return;
-  const r = frame.getBoundingClientRect();
-  if (r.bottom < 0 || r.top > innerHeight) return;
-  const k = e.key, step = 80;
-  if (k === "+" || k === "=") zoomTo(...centre(), 1.5);
-  else if (k === "-" || k === "_") zoomTo(...centre(), 1 / 1.5);
-  else if (k === "0") { zoomGoal = null; fit(); }
-  else if (k === "Escape" && only >= 0) useOnly(only);
-  else if (k.startsWith("Arrow")) {
-    e.preventDefault();
-    view.x += k === "ArrowLeft" ? step : k === "ArrowRight" ? -step : 0;
-    view.y += k === "ArrowUp" ? step : k === "ArrowDown" ? -step : 0;
-    clampView();
+// j / k read the animals one by one, in the order of the book (only those shown): the view comes
+// close, the animal is underlined in yellow (your hand), and its passage shows below.
+let sel = -1;
+const selRule = document.getElementById("sel-rule");
+function readStep(d) {
+  if (!T) return;
+  const k = mkLine.length;
+  let i = sel;
+  if (i < 0) {                                   // the first animal at or after the line in the middle of the view
+    const x = (cw / 2 - view.x) / view.s, y = (ch * .4 - view.y) / view.s;
+    const c = Math.min(cols - 1, Math.max(0, colAt(x)));
+    let r = c * perCol + Math.min(perCol - 1, Math.max(0, Math.floor((y - MARGIN) / ROW_H)));
+    while (r < rows.length - 1 && !lineList(rows[r]).length) r++;
+    i = lineMk[lineList(rows[r])[0]] - d;
   }
-});
+  do { i += d; } while (i >= 0 && i < k && !shows(i));
+  if (i < 0 || i >= k) return;
+  sel = i;
+  const l = mkLine[sel];
+  const s = Math.min(MAX_PX_PER_EM, Math.max(view.s, READ_PX_PER_EM * 2));
+  const cx = (mkX0[sel] + mkX1[sel]) / 2, cy = lineY[l] - .38;
+  const pw = W * s, ph = H * s;
+  let x = cw / 2 - cx * s, y = ch * .4 - cy * s;
+  x = pw <= cw ? (cw - pw) / 2 : Math.min(0, Math.max(cw - pw, x));
+  y = ph <= ch ? (ch - ph) / 2 : Math.min(0, Math.max(ch - ph, y));
+  zoomGoal = null;
+  viewGoal = { s, x, y };
+}
+function readRule() {
+  if (sel < 0) { selRule.hidden = true; return; }
+  const l = mkLine[sel];
+  selRule.hidden = false;
+  selRule.style.width = Math.max(4, (mkX1[sel] - mkX0[sel]) * view.s) + "px";
+  selRule.style.transform = `translate(${mkX0[sel] * view.s + view.x}px, ${(lineY[l] + .18) * view.s + view.y}px)`;
+}
 
-const themeBtn = document.getElementById("theme");
-function labelTheme() { themeBtn.textContent = document.documentElement.dataset.theme === "light" ? "dark" : "light"; }
-themeBtn.onclick = () => {
-  const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
-  document.documentElement.dataset.theme = next;
-  try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
-  palette = PALETTES[next]; labelTheme(); shown = ""; dirty = true;
-};
-labelTheme();
+const ui = window.Piece({
+  frame,
+  keys: () => [["j k", "the next animal"], ["1 2 3", "the book"], ["4–8", only >= 0 ? "one kind alone: on" : "one kind of mind alone"],
+    ["+ − 0", "zoom · whole book"], ["← →", "move"],
+    ["esc", only >= 0 ? "every kind back" : sel >= 0 ? "stop reading" : "give the keys back"]],
+  help: () => [
+    ["j k", "the next / previous animal, in the order of the book: its passage, how it was judged and its drawing show below"],
+    ["1 2 3", "Kalila wa Dimna · the Conference of the Birds · the Shahnameh"],
+    ["4–8", "one kind alone: 4 a human mind · 5 a mind read from the animal · 6 what its kind does · 7 no mind · 8 said of a person"],
+    ["+ − 0", "come closer · go back · see the whole book (◻)"],
+    ["← ↑ → ↓", "move across the book"],
+  ],
+  key(e) {
+    const k = e.key, step = 80;
+    if (k === "j" || k === "k") { readStep(k === "j" ? 1 : -1); return true; }
+    if (k.startsWith("Arrow")) {
+      viewGoal = null;
+      view.x += k === "ArrowLeft" ? step : k === "ArrowRight" ? -step : 0;
+      view.y += k === "ArrowUp" ? step : k === "ArrowDown" ? -step : 0;
+      clampView();
+      return true;
+    }
+    return false;
+  },
+  escape() {
+    if (only >= 0) { useOnly(only); return true; }
+    if (sel >= 0) { sel = -1; return true; }
+    return false;
+  },
+});
 
 // ---------- the books ----------
 
@@ -395,14 +450,15 @@ async function useBook(b) {
   switching = true;
   for (const x of document.querySelectorAll("[data-book]")) x.setAttribute("aria-pressed", x.dataset.book === b);
   T = await fetchBook(b);
-  book = b;
+  book = b; sel = -1;
   layout();
-  frame.style.setProperty("--aspect", (W / H).toFixed(3));
+  frame.parentElement.style.setProperty("--aspect", (W / H).toFixed(3));   // the stage: the frame and the keys under it
   resize(); fit();
   ghost.key = words.key = ""; shown = "";
   try { localStorage.setItem(BOOK_KEY, b); } catch (_) {}
-  const url = new URL(location.href); url.searchParams.set("book", b); history.replaceState(null, "", url);
+  try { const url = new URL(location.href); url.searchParams.set("book", b); history.replaceState(null, "", url); } catch (_) {}
   switching = false;
+  ui.render();
 }
 for (const x of document.querySelectorAll("[data-book]")) x.onclick = () => useBook(x.dataset.book);
 
@@ -413,6 +469,12 @@ const t0 = then;
 function frameLoop(now) {
   if (!running) return;
   const dt = Math.min(100, now - then); then = now;
+  if (viewGoal) {
+    const k = 1 - Math.pow(1e-4, dt / 1000);
+    view.s += (viewGoal.s - view.s) * k; view.x += (viewGoal.x - view.x) * k; view.y += (viewGoal.y - view.y) * k;
+    clampView();
+    if (Math.abs(viewGoal.s - view.s) < .01 && Math.abs(viewGoal.x - view.x) < .5 && Math.abs(viewGoal.y - view.y) < .5) viewGoal = null;
+  }
   if (zoomGoal && T) {
     const r = zoomGoal.s / view.s;
     if (Math.abs(Math.log(r)) < 1e-3) { zoomAt(zoomGoal.px, zoomGoal.py, r); zoomGoal = null; }
@@ -422,7 +484,9 @@ function frameLoop(now) {
   const until = performance.now() + TILE_MS;
   drawLayer(words, 1, until);
   drawLayer(ghost, Math.min(1, Math.max(0, (view.s - READ_PX_PER_EM * .6) / (READ_PX_PER_EM * .4))), until);
-  showPanel(pointer && !pts.size ? under(...pointer) : -1);
+  const hov = pointer && !pts.size ? under(...pointer) : -1;
+  showPanel(hov >= 0 ? hov : sel);
+  readRule();
   if (T && view.s > fitScale() * 1.5 && now - t0 > 4000) hint.classList.add("gone");
   requestAnimationFrame(frameLoop);
 }
@@ -436,7 +500,10 @@ new IntersectionObserver(([en]) => { frameVisible = en.isIntersecting; wake(); }
 document.addEventListener("visibilitychange", wake);
 
 (async () => {
-  await new FontFace("Hand", "url(data/hand.woff2)").load().then(f => document.fonts.add(f)).catch(() => {});
+  await Promise.all([
+    new FontFace("Hand", "url(data/hand.woff2)").load().then(f => document.fonts.add(f)).catch(() => {}),
+    fetch("data/naardoon/credits.json").then(r => r.json()).then(d => { drawings = d; }).catch(() => {}),
+  ]);
   const q = new URLSearchParams(location.search).get("book");
   let start = BOOKS.includes(q) ? q : null;
   if (!start) try { const s = localStorage.getItem(BOOK_KEY); if (BOOKS.includes(s)) start = s; } catch (_) {}
