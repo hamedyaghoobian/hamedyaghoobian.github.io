@@ -15,8 +15,8 @@ const MAX_PX_PER_EM = 110;
 const READ_PX_PER_EM = 7;      // from here on the text shows, faintly
 const WORD_PX_PER_EM = 3;      // from here on the animals are written out, not marked
 const BOOK_KEY = "what-the-animals-know:book";
-const BOOKS = ["kalila", "attar", "shahnameh", "masnavi"];
-const NAMES = { kalila: "Kalila wa Dimna", attar: "The Conference of the Birds", shahnameh: "The Shahnameh", masnavi: "The Masnavi" };
+const BOOKS = ["kalila", "attar", "shahnameh", "masnavi", "marzban", "parvin"];
+const NAMES = { kalila: "Kalila wa Dimna", attar: "The Conference of the Birds", shahnameh: "The Shahnameh", masnavi: "The Masnavi", marzban: "Marzban-nameh", parvin: "Parvin's Divan" };
 const FACULTIES = ["speech", "reasoning", "knowledge", "emotion", "deception", "perception", "desire", "memory", "moral judgement", "devotion"];
 const SPECTRUM = ["", "no mind", "what its kind does", "a mind read from the animal", "a human mind"];
 const FIGURE = ["", "an animal", "an animal as a person", "said of a person or thing"];
@@ -419,13 +419,13 @@ function readRule() {
 
 const ui = window.Piece({
   frame,
-  keys: () => [["j k", "the next animal"], ["1–4", "the book"], ["5–9", only >= 0 ? "one kind alone: on" : "one kind of mind alone"],
+  keys: () => [["j k", "the next animal"], ["1–6", "the book"], ["h r t n f", only >= 0 ? "one kind alone: on" : "one kind of mind alone"],
     ["+ − 0", "zoom · whole book"], ["← →", "move"],
     ["esc", only >= 0 ? "every kind back" : sel >= 0 ? "stop reading" : "give the keys back"]],
   help: () => [
     ["j k", "the next / previous animal, in the order of the book: its passage, how it was judged and its drawing show below"],
-    ["1–4", "Kalila wa Dimna · the Conference of the Birds · the Shahnameh · the Masnavi"],
-    ["5–9", "one kind alone: 5 a human mind · 6 a mind read from the animal · 7 what its kind does · 8 no mind · 9 said of a person"],
+    ["1–6", "Kalila wa Dimna · the Conference of the Birds · the Shahnameh · the Masnavi · Marzban-nameh · Parvin's Divan"],
+    ["h r t n f", "one kind alone: h a human mind · r a mind read from the animal · t what its kind does · n no mind · f said of a person (a figure)"],
     ["+ − 0", "come closer · go back · see the whole book (◻)"],
     ["← ↑ → ↓", "move across the book"],
   ],
