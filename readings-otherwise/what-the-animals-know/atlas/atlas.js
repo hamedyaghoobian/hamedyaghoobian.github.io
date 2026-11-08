@@ -1,5 +1,5 @@
 // The Animals, Counted: the atlas of What the Animals Know.
-const BOOK_NAMES = ["Kalila wa Dimna", "The Birds", "The Shahnameh"];
+const BOOK_NAMES = ["Kalila wa Dimna", "The Birds", "The Shahnameh", "The Masnavi"];
 const SPECTRUM = ["anthropectomy", "species-typical", "constructive", "gratuitous"];   // k1..k4
 const SPECTRUM_SAY = { anthropectomy: "no mind", "species-typical": "what its kind does", constructive: "a mind read from the animal", gratuitous: "a human mind", none: "" };
 const MODES = ["court", "guide", "kept", "ridden", "hunter", "hunted", "wild", "eaten", "sacrificed", "emblem", "none"];
@@ -15,9 +15,9 @@ const sil = s => drawings[s] ? `<i class="sil" style="--m:url('../data/naardoon/
 
 function render() {
   const rows = D.rows.filter(inBook);
-  const books = book < 0 ? [0, 1, 2] : [book];
+  const books = book < 0 ? [0, 1, 2, 3] : [book];
   const figs = rows.filter(r => r[R.figure] === "figure").length;
-  $("total").textContent = `${rows.length.toLocaleString("en")} animals in ${book < 0 ? "the three books" : BOOK_NAMES[book]}: ` +
+  $("total").textContent = `${rows.length.toLocaleString("en")} animals in ${book < 0 ? "the four books" : BOOK_NAMES[book]}: ` +
     `${(rows.length - figs).toLocaleString("en")} as animals, ${figs.toLocaleString("en")} said of people or things`;
 
   // ---- species bars ----

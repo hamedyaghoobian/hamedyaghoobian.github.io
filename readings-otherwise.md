@@ -28,13 +28,13 @@ permalink: /readings-otherwise/
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
     <div class="fp-row__body">
-      <p class="ro-row__line">Animals in three books, lit by the mind each text gives them. 7,254 animals, 10,457 readings</p>
+      <p class="ro-row__line">Animals in four books, lit by the mind each text gives them. 10,634 animals, 15,433 readings</p>
       <dl class="fp-spec ro-spec">
         <dt>taken out</dt><dd>every word but the animals</dd>
-        <dt>left</dt><dd>7,254 animals in Kalila wa Dimna, the Conference of the Birds and the Shahnameh</dd>
+        <dt>left</dt><dd>10,634 animals in Kalila wa Dimna, the Conference of the Birds, the Shahnameh and the Masnavi</dd>
         <dt>light</dt><dd>how much mind the text gives each one, after Wagschal's <em>Minding Animals</em></dd>
       </dl>
-      <p class="ro-note">Three books of Persian literature, <em>Kalila wa Dimna</em>, <bdi lang="fa">کلیله و دمنه</bdi>, Attar's <em>Conference of the Birds</em> and Ferdowsi's <em>Shahnameh</em>, with every word taken out but the animals, each lit by how much mind the text gives it, in the terms of Steven Wagschal's <em>Minding Animals</em>. The fables are bright: the jackals scheme with human minds. The epic is dim: its horses are counted, given and ridden, and its lions are mostly men. Of the horses given a mind, half have names.</p>
+      <p class="ro-note">Four books of Persian literature, <em>Kalila wa Dimna</em>, <bdi lang="fa">کلیله و دمنه</bdi>, Attar's <em>Conference of the Birds</em>, Ferdowsi's <em>Shahnameh</em> and Rumi's <em>Masnavi</em>, with every word taken out but the animals, each lit by how much mind the text gives it, in the terms of Steven Wagschal's <em>Minding Animals</em>. The fables are bright: the jackals scheme with human minds. The epic is dim: its horses are counted, given and ridden, and its lions are mostly men. Of the horses given a mind, half have names. Rumi's animals are mostly people in disguise, but his dogs are given minds of their own.</p>
       <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-animals-know/' | relative_url }}">See it</a> <a href="{{ '/readings-otherwise/what-the-animals-know/atlas/' | relative_url }}">The atlas</a> <a href="https://github.com/hamedyaghoobian/what-the-animals-know">Code</a></p>
     </div>
   </li>
