@@ -101,3 +101,4 @@ main > .fallback, body > .fallback { position: static; }
 }
 .ro-read .lines .line .n { display: none; }          /* the card says it; a lone number beside the passage only distracts */
 .ro-animals .ro-stage > .ro-controls:first-of-type .ro-key { flex-basis: 118px; }
+.ro-animals .ro-key kbd { margin-left: 8px; padding: 0 4px; border: 1px solid currentColor; border-radius: 3px; font: 500 .62rem/1.3 var(--mono); opacity: .7; }
