@@ -34,5 +34,14 @@ body.hand-english #layers { display: none; }
 
 .fallback { margin: 2rem 0; font: 400 .8rem/1.5 var(--mono); }
 
+/* ---- in Persian (../lang.js): what the piece writes is set in the site's Persian face,
+   without the mono's spacing and capitals; the verse keeps its hand ---- */
+html[data-lang="fa"] :is(.layer-label, .solo, .ro-panel .count, .ro-panel .line .n, .bk-readout, .bk-map__cap, .bk-valleys__t, .bk-bar__n),
+html[data-lang="fa"] :is(.layer-label, .solo, .bk-readout) :not(.fp-k):not(kbd):not(.bk-fa) {
+  font-family: var(--fa); letter-spacing: 0; text-transform: none; font-style: normal;
+}
+.bk-readout[dir="rtl"] .bk-bk { direction: ltr; }   /* the bars and their ticks are measured from the left */
+.bk-readout[dir="rtl"] .bk-fa { text-align: right; }
+
 @media (max-width: 720px) {
 }

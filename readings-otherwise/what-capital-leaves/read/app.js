@@ -20,6 +20,12 @@ const rail = document.getElementById("rail");
 const legend = document.getElementById("legend");
 const panel = document.getElementById("panel");
 const fmt = new Intl.NumberFormat("en");
+// the page around the book in Persian when the reader chose it (../../lang.js); the book stays English
+const tr = s => (window.RO ? RO.tr(s) : s);
+const fa = () => !!(window.RO && RO.fa());
+const num = n => (window.RO ? RO.num(n) : fmt.format(n));
+const setDir = el => { if (fa()) { el.dir = "rtl"; el.lang = "fa"; } else { el.removeAttribute("dir"); el.removeAttribute("lang"); } };
+let total = -1;               // the marks in all, for the lede (lang.js puts the lede back on a switch)
 
 const chapters = [];          // {key, vol, n, title, marks, el, box, mounted, height}
 const texts = new Map();      // key -> Promise<{text, pos}>
@@ -106,9 +112,9 @@ function reflowPlaceholders() {
 // ---------- build ----------
 
 function build(data) {
-  let total = 0;
+  total = 0;
   for (const [k, v] of Object.entries(data.totals)) if (k !== "\n") total += v;
-  document.getElementById("total").textContent = fmt.format(total);
+  showTotal();
 
   const frag = document.createDocumentFragment();
   for (const vol of data.volumes) {
@@ -116,7 +122,9 @@ function build(data) {
     head.className = "vol-head";
     head.id = "vol-" + vol.id;
     const vm = vol.chapters.reduce((s, c) => s + c.marks.length, 0);
-    head.innerHTML = `<b>${vol.id}</b>${ROMAN[vol.id]} &middot; ${esc(vol.subtitle)}`;
+    head.dataset.vol = vol.id;
+    head.dataset.subtitle = vol.subtitle;
+    nameVolume(head);
     frag.appendChild(head);
 
     const rv = document.createElement("div");
@@ -158,6 +166,19 @@ function build(data) {
   buildLegend(data.totals);
 }
 
+function showTotal() {
+  const el = document.getElementById("total");
+  if (el && total >= 0) el.textContent = num(total);
+}
+
+// "Volume One · " in the reader's language; the subtitle is Capital's own and stays English
+function nameVolume(head) {
+  const id = head.dataset.vol;
+  head.innerHTML = fa()
+    ? `<b>${id}</b><span lang="fa" dir="rtl">${tr(ROMAN[id])}</span> &middot; ${esc(head.dataset.subtitle)}`
+    : `<b>${id}</b>${ROMAN[id]} &middot; ${esc(head.dataset.subtitle)}`;
+}
+
 // ---------- legend ----------
 
 function buildLegend(totals) {
@@ -166,13 +187,22 @@ function buildLegend(totals) {
   for (const [cls, glyph, name] of LEGEND) {
     const b = document.createElement("button");
     b.dataset.c = cls;
-    b.title = `${name}: click to hide, double-click to see only this`;
-    b.innerHTML = `<span class="g m-${cls}">${glyph}</span><span class="n">${fmt.format(count[cls] || 0)}</span>`;
+    b.dataset.name = name;
+    b.dataset.count = count[cls] || 0;
+    b.dataset.glyph = glyph;
+    nameLegend(b);
     b.addEventListener("click", () => setHidden(cls, !hidden(cls)));
     b.addEventListener("dblclick", () => solo(cls));
     legend.appendChild(b);
   }
   syncLegend();
+}
+
+function nameLegend(b) {
+  const { c, name, count, glyph } = b.dataset;
+  b.title = fa() ? `${tr(name)}: برای پنهان کردن کلیک کنید، برای دیدن تنها همین نشانه دوبار کلیک کنید`
+                 : `${name}: click to hide, double-click to see only this`;
+  b.innerHTML = `<span class="g m-${c}">${glyph}</span><span class="n">${num(+count)}</span>`;
 }
 
 function setHidden(cls, on) {
@@ -244,7 +274,17 @@ function sentenceHTML(text, s, pos) {
   return out + (s.cut1 ? "…" : "");
 }
 
-let litBox = null, hideTimer = 0, token = 0;
+let litBox = null, hideTimer = 0, token = 0, whereCh = null;
+
+// where the sentence is: "Volume I · Chapter 3 · Title", the title Capital's own
+function nameWhere() {
+  if (!whereCh) return;
+  const ch = whereCh, where = document.getElementById("where");
+  where.textContent = fa()
+    ? [`${tr("Volume")} ${tr(ch.vol)}`, ch.n ? `${tr("Chapter")} ${num(ch.n)}` : "", "\u2068" + ch.title + "\u2069"].filter(Boolean).join(" · ")
+    : [`Volume ${ch.vol}`, ch.n ? `Chapter ${ch.n}` : "", ch.title].filter(Boolean).join(" · ");
+  setDir(where);
+}
 
 function clearLit() {
   if (!litBox) return;
@@ -272,9 +312,8 @@ async function reveal(el) {
   }
   el.classList.add("on", "here");
 
-  const num = ch.n ? `Chapter ${ch.n}` : "";
-  document.getElementById("where").textContent =
-    [`Volume ${ch.vol}`, num, ch.title].filter(Boolean).join(" · ");
+  whereCh = ch;
+  nameWhere();
   document.getElementById("sentence").innerHTML = sentenceHTML(text, s, pos[i]);
   panel.classList.add("show");
 }
@@ -402,6 +441,14 @@ themeBtn.addEventListener("click", () => {
   syncThemeButton();
 });
 syncThemeButton();
+
+// the other language: the count in the lede, the volume heads, the legend, the open sentence's place
+document.addEventListener("ro-lang", () => {
+  showTotal();
+  for (const h of book.querySelectorAll(".vol-head")) nameVolume(h);
+  for (const b of legend.children) nameLegend(b);
+  nameWhere();
+});
 
 fetch("../data/marks.json")
   .then(r => r.json())

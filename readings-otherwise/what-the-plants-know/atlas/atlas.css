@@ -87,3 +87,14 @@
   .at-species .fig, .at-species .n { display: none; }
   .at-table td.lab, .at-table td.book { display: none; }
 }
+
+/* in Persian (../../lang.js): what atlas.js writes is set right to left in the Persian face; the charts keep their geometry */
+html[data-lang="fa"] :is(#total, #count, #page, .at-species .head, .at-species .name, .at-species .n, .at-matrix th, .at-matrix td,
+  .at-figures .row > span, .at-table td.book, .at-table td.lab, .at-table td.an, .at-credits figcaption, .at-credits figcaption b, .at-filters select) {
+  font-family: var(--fa); letter-spacing: 0; text-transform: none;
+}
+html[data-lang="fa"] .at-sec h2 { text-transform: none; letter-spacing: 0; }
+html[data-lang="fa"] .at-credits figcaption a[href^="https://library"] { font-family: var(--fa); }
+[dir="rtl"] .sw { margin-right: 0; margin-left: 7px; }
+.at-species .name[dir="rtl"], .at-matrix th[dir="rtl"], .at-table td[dir="rtl"] { text-align: right; }
+.at-credits figcaption[dir="rtl"] span[dir="ltr"] { unicode-bidi: isolate; font-family: var(--mono); }

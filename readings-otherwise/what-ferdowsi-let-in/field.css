@@ -39,3 +39,10 @@ body.exploded #words { cursor: default; }
 
 .fallback { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 400 .8rem/1.5 var(--mono); color: var(--ro-mark); }
 main > .fallback, body > .fallback { position: static; }
+
+/* ---- in Persian (../lang.js): what the piece writes is set in the site's Persian face, upright,
+   without the mono's spacing and capitals; the word itself keeps its hand ---- */
+html[data-lang="fa"] :is(.layer-label, .solo, .ro-panel .count, .ro-panel .line .n, .ro-panel .gloss),
+html[data-lang="fa"] :is(.layer-label, .solo, .ro-panel .gloss) :not(.fp-k):not(kbd):not([lang="fa"]) {
+  font-family: var(--fa); letter-spacing: 0; text-transform: none; font-style: normal;
+}
