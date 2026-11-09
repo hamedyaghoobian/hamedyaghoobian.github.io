@@ -114,7 +114,10 @@
   function closeHelp() {
     const h = help(); if (!h || h.hidden) return false;
     h.hidden = true;
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    // back to where the reader was; the page itself (body) cannot take focus, so let go of the
+    // close button instead, or enter would land on a hidden button and not give the keys to a piece
+    if (lastFocus && lastFocus !== document.body && lastFocus.isConnected && lastFocus.focus) lastFocus.focus();
+    else if (h.contains(document.activeElement)) document.activeElement.blur();
     return true;
   }
 
