@@ -38,7 +38,7 @@
    "title": "The Writer In-between: A Post-phenomenological Analysis of LLMs and their Implications for Writer-Tool Relations",
    "year": 2025,
    "citation": "Journal of Human-Technology Relations 3, 1-18, 2025",
-   "cites": 25
+   "cites": 26
   },
   {
    "id": "5Ax8m6sAAAAJ:Tyk-4Ss8FVUC",
@@ -71,18 +71,6 @@
    "cites": 10
   },
   {
-   "id": "5Ax8m6sAAAAJ:YsMSGLbcyi4C",
-   "authors": [
-    "Hamed Yaghoobian"
-   ],
-   "venue": "Somatechnics",
-   "url": "https://www.euppublishing.com/doi/abs/10.3366/soma.2025.0448",
-   "title": "Data-Body Machine: A Deleuzian Perspective in Digital Ontology",
-   "year": 2025,
-   "citation": "Somatechnics 15 (1), 45-62, 2025",
-   "cites": 3
-  },
-  {
    "id": "5Ax8m6sAAAAJ:u5HHmVD_uO8C",
    "authors": [
     "Hamed Yaghoobian",
@@ -108,6 +96,18 @@
    "title": "MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting",
    "year": 2025,
    "citation": "arXiv preprint arXiv:2512.21878, 2025",
+   "cites": 2
+  },
+  {
+   "id": "5Ax8m6sAAAAJ:YsMSGLbcyi4C",
+   "authors": [
+    "Hamed Yaghoobian"
+   ],
+   "venue": "Somatechnics",
+   "url": "https://www.euppublishing.com/doi/abs/10.3366/soma.2025.0448",
+   "title": "Data-Body Machine: A Deleuzian Perspective in Digital Ontology",
+   "year": 2025,
+   "citation": "Somatechnics 15 (1), 45-62, 2025",
    "cites": 2
   },
   {
@@ -177,5 +177,5 @@
    "cites": 0
   }
  ],
- "updated": "2026-10-18T16:22:34+00:00"
+ "updated": "2026-11-09T16:31:36+00:00"
 }
