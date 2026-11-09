@@ -25,7 +25,17 @@
 
   // the guide: i, one key with no shift (a letter nothing else uses); ? too, the web's usual help key,
   // on any layout: ? itself, the Persian ؟, or shift + the / key wherever the layout puts it
-  const isHelpKey = e => e.key === 'i' || e.key === '?' || e.key === '\u061F' || (e.code === 'Slash' && e.shiftKey);
+  // a letter on a non-Latin layout (Persian, Arabic, Russian…) is read as the Latin key in its place
+  const latin = e => {
+    const k = e.key;
+    if (k && k.length === 1 && k.charCodeAt(0) > 127) {
+      if (/^Key[A-Z]$/.test(e.code)) return e.code[3].toLowerCase();
+      if (/^Digit[0-9]$/.test(e.code)) return e.code[5];
+    }
+    return k;
+  };
+  const tr = s => (FP.tr ? FP.tr(s) : s);
+  const isHelpKey = e => latin(e) === 'i' || e.key === '?' || e.key === '\u061F' || (e.code === 'Slash' && e.shiftKey);
   const typing = el => el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
   // Something that keeps its own keys while it has focus: a figure's
   // canvas, a readings piece, anything marked data-fp-own-keys.
@@ -86,22 +96,22 @@
   const help = () => $('#fp-help');
   function helpRows() {
     const site = [
-      ...(FP.ownsDigits ? [] : [['0–7', 'press a section key']]),
-      ['\\', 'turn the theme knob: light · dark · auto'],
-      ['i', 'these keys (? works too)'],
+      ...(FP.ownsDigits ? [] : [['0–7', tr('press a section key')]]),
+      ['\\', tr('turn the theme knob: light · dark · auto')],
+      ['i', tr('these keys (? works too)')],
     ];
     const page = [];
     const n = parts().length;
-    if (n) page.push(['j  k', `next / previous ${$('[data-fp-part]') || FP.partsSelector ? 'item' : 'part'} · ${n} here`], ['enter', 'open it']);
-    if ($('[data-fp-find]')) page.push(['/', 'find on this page']);
-    extra.filter(k => !k.when || k.when()).forEach(k => page.push([k.key, k.label]));
+    if (n) page.push(['j  k', `${tr('next / previous')} ${tr($('[data-fp-part]') || FP.partsSelector ? 'item' : 'part')} · ${n} ${tr('here')}`], ['enter', tr('open it')]);
+    if ($('[data-fp-find]')) page.push(['/', tr('find on this page')]);
+    extra.filter(k => !k.when || k.when()).forEach(k => page.push([k.key, tr(k.label)]));
     const move = [];
     const p = rel('prev'), nx = rel('next'), up = rel('up');
-    if (p) move.push(['[', `previous: ${p.title || p.textContent.replace(/^\s*\[/, '').trim()}`]);
-    if (nx) move.push([']', `next: ${nx.title || nx.textContent.replace(/^\s*\]/, '').trim()}`]);
-    if (up) move.push(['esc', `up to ${up.title || 'one level up'}`]);
+    if (p) move.push(['[', `${tr('previous')}: ${p.title || p.textContent.replace(/^\s*\[/, '').trim()}`]);
+    if (nx) move.push([']', `${tr('next')}: ${nx.title || nx.textContent.replace(/^\s*\]/, '').trim()}`]);
+    if (up) move.push(['esc', `${tr('up to')} ${up.title || tr('one level up')}`]);
     const block = (t, rows) => rows.length ? `<p class="fp-help__group">${t}</p><dl>${rows.map(([k, v]) => `<dt>${k.split(/\s+/).map(x => `<span class="fp-k">${x}</span>`).join('')}</dt><dd>${v}</dd>`).join('')}</dl>` : '';
-    return block('this page', page) + block('moving', move) + block('the whole site', site);
+    return block(tr('this page'), page) + block(tr('moving'), move) + block(tr('the whole site'), site);
   }
   let lastFocus = null;
   function openHelp() {
@@ -138,7 +148,7 @@
   // ── the keys ──
   document.addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    const k = isHelpKey(e) ? '?' : e.key, t = e.target;
+    const k = isHelpKey(e) ? '?' : latin(e), t = e.target;
     if (typing(t)) { if (k === 'Escape') t.blur(); return; }
     if (help() && !help().hidden) { if (k === 'Escape' || k === '?') { e.preventDefault(); closeHelp(); } return; }
     if (box && !box.hidden) { if (k === 'Escape') box.hidden = true; return; }

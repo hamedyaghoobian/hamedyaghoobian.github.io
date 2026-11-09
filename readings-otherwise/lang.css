@@ -1,0 +1,24 @@
+/* Readings, Otherwise in Persian (lang.js): the switch in the crumb, and Persian set right to left. */
+
+/* a page opening in Persian waits for its Persian before it shows (never longer than a moment) */
+html[data-lang="fa"]:not(.ro-lang-ready) main { opacity: 0; animation: ro-lang-show 0s 1.2s forwards; }
+@keyframes ro-lang-show { to { opacity: 1; } }
+
+.fp-crumb__lang { font-family: var(--fa); }
+.fp-crumb__lang[lang="en"] { font-family: inherit; }
+
+[data-t][lang="fa"], .ro-keys[dir="rtl"], .fp-help__box[dir="rtl"], .card[dir="rtl"] { font-family: var(--fa); }
+[data-t][lang="fa"] em, [data-t][lang="fa"] i:not(.sw) { font-style: normal; }
+[data-t][lang="fa"] .fp-k, .ro-keys[dir="rtl"] .fp-k, .fp-help__box[dir="rtl"] .fp-k, [data-t][lang="fa"] kbd { font-family: var(--mono); direction: ltr; unicode-bidi: isolate; }
+.ro-label [data-t][lang="fa"] p, .ro-label .colophon[lang="fa"] { line-height: 2; }
+.ro-label .text[lang="fa"] { font-size: .97em; }
+.ro-head h1[lang="fa"] { font-family: var(--fa); font-weight: 600; letter-spacing: 0; }
+.fp-help__box[dir="rtl"] dt { direction: ltr; text-align: right; }
+
+/* the site's small labels are set in mono, spaced and in capitals; Persian has none of that */
+[data-t][lang="fa"], [data-t][lang="fa"] :not(.fp-k):not(kbd):not(code),
+html[data-lang="fa"] :is(.ro-owner, .ro-keys, .ro-hint, .fp-help__body, .card, .ro-controls__lbl),
+html[data-lang="fa"] :is(.ro-keys, .fp-help__body, .card) :not(.fp-k):not(kbd) {
+  font-family: var(--fa); letter-spacing: 0; text-transform: none; font-variant: normal;
+}
+html[data-lang="fa"] .ro-owner { direction: rtl; }

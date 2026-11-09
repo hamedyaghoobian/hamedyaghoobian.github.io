@@ -256,6 +256,7 @@ function drawLayer(L, alpha, until) {
 
 // ---------- the plant under the pointer, or under j / k ----------
 
+const tr = s => (window.RO ? RO.tr(s) : s);
 const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const shows = i => only < 0 || CLASS_OF(T.table[mkRow[i]]) === only;
 
@@ -318,17 +319,19 @@ function showPanel(i) {
   document.getElementById("where").textContent = `${sec.title}${poem && poem.title !== sec.title ? " · " + poem.title : ""}`;
   const ev = new Set(String(evidence || "").split(/\s+/).map(bareWord).filter(w => w.length > 1));
   document.getElementById("couplet").innerHTML = Array.isArray(p) ? p.map(x => lineHTML(x, i, ev)).join("") : proseHTML(i, ev);
-  const fs = FACULTIES.filter((_, k) => fac & (1 << k));
+  const fs = FACULTIES.filter((_, k) => fac & (1 << k)).map(tr);
   const d = drawings[species], k = CLASS_OF(r);
-  const mark = d ? `<i class="sil" style="--m:url('data/naardoon/${esc(d.file)}')" title="${esc(d.title)}, traced by ${esc(d.by)} (NaarDoon)"></i>`
+  const mark = d ? `<i class="sil" style="--m:url('data/naardoon/${esc(d.file)}')" title="${esc(d.title)}, ${tr("traced by")} ${esc(d.by)} (NaarDoon)"></i>`
                  : `<i class="sil none" aria-hidden="true">${esc(species.slice(0, 1))}</i>`;
-  const field = (t, v) => v ? `<dt>${t}</dt><dd>${v}</dd>` : "";
-  document.getElementById("card").innerHTML =
-    `<div class="card__h">${mark}<p><b>${esc(species)}</b><small>${NAMES[book]}</small></p></div>` +
-    (unjudged ? `<dl>${field("soul", "not yet judged")}</dl>` :
-    `<dl>${field("as", FIGURE[fig])}${field("relation", mode !== "none" ? esc(mode) : "")}` +
-    `${field("soul", spec ? `<i class="sw k${k}"></i>${SPECTRUM[spec]}` : fig === 3 ? `<i class="sw k6"></i>a figure of speech` : "")}` +
-    `${field("given", fs.join(", "))}${unsure ? field("note", "the reader was unsure") : ""}</dl>`);
+  const field = (t, v) => v ? `<dt>${tr(t)}</dt><dd>${v}</dd>` : "";
+  const card = document.getElementById("card");
+  card.dir = window.RO && RO.fa() ? "rtl" : "";
+  card.innerHTML =
+    `<div class="card__h">${mark}<p><b>${esc(tr(species))}</b><small>${tr(NAMES[book])}</small></p></div>` +
+    (unjudged ? `<dl>${field("soul", tr("not yet judged"))}</dl>` :
+    `<dl>${field("as", tr(FIGURE[fig]))}${field("relation", mode !== "none" ? esc(tr(mode)) : "")}` +
+    `${field("soul", spec ? `<i class="sw k${k}"></i>${tr(SPECTRUM[spec])}` : fig === 3 ? `<i class="sw k6"></i>${tr("a figure of speech")}` : "")}` +
+    `${field("given", fs.join(tr(", ")))}${unsure ? field("note", tr("the reader was unsure")) : ""}</dl>`);
   panel.classList.add("show");
 }
 
@@ -422,15 +425,15 @@ function readRule() {
 
 const ui = window.Piece({
   frame,
-  keys: () => [["j k", "the next plant"], ["1–8", "the book"], ["h a s g t f", only >= 0 ? "one rung alone: on" : "one rung alone"],
-    ["+ − 0", "zoom · whole book"], ["← →", "move"],
-    ["esc", only >= 0 ? "every kind back" : sel >= 0 ? "stop reading" : "give the keys back"]],
+  keys: () => [["j k", tr("the next plant")], ["1–8", tr("the book")], ["h a s g t f", tr(only >= 0 ? "one rung alone: on" : "one rung alone")],
+    ["+ − 0", tr("zoom · whole book")], ["← →", tr("move")],
+    ["esc", tr(only >= 0 ? "every kind back" : sel >= 0 ? "stop reading" : "give the keys back")]],
   help: () => [
-    ["j k", "the next / previous plant, in the order of the book: its passage, how it was judged and its drawing show below"],
-    ["1–8", "Kalila wa Dimna · the Conference of the Birds · the Shahnameh · the Masnavi · Marzban-nameh · Parvin's Divan · the Golestan · the Bustan"],
-    ["h a s g t f", "one rung alone: h the human soul · a the animal soul · s a sense true to the plant · g plant life only · t a thing · f said of a person (a figure)"],
-    ["+ − 0", "come closer · go back · see the whole book (◻)"],
-    ["← ↑ → ↓", "move across the book"],
+    ["j k", tr("the next / previous plant, in the order of the book: its passage, how it was judged and its drawing show below")],
+    ["1–8", tr("Kalila wa Dimna · the Conference of the Birds · the Shahnameh · the Masnavi · Marzban-nameh · Parvin's Divan · the Golestan · the Bustan")],
+    ["h a s g t f", tr("one rung alone: h the human soul · a the animal soul · s a sense true to the plant · g plant life only · t a thing · f said of a person (a figure)")],
+    ["+ − 0", tr("come closer · go back · see the whole book (◻)")],
+    ["← ↑ → ↓", tr("move across the book")],
   ],
   key(e) {
     const k = e.key, step = 80;
@@ -472,6 +475,7 @@ async function useBook(b) {
   ui.render();
 }
 for (const x of document.querySelectorAll("[data-book]")) x.onclick = () => useBook(x.dataset.book);
+document.addEventListener("ro-lang", () => { shown = "\u0000"; ui.render(); });   // the card again, in the other language
 
 // ---------- the loop ----------
 
