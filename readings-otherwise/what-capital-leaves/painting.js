@@ -506,7 +506,7 @@ function nameSolo() {
   if (solo < 0) return;
   const [title, sub] = LSET.names[solo].split("|");
   const what = soloChip.querySelector(".what");
-  what.innerHTML = fa() ? `<span class="fp-k">${solo + 1}</span>${tr(title)}، تنها<small>${tr(sub)}</small>`
+  what.innerHTML = fa() ? `<span class="fp-k">${solo + 1}</span>تنها ${tr(title)}<small>${tr(sub)}</small>`
                         : `<span class="fp-k">${solo + 1}</span>${title} alone<small>${sub}</small>`;
   setDir(what);
 }
@@ -905,7 +905,7 @@ function machine(now, dt) {
   const m = headMark(), ch = chapters[markChapter[m]];
   const token = Math.round(head / (COLS * ROWS) * data.tokens);
   machineLine.textContent = fa()
-    ? `${running ? "ماشین دارد" : "ماشین ایستاده است در"} ${placeName(ch, "، ")}${running ? " را می‌خواند" : ""}. توکن ${num(token)} از ${num(data.tokens)}.`
+    ? `${running ? `ماشین دارد ${placeName(ch, "، ")} را می‌خواند` : `ماشین در ${placeName(ch, "، ")} ایستاده است`}. توکن ${num(token)} از ${num(data.tokens)}.`
     : `${running ? "The machine is reading" : "The machine has stopped at"} Volume ${ch.vol}` +
       `${ch.n ? `, Chapter ${ch.n}` : ""}, ${ch.title}. Token ${fmt.format(token)} of ${fmt.format(data.tokens)}.`;
   if (!reading) {
