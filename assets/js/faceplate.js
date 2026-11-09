@@ -86,7 +86,7 @@
   const help = () => $('#fp-help');
   function helpRows() {
     const site = [
-      ['0–7', 'press a section key'],
+      ...(FP.ownsDigits ? [] : [['0–7', 'press a section key']]),
       ['\\', 'turn the theme knob: light · dark · auto'],
       ['i', 'these keys (? works too)'],
     ];
@@ -148,7 +148,8 @@
     }
     if (e.defaultPrevented) return;
 
-    if (/^[0-7]$/.test(k)) { if (press($(`.fp-strip a[data-key="${k}"]`))) e.preventDefault(); return; }
+    if (/^[0-7]$/.test(k)) { if (FP.ownsDigits) return;   // a readings piece keeps the numbers (piece.js)
+      if (press($(`.fp-strip a[data-key="${k}"]`))) e.preventDefault(); return; }
     if (k === '?') { e.preventDefault(); openHelp(); return; }
     if (k === '\\') { e.preventDefault(); window.FPTheme && FPTheme.cycle(); return; }
     if (k === '[') { if (rel('prev')) { e.preventDefault(); rel('prev').click(); } return; }

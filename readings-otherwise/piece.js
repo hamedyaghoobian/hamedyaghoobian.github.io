@@ -9,8 +9,11 @@
 //              stores it, so a piece and the site never disagree
 //   the keys   the page's keys work until the frame has focus (a click, Tab,
 //              or enter). Then the piece owns them: a yellow ring, the owner
-//              label, and the key strip at the foot say so, and the numbers
-//              become the piece's. esc steps back: first whatever the piece
+//              label, and the key strip at the foot say so. The numbers are
+//              always the piece's (its books, its whole view), never the
+//              site's sections, which would be too easy to fall into: a
+//              number pressed on the page gives the keys to the piece and
+//              does what it does there. esc steps back: first whatever the piece
 //              has open (layers, one layer alone, a line being read), then
 //              it gives the keys back, then (the page's esc) it goes up.
 //
@@ -57,7 +60,7 @@
 
     const sib = r => { const a = $(`.fp-crumb a[rel="${r}"]`); return a ? a.textContent.replace(/^\s*[\[\]]/, "").trim() : null; };
     function pageKeys() {
-      const k = [["0–7", "sections"]];
+      const k = [["0–9", "keys to the piece"]];
       const p = sib("prev"), n = sib("next");
       if (p) k.push(["[", p]);
       if (n) k.push(["]", n]);
@@ -120,8 +123,24 @@
       render();
     });
 
+    // A number on the page is the piece's too: take the keys and do it. Capture, so
+    // faceplate.js never sees it and never presses a section key.
+    const typing = el => el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+    document.addEventListener("keydown", e => {
+      if (owns || e.metaKey || e.ctrlKey || e.altKey || !/^[0-9]$/.test(e.key)) return;
+      if (typing(e.target) || frame.contains(e.target)) return;
+      const h = $("#fp-help");
+      if (h && !h.hidden) return;
+      e.preventDefault(); e.stopImmediatePropagation();
+      frame.focus({ preventScroll: true });
+      owns = true;
+      const b = buttonFor(e.key);
+      if (b) press(b); else if (o.key) o.key(e);
+      render();
+    }, true);
     // On the page, enter gives the keys to the piece (Tab and a click do too).
     window.FP = window.FP || { _q: [], add(x) { this._q.push(x); } };
+    FP.ownsDigits = true;
     FP.add({
       key: "Enter", label: "give the keys to the piece",
       when: () => !document.activeElement || document.activeElement === document.body,
