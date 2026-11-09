@@ -321,6 +321,10 @@ function drawLayer(L, alpha, until) {
 // ---------- the couplet under the pointer ----------
 
 const esc = s => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+// in English or Persian (../lang.js): in Persian the word's sense is given in Persian, without the transliteration
+const tr = s => (window.RO ? RO.tr(s) : s);
+const isFa = () => !!(window.RO && RO.fa());
+const num = n => (window.RO ? RO.num(n) : Number(n).toLocaleString("en"));
 
 // the Arabic word nearest the pointer, within a few pixels; or, close up, the line under it
 function under(px, py) {
@@ -363,17 +367,19 @@ function showPanel(u) {
     `${sec.title}${poem.title !== sec.title ? " · " + poem.title : ""}`;
   // the couplet in the site's verse form: each hemistich a line, its count of Arabic words at the end
   const line = l => l < T.lines.length
-    ? `<p class="line"><span class="t">${half(l)}</span><span class="n" title="Arabic words">${lineAr[l + 1] - lineAr[l]}</span></p>` : "";
+    ? `<p class="line"><span class="t">${half(l)}</span><span class="n" title="${tr("Arabic words")}">${num(lineAr[l + 1] - lineAr[l])}</span></p>` : "";
   document.getElementById("couplet").innerHTML = line(row.l) + line(row.l + 1);
-  let what = `couplet ${(row.l / 2 + 1).toLocaleString("en")} of ${(T.lines.length / 2).toLocaleString("en")}`;
-  if (deathLine[row.l] === 2) what += " · a death";
-  const g = document.getElementById("gloss");
+  const fa = isFa();
+  let what = fa ? `بیت ${num(row.l / 2 + 1)} از ${num(T.lines.length / 2)}` : `couplet ${num(row.l / 2 + 1)} of ${num(T.lines.length / 2)}`;
+  if (deathLine[row.l] === 2) what += fa ? " · یک مرگ" : " · a death";
+  const g = document.getElementById("gloss"), count = document.getElementById("count");
+  g.dir = count.dir = fa ? "rtl" : "";
   if (u.i >= 0) {
     const [form, rom, sense, src] = T.forms[arForm[u.i]];
-    g.innerHTML = `<span lang="fa">${esc(form)}</span>${rom ? `<i>${esc(rom)}</i>` : ""}${sense ? `<span>${esc(sense)}</span>` : ""}` +
-      `<small>from Arabic${src === "w" ? " · sense from Wiktionary" : ""}</small>`;
+    g.innerHTML = `<span lang="fa">${esc(form)}</span>${rom && !fa ? `<i>${esc(rom)}</i>` : ""}${sense ? `<span>${esc(tr(sense))}</span>` : ""}` +
+      `<small>${tr("from Arabic")}${src === "w" ? tr(" · sense from Wiktionary") : ""}</small>`;
   } else g.innerHTML = "";
-  document.getElementById("count").textContent = what;
+  count.textContent = what;
   panel.classList.add("show");
 }
 
@@ -480,12 +486,20 @@ function plane(z, t) {
 }
 const at = (p, x, y) => [p.a * x + p.e, p.b * x + p.d * y + p.f];
 
-const labels = LAYERS.map(([title, sub], z) => {
+function labelLayer(el, z) {
+  el.title = tr("See this layer alone");
+  el.innerHTML = `<span class="fp-k">${z + 1}</span><b>${tr(LAYERS[z][0])}</b><small>${tr(LAYERS[z][1])}</small>`;
+}
+function soloLabel() {
+  if (solo < 0) return;
+  const title = tr(LAYERS[solo][0]), sub = tr(LAYERS[solo][1]);
+  soloChip.querySelector(".what").innerHTML = `<span class="fp-k">${solo + 1}</span>${isFa() ? `تنها ${title}` : `${title} alone`}<small>${sub}</small>`;
+}
+const labels = LAYERS.map((_, z) => {
   const el = document.createElement("button");
   el.type = "button";
   el.className = "layer-label";
-  el.title = "See this layer alone";
-  el.innerHTML = `<span class="fp-k">${z + 1}</span><b>${title}</b><small>${sub}</small>`;
+  labelLayer(el, z);
   el.tabIndex = -1;
   el.onpointerenter = el.onfocus = () => peekAt(z);
   el.onpointerleave = el.onblur = () => { if (peek === z) peekAt(-1); };
@@ -508,8 +522,7 @@ function chooseLayer(z) {
   solo = z;
   peekAt(-1);
   if (z >= 0) {
-    const [title, sub] = LAYERS[z];
-    soloChip.querySelector(".what").innerHTML = `<span class="fp-k">${z + 1}</span>${title} alone<small>${sub}</small>`;
+    soloLabel();
     if (explodeTarget) setExplode(false);
   }
   soloChip.hidden = z < 0;
@@ -586,10 +599,10 @@ function readRule() {
 const ui = window.Piece({
   frame,
   keys: () => explodeTarget
-    ? [["j k", "look at a layer"], ["1–3", "one layer alone"], ["enter", "see it alone"], ["l", "put it back"], ["esc", "put it back"]]
-    : [["j k", "the next Arabic word"], ["d", showDeaths ? "the deaths: on" : "the deaths"], ["l", "layers"], ["1–3", "one layer alone"],
-       ["+ − 0", "zoom · whole book"], ["← →", "move"],
-       ["esc", solo >= 0 ? "the whole book back" : sel >= 0 ? "stop reading" : "give the keys back"]],
+    ? [["j k", tr("look at a layer")], ["1–3", tr("one layer alone")], ["enter", tr("see it alone")], ["l", tr("put it back")], ["esc", tr("put it back")]]
+    : [["j k", tr("the next Arabic word")], ["d", tr(showDeaths ? "the deaths: on" : "the deaths")], ["l", tr("layers")], ["1–3", tr("one layer alone")],
+       ["+ − 0", tr("zoom · whole book")], ["← →", tr("move")],
+       ["esc", tr(solo >= 0 ? "the whole book back" : sel >= 0 ? "stop reading" : "give the keys back")]],
   help: () => [
     ["j k", "the next / previous Arabic word, in the order of the book: its couplet and its sense show below"],
     ["d", "the deaths: the sections that name a death, shaded red"],
@@ -598,7 +611,7 @@ const ui = window.Piece({
     ["+ − 0", "come closer · go back · see the whole book (◻)"],
     ["← ↑ → ↓", "move across the book"],
     ["", "taken apart: j k look at a layer, enter shows it alone, esc puts the book back"],
-  ],
+  ].map(([k, v]) => [k, tr(v)]),
   key(e) {
     const k = e.key, step = 80, n = LAYERS.length;
     if (explodeTarget) {
@@ -679,6 +692,14 @@ let frameVisible = true;
 new IntersectionObserver(([en]) => { frameVisible = en.isIntersecting; wake(); }).observe(frame);
 document.addEventListener("visibilitychange", wake);
 
+// the other language: the layers' labels, the chosen layer, the couplet's count and sense, and the keys again
+document.addEventListener("ro-lang", () => {
+  labels.forEach(labelLayer);
+  soloLabel();
+  shown = "\u0000";
+  ui.render();
+});
+
 // ---------- start ----------
 
 (async () => {
@@ -697,5 +718,5 @@ document.addEventListener("visibilitychange", wake);
   requestAnimationFrame(frameLoop);
 })().catch(err => {
   console.error(err);
-  frame.insertAdjacentHTML("beforeend", `<p class="fallback">The book could not be loaded.</p>`);
+  frame.insertAdjacentHTML("beforeend", isFa() ? `<p class="fallback" dir="rtl" lang="fa">کتاب بار نشد.</p>` : `<p class="fallback">The book could not be loaded.</p>`);
 });

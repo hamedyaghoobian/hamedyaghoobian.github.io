@@ -14,19 +14,22 @@
     document.documentElement.setAttribute("data-theme", d ? "dark" : "light");
   })();
   window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
+  // and in the reader's language: Persian if they last chose it (lang.js)
+  try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("ro-lang"); if (l === "fa") document.documentElement.setAttribute("data-lang", "fa"); } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Kufi+Arabic:wght@400;800&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/main.css?v=fp6">
-<link rel="stylesheet" href="field.css?v=6">
+<link rel="stylesheet" href="field.css?v=7">
+<link rel="stylesheet" href="../lang.css?v=1">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg?v=key2">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-light.png?v=key2" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-dark.png?v=key2" media="(prefers-color-scheme: dark)">
 <script src="/assets/js/faceplate.js?v=fp6" defer></script>
 </head>
 <body class="fp fp-depth-2 fp-sec-6 ro-piece ro-ferdowsi">
-<a class="fp-skip" href="#frame">skip to the piece</a>
+<a class="fp-skip" href="#frame" data-t="skip">skip to the piece</a>
 
 <header class="fp-plate ro-plate" role="banner">
   <div class="fp-plate__row">
@@ -51,43 +54,43 @@
   </div>
   <div class="fp-crumb">
     <p class="fp-crumb__path">
-      <a href="/">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page"><span class="fp-crumb__n">03</span> what ferdowsi let in</span>
+      <a href="/" data-t="crumb-home">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../" data-t="crumb-readings"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page" data-t="crumb-here"><span class="fp-crumb__n">03</span> what ferdowsi let in</span>
     </p>
     <p class="fp-crumb__keys">
-      <a class="fp-crumb__sib" rel="prev" href="../what-the-birds-leave/" title="No. 2 · What the Birds Leave"><span class="fp-k">[</span>no. 2 what the birds leave</a>
-      <a class="fp-crumb__sib" rel="next" href="../what-the-animals-know/" title="No. 4 · What the Animals Know"><span class="fp-k">]</span>no. 4 what the animals know</a>
-      <a class="fp-crumb__up" rel="up" href="../"><span class="fp-k">esc</span>up</a>
-      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">i</span>keys</button>
+      <a class="fp-crumb__sib" rel="prev" href="../what-the-birds-leave/" title="No. 2 · What the Birds Leave" data-tt="prev-title" data-t="crumb-prev"><span class="fp-k">[</span>no. 2 what the birds leave</a>
+      <a class="fp-crumb__sib" rel="next" href="../what-the-animals-know/" title="No. 4 · What the Animals Know" data-tt="next-title" data-t="crumb-next"><span class="fp-k">]</span>no. 4 what the animals know</a>
+      <a class="fp-crumb__up" rel="up" href="../" data-t="up"><span class="fp-k">esc</span>up</a>
+      <button type="button" class="fp-crumb__help" data-fp-help data-t="keys"><span class="fp-k">i</span>keys</button>
     </p>
   </div>
 </header>
 
-<main class="fp-main ro-main" id="content" aria-label="What Ferdowsi Let In">
+<main class="fp-main ro-main" id="content" aria-label="What Ferdowsi Let In" data-ta="h1">
   <header class="ro-head">
-    <p class="ro-head__n">06.3 · No. 3 · <time datetime="2026-11-02">2 nov 2026</time></p>
-    <h1>What Ferdowsi Let In</h1>
-    <div class="ro-head__lines">
+    <p class="ro-head__n" data-t="head-n">06.3 · No. 3 · <time datetime="2026-11-02">2 nov 2026</time></p>
+    <h1 data-t="h1">What Ferdowsi Let In</h1>
+    <div class="ro-head__lines" data-t="head-lines">
       <p class="meta">Abolqasem Ferdowsi, <em>Shahnameh</em> (<span lang="fa">شاهنامه</span>), finished 1010 / 2026</p>
       <p class="meta">Arabic words in the dark. 6,409 of 568,479 words, 49,610 couplets, one metre</p>
     </div>
   </header>
 
   <div class="ro-stage">
-    <figure class="ro-frame frame" id="frame" tabindex="0" data-fp-own-keys aria-label="The book. Focus it and the keys work the piece; press Esc to give them back.">
+    <figure class="ro-frame frame" id="frame" tabindex="0" data-fp-own-keys data-ta="frame-aria" aria-label="The book. Focus it and the keys work the piece; press Esc to give them back.">
       <canvas id="ghost" aria-hidden="true"></canvas>
       <canvas id="death" aria-hidden="true"></canvas>
-      <canvas id="words" aria-label="The Shahnameh with only its Arabic words left, each set where it falls in the verse, across a dark field."></canvas>
+      <canvas id="words" data-ta="words-aria" aria-label="The Shahnameh with only its Arabic words left, each set where it falls in the verse, across a dark field."></canvas>
       <canvas id="plates" aria-hidden="true"></canvas>
       <p class="ro-owner" aria-hidden="true">keys: page · enter to take them</p>
       <div class="ro-caps controls">
-        <button type="button" class="ro-cap" id="zoom-out" data-ro-key="- _ −" title="Zoom out (−)" aria-label="Zoom out"><kbd>−</kbd></button>
-        <button type="button" class="ro-cap" id="zoom-in" data-ro-key="+ =" title="Zoom in (+)" aria-label="Zoom in"><kbd>+</kbd></button>
-        <button type="button" class="ro-cap" id="reset" data-ro-key="0" title="See the whole book (0)" aria-label="See the whole book">◻<kbd>0</kbd></button>
-        <button type="button" class="ro-cap" id="layers" data-ro-key="l" aria-pressed="false" title="Take the book apart (l)" aria-label="Take the book apart into its layers">≋<kbd>l</kbd></button>
+        <button type="button" class="ro-cap" id="zoom-out" data-ro-key="- _ −" title="Zoom out (−)" aria-label="Zoom out" data-tt="zoom-out-t" data-ta="zoom-out-a"><kbd>−</kbd></button>
+        <button type="button" class="ro-cap" id="zoom-in" data-ro-key="+ =" title="Zoom in (+)" aria-label="Zoom in" data-tt="zoom-in-t" data-ta="zoom-in-a"><kbd>+</kbd></button>
+        <button type="button" class="ro-cap" id="reset" data-ro-key="0" title="See the whole book (0)" aria-label="See the whole book" data-tt="reset-t" data-ta="reset-a">◻<kbd>0</kbd></button>
+        <button type="button" class="ro-cap" id="layers" data-ro-key="l" aria-pressed="false" title="Take the book apart (l)" aria-label="Take the book apart into its layers" data-tt="layers-t" data-ta="layers-a">≋<kbd>l</kbd></button>
       </div>
-      <p class="solo" id="solo" hidden><span class="what"></span><button type="button" title="Bring the whole book back (Esc)" aria-label="Bring the whole book back">×</button></p>
+      <p class="solo" id="solo" hidden><span class="what"></span><button type="button" title="Bring the whole book back (Esc)" aria-label="Bring the whole book back" data-tt="solo-t" data-ta="solo-a">×</button></p>
       <i class="sel-rule" id="sel-rule" hidden></i>
-      <p class="ro-hint hint" id="hint">scroll or pinch to come closer · drag to move · point at a light to read it</p>
+      <p class="ro-hint hint" id="hint" data-t="hint">scroll or pinch to come closer · drag to move · point at a light to read it</p>
       <aside class="ro-panel ro-verse" id="panel" aria-live="polite">
         <p class="where" id="where" dir="rtl" lang="fa"></p>
         <div class="lines" id="couplet" dir="rtl" lang="fa"></div>
@@ -95,14 +98,14 @@
       </aside>
     </figure>
 
-    <div class="ro-controls layers" role="group" aria-label="Layers">
-      <p class="ro-controls__lbl"><span class="fp-k">d</span>Show</p>
-      <button type="button" class="ro-key" id="deaths" data-ro-key="d" aria-pressed="false"><span>the deaths</span></button>
+    <div class="ro-controls layers" role="group" aria-label="Layers" data-ta="layers-group-a">
+      <p class="ro-controls__lbl" data-t="lbl-show"><span class="fp-k">d</span>Show</p>
+      <button type="button" class="ro-key" id="deaths" data-ro-key="d" aria-pressed="false"><span data-t="deaths">the deaths</span></button>
     </div>
   </div>
 
-  <section class="ro-label label" aria-label="Wall label">
-    <div class="text">
+  <section class="ro-label label" aria-label="Wall label" data-ta="label-a">
+    <div class="text" data-t="label">
       <p>Abolqasem Ferdowsi was born around 940 near Tus, in Khorasan, into the dehqans, the landowning gentry who kept the old stories of Iran. He spent some thirty years putting them into verse and finished in 1010. The <em>Shahnameh</em>, the Book of Kings, runs from the first man and the first king to the fall of the last Sasanian, Yazdegerd, after the Arab conquest of the 640s: some 50,000 couplets, all in one metre.</p>
       <p>He wrote it three centuries after the conquest, when Arabic was the language of religion, learning and the court, and Persian was only beginning to be written again. Ferdowsi is famous for keeping his Persian nearly free of Arabic. The line most often quoted for it, that he brought the Persians, <span lang="fa">عجم</span>, back to life with this Persian, is not in the text given here, and may not be his. Its key word is Arabic.</p>
       <p>This is the whole <em>Shahnameh</em> with every Persian word taken out. What is left are the words he let in from Arabic, each one where it falls on its line: 6,409 of the poem's 568,479 words, about one in ninety. From far off they scatter across the dark like stars. Come close and they can be read, with the Persian around them faint, and the couplet under the pointer shows below.</p>
@@ -112,30 +115,32 @@
       <p>Which words are Arabic was decided like this. Code put forward every word that might be: those Wiktionary says were borrowed from Arabic, those with letters Persian keeps almost only for Arabic words, those that are Arabic words in Arabic. Claude, a language model, then went through them one by one. Words that came into Persian through Arabic from Greek or Aramaic count, like <span lang="fa">قلم</span>, the pen. Persian words that went into Arabic and came back in Arabic dress do not, like <span lang="fa">تاج</span>, the crown, or <span lang="fa">دهقان</span>, Ferdowsi's own class. Names are left dark: 1,146 of them have an Arabic shape, from Zahhak to Mahmud of Ghazna. The one full count by a scholar, Moïnfar's of 1970, found 706 Arabic words used 8,938 times, in another edition and by his own rules. One word stands out among those left dark: <span lang="fa">رای</span>, judgement, used 1,026 times, which Wiktionary gives both an Arabic and an Iranian origin; counting it would add a sixth to the Arabic. The list used here is in the code, to be corrected.</p>
     </div>
 
-    <p class="colophon">Text: the <em>Shahnameh</em> on <a href="https://ganjoor.net/ferdousi/shahname">Ganjoor</a>, 61 books in 857 sections, with Ganjoor's headings. Loanwords: Persian and Arabic Wiktionary, by way of <a href="https://kaikki.org/">kaikki.org</a> (CC BY-SA), and the decisions in <code>data/decisions.tsv</code>. The count to compare with: M. D. Moïnfar, <em>Le vocabulaire arabe dans le Livre des rois de Firdausī</em> (1970), as given in the <em>Encyclopaedia Iranica</em>. Set in Amiri by Khaled Hosny, shaped with HarfBuzz, so each word sits where the browser sets it. Made in 2026 with Claude, a language model.</p>
-    <p class="colophon">Code and data: <a href="https://github.com/hamedyaghoobian/ferdowsi-shahnameh">github.com/hamedyaghoobian/ferdowsi-shahnameh</a></p>
+    <p class="colophon" data-t="colophon">Text: the <em>Shahnameh</em> on <a href="https://ganjoor.net/ferdousi/shahname">Ganjoor</a>, 61 books in 857 sections, with Ganjoor's headings. Loanwords: Persian and Arabic Wiktionary, by way of <a href="https://kaikki.org/">kaikki.org</a> (CC BY-SA), and the decisions in <code>data/decisions.tsv</code>. The count to compare with: M. D. Moïnfar, <em>Le vocabulaire arabe dans le Livre des rois de Firdausī</em> (1970), as given in the <em>Encyclopaedia Iranica</em>. Set in Amiri by Khaled Hosny, shaped with HarfBuzz, so each word sits where the browser sets it. Made in 2026 with Claude, a language model.</p>
+    <p class="colophon" data-t="colophon-code">Code and data: <a href="https://github.com/hamedyaghoobian/ferdowsi-shahnameh">github.com/hamedyaghoobian/ferdowsi-shahnameh</a></p>
   </section>
 </main>
 
-<nav class="fp-thumb" aria-label="Move">
-  <a href="../what-the-birds-leave/" rel="prev">‹ prev</a>
-  <a href="../" rel="up">up · 06 readings</a>
-  <a href="../what-the-animals-know/" rel="next">next ›</a>
+<nav class="fp-thumb" aria-label="Move" data-ta="thumb-a">
+  <a href="../what-the-birds-leave/" rel="prev" data-t="thumb-prev">‹ prev</a>
+  <a href="../" rel="up" data-t="thumb-up">up · 06 readings</a>
+  <a href="../what-the-animals-know/" rel="next" data-t="thumb-next">next ›</a>
 </nav>
 
 <p class="ro-keys" id="ro-keys" aria-hidden="true"></p>
 
 <div class="fp-help" id="fp-help" role="dialog" aria-modal="true" aria-labelledby="fp-help-t" hidden>
   <div class="fp-help__box">
-    <div class="fp-help__head"><h2 id="fp-help-t">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
+    <div class="fp-help__head"><h2 id="fp-help-t" data-t="help-title">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
     <div class="fp-help__body"></div>
-    <p class="fp-help__note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
+    <p class="fp-help__note" data-t="help-note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
   </div>
 </div>
 
 <noscript><p class="fallback">This piece needs JavaScript. <a href="https://ganjoor.net/ferdousi/shahname">Read the Shahnameh on Ganjoor instead.</a></p></noscript>
 
-<script src="../piece.js?v=6"></script>
-<script src="field.js?v=10"></script>
+<script src="../lang.js?v=1"></script>
+<script src="fa.js?v=1"></script>
+<script src="../piece.js?v=7"></script>
+<script src="field.js?v=11"></script>
 </body>
 </html>

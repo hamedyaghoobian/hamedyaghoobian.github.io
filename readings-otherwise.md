@@ -12,22 +12,22 @@ permalink: /readings-otherwise/
   standalone pages under readings-otherwise/<piece>/.
 {%- endcomment -%}
 
-<p class="ro-intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
+<p class="ro-intro" data-t="intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="fp-toolbar">
-  <p class="fp-label">5 pieces · newest first</p>
-  <p class="fp-label"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open</p>
+  <p class="fp-label" data-t="count">5 pieces · newest first</p>
+  <p class="fp-label" data-t="toolbar-keys"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open</p>
 </div>
 
 <ol class="fp-index ro-index">
   <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-plants-know/' | relative_url }}">
       <span class="fp-row__n">06.5</span>
-      <span class="fp-row__t">What the Plants Know</span>
-      <span class="fp-row__m"><span class="fp-live" aria-label="newest"></span>No. 5 · <time datetime="2026-11-08">8 nov 2026</time></span>
+      <span class="fp-row__t" data-t="r5-t">What the Plants Know</span>
+      <span class="fp-row__m" data-t="r5-m"><span class="fp-live" aria-label="newest"></span>No. 5 · <time datetime="2026-11-08">8 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
-    <div class="fp-row__body">
+    <div class="fp-row__body" data-t="r5-b">
       <p class="ro-row__line">Plants in eight books, lit by the soul each text gives them. 5,202 plants, 6,628 readings</p>
       <dl class="fp-spec ro-spec">
         <dt>taken out</dt><dd>every word but the plants</dd>
@@ -42,11 +42,11 @@ permalink: /readings-otherwise/
   <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-animals-know/' | relative_url }}">
       <span class="fp-row__n">06.4</span>
-      <span class="fp-row__t">What the Animals Know</span>
-      <span class="fp-row__m">No. 4 · <time datetime="2026-11-08">8 nov 2026</time></span>
+      <span class="fp-row__t" data-t="r4-t">What the Animals Know</span>
+      <span class="fp-row__m" data-t="r4-m">No. 4 · <time datetime="2026-11-08">8 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
-    <div class="fp-row__body">
+    <div class="fp-row__body" data-t="r4-b">
       <p class="ro-row__line">Animals in six books, lit by the mind each text gives them. 12,413 animals, 17,989 readings</p>
       <dl class="fp-spec ro-spec">
         <dt>taken out</dt><dd>every word but the animals</dd>
@@ -61,11 +61,11 @@ permalink: /readings-otherwise/
   <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-ferdowsi-let-in/' | relative_url }}">
       <span class="fp-row__n">06.3</span>
-      <span class="fp-row__t">What Ferdowsi Let In</span>
-      <span class="fp-row__m">No. 3 · <time datetime="2026-11-02">2 nov 2026</time></span>
+      <span class="fp-row__t" data-t="r3-t">What Ferdowsi Let In</span>
+      <span class="fp-row__m" data-t="r3-m">No. 3 · <time datetime="2026-11-02">2 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
-    <div class="fp-row__body">
+    <div class="fp-row__body" data-t="r3-b">
       <p class="ro-row__line">Arabic words in the dark. 6,409 of 568,479 words, 49,610 couplets, one metre</p>
       <dl class="fp-spec ro-spec">
         <dt>taken out</dt><dd>every Persian word</dd>
@@ -80,11 +80,11 @@ permalink: /readings-otherwise/
   <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-birds-leave/' | relative_url }}">
       <span class="fp-row__n">06.2</span>
-      <span class="fp-row__t">What the Birds Leave</span>
-      <span class="fp-row__m">No. 2 · <time datetime="2026-11-01">1 nov 2026</time></span>
+      <span class="fp-row__t" data-t="r2-t">What the Birds Leave</span>
+      <span class="fp-row__m" data-t="r2-m">No. 2 · <time datetime="2026-11-01">1 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
-    <div class="fp-row__body">
+    <div class="fp-row__body" data-t="r2-b">
       <p class="ro-row__line">Dots in flight. 112,052 dots, 4,697 couplets, one metre</p>
       <dl class="fp-spec ro-spec">
         <dt>taken out</dt><dd>every letter</dd>
@@ -100,11 +100,11 @@ permalink: /readings-otherwise/
   <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-capital-leaves/' | relative_url }}">
       <span class="fp-row__n">06.1</span>
-      <span class="fp-row__t">What Capital Leaves</span>
-      <span class="fp-row__m">No. 1 · <time datetime="2026-10-28">28 oct 2026</time></span>
+      <span class="fp-row__t" data-t="r1-t">What Capital Leaves</span>
+      <span class="fp-row__m" data-t="r1-m">No. 1 · <time datetime="2026-10-28">28 oct 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
-    <div class="fp-row__body">
+    <div class="fp-row__body" data-t="r1-b">
       <p class="ro-row__line">Punctuation on screen. 162,890 marks, 1,161,237 tokens</p>
       <dl class="fp-spec ro-spec">
         <dt>taken out</dt><dd>every word, all three volumes</dd>
@@ -116,3 +116,7 @@ permalink: /readings-otherwise/
     </div>
   </li>
 </ol>
+
+<link rel="stylesheet" href="{{ '/readings-otherwise/lang.css' | relative_url }}?v=1">
+<script src="{{ '/readings-otherwise/lang.js' | relative_url }}?v=1"></script>
+<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=1"></script>

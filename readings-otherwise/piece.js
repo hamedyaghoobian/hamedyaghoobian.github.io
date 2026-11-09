@@ -47,6 +47,8 @@
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if (mode() === "system") apply("system"); });
 
   // ── the keys ──
+  const tr = s => (window.RO ? RO.tr(s) : s);
+  const latin = e => (window.RO ? RO.latin(e) : e.key);
   const caps = keys => keys.split(" ").map(x => `<span class="fp-k">${x}</span>`).join("");
   const visible = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
 
@@ -60,21 +62,23 @@
 
     const sib = r => { const a = $(`.fp-crumb a[rel="${r}"]`); return a ? a.textContent.replace(/^\s*[\[\]]/, "").trim() : null; };
     function pageKeys() {
-      const k = [["0–9", "keys to the piece"]];
+      const k = [["0–9", tr("keys to the piece")]];
       const p = sib("prev"), n = sib("next");
       if (p) k.push(["[", p]);
       if (n) k.push(["]", n]);
-      k.push(["esc", "up"], ["enter", "keys to the piece"], ["\\", "theme"], ["i", "keys"]);
+      k.push(["esc", tr("up")], ["enter", tr("keys to the piece")], ["\\", tr("theme")], ["i", tr("keys")]);
+      if (window.RO) k.push(["p", RO.fa() ? "English" : "فارسی"]);
       return k;
     }
 
     function render() {
       frame.classList.toggle("owns", owns);
-      if (owner) owner.textContent = owns ? "keys: piece · esc to give back" : "keys: page · enter to take them";
+      if (owner) owner.textContent = tr(owns ? "keys: piece · esc to give back" : "keys: page · enter to take them");
       if (!strip) return;
       const ks = owns ? o.keys() : pageKeys();
       strip.classList.toggle("is-piece", owns);
-      strip.innerHTML = `<span class="ro-keys__who">${owns ? "the piece" : "the page"}</span>` +
+      strip.dir = window.RO && RO.fa() ? "rtl" : "";
+      strip.innerHTML = `<span class="ro-keys__who">${tr(owns ? "the piece" : "the page")}</span>` +
         ks.map(([k, v]) => `<span>${caps(k)}${v}</span>`).join("");
     }
 
@@ -91,9 +95,10 @@
       if (!h) return;
       const block = (t, ks) => `<p class="fp-help__group">${t}</p><dl>${ks.map(([k, v]) => `<dt>${caps(k)}</dt><dd>${v}</dd>`).join("")}</dl>`;
       $(".fp-help__body", h).innerHTML =
-        block("the piece · while it has the keys", (o.help || o.keys)()) +
-        block("then", [["esc", "step back: close what is open, then give the keys back"], ["\\", "turn the theme knob"], ["i", "these keys (? works too)"]]) +
-        block("the page · once the keys are given back", pageKeys());
+        block(tr("the piece · while it has the keys"), (o.help || o.keys)()) +
+        block(tr("then"), [["esc", tr("step back: close what is open, then give the keys back")], ["\\", tr("turn the theme knob")], ["i", tr("these keys (? works too)")],
+          ...(window.RO ? [["p", tr("Persian · English")]] : [])]) +
+        block(tr("the page · once the keys are given back"), pageKeys());
       h.hidden = false;
     }
 
@@ -104,7 +109,8 @@
     frame.addEventListener("keydown", e => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       owns = true;                                // a key that reaches the frame: the piece has them
-      const k = (e.key === "i" || e.key === "?" || e.key === "\u061F" || (e.code === "Slash" && e.shiftKey)) ? "?" : e.key, t = e.target;   // the guide: i, or ? on any layout (the Persian ؟ too)
+      const lk = latin(e);
+      const k = (lk === "i" || e.key === "?" || e.key === "\u061F" || (e.code === "Slash" && e.shiftKey)) ? "?" : lk, t = e.target;   // the guide: i, or ? on any layout (the Persian ؟ too)
       const h = $("#fp-help");
       if (h && !h.hidden) { if (k === "Escape" || k === "?") { e.preventDefault(); h.hidden = true; } return; }
       if (k === "Tab") return;
@@ -119,7 +125,7 @@
       }
       const b = buttonFor(k);
       if (b) { e.preventDefault(); press(b); }
-      else if (o.key && o.key(e)) e.preventDefault();
+      else if (o.key && o.key(k === e.key ? e : { key: k, code: e.code, shiftKey: e.shiftKey, target: e.target, preventDefault: () => e.preventDefault() })) e.preventDefault();
       render();
     });
 
@@ -127,15 +133,15 @@
     // faceplate.js never sees it and never presses a section key.
     const typing = el => el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
     document.addEventListener("keydown", e => {
-      if (owns || e.metaKey || e.ctrlKey || e.altKey || !/^[0-9]$/.test(e.key)) return;
+      if (owns || e.metaKey || e.ctrlKey || e.altKey || !/^[0-9]$/.test(latin(e))) return;
       if (typing(e.target) || frame.contains(e.target)) return;
       const h = $("#fp-help");
       if (h && !h.hidden) return;
       e.preventDefault(); e.stopImmediatePropagation();
       frame.focus({ preventScroll: true });
       owns = true;
-      const b = buttonFor(e.key);
-      if (b) press(b); else if (o.key) o.key(e);
+      const k = latin(e), b = buttonFor(k);
+      if (b) press(b); else if (o.key) o.key(k === e.key ? e : { key: k, code: e.code, shiftKey: e.shiftKey, target: e.target, preventDefault() {} });
       render();
     }, true);
     // On the page, enter gives the keys to the piece (Tab and a click do too).
@@ -147,6 +153,7 @@
       run: () => frame.focus(),
     });
 
+    document.addEventListener("ro-lang", () => render());
     render();
     return { render, owns: () => owns };
   };

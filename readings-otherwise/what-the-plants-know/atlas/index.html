@@ -13,17 +13,20 @@
     document.documentElement.setAttribute("data-theme", d ? "dark" : "light");
   })();
   window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
+  // and in the reader's language: Persian if they last chose it (lang.js)
+  try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("ro-lang"); if (l === "fa") document.documentElement.setAttribute("data-lang", "fa"); } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/main.css?v=fp6">
-<link rel="stylesheet" href="atlas.css?v=2">
+<link rel="stylesheet" href="atlas.css?v=3">
+<link rel="stylesheet" href="../../lang.css?v=1">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg?v=key2">
 <script src="/assets/js/faceplate.js?v=fp6" defer></script>
 </head>
 <body class="fp fp-depth-2 fp-sec-6 ro-atlas">
-<a class="fp-skip" href="#content">skip to content</a>
+<a class="fp-skip" href="#content" data-t="skip-content">skip to content</a>
 
 <header class="fp-plate ro-plate" role="banner">
   <div class="fp-plate__row">
@@ -48,97 +51,99 @@
   </div>
   <div class="fp-crumb">
     <p class="fp-crumb__path">
-      <a href="/">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../../"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><a href="../"><span class="fp-crumb__n">05</span> what the plants know</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page">the atlas</span>
+      <a href="/" data-t="crumb-home">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../../" data-t="crumb-readings"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><a href="../" data-t="crumb-piece"><span class="fp-crumb__n">05</span> what the plants know</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page" data-t="crumb-here">the atlas</span>
     </p>
     <p class="fp-crumb__keys">
-      <a class="fp-crumb__up" rel="up" href="../"><span class="fp-k">esc</span>up</a>
-      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">i</span>keys</button>
+      <a class="fp-crumb__up" rel="up" href="../" data-t="up"><span class="fp-k">esc</span>up</a>
+      <button type="button" class="fp-crumb__help" data-fp-help data-t="keys"><span class="fp-k">i</span>keys</button>
     </p>
   </div>
 </header>
 
-<main class="fp-main at-main" id="content" aria-label="The Plants, Counted">
+<main class="fp-main at-main" id="content" data-ta="main-aria" aria-label="The Plants, Counted">
   <header class="ro-head">
-    <p class="ro-head__n">06.5 · No. 5 · the atlas</p>
-    <h1>The Plants, Counted</h1>
+    <p class="ro-head__n" data-t="head-n">06.5 · No. 5 · the atlas</p>
+    <h1 data-t="h1">The Plants, Counted</h1>
     <div class="ro-head__lines">
-      <p class="meta">Every plant in <a href="../">What the Plants Know</a>, by the soul the text gives it</p>
+      <p class="meta" data-t="head-meta">Every plant in <a href="../">What the Plants Know</a>, by the soul the text gives it</p>
       <p class="meta" id="total"></p>
     </div>
   </header>
 
-  <div class="ro-controls at-books" role="group" aria-label="Which book">
-    <p class="ro-controls__lbl">Read</p>
-    <button type="button" class="ro-key" data-book="-1" aria-pressed="true"><span>all eight</span></button>
-    <button type="button" class="ro-key" data-book="0" aria-pressed="false"><span>Kalila wa Dimna</span></button>
-    <button type="button" class="ro-key" data-book="1" aria-pressed="false"><span>The Birds</span></button>
-    <button type="button" class="ro-key" data-book="2" aria-pressed="false"><span>The Shahnameh</span></button>
-    <button type="button" class="ro-key" data-book="3" aria-pressed="false"><span>The Masnavi</span></button>
-    <button type="button" class="ro-key" data-book="4" aria-pressed="false"><span>Marzban-nameh</span></button>
-    <button type="button" class="ro-key" data-book="5" aria-pressed="false"><span>Parvin</span></button>
-    <button type="button" class="ro-key" data-book="6" aria-pressed="false"><span>The Golestan</span></button>
-    <button type="button" class="ro-key" data-book="7" aria-pressed="false"><span>The Bustan</span></button>
+  <div class="ro-controls at-books" role="group" data-ta="books-aria" aria-label="Which book">
+    <p class="ro-controls__lbl" data-t="lbl-read">Read</p>
+    <button type="button" class="ro-key" data-book="-1" aria-pressed="true"><span data-t="b-all">all eight</span></button>
+    <button type="button" class="ro-key" data-book="0" aria-pressed="false"><span data-t="b-0">Kalila wa Dimna</span></button>
+    <button type="button" class="ro-key" data-book="1" aria-pressed="false"><span data-t="b-1">The Birds</span></button>
+    <button type="button" class="ro-key" data-book="2" aria-pressed="false"><span data-t="b-2">The Shahnameh</span></button>
+    <button type="button" class="ro-key" data-book="3" aria-pressed="false"><span data-t="b-3">The Masnavi</span></button>
+    <button type="button" class="ro-key" data-book="4" aria-pressed="false"><span data-t="b-4">Marzban-nameh</span></button>
+    <button type="button" class="ro-key" data-book="5" aria-pressed="false"><span data-t="b-5">Parvin</span></button>
+    <button type="button" class="ro-key" data-book="6" aria-pressed="false"><span data-t="b-6">The Golestan</span></button>
+    <button type="button" class="ro-key" data-book="7" aria-pressed="false"><span data-t="b-7">The Bustan</span></button>
   </div>
 
   <section class="at-sec">
-    <h2>how high, plant by plant</h2>
-    <p class="at-lede">Each bar is one plant in one book, as a plant in the story, growing or cut or speaking, divided by the rung of the ladder the text puts it on. Beside it, how often the plant is said of a person instead. Press a plant to list its passages below.</p>
-    <p class="at-legend"><span><i class="sw k5"></i>the human soul</span><span><i class="sw k4"></i>the animal soul</span><span><i class="sw k3"></i>a sense true to the plant</span><span><i class="sw k2"></i>plant life only</span><span><i class="sw k1"></i>a thing</span><span><i class="sw k6"></i>said of a person</span></p>
+    <h2 data-t="h2-1">how high, plant by plant</h2>
+    <p class="at-lede" data-t="lede-1">Each bar is one plant in one book, as a plant in the story, growing or cut or speaking, divided by the rung of the ladder the text puts it on. Beside it, how often the plant is said of a person instead. Press a plant to list its passages below.</p>
+    <p class="at-legend" data-t="legend"><span><i class="sw k5"></i>the human soul</span><span><i class="sw k4"></i>the animal soul</span><span><i class="sw k3"></i>a sense true to the plant</span><span><i class="sw k2"></i>plant life only</span><span><i class="sw k1"></i>a thing</span><span><i class="sw k6"></i>said of a person</span></p>
     <div id="species" class="at-species"></div>
   </section>
 
   <section class="at-sec">
-    <h2>who is used for what, and what they are given</h2>
-    <p class="at-lede">The relation to people against the faculties the passage gives the plant: how many in each relation are given speech, feeling, desire, devotion. Wagschal's claim for animals was that the first decides the second; here is the same test for plants.</p>
+    <h2 data-t="h2-2">who is used for what, and what they are given</h2>
+    <p class="at-lede" data-t="lede-2">The relation to people against the faculties the passage gives the plant: how many in each relation are given speech, feeling, desire, devotion. Wagschal's claim for animals was that the first decides the second; here is the same test for plants.</p>
     <div id="matrix" class="at-matrix"></div>
   </section>
 
   <section class="at-sec">
-    <h2>plants said of people</h2>
-    <p class="at-lede">The other direction: the beloved as a cypress, a cheek as a rose or a tulip, eyes as narcissi, an enemy as a thorn. How often each plant is a figure of speech rather than a plant, and what share of its appearances that is.</p>
+    <h2 data-t="h2-3">plants said of people</h2>
+    <p class="at-lede" data-t="lede-3">The other direction: the beloved as a cypress, a cheek as a rose or a tulip, eyes as narcissi, an enemy as a thorn. How often each plant is a figure of speech rather than a plant, and what share of its appearances that is.</p>
     <div id="figures" class="at-figures"></div>
   </section>
 
   <section class="at-sec">
-    <h2>every passage</h2>
+    <h2 data-t="h2-4">every passage</h2>
     <div class="at-filters">
-      <label>plant <select id="f-species"><option value="">any</option></select></label>
-      <label>as <select id="f-figure"><option value="">any</option><option>plant</option><option>character</option><option>figure</option></select></label>
-      <label>relation <select id="f-mode"><option value="">any</option></select></label>
-      <label>soul <select id="f-spectrum"><option value="">any</option><option value="rational">the human soul</option><option value="gratuitous">the animal soul</option><option value="constructive">a sense true to it</option><option value="species-typical">plant life only</option><option value="anthropectomy">a thing</option><option value="none">none (figures)</option></select></label>
-      <label>given <select id="f-faculty"><option value="">any faculty</option></select></label>
-      <button type="button" id="f-clear">clear</button>
+      <label><span data-t="f-plant">plant</span> <select id="f-species"><option value="" data-t="any">any</option></select></label>
+      <label><span data-t="f-as">as</span> <select id="f-figure"><option value="" data-t="any">any</option><option value="plant" data-t="o-plant">plant</option><option value="character" data-t="o-character">character</option><option value="figure" data-t="o-figure">figure</option></select></label>
+      <label><span data-t="f-relation">relation</span> <select id="f-mode"><option value="" data-t="any">any</option></select></label>
+      <label><span data-t="f-soul">soul</span> <select id="f-spectrum"><option value="" data-t="any">any</option><option value="rational" data-t="o-rational">the human soul</option><option value="gratuitous" data-t="o-gratuitous">the animal soul</option><option value="constructive" data-t="o-constructive">a sense true to it</option><option value="species-typical" data-t="o-species-typical">plant life only</option><option value="anthropectomy" data-t="o-anthropectomy">a thing</option><option value="none" data-t="o-none">none (figures)</option></select></label>
+      <label><span data-t="f-given">given</span> <select id="f-faculty"><option value="" data-t="any-faculty">any faculty</option></select></label>
+      <button type="button" id="f-clear" data-t="f-clear">clear</button>
     </div>
     <p class="fp-label" id="count"></p>
-    <table class="at-table"><thead><tr><th>book</th><th>plant</th><th>how it was judged</th><th>passage</th></tr></thead><tbody id="rows"></tbody></table>
+    <table class="at-table"><thead><tr><th data-t="th-book">book</th><th data-t="th-plant">plant</th><th data-t="th-judged">how it was judged</th><th data-t="th-passage">passage</th></tr></thead><tbody id="rows"></tbody></table>
     <p class="at-pager"><button type="button" id="prev">←</button> <span id="page"></span> <button type="button" id="next">→</button></p>
   </section>
 
   <section class="at-sec" id="drawings">
-    <h2>the drawings</h2>
-    <p class="at-lede">The plants are drawn from <a href="https://library.eranshahr.com">NaarDoon</a>, Eranshahr's open library of Iranian and Persianate visual elements. Each is a hand tracing of a Sasanian object or a Persian miniature, shown here in one ink, its own outline filled. Credit belongs to the people who traced them and the collections that keep the originals. Plants without a drawing that reads alone (the narcissus, the reed, the plane tree) are shown by their initial.</p>
+    <h2 data-t="h2-5">the drawings</h2>
+    <p class="at-lede" data-t="lede-drawings">The plants are drawn from <a href="https://library.eranshahr.com">NaarDoon</a>, Eranshahr's open library of Iranian and Persianate visual elements. Each is a hand tracing of a Sasanian object or a Persian miniature, shown here in one ink, its own outline filled. Credit belongs to the people who traced them and the collections that keep the originals. Plants without a drawing that reads alone (the narcissus, the reed, the plane tree) are shown by their initial.</p>
     <div id="credits" class="at-credits"></div>
   </section>
 
   <section class="ro-label">
-    <p class="colophon">The judgements were made by Claude Sonnet 5.5 under the scheme in the code, on the ladder of Avicenna's vegetative, animal and rational souls, with the fields of <a href="../../what-the-animals-know/atlas/">the animals' atlas</a> so the two can be set side by side; 60 drawn at random were read again, 56 agreed, 1 was wrong and corrected, 3 arguable. Texts from <a href="https://ganjoor.net">Ganjoor</a>.</p>
-    <p class="colophon">Code and data: <a href="https://github.com/hamedyaghoobian/what-the-plants-know">github.com/hamedyaghoobian/what-the-plants-know</a></p>
+    <p class="colophon" data-t="colophon">The judgements were made by Claude Sonnet 5.5 under the scheme in the code, on the ladder of Avicenna's vegetative, animal and rational souls, with the fields of <a href="../../what-the-animals-know/atlas/">the animals' atlas</a> so the two can be set side by side; 60 drawn at random were read again, 56 agreed, 1 was wrong and corrected, 3 arguable. Texts from <a href="https://ganjoor.net">Ganjoor</a>.</p>
+    <p class="colophon" data-t="colophon-code">Code and data: <a href="https://github.com/hamedyaghoobian/what-the-plants-know">github.com/hamedyaghoobian/what-the-plants-know</a></p>
   </section>
 </main>
 
-<nav class="fp-thumb" aria-label="Move">
-  <a href="../" rel="up">up · what the plants know</a>
+<nav class="fp-thumb" data-ta="move-aria" aria-label="Move">
+  <a href="../" rel="up" data-t="thumb-up-piece">up · what the plants know</a>
   <span></span>
 </nav>
 
 <div class="fp-help" id="fp-help" role="dialog" aria-modal="true" aria-labelledby="fp-help-t" hidden>
   <div class="fp-help__box">
-    <div class="fp-help__head"><h2 id="fp-help-t">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
+    <div class="fp-help__head"><h2 id="fp-help-t" data-t="help-title">keys on this page</h2><button type="button" data-fp-help-close data-ta="close" aria-label="Close"><span class="fp-k">esc</span></button></div>
     <div class="fp-help__body"></div>
   </div>
 </div>
 
-<script src="../../piece.js?v=6"></script>
-<script src="atlas.js?v=2"></script>
+<script src="../../lang.js?v=1"></script>
+<script src="fa.js?v=1"></script>
+<script src="../../piece.js?v=7"></script>
+<script src="atlas.js?v=3"></script>
 </body>
 </html>

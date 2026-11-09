@@ -14,12 +14,15 @@
     document.documentElement.setAttribute("data-theme", d ? "dark" : "light");
   })();
   window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
+  // and in the reader's language: Persian if they last chose it (../../lang.js)
+  try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("ro-lang"); if (l === "fa") document.documentElement.setAttribute("data-lang", "fa"); } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Kufi+Arabic:wght@400;800&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/main.css?v=fp6">
 <link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="../../lang.css?v=1">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg?v=key2">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-light.png?v=key2" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-dark.png?v=key2" media="(prefers-color-scheme: dark)">
@@ -60,6 +63,13 @@
   .ro-read #legend:hover, .ro-read #legend:focus-within { border-radius: 4px; }
   .ro-read .chapter.fp-at { box-shadow: -14px 0 0 -10px var(--yellow); }
   .ro-read .colophon { font: 400 .78rem/1.6 var(--mono); }
+  /* in Persian (../../lang.js): the page's own words right to left; the book stays as it is */
+  .ro-read h1[lang="fa"] { font-family: var(--fa); font-weight: 600; letter-spacing: 0; }
+  .ro-read .how[lang="fa"] { font-style: normal; }
+  .ro-read .kicker[lang="fa"] span { margin-left: 0; margin-right: .8em; }
+  .ro-read .kicker[lang="fa"] span:first-child { margin-right: 0; }
+  .ro-read .lede[lang="fa"], .ro-read .how[lang="fa"], .ro-read .colophon [lang="fa"] { line-height: 2; }
+  .ro-read #panel .where[lang="fa"], .ro-read .vol-head [lang="fa"] { font-family: var(--fa); }
   @media (max-width: 720px) {
     .ro-read #legend { bottom: 54px; }
     .ro-read #panel { bottom: calc(54px + 2.6rem); }
@@ -69,7 +79,7 @@
 <script src="/assets/js/faceplate.js?v=fp6" defer></script>
 </head>
 <body class="fp fp-depth-2 fp-sec-6 ro-read hide-h hide-a">
-<a class="fp-skip" href="#book">skip to the marks</a>
+<a class="fp-skip" href="#book" data-t="skip-marks">skip to the marks</a>
 <button id="theme" class="theme-toggle" type="button" hidden>light</button>
 
 <header class="fp-plate ro-plate" role="banner">
@@ -95,27 +105,27 @@
   </div>
   <div class="fp-crumb">
     <p class="fp-crumb__path">
-      <a href="/">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../../"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><a href="../"><span class="fp-crumb__n">01</span> what capital leaves</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page"><span class="fp-crumb__n"></span> read it as a page</span>
+      <a href="/" data-t="crumb-home">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../../" data-t="crumb-readings"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><a href="../" data-t="crumb-piece"><span class="fp-crumb__n">01</span> what capital leaves</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page" data-t="crumb-here"><span class="fp-crumb__n"></span> read it as a page</span>
     </p>
     <p class="fp-crumb__keys">
-      <a class="fp-crumb__up" rel="up" href="../"><span class="fp-k">esc</span>up</a>
-      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">i</span>keys</button>
+      <a class="fp-crumb__up" rel="up" href="../" data-t="up"><span class="fp-k">esc</span>up</a>
+      <button type="button" class="fp-crumb__help" data-fp-help data-t="keys"><span class="fp-k">i</span>keys</button>
     </p>
   </div>
 </header>
 
 <header class="intro">
-  <p class="kicker"><span>No. 1</span> <span>· <a href="../">see it as a painting</a></span></p>
-  <h1>What Capital Leaves</h1>
-  <p class="lede">Take the three volumes of Marx's <em>Capital</em> and remove every word. What remains is <strong id="total">…</strong> marks: commas, full stops, the parentheses where Engels steps in to explain, the quotation marks of factory inspectors and political economists. The argument is gone. Its breathing is still here.</p>
-  <p class="how">Scroll to read. Hover or tap any mark to bring back the sentence it came from. Use the legend to hide a mark, or double-click it to see only that mark. Drag along the bar on the right to race through the book.</p>
+  <p class="kicker" data-t="kicker"><span>No. 1</span> <span>· <a href="../">see it as a painting</a></span></p>
+  <h1 data-t="h1">What Capital Leaves</h1>
+  <p class="lede" data-t="lede">Take the three volumes of Marx's <em>Capital</em> and remove every word. What remains is <strong id="total">…</strong> marks: commas, full stops, the parentheses where Engels steps in to explain, the quotation marks of factory inspectors and political economists. The argument is gone. Its breathing is still here.</p>
+  <p class="how" data-t="how">Scroll to read. Hover or tap any mark to bring back the sentence it came from. Use the legend to hide a mark, or double-click it to see only that mark. Drag along the bar on the right to race through the book.</p>
 </header>
 
-<main id="book" aria-label="The punctuation of Capital, volumes I to III"></main>
+<main id="book" data-ta="book-aria" aria-label="The punctuation of Capital, volumes I to III"></main>
 
-<nav id="rail" aria-label="Chapters"></nav>
+<nav id="rail" aria-label="Chapters" data-ta="rail-aria"></nav>
 
-<aside id="legend" aria-label="Marks"></aside>
+<aside id="legend" aria-label="Marks" data-ta="legend-aria"></aside>
 
 <aside id="panel" aria-live="polite">
   <p class="where" id="where"></p>
@@ -123,14 +133,14 @@
 </aside>
 
 <footer class="colophon">
-  <p>Text: <em>Capital</em>, Volumes I–III, in the Moore &amp; Aveling (I) and Progress Publishers (II, III) English translations, as published on marxists.org and OCR'd by the Internet Archive. The scanner made its own reading. Some commas are mis-seen full stops, and some footnote brackets survived the cleaning. Numbers lose their separators. Hyphens and apostrophes sit inside words, so they start hidden. Switch them on to see Marx's compound nouns, <em>labour-power</em> and <em>surplus-value</em>, come back.</p>
-  <p>Volumes II and III were assembled by Engels from Marx's manuscripts after Marx's death in 1883.</p>
-  <p>The code and data are open: <a href="https://github.com/hamedyaghoobian/what-capital-leaves">github.com/hamedyaghoobian/what-capital-leaves</a></p>
+  <p data-t="colophon-text">Text: <em>Capital</em>, Volumes I–III, in the Moore &amp; Aveling (I) and Progress Publishers (II, III) English translations, as published on marxists.org and OCR'd by the Internet Archive. The scanner made its own reading. Some commas are mis-seen full stops, and some footnote brackets survived the cleaning. Numbers lose their separators. Hyphens and apostrophes sit inside words, so they start hidden. Switch them on to see Marx's compound nouns, <em>labour-power</em> and <em>surplus-value</em>, come back.</p>
+  <p data-t="colophon-engels">Volumes II and III were assembled by Engels from Marx's manuscripts after Marx's death in 1883.</p>
+  <p data-t="colophon-code">The code and data are open: <a href="https://github.com/hamedyaghoobian/what-capital-leaves">github.com/hamedyaghoobian/what-capital-leaves</a></p>
 </footer>
 
-<nav class="fp-thumb" aria-label="Move">
+<nav class="fp-thumb" aria-label="Move" data-ta="thumb-aria">
   <span></span>
-  <a href="../" rel="up">up · the painting</a>
+  <a href="../" rel="up" data-t="thumb-up-painting">up · the painting</a>
   <span></span>
 </nav>
 
@@ -138,17 +148,19 @@
 
 <div class="fp-help" id="fp-help" role="dialog" aria-modal="true" aria-labelledby="fp-help-t" hidden>
   <div class="fp-help__box">
-    <div class="fp-help__head"><h2 id="fp-help-t">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
+    <div class="fp-help__head"><h2 id="fp-help-t" data-t="help-title">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
     <div class="fp-help__body"></div>
-    <p class="fp-help__note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
+    <p class="fp-help__note" data-t="help-note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
   </div>
 </div>
 
-<script src="../../piece.js?v=6"></script>
+<script src="../../lang.js?v=1"></script>
+<script src="fa.js?v=1"></script>
+<script src="../../piece.js?v=7"></script>
 <script>
   // j / k step through the chapters (the site's keys, /assets/js/faceplate.js)
   document.addEventListener("DOMContentLoaded", () => { if (window.FP) FP.partsSelector = ".chapter"; });
 </script>
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>

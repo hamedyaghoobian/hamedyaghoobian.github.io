@@ -37,6 +37,16 @@ const frame = document.getElementById("frame");
 const ghostLayer = document.getElementById("ghosts");
 const panel = document.getElementById("panel");
 const fmt = new Intl.NumberFormat("en");
+// the page around the book in Persian when the reader chose it (../lang.js); the book stays English
+const tr = s => (window.RO ? RO.tr(s) : s);
+const fa = () => !!(window.RO && RO.fa());
+const num = n => (window.RO ? RO.num(n) : fmt.format(n));
+const isolate = s => "\u2068" + s + "\u2069";        // an English title inside a Persian line
+// "Volume I · Chapter 3 · Title", in the reader's language; the title is Capital's own
+const placeName = (ch, sep) => fa()
+  ? [`${tr("Volume")} ${tr(ch.vol)}`, ch.n ? `${tr("Chapter")} ${num(ch.n)}` : "", isolate(ch.title)].filter(Boolean).join(sep)
+  : [`Volume ${ch.vol}`, ch.n ? `Chapter ${ch.n}` : "", ch.title].filter(Boolean).join(sep);
+const setDir = el => { if (fa()) { el.dir = "rtl"; el.lang = "fa"; } else { el.removeAttribute("dir"); el.removeAttribute("lang"); } };
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const Q = new URLSearchParams(location.search);
@@ -477,9 +487,7 @@ const labels = LSET.names.map((name, i) => {
   const el = document.createElement("button");
   el.type = "button";
   el.className = "layer-label";
-  el.title = "See this layer alone";
-  const [title, sub] = name.split("|");
-  el.innerHTML = `<span class="fp-k">${i + 1}</span><b>${title}</b>${sub ? `<small>${sub}</small>` : ""}`;
+  nameLabel(el, i);
   el.tabIndex = -1;                              // reachable only while the painting is taken apart
   el.onpointerenter = el.onfocus = () => peekAt(i);
   el.onpointerleave = el.onblur = () => { if (peek === i) peekAt(-1); };
@@ -487,6 +495,21 @@ const labels = LSET.names.map((name, i) => {
   frame.appendChild(el);
   return el;
 });
+
+function nameLabel(el, i) {
+  const [title, sub] = LSET.names[i].split("|");
+  el.title = tr("See this layer alone");
+  el.innerHTML = `<span class="fp-k">${i + 1}</span><b>${tr(title)}</b>${sub ? `<small>${tr(sub)}</small>` : ""}`;
+  setDir(el);
+}
+function nameSolo() {
+  if (solo < 0) return;
+  const [title, sub] = LSET.names[solo].split("|");
+  const what = soloChip.querySelector(".what");
+  what.innerHTML = fa() ? `<span class="fp-k">${solo + 1}</span>${tr(title)}، تنها<small>${tr(sub)}</small>`
+                        : `<span class="fp-k">${solo + 1}</span>${title} alone<small>${sub}</small>`;
+  setDir(what);
+}
 
 // one layer alone: the painting goes back on the wall with only that layer in it
 let solo = Q.has("layer") ? +Q.get("layer") - 1 : -1, peek = -1, soloAmt = 0, soloShown = -1;
@@ -500,8 +523,7 @@ function chooseLayer(z) {
   solo = z;
   peekAt(-1);
   if (z >= 0) {
-    const [title, sub] = LSET.names[z].split("|");
-    soloChip.querySelector(".what").innerHTML = `<span class="fp-k">${z + 1}</span>${title} alone<small>${sub}</small>`;
+    nameSolo();
     if (explodeTarget) setExplode(false);
   }
   soloChip.hidden = z < 0;
@@ -694,7 +716,13 @@ function markup(text, a, b, pos) {
   return out;
 }
 
-let revealToken = 0, panelTimer = 0;
+let revealToken = 0, panelTimer = 0, whereCh = null;
+function nameWhere() {
+  if (!whereCh) return;
+  const where = document.getElementById("where");
+  where.textContent = placeName(whereCh, " · ");
+  setDir(where);
+}
 
 async function reveal(mx, my) {
   // a lantern within reach wins; otherwise the nearest mark
@@ -712,8 +740,8 @@ async function revealMark(m, testimony, keep) {
   if (my_ !== revealToken) return;
   const p = pos[markLocal[m]];
   const [a, b] = testimony ? passageAround(text, p) : sentenceAround(text, p);
-  document.getElementById("where").textContent =
-    [`Volume ${ch.vol}`, ch.n ? `Chapter ${ch.n}` : "", ch.title].filter(Boolean).join(" · ");
+  whereCh = ch;
+  nameWhere();
   document.getElementById("sentence").innerHTML = markup(text, a, Math.min(b, a + 900), p) + (b > a + 900 ? "…" : "");
   panel.classList.toggle("testimony", testimony);
   panel.classList.add("show");
@@ -756,17 +784,17 @@ function ring() {
 const ui = window.Piece({
   frame,
   keys: () => explodeTarget
-    ? [["j k", "look at a layer"], ["1–4", "one layer alone"], ["enter", "see it alone"], ["l", "put it back"], ["esc", "put it back"]]
-    : [["j k", "the next voice"], ["l", "layers"], ["1–4", "one layer alone"], ["s", "stop the machine"], ["+ − 0", "zoom · whole painting"],
-       ["← →", "move"], ["esc", solo >= 0 ? "the whole painting back" : sel >= 0 || panel.classList.contains("show") ? "close the passage" : "give the keys back"]],
+    ? [["j k", tr("look at a layer")], ["1–4", tr("one layer alone")], ["enter", tr("see it alone")], ["l", tr("put it back")], ["esc", tr("put it back")]]
+    : [["j k", tr("the next voice")], ["l", tr("layers")], ["1–4", tr("one layer alone")], ["s", tr("stop the machine")], ["+ − 0", tr("zoom · whole painting")],
+       ["← →", tr("move")], ["esc", tr(solo >= 0 ? "the whole painting back" : sel >= 0 || panel.classList.contains("show") ? "close the passage" : "give the keys back")]],
   help: () => [
-    ["j k", "the next / previous voice: a quotation mark, its passage below"],
-    ["l", "take the painting apart into its layers (≋)"],
-    ["1–4", "one layer alone: 1 ground · 2 marks · 3 voices · 4 ghosts"],
-    ["s", "stop the machine for a moment"],
-    ["+ − 0", "come closer · go back · see the whole painting (◻)"],
-    ["← ↑ → ↓", "move across the painting"],
-    ["", "taken apart: j k look at a layer, enter shows it alone, esc puts the painting back"],
+    ["j k", tr("the next / previous voice: a quotation mark, its passage below")],
+    ["l", tr("take the painting apart into its layers (≋)")],
+    ["1–4", tr("one layer alone: 1 ground · 2 marks · 3 voices · 4 ghosts")],
+    ["s", tr("stop the machine for a moment")],
+    ["+ − 0", tr("come closer · go back · see the whole painting (◻)")],
+    ["← ↑ → ↓", tr("move across the painting")],
+    ["", tr("taken apart: j k look at a layer, enter shows it alone, esc puts the painting back")],
   ],
   key(e) {
     const k = e.key, step = 80, n = LSET.names.length;
@@ -876,8 +904,10 @@ function machine(now, dt) {
   lastReadout = now;
   const m = headMark(), ch = chapters[markChapter[m]];
   const token = Math.round(head / (COLS * ROWS) * data.tokens);
-  machineLine.textContent = `${running ? "The machine is reading" : "The machine has stopped at"} Volume ${ch.vol}` +
-    `${ch.n ? `, Chapter ${ch.n}` : ""}, ${ch.title}. Token ${fmt.format(token)} of ${fmt.format(data.tokens)}.`;
+  machineLine.textContent = fa()
+    ? `${running ? "ماشین دارد" : "ماشین ایستاده است در"} ${placeName(ch, "، ")}${running ? " را می‌خواند" : ""}. توکن ${num(token)} از ${num(data.tokens)}.`
+    : `${running ? "The machine is reading" : "The machine has stopped at"} Volume ${ch.vol}` +
+      `${ch.n ? `, Chapter ${ch.n}` : ""}, ${ch.title}. Token ${fmt.format(token)} of ${fmt.format(data.tokens)}.`;
   if (!reading) {
     reading = true;
     loadText(ch.key).then(({ text, pos }) => {
@@ -1021,15 +1051,14 @@ async function start() {
   }
   const verts = layout();
   frame.parentElement.style.setProperty("--aspect", (W / H).toFixed(4));   // the stage: the frame and the keys under it
-  document.getElementById("n-marks").textContent = fmt.format(N);
-  document.getElementById("n-tokens").textContent = fmt.format(data.tokens);
+  counts();
 
   await document.fonts.load('500 40px "Newsreader"').catch(() => {});
   try {
     setupGL(verts);
   } catch (err) {
     console.error(err);
-    frame.innerHTML = '<p class="fallback" style="padding:2rem">This painting needs WebGL 2. <a href="read/">Read it as a page instead.</a></p>';
+    frame.innerHTML = `<p class="fallback" style="padding:2rem"${fa() ? ' dir="rtl" lang="fa"' : ""}>${tr("This painting needs WebGL 2.")} <a href="read/">${tr("Read it as a page instead.")}</a></p>`;
     return;
   }
   resize();
@@ -1039,5 +1068,22 @@ async function start() {
   new ResizeObserver(resize).observe(canvas);
   requestAnimationFrame(frameLoop);
 }
+
+// the counts in the head: lang.js puts the head's words back on a switch, so they are written again
+function counts() {
+  if (!data) return;
+  const a = document.getElementById("n-marks"), b = document.getElementById("n-tokens");
+  if (a) a.textContent = num(N);
+  if (b) b.textContent = num(data.tokens);
+}
+// the other language: the counts, the layers, the chip, the open passage's place, the keys
+document.addEventListener("ro-lang", () => {
+  counts();
+  labels.forEach(nameLabel);
+  nameSolo();
+  lastReadout = 0;                                  // the machine's line, at once
+  nameWhere();
+  if (ui) ui.render();
+});
 
 start();

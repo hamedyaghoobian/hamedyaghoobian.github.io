@@ -13,17 +13,20 @@
     document.documentElement.setAttribute("data-theme", d ? "dark" : "light");
   })();
   window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
+  // and in the reader's language: Persian if they last chose it (lang.js)
+  try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("ro-lang"); if (l === "fa") document.documentElement.setAttribute("data-lang", "fa"); } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/main.css?v=fp6">
-<link rel="stylesheet" href="atlas.css?v=2">
+<link rel="stylesheet" href="atlas.css?v=3">
+<link rel="stylesheet" href="../../lang.css?v=1">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg?v=key2">
 <script src="/assets/js/faceplate.js?v=fp6" defer></script>
 </head>
 <body class="fp fp-depth-2 fp-sec-6 ro-atlas">
-<a class="fp-skip" href="#content">skip to content</a>
+<a class="fp-skip" href="#content" data-t="skip-content">skip to content</a>
 
 <header class="fp-plate ro-plate" role="banner">
   <div class="fp-plate__row">
@@ -48,95 +51,97 @@
   </div>
   <div class="fp-crumb">
     <p class="fp-crumb__path">
-      <a href="/">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../../"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><a href="../"><span class="fp-crumb__n">04</span> what the animals know</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page">the atlas</span>
+      <a href="/" data-t="crumb-home">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../../" data-t="crumb-readings"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><a href="../" data-t="crumb-piece"><span class="fp-crumb__n">04</span> what the animals know</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page" data-t="crumb-here">the atlas</span>
     </p>
     <p class="fp-crumb__keys">
-      <a class="fp-crumb__up" rel="up" href="../"><span class="fp-k">esc</span>up</a>
-      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">i</span>keys</button>
+      <a class="fp-crumb__up" rel="up" href="../" data-t="up"><span class="fp-k">esc</span>up</a>
+      <button type="button" class="fp-crumb__help" data-fp-help data-t="keys"><span class="fp-k">i</span>keys</button>
     </p>
   </div>
 </header>
 
-<main class="fp-main at-main" id="content" aria-label="The Animals, Counted">
+<main class="fp-main at-main" id="content" data-ta="main-aria" aria-label="The Animals, Counted">
   <header class="ro-head">
-    <p class="ro-head__n">06.4 · No. 4 · the atlas</p>
-    <h1>The Animals, Counted</h1>
+    <p class="ro-head__n" data-t="head-n">06.4 · No. 4 · the atlas</p>
+    <h1 data-t="h1">The Animals, Counted</h1>
     <div class="ro-head__lines">
-      <p class="meta">Every animal in <a href="../">What the Animals Know</a>, by the mind the text gives it</p>
+      <p class="meta" data-t="head-meta">Every animal in <a href="../">What the Animals Know</a>, by the mind the text gives it</p>
       <p class="meta" id="total"></p>
     </div>
   </header>
 
-  <div class="ro-controls at-books" role="group" aria-label="Which book">
-    <p class="ro-controls__lbl">Read</p>
-    <button type="button" class="ro-key" data-book="-1" aria-pressed="true"><span>all six</span></button>
-    <button type="button" class="ro-key" data-book="0" aria-pressed="false"><span>Kalila wa Dimna</span></button>
-    <button type="button" class="ro-key" data-book="1" aria-pressed="false"><span>The Birds</span></button>
-    <button type="button" class="ro-key" data-book="2" aria-pressed="false"><span>The Shahnameh</span></button>
-    <button type="button" class="ro-key" data-book="3" aria-pressed="false"><span>The Masnavi</span></button>
-    <button type="button" class="ro-key" data-book="4" aria-pressed="false"><span>Marzban-nameh</span></button>
-    <button type="button" class="ro-key" data-book="5" aria-pressed="false"><span>Parvin</span></button>
+  <div class="ro-controls at-books" role="group" data-ta="books-aria" aria-label="Which book">
+    <p class="ro-controls__lbl" data-t="lbl-read">Read</p>
+    <button type="button" class="ro-key" data-book="-1" aria-pressed="true"><span data-t="b-all">all six</span></button>
+    <button type="button" class="ro-key" data-book="0" aria-pressed="false"><span data-t="b-0">Kalila wa Dimna</span></button>
+    <button type="button" class="ro-key" data-book="1" aria-pressed="false"><span data-t="b-1">The Birds</span></button>
+    <button type="button" class="ro-key" data-book="2" aria-pressed="false"><span data-t="b-2">The Shahnameh</span></button>
+    <button type="button" class="ro-key" data-book="3" aria-pressed="false"><span data-t="b-3">The Masnavi</span></button>
+    <button type="button" class="ro-key" data-book="4" aria-pressed="false"><span data-t="b-4">Marzban-nameh</span></button>
+    <button type="button" class="ro-key" data-book="5" aria-pressed="false"><span data-t="b-5">Parvin</span></button>
   </div>
 
   <section class="at-sec">
-    <h2>how much mind, animal by animal</h2>
-    <p class="at-lede">Each bar is one animal in one book, as an animal in the story, a creature or a character, divided by how much mind the text gives it. Beside it, how often the animal is said of a person instead. Press an animal to list its passages below.</p>
-    <p class="at-legend"><span><i class="sw k4"></i>a human mind</span><span><i class="sw k3"></i>a mind read from the animal</span><span><i class="sw k2"></i>what its kind does</span><span><i class="sw k1"></i>no mind</span><span><i class="sw k5"></i>said of a person</span></p>
+    <h2 data-t="h2-1">how much mind, animal by animal</h2>
+    <p class="at-lede" data-t="lede-1">Each bar is one animal in one book, as an animal in the story, a creature or a character, divided by how much mind the text gives it. Beside it, how often the animal is said of a person instead. Press an animal to list its passages below.</p>
+    <p class="at-legend" data-t="legend"><span><i class="sw k4"></i>a human mind</span><span><i class="sw k3"></i>a mind read from the animal</span><span><i class="sw k2"></i>what its kind does</span><span><i class="sw k1"></i>no mind</span><span><i class="sw k5"></i>said of a person</span></p>
     <div id="species" class="at-species"></div>
   </section>
 
   <section class="at-sec">
-    <h2>who is used for what, and what they are given</h2>
-    <p class="at-lede">The relation to people against the faculties the passage gives the animal: how many in each relation are given speech, reasoning, feeling, cunning. Wagschal's claim is that the first decides the second.</p>
+    <h2 data-t="h2-2">who is used for what, and what they are given</h2>
+    <p class="at-lede" data-t="lede-2">The relation to people against the faculties the passage gives the animal: how many in each relation are given speech, reasoning, feeling, cunning. Wagschal's claim is that the first decides the second.</p>
     <div id="matrix" class="at-matrix"></div>
   </section>
 
   <section class="at-sec">
-    <h2>animals said of people</h2>
-    <p class="at-lede">The other direction: the hero as a lion, the army as a dragon, the soul as a bird. How often each animal is a figure of speech rather than an animal, and what share of its appearances that is.</p>
+    <h2 data-t="h2-3">animals said of people</h2>
+    <p class="at-lede" data-t="lede-3">The other direction: the hero as a lion, the army as a dragon, the soul as a bird. How often each animal is a figure of speech rather than an animal, and what share of its appearances that is.</p>
     <div id="figures" class="at-figures"></div>
   </section>
 
   <section class="at-sec">
-    <h2>every passage</h2>
+    <h2 data-t="h2-4">every passage</h2>
     <div class="at-filters">
-      <label>animal <select id="f-species"><option value="">any</option></select></label>
-      <label>as <select id="f-figure"><option value="">any</option><option>creature</option><option>character</option><option>figure</option></select></label>
-      <label>relation <select id="f-mode"><option value="">any</option></select></label>
-      <label>mind <select id="f-spectrum"><option value="">any</option><option value="gratuitous">a human mind</option><option value="constructive">read from the animal</option><option value="species-typical">what its kind does</option><option value="anthropectomy">no mind</option><option value="none">none (figures)</option></select></label>
-      <label>given <select id="f-faculty"><option value="">any faculty</option></select></label>
-      <button type="button" id="f-clear">clear</button>
+      <label><span data-t="f-animal">animal</span> <select id="f-species"><option value="" data-t="any">any</option></select></label>
+      <label><span data-t="f-as">as</span> <select id="f-figure"><option value="" data-t="any">any</option><option value="creature" data-t="o-creature">creature</option><option value="character" data-t="o-character">character</option><option value="figure" data-t="o-figure">figure</option></select></label>
+      <label><span data-t="f-relation">relation</span> <select id="f-mode"><option value="" data-t="any">any</option></select></label>
+      <label><span data-t="f-mind">mind</span> <select id="f-spectrum"><option value="" data-t="any">any</option><option value="gratuitous" data-t="o-gratuitous">a human mind</option><option value="constructive" data-t="o-constructive">read from the animal</option><option value="species-typical" data-t="o-species-typical">what its kind does</option><option value="anthropectomy" data-t="o-anthropectomy">no mind</option><option value="none" data-t="o-none">none (figures)</option></select></label>
+      <label><span data-t="f-given">given</span> <select id="f-faculty"><option value="" data-t="any-faculty">any faculty</option></select></label>
+      <button type="button" id="f-clear" data-t="f-clear">clear</button>
     </div>
     <p class="fp-label" id="count"></p>
-    <table class="at-table"><thead><tr><th>book</th><th>animal</th><th>how it was judged</th><th>passage</th></tr></thead><tbody id="rows"></tbody></table>
+    <table class="at-table"><thead><tr><th data-t="th-book">book</th><th data-t="th-animal">animal</th><th data-t="th-judged">how it was judged</th><th data-t="th-passage">passage</th></tr></thead><tbody id="rows"></tbody></table>
     <p class="at-pager"><button type="button" id="prev">←</button> <span id="page"></span> <button type="button" id="next">→</button></p>
   </section>
 
   <section class="at-sec" id="drawings">
-    <h2>the drawings</h2>
-    <p class="at-lede">The animals are drawn from <a href="https://library.eranshahr.com">NaarDoon</a>, Eranshahr's open library of Iranian and Persianate visual elements. Each is a hand tracing of an object in a museum, shown here in one ink, its own outline filled. Credit belongs to the people who traced them and the collections that keep the objects.</p>
+    <h2 data-t="h2-5">the drawings</h2>
+    <p class="at-lede" data-t="lede-drawings">The animals are drawn from <a href="https://library.eranshahr.com">NaarDoon</a>, Eranshahr's open library of Iranian and Persianate visual elements. Each is a hand tracing of an object in a museum, shown here in one ink, its own outline filled. Credit belongs to the people who traced them and the collections that keep the objects.</p>
     <div id="credits" class="at-credits"></div>
   </section>
 
   <section class="ro-label">
-    <p class="colophon">The judgements were made by Claude Sonnet 5.5 under the scheme in the code, from the categories of Steven Wagschal, <em>Minding Animals in the Old and New Worlds</em> (Toronto, 2018); 140 drawn at random were read again, 128 agreed, 2 were wrong and corrected, 10 arguable. Texts from <a href="https://ganjoor.net">Ganjoor</a>.</p>
-    <p class="colophon">Code and data: <a href="https://github.com/hamedyaghoobian/what-the-animals-know">github.com/hamedyaghoobian/what-the-animals-know</a></p>
+    <p class="colophon" data-t="colophon">The judgements were made by Claude Sonnet 5.5 under the scheme in the code, from the categories of Steven Wagschal, <em>Minding Animals in the Old and New Worlds</em> (Toronto, 2018); 140 drawn at random were read again, 128 agreed, 2 were wrong and corrected, 10 arguable. Texts from <a href="https://ganjoor.net">Ganjoor</a>.</p>
+    <p class="colophon" data-t="colophon-code">Code and data: <a href="https://github.com/hamedyaghoobian/what-the-animals-know">github.com/hamedyaghoobian/what-the-animals-know</a></p>
   </section>
 </main>
 
-<nav class="fp-thumb" aria-label="Move">
-  <a href="../" rel="up">up · what the animals know</a>
+<nav class="fp-thumb" data-ta="move-aria" aria-label="Move">
+  <a href="../" rel="up" data-t="thumb-up-piece">up · what the animals know</a>
   <span></span>
 </nav>
 
 <div class="fp-help" id="fp-help" role="dialog" aria-modal="true" aria-labelledby="fp-help-t" hidden>
   <div class="fp-help__box">
-    <div class="fp-help__head"><h2 id="fp-help-t">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
+    <div class="fp-help__head"><h2 id="fp-help-t" data-t="help-title">keys on this page</h2><button type="button" data-fp-help-close data-ta="close" aria-label="Close"><span class="fp-k">esc</span></button></div>
     <div class="fp-help__body"></div>
   </div>
 </div>
 
-<script src="../../piece.js?v=6"></script>
-<script src="atlas.js?v=2"></script>
+<script src="../../lang.js?v=1"></script>
+<script src="fa.js?v=1"></script>
+<script src="../../piece.js?v=7"></script>
+<script src="atlas.js?v=3"></script>
 </body>
 </html>

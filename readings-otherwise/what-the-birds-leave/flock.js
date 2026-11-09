@@ -339,6 +339,12 @@ function usePalette() {
   useCursor();
 }
 
+// ---------- in English or Persian (../lang.js) ----------
+
+const tr = s => (window.RO ? RO.tr(s) : s);
+const isFa = () => !!(window.RO && RO.fa());
+const num = n => (window.RO ? RO.num(n) : Number(n).toLocaleString("en"));
+
 // ---------- taking the flock apart into its layers ----------
 
 const LAYERS = [
@@ -428,12 +434,16 @@ function drawLayers(t) {
   return m;
 }
 
-const labels = LAYERS.map(([title, sub], z) => {
+const layerName = z => tr(LAYERS[z][0].split(" · ").pop());
+function labelLayer(el, z) {
+  el.title = tr("Go through this layer alone");
+  el.innerHTML = `<span class="fp-k">${z + 1}</span><b>${layerName(z)}</b><small>${tr(LAYERS[z][1])}</small><small class="n"></small>`;
+}
+const labels = LAYERS.map((_, z) => {
   const el = document.createElement("button");
   el.type = "button";
   el.className = "layer-label";
-  el.title = "Go through this layer alone";
-  el.innerHTML = `<span class="fp-k">${z + 1}</span><b>${title.split(" · ").pop()}</b><small>${sub}</small><small class="n"></small>`;
+  labelLayer(el, z);
   el.tabIndex = -1;                              // reachable only while the flock is taken apart
   el.onpointerenter = el.onfocus = () => { peekAt(z); };
   el.onpointerleave = el.onblur = () => { if (peek === z) peekAt(-1); };
@@ -453,8 +463,7 @@ function chooseLayer(z) {
   solo = z;
   peekAt(-1);
   if (z >= 0) {
-    const [title, sub] = LAYERS[z];
-    soloChip.querySelector(".what").innerHTML = `<span class="fp-k">${z + 1}</span>${title.split(" · ").pop()} alone<small>${sub}</small>`;
+    soloLabel();
     setExplode(false);
   }
   soloChip.hidden = z < 0;
@@ -467,10 +476,16 @@ function chooseLayer(z) {
   if (ui) ui.render();
 }
 soloChip.querySelector("button").onclick = () => chooseLayer(-1);
+function soloLabel() {
+  if (solo < 0) return;
+  const name = layerName(solo), sub = tr(LAYERS[solo][1]);
+  soloChip.querySelector(".what").innerHTML = `<span class="fp-k">${solo + 1}</span>${isFa() ? `تنها ${name}` : `${name} alone`}<small>${sub}</small>`;
+}
 
 function countLayers() {
-  labels[0].querySelector(".n").textContent = `${(T.lines.length).toLocaleString("en")} half-lines`;
-  labels.slice(1).forEach((el, i) => el.querySelector(".n").textContent = `${layerCount[i + 1].toLocaleString("en")} dots`);
+  if (!T || !layerCount.length) return;
+  labels[0].querySelector(".n").textContent = isFa() ? `${num(T.lines.length)} مصراع` : `${num(T.lines.length)} half-lines`;
+  labels.slice(1).forEach((el, i) => el.querySelector(".n").textContent = `${num(layerCount[i + 1])} ${tr("dots")}`);
 }
 
 function setExplode(on) {
@@ -693,19 +708,24 @@ function showPanel(l) {
   // the site's verse form: each line with its dots counted at the end (only the chosen layer's, if one is)
   const dotsIn = i => { let k = 0; for (let d = T.starts[i]; d < T.starts[i + 1]; d++) k += solo <= 0 || layerOf(dotFlags[d]) === solo; return k; };
   const line = i => i < T.lines.length
-    ? `<p class="line"><span class="t">${half(i)}</span><span class="n" title="dots">${dotsIn(i)}</span></p>` : "";
+    ? `<p class="line"><span class="t">${half(i)}</span><span class="n" title="${tr("dots")}">${num(dotsIn(i))}</span></p>` : "";
   const where = document.getElementById("where"), lines = document.getElementById("couplet");
   const dir = LTR ? "ltr" : "rtl", lang = LTR ? "en" : "fa";
   for (const el of [where, lines]) { el.dir = dir; el.lang = lang; }
   where.textContent = `${sec.title}${poem.title !== sec.title ? " · " + poem.title : ""}`;
   const kind = solo > 0 ? `${LAYERS[solo][0].split(" · ")[1]} ` : "";
+  const count = document.getElementById("count"), fa = isFa();
+  // in Persian: the dots (of the chosen layer), then where the line falls
+  const faDots = solo > 0 ? `نقطه‌های «${layerName(solo)}»` : "نقطه‌ها";
+  count.dir = fa ? "rtl" : "";
   if (LTR) {
     lines.innerHTML = line(l);
-    document.getElementById("count").textContent = `${kind}dots · line ${(l + 1).toLocaleString("en")} of ${T.lines.length.toLocaleString("en")}`;
+    count.textContent = fa ? `${faDots} · سطر ${num(l + 1)} از ${num(T.lines.length)}`
+      : `${kind}dots · line ${num(l + 1)} of ${num(T.lines.length)}`;
   } else {
     lines.innerHTML = line(a) + line(b);
-    document.getElementById("count").textContent =
-      `${kind}dots per line · couplet ${((a / 2) + 1).toLocaleString("en")} of ${(T.lines.length / 2).toLocaleString("en")}`;
+    count.textContent = fa ? `${faDots} در هر مصراع · بیت ${num(a / 2 + 1)} از ${num(T.lines.length / 2)}`
+      : `${kind}dots per line · couplet ${num(a / 2 + 1)} of ${num(T.lines.length / 2)}`;
   }
   panel.classList.add("show");
 }
@@ -782,11 +802,11 @@ document.getElementById("layers").onclick = () => { if (!LTR) setExplode(!explod
 
 const NAMES = { naskh: "naskh", nastaliq: "nastaliq", english: "English" };
 function pieceKeys() {
-  if (explodeTarget) return [["j k", "look at a layer"], ["1–6", "one layer alone"], ["enter", "go through it alone"], ["esc", "put the flock back"]];
-  const k = [["j k", "read a couplet"], ["space", "let them fly"]];
-  if (!LTR) k.push(["l", "layers"], ["1–6", "one layer alone"]);
-  k.push(["h", `hand: ${NAMES[hand]}`], ["+ − 0", "zoom · whole book"], ["← →", "move"],
-         ["esc", solo >= 0 ? "all the birds back" : sel >= 0 ? "stop reading" : "give the keys back"]);
+  if (explodeTarget) return [["j k", tr("look at a layer")], ["1–6", tr("one layer alone")], ["enter", tr("go through it alone")], ["esc", tr("put the flock back")]];
+  const k = [["j k", tr("read a couplet")], ["space", tr("let them fly")]];
+  if (!LTR) k.push(["l", tr("layers")], ["1–6", tr("one layer alone")]);
+  k.push(["h", `${tr("hand")}: ${tr(NAMES[hand])}`], ["+ − 0", tr("zoom · whole book")], ["← →", tr("move")],
+         ["esc", tr(solo >= 0 ? "all the birds back" : sel >= 0 ? "stop reading" : "give the keys back")]);
   return k;
 }
 ui = window.Piece({
@@ -801,7 +821,7 @@ ui = window.Piece({
     ["+ − 0", "come closer · go back · see the whole book (◻)"],
     ["← ↑ → ↓", "move across the book"],
     ["", "taken apart: j k look at a layer, enter goes through it alone, esc puts the flock back"],
-  ],
+  ].map(([k, v]) => [k, tr(v)]),
   key(e) {
     const k = e.key, step = 80;
     if (explodeTarget) {
@@ -938,6 +958,15 @@ async function changeHand(h) {
 }
 for (const b of document.querySelectorAll("[data-hand]")) b.onclick = () => changeHand(b.dataset.hand);
 
+// the other language: the layers' labels, the chosen layer, the couplet's count and the keys again
+document.addEventListener("ro-lang", () => {
+  labels.forEach(labelLayer);
+  countLayers();
+  soloLabel();
+  shown = -2;
+  ui.render();
+});
+
 (async () => {
   const dots = await fetchHand(hand);
   useHand(hand, dots);
@@ -950,5 +979,7 @@ for (const b of document.querySelectorAll("[data-hand]")) b.onclick = () => chan
   requestAnimationFrame(frameLoop);
 })().catch(err => {
   console.error(err);
-  frame.insertAdjacentHTML("beforeend", `<p class="fallback" style="position:absolute;inset:auto 0 45%;">The flock could not take off in this browser. <a href="https://ganjoor.net/attar/manteghotteyr">Read the poem on Ganjoor.</a></p>`);
+  frame.insertAdjacentHTML("beforeend", isFa()
+    ? `<p class="fallback" dir="rtl" lang="fa" style="position:absolute;inset:auto 0 45%;">دسته در این مرورگر نتوانست برخیزد. <a href="https://ganjoor.net/attar/manteghotteyr">شعر را در گنجور بخوانید.</a></p>`
+    : `<p class="fallback" style="position:absolute;inset:auto 0 45%;">The flock could not take off in this browser. <a href="https://ganjoor.net/attar/manteghotteyr">Read the poem on Ganjoor.</a></p>`);
 });

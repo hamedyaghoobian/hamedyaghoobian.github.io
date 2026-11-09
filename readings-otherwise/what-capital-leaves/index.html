@@ -14,19 +14,22 @@
     document.documentElement.setAttribute("data-theme", d ? "dark" : "light");
   })();
   window.FP = window.FP || { _q: [], add: function (k) { this._q.push(k); } };
+  // and in the reader's language: Persian if they last chose it (lang.js)
+  try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("ro-lang"); if (l === "fa") document.documentElement.setAttribute("data-lang", "fa"); } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Kufi+Arabic:wght@400;800&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/main.css?v=fp6">
-<link rel="stylesheet" href="painting.css?v=10">
+<link rel="stylesheet" href="painting.css?v=11">
+<link rel="stylesheet" href="../lang.css?v=1">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg?v=key2">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-light.png?v=key2" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-dark.png?v=key2" media="(prefers-color-scheme: dark)">
 <script src="/assets/js/faceplate.js?v=fp6" defer></script>
 </head>
 <body class="fp fp-depth-2 fp-sec-6 ro-piece ro-capital">
-<a class="fp-skip" href="#frame">skip to the piece</a>
+<a class="fp-skip" href="#frame" data-t="skip">skip to the piece</a>
 
 <header class="fp-plate ro-plate" role="banner">
   <div class="fp-plate__row">
@@ -51,41 +54,41 @@
   </div>
   <div class="fp-crumb">
     <p class="fp-crumb__path">
-      <a href="/">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page"><span class="fp-crumb__n">01</span> what capital leaves</span>
+      <a href="/" data-t="crumb-home">hamed yaghoobian</a><span class="fp-crumb__sep">/</span><a href="../" data-t="crumb-readings"><span class="fp-crumb__n">06</span> readings</a><span class="fp-crumb__sep">/</span><span class="fp-crumb__here" aria-current="page" data-t="crumb-here"><span class="fp-crumb__n">01</span> what capital leaves</span>
     </p>
     <p class="fp-crumb__keys">
-      <a class="fp-crumb__sib" rel="next" href="../what-the-birds-leave/" title="No. 2 · What the Birds Leave"><span class="fp-k">]</span>no. 2 what the birds leave</a>
-      <a class="fp-crumb__up" rel="up" href="../"><span class="fp-k">esc</span>up</a>
-      <button type="button" class="fp-crumb__help" data-fp-help><span class="fp-k">i</span>keys</button>
+      <a class="fp-crumb__sib" rel="next" href="../what-the-birds-leave/" title="No. 2 · What the Birds Leave" data-tt="next-title" data-t="crumb-next"><span class="fp-k">]</span>no. 2 what the birds leave</a>
+      <a class="fp-crumb__up" rel="up" href="../" data-t="up"><span class="fp-k">esc</span>up</a>
+      <button type="button" class="fp-crumb__help" data-fp-help data-t="keys"><span class="fp-k">i</span>keys</button>
     </p>
   </div>
 </header>
 
-<main class="fp-main ro-main" id="content" aria-label="What Capital Leaves">
+<main class="fp-main ro-main" id="content" aria-label="What Capital Leaves" data-ta="main-aria">
   <header class="ro-head">
-    <p class="ro-head__n">06.1 · No. 1 · <time datetime="2026-10-28">28 oct 2026</time></p>
-    <h1>What Capital Leaves</h1>
-    <div class="ro-head__lines">
+    <p class="ro-head__n" data-t="head-n">06.1 · No. 1 · <time datetime="2026-10-28">28 oct 2026</time></p>
+    <h1 data-t="h1">What Capital Leaves</h1>
+    <div class="ro-head__lines" data-t="head-lines">
       <p class="meta">Karl Marx, <em>Capital</em>, Volumes I–III, 1867–1894 / 2026</p>
       <p class="meta">Punctuation on screen. <span id="n-marks">…</span> marks, <span id="n-tokens">…</span> tokens</p>
     </div>
   </header>
 
   <div class="ro-stage" style="--aspect: 1.35">
-    <figure class="ro-frame frame" id="frame" tabindex="0" data-fp-own-keys aria-label="The painting. Focus it and the keys work the piece; press Esc to give them back.">
-      <canvas id="sea" aria-label="A painting made of the punctuation of Capital, volumes I to III. Zoom in to read it."></canvas>
+    <figure class="ro-frame frame" id="frame" tabindex="0" data-fp-own-keys data-ta="frame-aria" aria-label="The painting. Focus it and the keys work the piece; press Esc to give them back.">
+      <canvas id="sea" data-ta="sea-aria" aria-label="A painting made of the punctuation of Capital, volumes I to III. Zoom in to read it."></canvas>
       <div id="ghosts" aria-hidden="true"></div>
       <p class="reading" id="reading" aria-hidden="true"></p>
       <p class="ro-owner" aria-hidden="true">keys: page · enter to take them</p>
       <div class="ro-caps controls">
-        <button type="button" class="ro-cap" id="zoom-out" data-ro-key="- _ −" title="Zoom out (−)" aria-label="Zoom out"><kbd>−</kbd></button>
-        <button type="button" class="ro-cap" id="zoom-in" data-ro-key="+ =" title="Zoom in (+)" aria-label="Zoom in"><kbd>+</kbd></button>
-        <button type="button" class="ro-cap" id="reset" data-ro-key="0" title="See the whole painting (0)" aria-label="See the whole painting">◻<kbd>0</kbd></button>
-        <button type="button" class="ro-cap" id="layers" data-ro-key="l" aria-pressed="false" title="Take the painting apart (l)" aria-label="Take the painting apart into its layers">≋<kbd>l</kbd></button>
+        <button type="button" class="ro-cap" id="zoom-out" data-ro-key="- _ −" title="Zoom out (−)" aria-label="Zoom out" data-tt="zoom-out-t" data-ta="zoom-out-a"><kbd>−</kbd></button>
+        <button type="button" class="ro-cap" id="zoom-in" data-ro-key="+ =" title="Zoom in (+)" aria-label="Zoom in" data-tt="zoom-in-t" data-ta="zoom-in-a"><kbd>+</kbd></button>
+        <button type="button" class="ro-cap" id="reset" data-ro-key="0" title="See the whole painting (0)" aria-label="See the whole painting" data-tt="reset-t" data-ta="reset-a">◻<kbd>0</kbd></button>
+        <button type="button" class="ro-cap" id="layers" data-ro-key="l" aria-pressed="false" title="Take the painting apart (l)" aria-label="Take the painting apart into its layers" data-tt="layers-t" data-ta="layers-a">≋<kbd>l</kbd></button>
       </div>
-      <p class="solo" id="solo" hidden><span class="what"></span><button type="button" title="Bring the whole painting back (Esc)" aria-label="Bring the whole painting back">×</button></p>
+      <p class="solo" id="solo" hidden><span class="what"></span><button type="button" title="Bring the whole painting back (Esc)" aria-label="Bring the whole painting back" data-tt="solo-t" data-ta="solo-a">×</button></p>
       <i class="sel-ring" id="sel-ring" hidden></i>
-      <p class="ro-hint hint" id="hint">a machine is reading, in red · scroll to come closer</p>
+      <p class="ro-hint hint" id="hint" data-t="hint">a machine is reading, in red · scroll to come closer</p>
       <aside class="ro-panel" id="panel" aria-live="polite">
         <p class="where" id="where"></p>
         <p class="sentence" id="sentence"></p>
@@ -94,15 +97,15 @@
 
     <div class="ro-controls ro-write">
       <div class="ro-labour">
-        <p class="labour" id="machine-line" aria-live="off">The machine is starting.</p>
-        <button type="button" class="ro-key" id="stop" data-ro-key="s" title="Stop the machine for a moment (s)"><span>Stop the machine</span><kbd class="fp-k">s</kbd></button>
-        <p class="stop-note" id="stop-note" aria-live="polite">The machine has stopped. It will start again.</p>
+        <p class="labour" id="machine-line" aria-live="off" data-t="machine-line">The machine is starting.</p>
+        <button type="button" class="ro-key" id="stop" data-ro-key="s" title="Stop the machine for a moment (s)" data-tt="stop-t"><span data-t="stop">Stop the machine</span><kbd class="fp-k">s</kbd></button>
+        <p class="stop-note" id="stop-note" aria-live="polite" data-t="stop-note">The machine has stopped. It will start again.</p>
       </div>
     </div>
   </div>
 
-  <section class="ro-label label" aria-label="Wall label">
-    <div class="text">
+  <section class="ro-label label" aria-label="Wall label" data-ta="label-aria">
+    <div class="text" data-t="label">
       <p>Every word of the three volumes has been taken out. What is left is the punctuation, laid down in reading order and painted as a sea, after Turner's <em>Slave Ship</em> (1840). Volume I, production, is the sky. Volume II, circulation, is where the water starts. Volume III, the process as a whole, is the deep.</p>
       <p>From a distance it reads as wealth, one surface, an "immense accumulation of commodities." Come closer and the currents settle into marks, and the marks into the order in which Marx wrote them. Stay still and the words that were taken out come back up through the water.</p>
       <p>The pale lights are quotation marks. In <em>Capital</em> these are the places where other people speak: factory inspectors, physicians, and the children who worked through the night, in their own words, in Marx's footnotes. Touch one.</p>
@@ -111,30 +114,32 @@
       <p>Press ≋ in the corner to take the painting apart: the ground, the marks, the voices, the ghosts. Then press 1 to 4 to see one of them alone.</p>
     </div>
 
-    <p class="colophon">Text: the marxists.org edition, OCR'd by the Internet Archive, cleaned and counted with code. Tokens are counted with the o200k tokenizer, the way a language model would read the same pages. Made in 2026 with Claude, a language model built from other people's writing, taking apart the book about dead labour. <a href="read/">Read it as a page instead →</a></p>
-    <p class="colophon colophon-code">The code and data are open: <a href="https://github.com/hamedyaghoobian/what-capital-leaves">github.com/hamedyaghoobian/what-capital-leaves</a></p>
+    <p class="colophon" data-t="colophon">Text: the marxists.org edition, OCR'd by the Internet Archive, cleaned and counted with code. Tokens are counted with the o200k tokenizer, the way a language model would read the same pages. Made in 2026 with Claude, a language model built from other people's writing, taking apart the book about dead labour. <a href="read/">Read it as a page instead →</a></p>
+    <p class="colophon colophon-code" data-t="colophon-code">The code and data are open: <a href="https://github.com/hamedyaghoobian/what-capital-leaves">github.com/hamedyaghoobian/what-capital-leaves</a></p>
   </section>
 </main>
 
-<nav class="fp-thumb" aria-label="Move">
+<nav class="fp-thumb" aria-label="Move" data-ta="thumb-aria">
   <span></span>
-  <a href="../" rel="up">up · 06 readings</a>
-  <a href="../what-the-birds-leave/" rel="next">next ›</a>
+  <a href="../" rel="up" data-t="thumb-up">up · 06 readings</a>
+  <a href="../what-the-birds-leave/" rel="next" data-t="thumb-next">next ›</a>
 </nav>
 
 <p class="ro-keys" id="ro-keys" aria-hidden="true"></p>
 
 <div class="fp-help" id="fp-help" role="dialog" aria-modal="true" aria-labelledby="fp-help-t" hidden>
   <div class="fp-help__box">
-    <div class="fp-help__head"><h2 id="fp-help-t">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
+    <div class="fp-help__head"><h2 id="fp-help-t" data-t="help-title">keys on this page</h2><button type="button" data-fp-help-close aria-label="Close"><span class="fp-k">esc</span></button></div>
     <div class="fp-help__body"></div>
-    <p class="fp-help__note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
+    <p class="fp-help__note" data-t="help-note">Keys never fire while you type. When the piece has focus, its own keys come first; esc gives them back.</p>
   </div>
 </div>
 
 <noscript><p class="fallback">This painting needs JavaScript. <a href="read/">Read it as a page instead.</a></p></noscript>
 
-<script src="../piece.js?v=6"></script>
-<script src="painting.js?v=12"></script>
+<script src="../lang.js?v=1"></script>
+<script src="fa.js?v=1"></script>
+<script src="../piece.js?v=7"></script>
+<script src="painting.js?v=13"></script>
 </body>
 </html>

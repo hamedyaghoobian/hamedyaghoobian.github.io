@@ -102,3 +102,16 @@ body.exploded #sea { cursor: default; }
   .ghost { animation-duration: 14s; }
   .head-dot { animation: none; }
 }
+
+/* ---- in Persian (../lang.js): the page's words right to left; the book itself stays English ---- */
+html[data-lang="fa"] .ro-labour { direction: rtl; }
+html[data-lang="fa"] .stop-note { font-style: normal; font-family: var(--fa); }
+.layer-label[lang="fa"], .solo .what[lang="fa"], .ro-panel .where[lang="fa"], .fallback[lang="fa"] {
+  font-family: var(--fa); letter-spacing: 0; text-transform: none;
+}
+:is(.layer-label, .solo .what)[lang="fa"] .fp-k { font-family: var(--mono); direction: ltr; unicode-bidi: isolate; }
+.layer-label[lang="fa"] { font-size: .76rem; text-align: right; }
+.layer-label[lang="fa"] b::after { content: " ←"; }
+.solo .what[lang="fa"] { font-size: 1.15em; }
+.solo .what[lang="fa"] .fp-k { margin: 0 0 0 .5em; }
+.solo .what[lang="fa"] small { margin: 0 .6em 0 0; }
