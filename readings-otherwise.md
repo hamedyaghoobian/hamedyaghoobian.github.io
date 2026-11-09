@@ -118,5 +118,5 @@ permalink: /readings-otherwise/
 </ol>
 
 <link rel="stylesheet" href="{{ '/readings-otherwise/lang.css' | relative_url }}?v=1">
-<script src="{{ '/readings-otherwise/lang.js' | relative_url }}?v=1"></script>
-<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=1"></script>
+<script src="{{ '/readings-otherwise/lang.js' | relative_url }}?v=2"></script>
+<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=3"></script>

@@ -200,7 +200,7 @@ function buildLegend(totals) {
 
 function nameLegend(b) {
   const { c, name, count, glyph } = b.dataset;
-  b.title = fa() ? `${tr(name)}: برای پنهان کردن کلیک کنید، برای دیدن تنها همین نشانه دوبار کلیک کنید`
+  b.title = fa() ? `${tr(name)}: با یک کلیک پنهان می‌شود و با دو کلیک فقط همین نشانه دیده می‌شود`
                  : `${name}: click to hide, double-click to see only this`;
   b.innerHTML = `<span class="g m-${c}">${glyph}</span><span class="n">${num(+count)}</span>`;
 }

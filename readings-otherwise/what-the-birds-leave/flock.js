@@ -980,6 +980,6 @@ document.addEventListener("ro-lang", () => {
 })().catch(err => {
   console.error(err);
   frame.insertAdjacentHTML("beforeend", isFa()
-    ? `<p class="fallback" dir="rtl" lang="fa" style="position:absolute;inset:auto 0 45%;">دسته در این مرورگر نتوانست برخیزد. <a href="https://ganjoor.net/attar/manteghotteyr">شعر را در گنجور بخوانید.</a></p>`
+    ? `<p class="fallback" dir="rtl" lang="fa" style="position:absolute;inset:auto 0 45%;">پرندگان در این مرورگر نتوانستند پرواز کنند. <a href="https://ganjoor.net/attar/manteghotteyr">شعر را در گنجور بخوانید.</a></p>`
     : `<p class="fallback" style="position:absolute;inset:auto 0 45%;">The flock could not take off in this browser. <a href="https://ganjoor.net/attar/manteghotteyr">Read the poem on Ganjoor.</a></p>`);
 });

@@ -718,5 +718,5 @@ document.addEventListener("ro-lang", () => {
   requestAnimationFrame(frameLoop);
 })().catch(err => {
   console.error(err);
-  frame.insertAdjacentHTML("beforeend", isFa() ? `<p class="fallback" dir="rtl" lang="fa">کتاب بار نشد.</p>` : `<p class="fallback">The book could not be loaded.</p>`);
+  frame.insertAdjacentHTML("beforeend", isFa() ? `<p class="fallback" dir="rtl" lang="fa">کتاب بارگذاری نشد.</p>` : `<p class="fallback">The book could not be loaded.</p>`);
 });
