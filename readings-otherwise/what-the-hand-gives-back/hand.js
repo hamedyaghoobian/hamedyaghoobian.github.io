@@ -2,7 +2,7 @@
 // github.com/hamedyaghoobian/dastkhat with `npm run build:piece`) writes a letter into the frame; this file
 // wires it to the site: the hand keys, the frame's keycaps, the letter's record under the frame, the address
 // (?letter=…&hand=…&w=… replays the same page), the theme knob and the Persian switch (../lang.js).
-import { mount } from "./data/dastkhat.js?v=2";
+import { mount } from "./data/dastkhat.js?v=3";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];

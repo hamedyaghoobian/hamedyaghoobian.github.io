@@ -415,8 +415,8 @@ const NI = [
   qajar: {
     name: "قلم نی، قاجاری",
     about: "دست منشی با قلم نی و مرکب مازو، به شیوهٔ نامه‌های دورهٔ قاجار.",
-    em: 28,
-    // the scan is a narrow slip (7 words a line); on a full sheet the same hand fits about 9
+    em: 22,
+    // smaller than the scan's narrow slip (7 words a line): a full sheet holds about 11
     style: "nastaliq",
     pen: "reed",
     ink: "black",
