@@ -107,7 +107,7 @@ function ZI(B, A, I, Q) {
   });
   const F = i.map((C, N) => N), U = (C) => F[C] === C ? C : F[C] = U(F[C]), M = (C, N) => {
     F[U(C)] = U(N);
-  }, s = I.upem * 0.03, R = I.upem * 0.06;
+  }, s = I.upem * 0.03, R = I.upem * 0.07;
   for (let C = 0; C < i.length; C++) for (let N = C + 1; N < i.length; N++) {
     const t = i[C], K = i[N];
     if (t.glyph === K.glyph) {
@@ -364,7 +364,7 @@ function BI(B, A, I, Q) {
         NA && (GA && dA(UA(GA, NA.m[0])), YA(NA.m, "body", 1, NA.g), GA = NA.m[NA.m.length - 1], NA = null);
       };
       for (const r of II) {
-        const gA = _ ? r.paths.map((P) => P.sin ? { ...P, pts: MI(P.pts, D.upem * 0.045, 0.3) } : P) : r.paths, wA = cI(gA, XA, D.upem * 0.06).map((P) => P.map(SA)), z = S++;
+        const gA = _ ? r.paths.map((P) => P.sin ? { ...P, pts: MI(P.pts, D.upem * 0.045, 0.3) } : P) : r.paths, wA = cI(gA, XA, D.upem * 0.07).map((P) => P.map(SA)), z = S++;
         if (!wA.length) continue;
         let $ = z;
         if (NA) {
@@ -415,8 +415,8 @@ const NI = [
   qajar: {
     name: "قلم نی، قاجاری",
     about: "دست منشی با قلم نی و مرکب مازو، به شیوهٔ نامه‌های دورهٔ قاجار.",
-    em: 22,
-    // smaller than the scan's narrow slip (7 words a line): a full sheet holds about 11
+    em: 17,
+    // much smaller than the scan's narrow slip (7 words a line): a full sheet holds about 14
     style: "nastaliq",
     pen: "reed",
     ink: "black",
@@ -1246,7 +1246,7 @@ function EI(B) {
   return B.replace(/ي/g, "ی").replace(/ى/g, "ی").replace(/ك/g, "ک").replace(/[0-9]/g, (A) => String.fromCharCode(1776 + +A)).replace(/[٠-٩]/g, (A) => String.fromCharCode(1776 + A.charCodeAt(0) - 1632)).replace(/ـ+/g, "").replace(/[ \t]+/g, " ");
 }
 const ig = {
-  nastaliq: { font: "NotoNastaliqUrdu.ttf", sk: () => import("./skeletons-nastaliq-DC7V-N0Z.js"), scale: 1.05, xh: 0.32, lineGap: 1.3 },
+  nastaliq: { font: "NotoNastaliqUrdu.ttf", sk: () => import("./skeletons-nastaliq-SobZJh9a.js"), scale: 1.05, xh: 0.32, lineGap: 1.3 },
   naskh: { font: "Vazirmatn-Thin.ttf", sk: () => import("./skeletons-C7G5GMSm.js"), scale: 1, xh: 0.45, lineGap: 1 }
 }, HI = /* @__PURE__ */ new Map();
 function wg(B) {
