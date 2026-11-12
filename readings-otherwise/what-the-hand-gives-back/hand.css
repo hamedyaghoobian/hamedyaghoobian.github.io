@@ -1,0 +1,55 @@
+/* What the Hand Gives Back: only what this piece draws. The plate, the frame, the keycaps, the key
+   strip, the record and the wall label are the site's (/assets/main.css, _readings.scss).
+   The frame is the sheet: its ground is the frame's sky and the ink is its cream (--ro-sky, --ro-mark),
+   drawn by the engine from those two tokens, so the theme knob turns the page with the rest. */
+
+/* the sheet is as tall as the letter, not the frame's usual aspect, and as wide as the reading column allows
+   (the frame's width rule follows the window's height, which suits a sky, not a page) */
+.ro-hand .ro-stage { --ro-w: min(100%, 48rem); }
+.ro-hand .ro-frame { aspect-ratio: auto; min-height: 22rem; touch-action: auto; }
+.hand-sheet { position: relative; width: 100%; }
+.hand-sheet canvas { display: block; }
+
+/* while the pen is moving: one red hairline along the foot of the frame, as long as the page is written */
+.hand-pen {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--live); transform-origin: right center; transform: scaleX(0);
+  pointer-events: none;
+}
+.hand-pen[hidden] { display: none; }
+
+/* the hint sits in the frame's foot until the reader has taken the keys or written a second page */
+.ro-hand .ro-frame.owns .ro-hint { opacity: 0; }
+
+/* the letter's record, under the stage, in the site's spec list */
+.hand-record { width: var(--ro-w, 100%); max-width: 100%; margin: 1.25rem auto 0; }
+.hand-record .fp-spec dd bdi[lang="fa"] { font-family: var(--fa); }
+.hand-record .fp-spec dd a { white-space: nowrap; }
+
+/* the wall label's Persian words are the site's Persian face */
+.ro-label [lang="fa"] { font-family: var(--fa); unicode-bidi: isolate; }
+
+.fallback { margin: 2rem 0; font: 400 .8rem/1.5 var(--mono); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hand-pen { display: none; }
+}
+
+/* ---- in Persian (../lang.js): what the piece writes in the record is set in the site's Persian face,
+   without the mono's spacing and capitals ---- */
+html[data-lang="fa"] .hand-record :is(dt, dd), html[data-lang="fa"] .hand-record dd :not(.fp-k) {
+  font-family: var(--fa); letter-spacing: 0; text-transform: none;
+}
+
+/* ---- the reply: a second sheet in the same frame, with the word being typed shown faintly where the pen will write it ---- */
+.hand-reply { width: var(--ro-w, 100%); max-width: 100%; margin-inline: auto; }
+.hand-reply__frame { cursor: text; min-height: 16rem; }
+.hand-reply__input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.hand-ghost {
+  position: absolute; top: 0; right: 0; white-space: nowrap; pointer-events: none;
+  font-family: var(--fa); color: var(--ro-mark-soft);
+  border-bottom: 1px solid var(--live);    /* the place the pen is about to write */
+}
+.hand-ghost:empty { border-bottom-color: transparent; }
+.hand-reply__frame:focus-within { box-shadow: 0 0 0 2px var(--paper), 0 0 0 5px var(--yellow); }
+.hand-reply__frame:focus-within .hand-reply__hint, .hand-reply.has-words .hand-reply__hint { opacity: 0; }

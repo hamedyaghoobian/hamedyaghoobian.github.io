@@ -15,16 +15,35 @@ permalink: /readings-otherwise/
 <p class="ro-intro" data-t="intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="fp-toolbar">
-  <p class="fp-label" data-t="count">5 pieces · newest first</p>
+  <p class="fp-label" data-t="count">6 pieces · newest first</p>
   <p class="fp-label" data-t="toolbar-keys"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open</p>
 </div>
 
 <ol class="fp-index ro-index">
   <li class="fp-row ro-row" data-fp-part>
+    <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-hand-gives-back/' | relative_url }}">
+      <span class="fp-row__n">06.6</span>
+      <span class="fp-row__t" data-t="r6-t">What the Hand Gives Back</span>
+      <span class="fp-row__m" data-t="r6-m"><span class="fp-live" aria-label="newest"></span>No. 6 · <time datetime="2026-11-12">12 nov 2026</time></span>
+      <span class="fp-row__x" aria-hidden="true">→</span>
+    </a>
+    <div class="fp-row__body" data-t="r6-b">
+      <p class="ro-row__line">Letters that survive only as type, written out again in a hand that never was. 123 letters, two hands</p>
+      <dl class="fp-spec ro-spec">
+        <dt>taken out</dt><dd>the hand: the letters reach us only as print</dd>
+        <dt>left</dt><dd>the words of Qaem-Maqam's 123 Persian letters, written again stroke by stroke</dd>
+        <dt>hands</dt><dd>a Qajar reed and a fine pen, each measured against a real letter</dd>
+      </dl>
+      <p class="ro-note">Qaem-Maqam Farahani, chief minister of Qajar Iran, strangled in 1835, wrote the letters that taught Persian prose to be plain. They were collected as the <em>Monsha'at</em>, <bdi lang="fa">منشآت</bdi>, and survive as print; the sheets and the hand are gone. Here a machine writes them out again, right to left, at the speed of a hand, in nasta'liq: a reed of the kind his secretaries used, or a small, quick fine pen. Neither is anyone's hand. The same letter never comes out the same way twice.</p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-hand-gives-back/' | relative_url }}">See it</a> <a href="https://ganjoor.net/ghaemmagham/monshaat">Read the letters on Ganjoor</a> <a href="https://github.com/hamedyaghoobian/dastkhat">Code</a></p>
+    </div>
+  </li>
+
+  <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-plants-know/' | relative_url }}">
       <span class="fp-row__n">06.5</span>
       <span class="fp-row__t" data-t="r5-t">What the Plants Know</span>
-      <span class="fp-row__m" data-t="r5-m"><span class="fp-live" aria-label="newest"></span>No. 5 · <time datetime="2026-11-08">8 nov 2026</time></span>
+      <span class="fp-row__m" data-t="r5-m">No. 5 · <time datetime="2026-11-08">8 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
     <div class="fp-row__body" data-t="r5-b">
