@@ -430,8 +430,8 @@ const NI = [
     hurry: 0.45,
     wordGap: 0.2,
     // the leaning, close-set words need clear air between them to stay readable
-    lineGap: 1.45,
-    // close lines, but a tall alef must not reach into the line above
+    lineGap: 1.75,
+    // room for a final ه's tail and a tall alef between lines at this small size
     baselineDrift: 0.03,
     wordTilt: 0.02,
     stretch: 1,
@@ -441,7 +441,7 @@ const NI = [
     dotsAfterWord: 0.5,
     speed: 0.6,
     loose: { cascade: 0.08, slant: 0.22, rise: 0, compress: 0.9, round: 0, dotDrop: 0, scale: 1, toothless: 0, joins: 0.15, pivot: 0.45, flat: 0, ascend: 1, stack: 0 },
-    fill: { reveal: 0.1, thin: 0.035, thinVar: 0.01, hair: 0.02, warp: 0.04, thr: 0.84, tall: 1 }
+    fill: { reveal: 0.1, thin: 0.012, thinVar: 6e-3, hair: 0.02, warp: 0.04, thr: 0.84, tall: 1 }
   },
   note: {
     name: "خودنویس، یادداشت",
@@ -1246,7 +1246,7 @@ function EI(B) {
   return B.replace(/ي/g, "ی").replace(/ى/g, "ی").replace(/ك/g, "ک").replace(/[0-9]/g, (A) => String.fromCharCode(1776 + +A)).replace(/[٠-٩]/g, (A) => String.fromCharCode(1776 + A.charCodeAt(0) - 1632)).replace(/ـ+/g, "").replace(/[ \t]+/g, " ");
 }
 const ig = {
-  nastaliq: { font: "NotoNastaliqUrdu.ttf", sk: () => import("./skeletons-nastaliq-SobZJh9a.js"), scale: 1.05, xh: 0.32, lineGap: 1.3 },
+  nastaliq: { font: "NotoNastaliqUrdu.ttf", sk: () => import("./skeletons-nastaliq-C-8F32Hk.js"), scale: 1.05, xh: 0.32, lineGap: 1.3 },
   naskh: { font: "Vazirmatn-Thin.ttf", sk: () => import("./skeletons-C7G5GMSm.js"), scale: 1, xh: 0.45, lineGap: 1 }
 }, HI = /* @__PURE__ */ new Map();
 function wg(B) {
@@ -2024,7 +2024,7 @@ async function xg(B, A = {}) {
   function a(N) {
     if (!U) return;
     const t = g - KA.left - KA.right;
-    E = aI(U.hand, U.seed, t, I.xh), F = BI(EI(U.text), E, I, { width: g, margin: KA }), s || (s = new eI(w, E, F.width, F.height), s.theme = R()), s.setHand(E), s.resize(F.width, F.height), s.pace = M, s.onProgress = (K, T) => {
+    E = aI(U.hand, U.seed, t, I.xh), F = BI(EI(U.text), E, I, { width: g, margin: KA }), s || (s = new eI(w, E, F.width, F.height), s.theme = R(), s.redraw()), s.setHand(E), s.resize(F.width, F.height), s.pace = M, s.onProgress = (K, T) => {
       var O;
       return (O = A.onProgress) == null ? void 0 : O.call(A, T ? K / T : 1);
     }, s.reset(), s.enqueue(F.strokes), N || s.finish(), w.setAttribute("aria-label", `${U.letter.title}, ${U.letter.author}: ${U.text}`);
@@ -2060,7 +2060,7 @@ async function xg(B, A = {}) {
       const e = (U == null ? void 0 : U.hand) ?? "qajar";
       IA = aI(e, "reply:" + ((U == null ? void 0 : U.seed) ?? ""), m - KA.left - KA.right, I.xh), x = BI(EI(c()), IA, I, { width: m, margin: KA });
       const V = Math.max(260, x.height + IA.size * 1.5);
-      Z && Z.destroy(), Z = new eI(O, IA, m, V), Z.theme = R(), Z.pace = 1.6;
+      Z && Z.destroy(), Z = new eI(O, IA, m, V), Z.theme = R(), Z.redraw(), Z.pace = 1.6;
       const j = [];
       let _ = -1;
       for (const G of p)
