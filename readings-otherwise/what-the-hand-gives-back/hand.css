@@ -53,3 +53,34 @@ html[data-lang="fa"] .hand-record :is(dt, dd), html[data-lang="fa"] .hand-record
 .hand-ghost:empty { border-bottom-color: transparent; }
 .hand-reply__frame:focus-within { box-shadow: 0 0 0 2px var(--paper), 0 0 0 5px var(--yellow); }
 .hand-reply__frame:focus-within .hand-reply__hint, .hand-reply.has-words .hand-reply__hint { opacity: 0; }
+
+/* ---- copying it out (c): the letter lies faintly on the sheet (the engine's ghost) and the reader types it;
+   below the sheet, the typed text in the site's Persian face, lit as far as it has been copied ---- */
+.hand-copy { position: relative; padding: .4rem 44px 2.4rem 40px; }
+.hand-copy[hidden] { display: none; }
+.hand-copy__line {
+  margin: 0; overflow: hidden; white-space: nowrap;
+  font: 400 1.15rem/2 var(--fa); color: var(--ro-mark-rule);
+  border-top: 1px solid var(--ro-mark-rule);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+.hand-copy__line .w { transition: color .3s; }
+.hand-copy__line .done, .hand-copy__line .ok { color: var(--ro-mark); }
+.hand-copy__line .now { color: var(--ro-mark-soft); }
+.hand-copy__line .bad { color: var(--live); }
+.hand-copy__line .next { text-decoration: underline 2px var(--live); text-underline-offset: .3em; text-decoration-skip-ink: none; }
+.hand-copy__line .caret { display: inline-block; width: 1px; height: 1.1em; margin: 0 1px; vertical-align: -.2em; background: var(--live); animation: hand-blink 1.1s steps(1) infinite; }
+@keyframes hand-blink { 50% { opacity: 0; } }
+.hand-copy__input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+/* the word to copy next, underlined on the sheet */
+.hand-copy__at { position: absolute; height: 1px; background: var(--live); pointer-events: none; z-index: 2; transition: left .2s, top .2s, width .2s; }
+.hand-copy__at[hidden] { display: none; }
+.hand-copy__hint { display: none; }
+.ro-hand .ro-frame.is-copying { cursor: text; }
+.ro-hand .ro-frame.is-copying #hint { display: none; }
+.ro-hand .ro-frame.is-copying .hand-copy__hint { display: block; }
+.ro-hand .ro-frame.is-copying .hand-copy__hint.gone { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .hand-copy__line .caret { animation: none; } }
+.ro-hand .ro-frame.is-copying.owns .hand-copy__hint { opacity: 1; }
+.ro-hand .ro-frame.is-copying.owns .hand-copy__hint.gone { opacity: 0; }

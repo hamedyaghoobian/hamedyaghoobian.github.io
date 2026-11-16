@@ -76,15 +76,21 @@
 
   <div class="ro-stage">
     <figure class="ro-frame frame" id="frame" tabindex="0" data-fp-own-keys data-ta="frame-aria" aria-label="The sheet. Focus it and the keys work the piece; press Esc to give them back.">
-      <div class="hand-sheet" id="sheet"></div>
+      <div class="hand-sheet" id="sheet"><i class="hand-copy__at" id="copy-at" hidden aria-hidden="true"></i></div>
+      <div class="hand-copy" id="copy" hidden>
+        <p class="hand-copy__line" id="copy-line" lang="fa" dir="rtl" aria-hidden="true"></p>
+        <input class="hand-copy__input" id="copy-input" type="text" lang="fa" dir="rtl" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-describedby="copy-line" aria-label="Type the letter out, in Persian. Each word is written when you finish it." data-ta="copy-input-a">
+      </div>
       <p class="ro-owner" aria-hidden="true">keys: page · enter to take them</p>
       <div class="ro-caps controls">
         <button type="button" class="ro-cap" id="again" data-ro-key="r" title="Write it again (r)" aria-label="Write it again" data-tt="again-t" data-ta="again-a">↺<kbd>r</kbd></button>
         <button type="button" class="ro-cap" id="all" data-ro-key="w" title="Write it all at once (w)" aria-label="Write it all at once" data-tt="all-t" data-ta="all-a">⇥<kbd>w</kbd></button>
+        <button type="button" class="ro-cap" id="copy-key" data-ro-key="c" aria-pressed="false" title="Copy it out yourself (c)" aria-label="Copy it out yourself" data-tt="copy-t" data-ta="copy-a">✎<kbd>c</kbd></button>
         <button type="button" class="ro-cap" id="next" data-ro-key="n" title="Another letter (n)" aria-label="Another letter" data-tt="next-t" data-ta="next-a">→<kbd>n</kbd></button>
       </div>
       <i class="hand-pen" id="pen" aria-hidden="true"></i>
       <p class="ro-hint hint" id="hint" data-t="hint">the pen writes from the right · n another letter · h the other hand</p>
+      <p class="ro-hint hand-copy__hint" id="copy-hint" data-t="copy-hint">type the letter in Persian · space writes the word · esc stops</p>
     </figure>
 
     <div class="ro-controls hands" role="group" aria-label="The hand" data-ta="hands-a">
@@ -129,6 +135,7 @@
       <p>This piece puts a hand back. It takes the 123 Persian letters of the <em>Monsha'at</em> as volunteers typed them for Ganjoor and writes each one out again, stroke by stroke, right to left, in a hand that never existed. Each word is shaped by HarfBuzz in the nasta'liq of Noto Nastaliq Urdu. Each letter of the font is thinned to the single line a pen would take, and repaired where the machine traces it wrongly: a <span lang="fa">م</span> that came out as a dot, a <span lang="fa">ح</span> that closed into a <span lang="fa">ه</span>. The pen then travels that line at the speed a hand moves, slower in the turns. Its ink pools where it slows and thins where it hurries.</p>
       <p>There are two hands. The first is a reed, <span lang="fa">قلم نی</span>, of the kind Qaem-Maqam's secretaries used, measured against a Qajar letter in Harvard's <em>Women's Worlds in Qajar Iran</em> archive: its weight, the height of its letters, how many words fit a line. It draws the font's own thick and thin, revealed as the pen passes, and bends each word a little so no two are alike. The second is a fine pen, small, flat and quick, with the lines far apart, after the many handwritten letters of the religious scholars of the last century. Neither is anyone's hand. The words are Qaem-Maqam's; the hand is a guess at what was taken out.</p>
       <p>Long letters are written as their opening, to the end of a sentence. Press <span class="fp-k">n</span> for another letter, <span class="fp-k">h</span> for the other hand. The same letter never comes out the same way twice.</p>
+      <p>Or copy it out yourself. Press <span class="fp-k">c</span> and the letter lies faintly on the sheet, as a page to copy from; type it in Persian and, as each word is finished, the pen writes it over its shadow. Nobody counts your speed or your slips: a wrong letter shows in red in the line below and the pen writes the word as the letter has it.</p>
       <p>Under the letter is a sheet for a reply. Write in Persian and the same hand writes it back, a word at a time, once each word is finished, since a Persian letter changes its shape until the word ends. Take a word back and it is crossed out, not erased: once, then harder, then scribbled over. The page can be kept.</p>
     </div>
 
