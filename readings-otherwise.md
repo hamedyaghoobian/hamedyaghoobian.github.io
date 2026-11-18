@@ -15,16 +15,35 @@ permalink: /readings-otherwise/
 <p class="ro-intro" data-t="intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="fp-toolbar">
-  <p class="fp-label" data-t="count">6 pieces · newest first</p>
+  <p class="fp-label" data-t="count">7 pieces · newest first</p>
   <p class="fp-label" data-t="toolbar-keys"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open</p>
 </div>
 
 <ol class="fp-index ro-index">
   <li class="fp-row ro-row" data-fp-part>
+    <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-poets-answered/' | relative_url }}">
+      <span class="fp-row__n">06.7</span>
+      <span class="fp-row__t" data-t="r7-t">What the Poets Answered</span>
+      <span class="fp-row__m" data-t="r7-m"><span class="fp-live" aria-label="newest"></span>No. 7 · <time datetime="2026-11-18">18 nov 2026</time></span>
+      <span class="fp-row__x" aria-hidden="true">→</span>
+    </a>
+    <div class="fp-row__body" data-t="r7-b">
+      <p class="ro-row__line">Ghazals as fireflies. 62,744 ghazals by 161 poets, 1,989 answers</p>
+      <dl class="fp-spec ro-spec">
+        <dt>taken out</dt><dd>everything but each ghazal's metre, rhyme and opening couplet</dd>
+        <dt>left</dt><dd>every ghazal on Ganjoor, from Rudaki to the twentieth century, each flashing on its own beat</dd>
+        <dt>in step</dt><dd>1,989 ghazals that answer an earlier poet's, flashing with what they answer</dd>
+      </dl>
+      <p class="ro-note">For a thousand years Persian poets wrote ghazals to one another, taking up an earlier ghazal's metre, rhyme and opening words: <bdi lang="fa">استقبال</bdi>, going out to meet it. Here every ghazal on Ganjoor is a firefly, and an answer falls into step with what it answers and flashes with it, centuries apart. Sharing a metre and rhyme is mostly chance; sharing the opening is not. The field falls into step slowly, from 4 answers in 1,886 ghazals in the 1100s to one in fifteen in the 1900s, and never all the way. Hafez is answered most for what he wrote: more than one ghazal in four.</p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-poets-answered/' | relative_url }}">See it</a> <a href="https://ganjoor.net">Read the ghazals on Ganjoor</a></p>
+    </div>
+  </li>
+
+  <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-hand-gives-back/' | relative_url }}">
       <span class="fp-row__n">06.6</span>
       <span class="fp-row__t" data-t="r6-t">What the Hand Gives Back</span>
-      <span class="fp-row__m" data-t="r6-m"><span class="fp-live" aria-label="newest"></span>No. 6 · <time datetime="2026-11-12">12 nov 2026</time></span>
+      <span class="fp-row__m" data-t="r6-m">No. 6 · <time datetime="2026-11-12">12 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
     <div class="fp-row__body" data-t="r6-b">
@@ -138,4 +157,4 @@ permalink: /readings-otherwise/
 
 <link rel="stylesheet" href="{{ '/readings-otherwise/lang.css' | relative_url }}?v=1">
 <script src="{{ '/readings-otherwise/lang.js' | relative_url }}?v=2"></script>
-<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=3"></script>
+<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=4"></script>
