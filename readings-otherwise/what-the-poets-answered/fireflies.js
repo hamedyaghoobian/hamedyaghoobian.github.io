@@ -14,7 +14,8 @@
 
 (function () {
   const YEAR0 = 1050, YEAR1 = 1990, RUN = 75;              // the whole span, in seconds of play
-  const STRIP = 66, PAD = 14;                               // the counts at the foot, in px
+  let STRIP = 66, SIZE = 1;                                 // the counts at the foot, in px; a flash's size
+  const PAD = 14;
   const SYNC_YEARS = 18;                                    // how long an answer takes to fall into step
   const CREAM = "242,235,218", YELLOW = "242,197,0";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -40,7 +41,7 @@
   let seed = 7;
   const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
 
-  fetch("data/field.json").then(r => r.json()).then(d => { D = d; build(); resize(); requestAnimationFrame(loop); })
+  fetch("data/field.json?v=2").then(r => r.json()).then(d => { D = d; build(); resize(); requestAnimationFrame(loop); })
     .catch(() => frame.insertAdjacentHTML("beforeend", `<p class="fallback">${tr("The ghazals could not be loaded.")}</p>`));
 
   function build() {
@@ -85,6 +86,7 @@
     dpr = Math.min(2, devicePixelRatio || 1);
     const r = frame.getBoundingClientRect();
     cw = r.width; ch = r.height;
+    STRIP = cw < 560 ? 46 : 66; SIZE = Math.max(.45, Math.min(1, cw / 760));
     for (const c of [cv, base]) { c.width = cw * dpr; c.height = ch * dpr; }
     cv.style.width = cw + "px"; cv.style.height = ch + "px";
     baseUpTo = -1;
@@ -109,6 +111,7 @@
   const flash = ph => (ph < .08 ? 1 - ph / .08 : 0);
   function bright(i) {
     if (gyear[i] > T) return 0;
+    if (reduce) return chain[i] >= 0 ? .55 : 0;          // still: the chains lit, nothing flashing
     const own = flash((t / ownP[i] + ownF[i]) % 1);
     if (chain[i] < 0) return own * .7;
     const r = root[i];
@@ -162,7 +165,7 @@
       if (gyear[i] > T) continue;
       const b = bright(i);
       if (b < .04) continue;
-      const s = chain[i] >= 0 ? 18 : 7;
+      const s = (chain[i] >= 0 ? 18 : 7) * SIZE;
       cx.globalAlpha = b * (chain[i] >= 0 ? 1 : .3);
       cx.drawImage(glow, X(i) - s / 2, Y(i) - s / 2, s, s);
     }
@@ -208,7 +211,7 @@
       cx.fillStyle = `rgba(${CREAM},.5)`;
       cx.textAlign = "center";
       cx.fillText(fa() ? RO.num(c.c) : c.c, (x0 + x1) / 2, y0 + h + 13);
-      if (on && x1 - x0 > 36) {
+      if (on && x1 - x0 > 46) {
         cx.fillStyle = `rgba(${CREAM},.85)`;
         cx.fillText(pct(c.answers / c.n), (x0 + x1) / 2, y0 + h - ha - 3);
       }

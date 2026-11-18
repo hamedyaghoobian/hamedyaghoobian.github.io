@@ -38,3 +38,8 @@ main > .fallback, body > .fallback { position: static; }
 /* in Persian (../lang.js): what the piece writes is set in the site's Persian face */
 html[data-lang="fa"] .ro-poets :is(.clock, .ro-panel .where, .link .how) { font-family: var(--fa); letter-spacing: 0; }
 .ro-poets .reading .ro-hint { opacity: 0; }
+@media (max-width: 640px) {
+  .ro-poets .ro-stage { --aspect: .95; }
+  .ro-poets .ro-caps, .ro-poets .ro-hint { bottom: 54px; }
+  .ro-poets .ro-panel { bottom: 46px; }
+}
