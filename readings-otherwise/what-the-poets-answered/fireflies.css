@@ -45,3 +45,9 @@ html[data-lang="fa"] .ro-poets :is(.clock, .ro-panel .where, .link .how) { font-
   .ro-poets .ro-caps, .ro-poets .ro-hint { bottom: 54px; }
   .ro-poets .ro-panel { bottom: 46px; }
 }
+
+/* the whole screen (f): the frame over the window, the browser's full screen where it has one */
+.ro-poets .ro-stage:fullscreen { background: var(--ro-sky); }
+.ro-poets .ro-frame.max { position: fixed; inset: 0; z-index: 1000; width: 100vw; height: 100vh; height: 100dvh; min-width: 0; aspect-ratio: auto; margin: 0; border-radius: 0; box-shadow: none; }
+html.ro-maxed, html.ro-maxed body { overflow: hidden; }
+.ro-poets .ro-cap#speed span { font: 500 .66rem/1 var(--mono); }

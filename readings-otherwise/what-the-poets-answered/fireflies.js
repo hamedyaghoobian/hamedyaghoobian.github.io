@@ -10,7 +10,8 @@
 // poet, against the share the same test finds when the rhymes are shuffled (chance).
 //
 // Keys (piece.js gives them to the piece): space play · ← → twenty years · 1–9 a century ·
-// 0 the end · j k the next or previous answer · c contemporaries · s the same openings.
+// 0 the end · j k the next or previous answer · c contemporaries · s the same openings ·
+// - + slower or faster (time and the flashing together) · f the whole screen.
 
 (function () {
   const YEAR0 = 1050, YEAR1 = 1990, RUN = 75;              // the whole span, in seconds of play
@@ -33,6 +34,8 @@
   let links = [], answers = [];          // [a, to, tier, shared, titled]
   let tiers = { 1: false, 2: false };    // contemporaries, the same openings (answers are always on)
   let T = reduce ? YEAR1 : YEAR0, playing = !reduce, last = 0, t = 0;
+  const SPEEDS = [1, .5, .25];           // the pace of everything: the years going by and the flashing
+  let speed = 0;
   let cw = 1, ch = 1, dpr = 1, baseUpTo = -1;
   let sel = -1, hover = -1, step = -1;
   const texts = {};
@@ -133,7 +136,7 @@
   }
 
   function loop(now) {
-    const dt = Math.min(.1, (now - last) / 1000 || 0); last = now;
+    const dt = Math.min(.1, (now - last) / 1000 || 0) * SPEEDS[speed]; last = now;
     t += dt;
     if (playing) { T = Math.min(YEAR1, T + dt * (YEAR1 - YEAR0) / RUN); if (T >= YEAR1) { playing = false; showPlay(); } }
     requestAnimationFrame(loop);
@@ -306,6 +309,32 @@
     const b = $("#" + id);
     b.addEventListener("click", () => { tiers[tier] = !tiers[tier]; b.setAttribute("aria-pressed", tiers[tier]); chains(); if (sel >= 0) show(sel); });
   }
+  // slower: the same field, everything at half or a quarter the pace
+  const speedBtn = $("#speed");
+  function setSpeed(s) {
+    speed = Math.max(0, Math.min(SPEEDS.length - 1, s));
+    speedBtn.querySelector("span").textContent = ["1×", "½×", "¼×"][speed];
+    speedBtn.setAttribute("aria-pressed", speed > 0);
+  }
+  speedBtn.addEventListener("click", () => setSpeed((speed + 1) % SPEEDS.length));
+
+  // the whole screen: the browser's own full screen where there is one (not on an iPhone),
+  // and the frame spread over the window either way, so there is nothing to zoom
+  const fullBtn = $("#full"), stage = frame.closest(".ro-stage");
+  const isMax = () => frame.classList.contains("max");
+  function setMax(on) {
+    if (on === isMax()) return;
+    frame.classList.toggle("max", on);
+    document.documentElement.classList.toggle("ro-maxed", on);
+    fullBtn.setAttribute("aria-pressed", on);
+    fullBtn.querySelector("span").textContent = on ? "⤡" : "⤢";
+    if (on && stage.requestFullscreen && !document.fullscreenElement) stage.requestFullscreen().catch(() => {});
+    if (!on && document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    frame.focus({ preventScroll: true });
+  }
+  fullBtn.addEventListener("click", () => setMax(!isMax()));
+  document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) setMax(false); });
+
   function go(dir) {
     if (!answers.length) return;
     step = Math.max(0, Math.min(answers.length - 1, step + dir));
@@ -317,7 +346,7 @@
 
   const piece = window.Piece({
     frame,
-    keys: () => [["space", tr("play · pause")], ["← →", tr("twenty years")], ["1–9", tr("a century")], ["j k", tr("the next answer")], ["c", tr("contemporaries")], ["s", tr("the same openings")]],
+    keys: () => [["space", tr("play · pause")], ["← →", tr("twenty years")], ["1–9", tr("a century")], ["j k", tr("the next answer")], ["c", tr("contemporaries")], ["s", tr("the same openings")], ["- +", tr("slower · faster")], ["f", tr("whole screen")]],
     help: () => [
       ["space", tr("play or pause the centuries")],
       ["← →", tr("twenty years back or on")],
@@ -326,6 +355,8 @@
       ["j k", tr("the next / previous answer, in the order they were written: the answer and what it answers show below")],
       ["c", tr("show the answers between contemporaries, where who answered whom can't be told")],
       ["s", tr("show the openings that are the same word for word: a quotation, or one poem in two divans")],
+      ["- +", tr("slower or faster: half or a quarter the pace, the years and the flashing both")],
+      ["f", tr("fill the whole screen, and back (esc too)")],
     ],
     key(e) {
       const k = e.key;
@@ -338,9 +369,12 @@
       if (k === "k") { go(-1); return true; }
       if (k === "c") { $("#contemps").click(); return true; }
       if (k === "s") { $("#same").click(); return true; }
+      if (k === "-" || k === "_") { setSpeed(speed + 1); return true; }
+      if (k === "+" || k === "=") { setSpeed(speed - 1); return true; }
+      if (k === "f") { setMax(!isMax()); return true; }
       return false;
     },
-    escape() { if (sel >= 0) { show(-1); return true; } return false; },
+    escape() { if (sel >= 0) { show(-1); return true; } if (isMax()) { setMax(false); return true; } return false; },
   });
   document.addEventListener("ro-lang", () => { if (sel >= 0) show(sel); });
   showPlay();
