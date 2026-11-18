@@ -1,0 +1,45 @@
+/* What the Poets Answered: only what this piece draws. The plate, the frame, the keycaps,
+   the key strip and the wall label are the site's (/assets/main.css, _readings.scss).
+   The field is cobalt and the fireflies are cream; the chain you are reading is your hand,
+   yellow. */
+
+.ro-poets { --ro-hand: "Amiri"; }
+.ro-poets .ro-stage { --aspect: 1.7; }
+#field { position: absolute; inset: 0; display: block; width: 100%; height: 100%; touch-action: none; }
+
+.ro-poets .clock {
+  position: absolute; left: 14px; top: 38px; margin: 0; pointer-events: none;
+  font: 500 .66rem/1.2 var(--mono); color: var(--ro-mark-soft); font-variant-numeric: tabular-nums;
+}
+.ro-poets .ro-owner { top: 10px; bottom: auto; }
+.ro-poets .ro-caps { bottom: 76px; }
+.ro-poets .ro-cap span { font-size: .7rem; }
+.ro-poets .ro-hint { bottom: 76px; }
+
+/* the ghazal under the pointer: its opening, and what it answers or what answers it */
+.ro-poets .ro-panel { bottom: 66px; padding-top: 2.2rem; }
+.ro-poets .ro-panel.show { pointer-events: auto; }
+.ro-poets .ro-panel .where { font: 400 .72rem/1.4 var(--mono); }
+.ro-poets .ro-panel .where [lang="fa"] { font: 400 .95rem/1 var(--fa); }
+.ro-poets .ro-panel .where a { color: var(--ro-mark); }
+.ro-poets .ro-panel .line { font: 400 clamp(1.05rem, 1.9vw, 1.25rem)/1.7 "Amiri", var(--fa-serif); color: var(--ro-mark); }
+.ro-poets .links { margin-top: .4rem; }
+.ro-poets .link { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 14px; margin: .25rem 0 0; }
+.ro-poets .link .how { font: 400 .64rem/1.5 var(--mono); color: var(--ro-mark-soft); }
+.ro-poets .link .how [lang="fa"] { font: 400 .85rem/1 var(--fa); color: var(--ro-mark); }
+.ro-poets .link .h { font: 400 1rem/1.5 "Amiri", var(--fa-serif); color: var(--ro-mark-soft); }
+
+.ro-poets .ro-key { flex: 0 1 300px; }
+.ro-label [lang="fa"] { font-family: "Amiri", var(--fa-serif); font-size: 1.12em; unicode-bidi: isolate; }
+
+.fallback { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 400 .8rem/1.5 var(--mono); color: var(--ro-mark); }
+main > .fallback, body > .fallback { position: static; }
+
+/* in Persian (../lang.js): what the piece writes is set in the site's Persian face */
+html[data-lang="fa"] .ro-poets :is(.clock, .ro-panel .where, .link .how) { font-family: var(--fa); letter-spacing: 0; }
+.ro-poets .reading .ro-hint { opacity: 0; }
+@media (max-width: 640px) {
+  .ro-poets .ro-stage { --aspect: .95; }
+  .ro-poets .ro-caps, .ro-poets .ro-hint { bottom: 54px; }
+  .ro-poets .ro-panel { bottom: 46px; }
+}
