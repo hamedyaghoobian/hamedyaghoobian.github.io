@@ -235,7 +235,7 @@
     const y = Math.round(T);
     return fa()
       ? `${RO.num(y)} · ${RO.num(n)} غزل · ${RO.num(a)} پاسخ`
-      : `${y} · ${num(n)} ghazals · ${num(a)} answers`;
+      : `${y} · ${num(n)} ghazal${n === 1 ? "" : "s"} · ${num(a)} answer${a === 1 ? "" : "s"}`;
   }
 
   // ---------- reading a ghazal ----------
