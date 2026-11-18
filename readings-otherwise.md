@@ -35,7 +35,7 @@ permalink: /readings-otherwise/
         <dt>in step</dt><dd>1,989 ghazals that answer an earlier poet's, flashing with what they answer</dd>
       </dl>
       <p class="ro-note">For a thousand years Persian poets wrote ghazals to one another, taking up an earlier ghazal's metre, rhyme and opening words: <bdi lang="fa">استقبال</bdi>, going out to meet it. Here every ghazal on Ganjoor is a firefly, and an answer falls into step with what it answers and flashes with it, centuries apart. Sharing a metre and rhyme is mostly chance; sharing the opening is not. The field falls into step slowly, from 4 answers in 1,886 ghazals in the 1100s to one in fifteen in the 1900s, and never all the way. Hafez is answered most for what he wrote: more than one ghazal in four.</p>
-      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-poets-answered/' | relative_url }}">See it</a> <a href="https://ganjoor.net">Read the ghazals on Ganjoor</a></p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-the-poets-answered/' | relative_url }}">See it</a> <a href="https://ganjoor.net">Read the ghazals on Ganjoor</a> <a href="https://github.com/hamedyaghoobian/ghazal-answers">Code</a></p>
     </div>
   </li>
 
@@ -157,4 +157,4 @@ permalink: /readings-otherwise/
 
 <link rel="stylesheet" href="{{ '/readings-otherwise/lang.css' | relative_url }}?v=1">
 <script src="{{ '/readings-otherwise/lang.js' | relative_url }}?v=2"></script>
-<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=4"></script>
+<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=5"></script>
