@@ -14,7 +14,7 @@
 
 (function () {
   const YEAR0 = 1050, YEAR1 = 1990, RUN = 75;              // the whole span, in seconds of play
-  let STRIP = 66, SIZE = 1;                                 // the counts at the foot, in px; a flash's size
+  let STRIP = 66, SIZE = 1, THIN = 1;                                 // the counts at the foot, in px; a flash's size
   const PAD = 14;
   const SYNC_YEARS = 18;                                    // how long an answer takes to fall into step
   const CREAM = "242,235,218", YELLOW = "242,197,0";
@@ -87,6 +87,7 @@
     const r = frame.getBoundingClientRect();
     cw = r.width; ch = r.height;
     STRIP = cw < 560 ? 46 : 66; SIZE = Math.max(.45, Math.min(1, cw / 760));
+    THIN = Math.max(.25, Math.min(1, (cw - 2 * PAD) * (ch - STRIP - 2 * PAD) / 450000)); // a small field holds the same 62,744: dim it so it does not haze over
     for (const c of [cv, base]) { c.width = cw * dpr; c.height = ch * dpr; }
     cv.style.width = cw + "px"; cv.style.height = ch + "px";
     baseUpTo = -1;
@@ -103,8 +104,9 @@
     if (baseUpTo === T) return;
     bx.setTransform(dpr, 0, 0, dpr, 0, 0);
     bx.clearRect(0, 0, cw, ch);
-    bx.fillStyle = `rgba(${CREAM},.22)`;
-    for (let i = 0; i < N; i++) if (gyear[i] <= T) bx.fillRect(X(i) - .6, Y(i) - .6, 1.2, 1.2);
+    bx.fillStyle = `rgba(${CREAM},${.22 * THIN})`;
+    const d = THIN < 1 ? .9 : 1.2;
+    for (let i = 0; i < N; i++) if (gyear[i] <= T) bx.fillRect(X(i) - d / 2, Y(i) - d / 2, d, d);
     baseUpTo = T;
   }
 
@@ -153,7 +155,7 @@
     for (const [a, to, tier] of links) {
       if (!(tier === 0 || tiers[tier]) || gyear[a] > T) continue;
       const fresh = 1 - Math.min(1, (T - gyear[a]) / 30);   // a new answer draws its line bright
-      const b = Math.max(bright(a) * .35, fresh * .55);
+      const b = Math.max(bright(a) * .35, fresh * .55) * (tier ? THIN : Math.sqrt(THIN));
       const mine = chain[a] === lit;
       if (b < .02 && !mine) continue;
       cx.strokeStyle = mine ? `rgba(${YELLOW},${.35 + .6 * b})` : `rgba(${CREAM},${b})`;
@@ -166,7 +168,7 @@
       const b = bright(i);
       if (b < .04) continue;
       const s = (chain[i] >= 0 ? 18 : 7) * SIZE;
-      cx.globalAlpha = b * (chain[i] >= 0 ? 1 : .3);
+      cx.globalAlpha = b * (chain[i] >= 0 ? 1 : .3 * THIN);
       cx.drawImage(glow, X(i) - s / 2, Y(i) - s / 2, s, s);
     }
     cx.globalAlpha = 1; cx.globalCompositeOperation = "source-over";
