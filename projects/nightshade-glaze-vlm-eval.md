@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "Poisoned Pixels: How Vision-Language Models Read Protected Art"
-heading: "Poisoned Pixels"   # the plate shows the name; the full title is for the tab, search and link previews
-short: poisoned pixels
+title: "Tooth: Giving Artworks a Bite Against Machine Reading"
+heading: "Tooth"   # the plate shows the name; the full title is for the tab, search and link previews
+short: tooth
 dek: "How vision-language models read artworks protected by Nightshade and Glaze, and Tooth, a studio tool where artists paint a visible protective layer and see what the machines make of it."
 term: Fall 2026
 status: live
