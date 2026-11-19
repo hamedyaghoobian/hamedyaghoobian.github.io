@@ -9,7 +9,7 @@ wide: true
 # own words, kept here.
 list:
   /projects/nightshade-glaze-vlm-eval:
-    name: "Nightshade/Glaze VLM Evaluation Harness"
+    name: "Poisoned Pixels: How Vision-Language Models Read Protected Art"
     blurb: "How vision-language models read artworks protected by Nightshade and Glaze, and Tooth, a studio tool for painting visible protection."
   /projects/grammar-of-belief:
     name: "The Grammar of Belief"

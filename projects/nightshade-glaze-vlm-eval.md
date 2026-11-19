@@ -1,7 +1,8 @@
 ---
 layout: page
-title: Nightshade/Glaze VLM Evaluation Harness
-short: nightshade / glaze
+title: "Poisoned Pixels: How Vision-Language Models Read Protected Art"
+heading: "Poisoned Pixels"   # the plate shows the name; the full title is for the tab, search and link previews
+short: poisoned pixels
 dek: "How vision-language models read artworks protected by Nightshade and Glaze, and Tooth, a studio tool where artists paint a visible protective layer and see what the machines make of it."
 term: Fall 2026
 status: live
@@ -60,6 +61,4 @@ Each reading is shown next to a **noise twin**: the same amount of random change
 
 ## What comes next
 
-- Offline measurements on public sample images of how strong a layer has to be before readings change, and what happens to it after an image is compressed and posted.
-- Sessions with artists using Tooth, beginning only after IRB approval.
-- A write-up, in preparation.
+Work in progress: artist sessions with Tooth after IRB approval, then a write-up.
