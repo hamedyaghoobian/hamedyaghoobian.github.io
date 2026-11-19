@@ -25,6 +25,7 @@ list_title: " "
   <dt>online readers</dt><dd>Claude Haiku 5.5 · TypeSafe Jev</dd>
   <dt>tools tested</dt><dd>Nightshade · Glaze (anti-AI-training)</dd>
   <dt>studio tool</dt><dd><a href="https://tooth-studio.web.app">Tooth</a> · research prototype</dd>
+  <dt>gallery</dt><dd><a href="https://tooth-studio.web.app/gallery/">flip gallery</a> · 14 artworks, read by machines at rising strengths</dd>
 </dl>
 </div>
 
@@ -58,6 +59,8 @@ In a small pilot, protection people couldn't see did little to the models' readi
 [Tooth](https://tooth-studio.web.app) (the texture of paper or canvas that grips the pigment, and a bite) is the studio tool that came out of the pilot. An artist paints a protective layer onto their work, with a brush or an Apple Pencil, choosing among paper and cloth textures, plain noise, or a "machine pigment" tuned to make AI see a word they choose. The layer stays visible. Then they ask the machines what they read in it.
 
 Each reading is shown next to a **noise twin**: the same amount of random change in the same places, so the artist can see what their layer did that noise alone wouldn't. Readings are kept side by side and never collapsed into a protection score; Tooth doesn't promise protection. The machine pigment is computed on the visitor's own graphics chip, and an artwork goes to the online readers only when the artist asks.
+
+The [flip gallery](https://tooth-studio.web.app/gallery/) shows the same idea at a larger scale: 14 openly licensed artworks, each painted with a machine pigment at several strengths beside a noise twin of the same size, and read by four computer-vision systems and three vision-language models. You can see, work by work, where a reading flips and what the image looks like when it does.
 
 ## What comes next
 
