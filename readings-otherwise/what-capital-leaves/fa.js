@@ -39,7 +39,7 @@ RO.add({
       <p>≋ را در گوشهٔ قاب بزنید تا لایه‌های نقاشی از هم جدا شوند: زمینه، نشانه‌ها، صداها و شبح‌ها. سپس با 1 تا 4 هر کدام را تنها ببینید.</p>`,
     "colophon": 'متن: ویرایش marxists.org که آرشیو اینترنت آن را نویسه‌خوانی (OCR) کرده و با کد پاک‌سازی و شمرده شده است. توکن‌ها با توکن‌ساز o200k شمرده شده‌اند، یعنی به همان شیوه‌ای که یک مدل زبانی این صفحه‌ها را می‌خواند. این اثر در ۱۴۰۵ با Claude ساخته شد، مدلی زبانی که خود از نوشته‌های دیگران فراهم آمده و اینجا کتابی را از هم می‌گشاید که دربارهٔ کار مرده است. <a href="read/">یا آن را به‌صورت صفحه بخوانید ←</a>',
     "colophon-code": 'کد و داده‌ها در دسترس همه است: <a href="https://github.com/hamedyaghoobian/what-capital-leaves">github.com/hamedyaghoobian/what-capital-leaves</a>',
-    "colophon-cite": 'برای ارجاع: یعقوبیان، حامد. ۱۴۰۵. «آنچه سرمایه از خود به جا می‌گذارد». <em>خوانش‌های ماشینی</em>، شمارهٔ ۱. اثر تعاملی، ۶ آبان ۱۴۰۵. <a href="https://hamedyaghoobian.com/readings-otherwise/what-capital-leaves/" dir="ltr">https://hamedyaghoobian.com/readings-otherwise/what-capital-leaves/</a>. این اثر با پروانهٔ <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> و کدش با پروانهٔ MIT منتشر شده است: آزادید آن را به کار ببرید، تغییر دهید و درس دهید، به شرط آنکه منبعش را بگویید. آنچه از جای دیگر آمده (متن‌ها، قلم‌ها و نگاره‌هایی که بالاتر نام برده شد) شرایط خودش را دارد.',
+    "colophon-cite": 'ارجاع: یعقوبیان، حامد. ۱۴۰۵. «آنچه سرمایه از خود به جا می‌گذارد». <em>خوانش‌های ماشینی</em>، شمارهٔ ۱. <a href="https://hamedyaghoobian.com/readings-otherwise/what-capital-leaves/" dir="ltr">https://hamedyaghoobian.com/readings-otherwise/what-capital-leaves/</a>. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>؛ کد: MIT.',
     "thumb-aria": "جابه‌جایی",
   },
   w: {
