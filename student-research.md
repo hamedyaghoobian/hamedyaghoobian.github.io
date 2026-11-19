@@ -10,7 +10,7 @@ wide: true
 list:
   /projects/nightshade-glaze-vlm-eval:
     name: "Nightshade/Glaze VLM Evaluation Harness"
-    blurb: "An evaluation harness for testing how vision-language models perceive and respond to images protected by anti-AI-training tools such as Nightshade and Glaze."
+    blurb: "How vision-language models read artworks protected by Nightshade and Glaze, and Tooth, a studio tool for painting visible protection."
   /projects/grammar-of-belief:
     name: "The Grammar of Belief"
     blurb: "Testing whether language models can separate what someone believes from what is true, in English and in Turkish."
