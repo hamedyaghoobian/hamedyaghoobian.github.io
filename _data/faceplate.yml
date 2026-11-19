@@ -12,7 +12,7 @@ keys:
 
 # Siblings, for [ and ]: the order a section's children are read in.
 projects:
-  - /projects/nightshade-glaze-vlm-eval
+  - /projects/tooth
   - /projects/grammar-of-belief
   - /projects/superhost-rating-reliability
   - /projects/raising-reachy

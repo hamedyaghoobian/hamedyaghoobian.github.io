@@ -8,7 +8,7 @@ wide: true
 # _data/students.yml (who). Names and one-line descriptions are this page's
 # own words, kept here.
 list:
-  /projects/nightshade-glaze-vlm-eval:
+  /projects/tooth:
     name: "Tooth: Giving Artworks a Bite Against Machine Reading"
     blurb: "How vision-language models read artworks protected by Nightshade and Glaze, and Tooth, a studio tool for painting visible protection."
   /projects/grammar-of-belief:

@@ -10,7 +10,7 @@ from: 2026.67
 to: now
 areas: [hai, cai]
 
-permalink: /projects/nightshade-glaze-vlm-eval
+permalink: /projects/tooth
 header: true
 list_title: " "
 
