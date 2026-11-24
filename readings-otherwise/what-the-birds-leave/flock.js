@@ -22,8 +22,8 @@ const LIFT_MS = 900;
 
 // The sky is cobalt in both themes (the frame's ground is CSS: --ro-sky), and the birds are cream.
 // The Simorgh's dots are yellow: inside the frame yellow is kept for the thing the poem is looking
-// for. These are the site's tokens, as numbers: cream #F2EBDA, yellow #F2C500, night #18217F.
-const CREAM = [242, 235, 218], YELLOW = [242, 197, 0], NIGHT = "rgb(24, 33, 127)";
+// for. These are the site's tokens, as numbers: cream #E8EAF2, yellow #F2C500, night #18217F.
+const CREAM = [232, 234, 242], YELLOW = [242, 197, 0], NIGHT = "rgb(24, 33, 127)";
 const PALETTE = { ink: CREAM, gold: YELLOW, letters: CREAM, letterA: .34, title: CREAM };
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;

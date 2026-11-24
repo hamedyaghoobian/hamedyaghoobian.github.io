@@ -15,7 +15,7 @@ const LOOK = [
 ];
 // The site's tokens, as numbers 0–1: the only colours in the painting.
 const RGB = c => c.map(v => v / 255);
-const CREAM = RGB([242, 235, 218]), COBALT = RGB([43, 59, 209]), DEEP = RGB([31, 42, 158]),
+const CREAM = RGB([232, 234, 242]), COBALT = RGB([43, 59, 209]), DEEP = RGB([31, 42, 158]),
       NIGHT = RGB([24, 33, 127]), RED = RGB([224, 54, 44]), RED_LIT = RGB([255, 107, 94]);
 // what each mark leans toward: the heavy marks (full stop, dash) sink to night, brackets of
 // thought (parentheses, ellipses) to cobalt, the rest lift to cream

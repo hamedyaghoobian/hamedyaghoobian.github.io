@@ -23,8 +23,8 @@ const FIGURE = ["", "an animal", "an animal as a person", "said of a person or t
 // the classes of light: 0 not judged, 1-4 the spectrum, 5 a figure of speech
 const CLASS_OF = r => r[1] === 3 ? 5 : r[4];
 
-// The site's tokens, as numbers: cream #F2EBDA, yellow #F2C500.
-const CREAM = [242, 235, 218], YELLOW = [242, 197, 0];
+// The site's tokens, as numbers: cream #E8EAF2, yellow #F2C500.
+const CREAM = [232, 234, 242], YELLOW = [242, 197, 0];
 const LIGHT = [[CREAM, .3], [CREAM, .3], [CREAM, .58], [YELLOW, 1], [CREAM, 1], [CREAM, .85]];
 
 const frame = document.getElementById("frame");

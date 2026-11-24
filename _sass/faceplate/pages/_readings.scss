@@ -59,8 +59,8 @@
 .ro-piece {
   --ro-sky: var(--cobalt-deep);                 // the frame's ground, against a cream page
   --ro-mark: var(--cream);
-  --ro-mark-soft: rgba(242, 235, 218, .62);     // cream at 62%, the same step as --ink-soft
-  --ro-mark-rule: rgba(242, 235, 218, .28);
+  --ro-mark-soft: rgba(232, 234, 242, .62);     // the ground at 62%, the same step as --ink-soft
+  --ro-mark-rule: rgba(232, 234, 242, .28);
   --ro-veil: color-mix(in srgb, var(--cobalt-night) 88%, transparent);
   padding-bottom: 44px;                         // room for the key strip
 }

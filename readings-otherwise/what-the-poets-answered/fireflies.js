@@ -18,7 +18,7 @@
   let STRIP = 66, SIZE = 1, THIN = 1;                                 // the counts at the foot, in px; a flash's size
   const PAD = 14;
   const SYNC_YEARS = 18;                                    // how long an answer takes to fall into step
-  const CREAM = "242,235,218", YELLOW = "242,197,0";
+  const CREAM = "232,234,242", YELLOW = "242,197,0";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const tr = s => (window.RO ? RO.tr(s) : s);
   const fa = () => window.RO && RO.fa();

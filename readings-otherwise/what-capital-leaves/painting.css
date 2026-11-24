@@ -20,7 +20,7 @@ body.exploded #sea { cursor: default; }
   font-style: italic;
   white-space: nowrap;
   color: var(--cream);
-  text-shadow: 0 0 .6em rgba(242, 235, 218, .55), 0 0 1.6em rgba(242, 235, 218, .3);
+  text-shadow: 0 0 .6em rgba(232, 234, 242, .55), 0 0 1.6em rgba(232, 234, 242, .3);
   animation: rise 9s ease-in-out forwards;
   will-change: transform, opacity, filter;
 }
@@ -76,7 +76,7 @@ body.exploded #sea { cursor: default; }
 }
 .ro-panel.testimony .sentence { font-style: italic; color: var(--ro-mark); }
 .ro-panel .sentence b { font-weight: 500; font-style: normal; color: var(--ro-mark); }
-.ro-panel .sentence b.q { color: var(--cream); text-shadow: 0 0 .5em rgba(242, 235, 218, .7); }
+.ro-panel .sentence b.q { color: var(--cream); text-shadow: 0 0 .5em rgba(232, 234, 242, .7); }
 .ro-panel .sentence b.here { color: var(--red); text-shadow: none; }
 
 /* ---- layers and one layer alone: the site's (_readings.scss) ---- */

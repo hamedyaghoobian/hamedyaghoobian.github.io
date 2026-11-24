@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Tokens. Four colours from the bag, each with one job:
-//   cream   the ground
+//   cream   the ground: a pale blueprint grey (#E8EAF2; the name stays from
+//           the first palette, a warm cream, retired as a reflex AI surface)
 //   cobalt  all type and every line
 //   red     live: what is happening now (the clock, the newest item, the
 //           lit part of a figure). Only ever a dot or a thin line.
@@ -13,7 +14,7 @@
 // ─────────────────────────────────────────────────────────────
 
 :root {
-  --cream: #F2EBDA;
+  --cream: #E8EAF2;
   --cobalt: #2B3BD1;
   --cobalt-deep: #1F2A9E;
   --cobalt-night: #18217F;
@@ -23,7 +24,7 @@
 
   --paper: var(--cream);
   --ink: var(--cobalt);
-  --ink-soft: #4F5BD3;          // cobalt at about 82% on cream (4.7:1, WCAG AA), solid so lines don't double up
+  --ink-soft: #4F5BD3;          // cobalt at about 82% on the ground (4.6:1, WCAG AA), solid so lines don't double up
   --rule: rgba(43, 59, 209, .24);
   --rule-strong: rgba(43, 59, 209, .55);
   --faint: rgba(43, 59, 209, .07);
@@ -58,9 +59,9 @@
   --paper: var(--cobalt-deep);
   --ink: var(--cream);
   --ink-soft: #AAA9C6;
-  --rule: rgba(242, 235, 218, .24);
-  --rule-strong: rgba(242, 235, 218, .55);
-  --faint: rgba(242, 235, 218, .07);
+  --rule: rgba(232, 234, 242, .24);
+  --rule-strong: rgba(232, 234, 242, .55);
+  --faint: rgba(232, 234, 242, .07);
   --glow: var(--red-lit);
   --live: var(--red-lit);
   --led: var(--red);            // the held key is cream in the dark

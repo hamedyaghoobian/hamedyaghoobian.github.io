@@ -19,8 +19,8 @@ const DEATHS_KEY = "what-ferdowsi-let-in:deaths";
 
 // The field is cobalt in both themes (the frame's ground is CSS: --ro-sky); the Arabic words and
 // the ghost of the Persian are cream. The deaths are red, as the wall label says: the one red in
-// the piece. The site's tokens, as numbers: cream #F2EBDA, red #E0362C.
-const CREAM = [242, 235, 218], RED = [224, 54, 44];
+// the piece. The site's tokens, as numbers: cream #E8EAF2, red #E0362C.
+const CREAM = [232, 234, 242], RED = [224, 54, 44];
 const PALETTE = { word: CREAM, ghost: CREAM, ghostA: .2, title: CREAM, death: RED };
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -26,8 +26,8 @@ const FIGURE = ["", "a plant", "a plant as a person", "said of a person or thing
 const FIG = 6;
 const CLASS_OF = r => r[1] === 3 ? FIG : r[4];
 
-// The site's tokens, as numbers: cream #F2EBDA, yellow #F2C500.
-const CREAM = [242, 235, 218], YELLOW = [242, 197, 0];
+// The site's tokens, as numbers: cream #E8EAF2, yellow #F2C500.
+const CREAM = [232, 234, 242], YELLOW = [242, 197, 0];
 const LIGHT = [[CREAM, .3], [CREAM, .28], [CREAM, .5], [YELLOW, 1], [CREAM, .76], [CREAM, 1], [CREAM, .85]];
 
 const frame = document.getElementById("frame");

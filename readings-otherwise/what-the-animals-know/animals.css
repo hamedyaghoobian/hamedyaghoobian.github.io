@@ -55,8 +55,8 @@
 .sw::after { content: ""; display: block; height: 100%; border-radius: 1px; }
 .sw.k4::after { background: var(--cream); }
 .sw.k3::after { background: var(--yellow); }
-.sw.k2::after { background: rgba(242, 235, 218, .58); }
-.sw.k1::after { background: rgba(242, 235, 218, .3); }
+.sw.k2::after { background: rgba(232, 234, 242, .58); }
+.sw.k1::after { background: rgba(232, 234, 242, .3); }
 .sw.k5::after { box-shadow: inset 0 0 0 1.5px var(--cream); margin: 1px; height: calc(100% - 2px); }
 :root[data-theme="dark"] .sw { background: var(--cobalt-night); box-shadow: inset 0 0 0 1px var(--rule-strong); }
 

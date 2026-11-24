@@ -11,9 +11,9 @@ This folder is a copy of the site. The live repo is untouched.
 
 | token | light | dark | job |
 |---|---|---|---|
-| `--paper` | cream `#F2EBDA` | deep cobalt `#1F2A9E` | the ground |
+| `--paper` | blueprint grey `#E8EAF2` (token still named `--cream`) | deep cobalt `#1F2A9E` | the ground |
 | `--ink` | cobalt `#2B3BD1` | cream | all type, every line |
-| `--ink-soft` | `#6E76D0` | `#AAA9C6` | labels, secondary lines |
+| `--ink-soft` | `#4F5BD3` | `#AAA9C6` | labels, secondary lines |
 | `--rule` / `--rule-strong` / `--faint` | cobalt at 24% / 55% / 7% | cream at the same | hairlines, faint fills |
 | `--live` (= `--glow`) | red `#E0362C` | brighter red `#FF6B5E` | **live**: the clock, the newest item, the lit part of a figure, today's date, the light on the held key. Only ever a dot or a thin line. Red in both themes, so yellow only ever means your hand |
 | `--hand` / `--on-hand` | yellow / cobalt | yellow / cobalt | **your hand**: hover, focus, selection. Always yellow ground under cobalt text |
