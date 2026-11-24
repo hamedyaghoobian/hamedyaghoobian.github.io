@@ -99,7 +99,7 @@
 }
 .hm-key {
   &__top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
-  &__n { font: 500 .66rem/1 var(--mono); opacity: .75; }
+  &__n { font: 500 .66rem/1 var(--mono); opacity: .82; }
   &__t { font: 800 1rem/1 var(--sans); letter-spacing: -.02em; }
   &__now { font-size: .8rem; line-height: 1.35; align-self: start; }
   &__m { font: 400 .64rem/1.3 var(--mono); display: flex; align-items: center; gap: 6px; opacity: .85; }
@@ -130,7 +130,7 @@
 .hm-fig--line {
   i { position: absolute; bottom: 0; width: 1.5px; height: 18px; margin-left: -.75px; background: currentColor; }
   i.is-live { height: 30px; background: var(--live); }
-  b { position: absolute; top: 0; font: 400 .58rem/1 var(--mono); opacity: .7; }
+  b { position: absolute; top: 0; font: 400 .58rem/1 var(--mono); opacity: .82; }
   b:first-of-type { left: 0; } b:last-of-type { right: 0; }
 }
 // cells: one per tool; the one being built carries the live dot

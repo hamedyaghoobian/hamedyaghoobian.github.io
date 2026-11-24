@@ -40,7 +40,7 @@
 // a row j / k is on, or one under the pointer: the hand
 .ro-row.fp-at {
   .ro-spec dt, .ro-spec dd { border-top-color: var(--on-hand); }
-  .ro-spec dt { color: inherit; opacity: .75; }
+  .ro-spec dt { color: inherit; opacity: .82; }
   a { color: inherit; text-decoration-color: currentColor; }
   .fp-live { box-shadow: 0 0 0 1.5px var(--on-hand); }
 }
@@ -141,7 +141,7 @@
   border: 1px solid var(--ro-mark-rule); border-radius: 4px;
   background: var(--ro-veil); color: var(--ro-mark);
   font: 500 .74rem/1 var(--mono);
-  kbd { font: inherit; font-size: .66rem; opacity: .7; }
+  kbd { font: inherit; font-size: .66rem; opacity: .82; }
   &:hover, &:focus-visible, &[aria-pressed="true"] { background: var(--yellow); color: var(--cobalt); border-color: var(--yellow); outline: none; }
   &:hover kbd, &:focus-visible kbd, &[aria-pressed="true"] kbd { opacity: 1; }
   &.is-pressing { transform: translateY(1px); background: var(--yellow); color: var(--cobalt); }
@@ -217,7 +217,7 @@
   background: none; color: var(--ink);
   font: 600 .9rem/1.2 var(--sans);
   [lang="fa"] { font-family: var(--fa); font-weight: 400; margin-left: 6px; }
-  small { font: 400 .68rem/1.3 var(--mono); opacity: .75; }
+  small { font: 400 .68rem/1.3 var(--mono); opacity: .82; }
   &:hover { background: var(--hand); color: var(--on-hand); }
   &[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
   &:focus-visible { outline: 2px solid var(--hand); outline-offset: -2px; }

@@ -50,7 +50,7 @@
   text-decoration: none;
   transition: background-color .1s ease, color .1s ease, transform .08s ease;
 
-  &__n { font: 500 .66rem/1 var(--mono); opacity: .75; }
+  &__n { font: 500 .66rem/1 var(--mono); opacity: .82; }
   &__t { font: 500 .8rem/1.1 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   &:hover, &:focus-visible {
@@ -78,10 +78,10 @@
   &__marks {
     display: flex; flex-direction: column; gap: 1px;
     button {
-      appearance: none; border: 0; background: none; color: var(--ink);
-      font: 500 .62rem/1.25 var(--mono); padding: 0 3px; cursor: pointer; opacity: .42; border-radius: 2px;
-      &[aria-pressed="true"] { opacity: 1; }
-      &:hover { background: var(--hand); color: var(--on-hand); opacity: 1; }
+      appearance: none; border: 0; background: none; color: var(--ink-soft);
+      font: 500 .62rem/1.25 var(--mono); padding: 0 3px; cursor: pointer; border-radius: 2px;
+      &[aria-pressed="true"] { color: var(--ink); font-weight: 800; }
+      &:hover { background: var(--hand); color: var(--on-hand); }
     }
   }
   &__dial {
@@ -108,7 +108,7 @@
   a { text-decoration: none; }
   &__path { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   &__sep { margin: 0 .55em; opacity: .4; }
-  &__n { opacity: .7; }
+  &__n { opacity: .82; }
   &__here { opacity: .85; }
   &__keys {
     display: flex; gap: 14px; align-items: baseline; flex: none; color: var(--ink-soft);
