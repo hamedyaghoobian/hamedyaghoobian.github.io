@@ -79,7 +79,7 @@ $pj: '.fp-body:has(> .pj-head)';
   border: var(--hair) solid var(--rule-strong); border-radius: var(--radius);
   &__row {
     display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-    font: 400 .68rem/1.4 var(--mono); color: var(--ink-soft); text-transform: lowercase;
+    font: 400 .7rem/1.4 var(--mono); color: var(--ink-soft); text-transform: lowercase;
   }
   &__cap {
     margin-top: 10px; padding-top: 8px; border-top: var(--hair) solid var(--rule);

@@ -16,7 +16,7 @@
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 1.55em; height: 1.55em; padding: 0 .35em; margin-right: .4em;
   border: var(--hair) solid var(--rule-strong); border-radius: 3px;
-  font: 500 .68rem/1 var(--mono); letter-spacing: 0;
+  font: 500 .7rem/1 var(--mono); letter-spacing: 0;
   vertical-align: .08em;
   color: inherit;
 }
@@ -50,7 +50,7 @@
   text-decoration: none;
   transition: background-color .1s ease, color .1s ease, transform .08s ease;
 
-  &__n { font: 500 .66rem/1 var(--mono); opacity: .82; }
+  &__n { font: 500 .7rem/1 var(--mono); opacity: .82; }
   &__t { font: 500 .8rem/1.1 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   &:hover, &:focus-visible {
@@ -79,7 +79,7 @@
     display: flex; flex-direction: column; gap: 1px;
     button {
       appearance: none; border: 0; background: none; color: var(--ink-soft);
-      font: 500 .62rem/1.25 var(--mono); padding: 0 3px; cursor: pointer; border-radius: 2px;
+      font: 500 .7rem/1.25 var(--mono); padding: 0 3px; cursor: pointer; border-radius: 2px;
       &[aria-pressed="true"] { color: var(--ink); font-weight: 800; }
       &:hover { background: var(--hand); color: var(--on-hand); }
     }
@@ -191,7 +191,7 @@
     button { appearance: none; border: 0; background: none; color: inherit; cursor: pointer; padding: 0; }
   }
   &__group {
-    margin: 14px 0 4px; font: 500 .66rem/1 var(--mono); color: var(--ink-soft); text-transform: lowercase;
+    margin: 14px 0 4px; font: 500 .7rem/1 var(--mono); color: var(--ink-soft); text-transform: lowercase;
   }
   dl { display: grid; grid-template-columns: 120px 1fr; margin: 0; font: 400 .78rem/1.45 var(--mono); }
   dt, dd { margin: 0; padding: 5px 0; border-top: var(--hair) solid var(--rule); }
