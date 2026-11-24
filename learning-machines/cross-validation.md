@@ -70,10 +70,10 @@ With k = 5 the folds score from **0.65 to 0.80**, so a single split could have r
 
 <div class="lm-decide"><p class="lm-decide__by">Decided by how much data there is · how long one fit takes · whether settings are being tuned</p>
 <div class="lm-options">
-<div class="lm-option"><h4>One train/test split </h4><p>Hold back 20–30% once.</p><p><b>Choose it when</b> the data is very large, or one fit is expensive.</p><p><b>The catch</b> one noisy number: here anywhere from 0.55 to 0.90.</p></div>
-<div class="lm-option is-here"><h4>k-fold cross-validation <span class="lm-option__here">This machine</span></h4><p>Each of k folds held back once; report the mean and spread.</p><p><b>Choose it when</b> the data is small or medium; k = 5 or 10 is the usual choice.</p><p><b>The catch</b> k fits instead of one.</p></div>
-<div class="lm-option"><h4>Leave-one-out </h4><p>k = n: every single row held back once.</p><p><b>Choose it when</b> the data is tiny.</p><p><b>The catch</b> n fits; its estimate is nearly unbiased but varies a lot.</p></div>
-<div class="lm-option"><h4>Repeated or nested CV </h4><p>k-fold several times with reshuffles, or inside an outer loop.</p><p><b>Choose it when</b> tuning settings and still wanting an honest final score.</p><p><b>The catch</b> many fits.</p></div>
+<div class="lm-option"><h3>One train/test split </h3><p>Hold back 20–30% once.</p><p><b>Choose it when</b> the data is very large, or one fit is expensive.</p><p><b>The catch</b> one noisy number: here anywhere from 0.55 to 0.90.</p></div>
+<div class="lm-option is-here"><h3>k-fold cross-validation <span class="lm-option__here">This machine</span></h3><p>Each of k folds held back once; report the mean and spread.</p><p><b>Choose it when</b> the data is small or medium; k = 5 or 10 is the usual choice.</p><p><b>The catch</b> k fits instead of one.</p></div>
+<div class="lm-option"><h3>Leave-one-out </h3><p>k = n: every single row held back once.</p><p><b>Choose it when</b> the data is tiny.</p><p><b>The catch</b> n fits; its estimate is nearly unbiased but varies a lot.</p></div>
+<div class="lm-option"><h3>Repeated or nested CV </h3><p>k-fold several times with reshuffles, or inside an outer loop.</p><p><b>Choose it when</b> tuning settings and still wanting an honest final score.</p><p><b>The catch</b> many fits.</p></div>
 </div></div>
 
 ## In scikit-learn

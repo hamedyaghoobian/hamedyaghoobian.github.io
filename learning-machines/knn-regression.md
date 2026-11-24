@@ -62,9 +62,9 @@ At 200 mm: k = 1 gives **4,050 g**, k = 5 gives 3,795 g, k = 15 gives 3,953 g an
 
 <div class="lm-decide"><p class="lm-decide__by">Decided by the shape of the relationship · how much data there is · whether you need to extrapolate or explain</p>
 <div class="lm-options">
-<div class="lm-option is-here"><h4>k-NN regression <span class="lm-option__here">This machine</span></h4><p>Average the k nearest.</p><p><b>Choose it when</b> the relationship bends unpredictably and data is plentiful in the range you will predict.</p><p><b>The catch</b> flattens at the edges, cannot extrapolate, gives no slope to read.</p></div>
-<div class="lm-option"><h4>Least squares </h4><p>A straight line.</p><p><b>Choose it when</b> the relationship is close to straight, or you need slopes and extrapolation.</p><p><b>The catch</b> cannot bend; outliers pull.</p><p class="lm-option__link"><a href="{{ base }}least-squares/">Least squares →</a></p></div>
-<div class="lm-option"><h4>Polynomial regression </h4><p>A curve: least squares on powers of x.</p><p><b>Choose it when</b> the relationship bends smoothly.</p><p><b>The catch</b> high degrees overfit and swing wildly at the edges.</p><p class="lm-option__link"><a href="{{ base }}bias-and-variance/">Bias and variance →</a></p></div>
+<div class="lm-option is-here"><h3>k-NN regression <span class="lm-option__here">This machine</span></h3><p>Average the k nearest.</p><p><b>Choose it when</b> the relationship bends unpredictably and data is plentiful in the range you will predict.</p><p><b>The catch</b> flattens at the edges, cannot extrapolate, gives no slope to read.</p></div>
+<div class="lm-option"><h3>Least squares </h3><p>A straight line.</p><p><b>Choose it when</b> the relationship is close to straight, or you need slopes and extrapolation.</p><p><b>The catch</b> cannot bend; outliers pull.</p><p class="lm-option__link"><a href="{{ base }}least-squares/">Least squares →</a></p></div>
+<div class="lm-option"><h3>Polynomial regression </h3><p>A curve: least squares on powers of x.</p><p><b>Choose it when</b> the relationship bends smoothly.</p><p><b>The catch</b> high degrees overfit and swing wildly at the edges.</p><p class="lm-option__link"><a href="{{ base }}bias-and-variance/">Bias and variance →</a></p></div>
 </div></div>
 
 ## In scikit-learn

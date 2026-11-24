@@ -88,7 +88,7 @@
     --turn: -90deg;
     position: relative; width: 40px; height: 40px; border-radius: 50%;
     border: var(--stroke) solid var(--ink); background: none; cursor: pointer; padding: 0;
-    transform: rotate(var(--turn)); transition: transform .25s cubic-bezier(.3, 1.4, .5, 1);
+    transform: rotate(var(--turn)); transition: transform .3s cubic-bezier(.22, 1, .36, 1);   // eases to a stop, no overshoot
     &::after {
       content: ""; position: absolute; left: 50%; top: 4px; width: 2px; height: 12px;
       background: var(--live); transform: translateX(-50%); border-radius: 1px;

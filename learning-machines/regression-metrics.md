@@ -72,9 +72,9 @@ Before: MAE **7.3**, RMSE **8.4**. After making one outlier: MAE **11.2** (up ab
 
 <div class="lm-decide"><p class="lm-decide__by">Decided by whether large misses are much worse than small ones · whether outliers are errors or real · who will read the number</p>
 <div class="lm-options">
-<div class="lm-option"><h4>MAE </h4><p>The typical miss, in the target’s units.</p><p><b>Choose it when</b> every unit of error costs the same, or the data has outliers you do not want to dominate.</p><p><b>The catch</b> hides whether a few misses are very large.</p></div>
-<div class="lm-option"><h4>RMSE </h4><p>The root mean squared miss, in the target’s units.</p><p><b>Choose it when</b> large misses are disproportionately bad; it matches a least-squares fit.</p><p><b>The catch</b> one outlier can dominate it.</p></div>
-<div class="lm-option"><h4>R² </h4><p>The share of variation removed, compared with guessing the mean.</p><p><b>Choose it when</b> comparing models on the same data and target.</p><p><b>The catch</b> not comparable across datasets; says nothing about the size of misses in units.</p></div>
+<div class="lm-option"><h3>MAE </h3><p>The typical miss, in the target’s units.</p><p><b>Choose it when</b> every unit of error costs the same, or the data has outliers you do not want to dominate.</p><p><b>The catch</b> hides whether a few misses are very large.</p></div>
+<div class="lm-option"><h3>RMSE </h3><p>The root mean squared miss, in the target’s units.</p><p><b>Choose it when</b> large misses are disproportionately bad; it matches a least-squares fit.</p><p><b>The catch</b> one outlier can dominate it.</p></div>
+<div class="lm-option"><h3>R² </h3><p>The share of variation removed, compared with guessing the mean.</p><p><b>Choose it when</b> comparing models on the same data and target.</p><p><b>The catch</b> not comparable across datasets; says nothing about the size of misses in units.</p></div>
 </div></div>
 
 Reporting MAE and RMSE together is cheap and informative: a big gap between them is itself a finding.

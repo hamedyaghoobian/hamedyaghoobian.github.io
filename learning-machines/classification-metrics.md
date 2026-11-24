@@ -77,10 +77,10 @@ At 0.50: accuracy **0.86**, but recall only **0.50**, so it misses 58 of the 117
 
 <div class="lm-decide"><p class="lm-decide__by">Decided by how rare the positive class is · what each kind of mistake costs · whether a threshold has been chosen yet</p>
 <div class="lm-options">
-<div class="lm-option"><h4>Accuracy </h4><p>The share of answers that are right.</p><p><b>Choose it when</b> the classes are roughly balanced and the two mistakes cost about the same.</p><p><b>The catch</b> flatters a model on a rare class; compare with the base rate.</p></div>
-<div class="lm-option"><h4>Precision and recall </h4><p>How many alarms are real; how many real cases are caught.</p><p><b>Choose it when</b> one class matters more, as in screening or search.</p><p><b>The catch</b> two numbers, pulled in opposite directions by the threshold.</p></div>
-<div class="lm-option"><h4>F₁ or κ </h4><p>One number that is high only when both precision and recall are.</p><p><b>Choose it when</b> you need a single score at a fixed threshold.</p><p><b>The catch</b> weighs both kinds of mistake equally.</p></div>
-<div class="lm-option"><h4>ROC AUC </h4><p>How well the scores rank positives above negatives.</p><p><b>Choose it when</b> comparing models before choosing a threshold.</p><p><b>The catch</b> says nothing about any particular threshold; can look good on very rare classes.</p></div>
+<div class="lm-option"><h3>Accuracy </h3><p>The share of answers that are right.</p><p><b>Choose it when</b> the classes are roughly balanced and the two mistakes cost about the same.</p><p><b>The catch</b> flatters a model on a rare class; compare with the base rate.</p></div>
+<div class="lm-option"><h3>Precision and recall </h3><p>How many alarms are real; how many real cases are caught.</p><p><b>Choose it when</b> one class matters more, as in screening or search.</p><p><b>The catch</b> two numbers, pulled in opposite directions by the threshold.</p></div>
+<div class="lm-option"><h3>F₁ or κ </h3><p>One number that is high only when both precision and recall are.</p><p><b>Choose it when</b> you need a single score at a fixed threshold.</p><p><b>The catch</b> weighs both kinds of mistake equally.</p></div>
+<div class="lm-option"><h3>ROC AUC </h3><p>How well the scores rank positives above negatives.</p><p><b>Choose it when</b> comparing models before choosing a threshold.</p><p><b>The catch</b> says nothing about any particular threshold; can look good on very rare classes.</p></div>
 </div></div>
 
 ## In scikit-learn

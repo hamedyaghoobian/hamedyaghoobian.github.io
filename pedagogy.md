@@ -112,7 +112,7 @@ terms:
     {%- for t in page.terms -%}
     {%- assign tn = 0 -%}{%- for c in t.courses -%}{%- assign tn = tn | plus: c.n -%}{%- endfor %}
     <li class="tm-row{% if t.status %} tm-row--{{ t.status }}{% endif %}" data-fp-part>
-      <h3 class="tm-term">{% if t.status == "live" %}<span class="fp-live" title="this term"></span>{% endif %}{{ t.term }}{% if t.status == "scheduled" %} <span class="tm-term__s">(scheduled)</span>{% elsif t.status == "live" %} <span class="tm-term__s">now</span>{% endif %}</h3>
+      <h2 class="tm-term">{% if t.status == "live" %}<span class="fp-live" title="this term"></span>{% endif %}{{ t.term }}{% if t.status == "scheduled" %} <span class="tm-term__s">(scheduled)</span>{% elsif t.status == "live" %} <span class="tm-term__s">now</span>{% endif %}</h2>
       <span class="tm-cells" aria-hidden="true">
         {%- for col in page.courses -%}
         {%- assign hit = t.courses | where: "code", col.code | first -%}

@@ -99,9 +99,9 @@ Try this
 
 <div class="lm-decide"><p class="lm-decide__by">Decided by how much data there is · whether features are related · whether the probabilities themselves will be used</p>
 <div class="lm-options">
-<div class="lm-option is-here"><h4>Logistic regression <span class="lm-option__here">This machine</span></h4><p>Fit the boundary directly: a weighted sum, squashed.</p><p><b>Choose it when</b> you need well-behaved probabilities and weights to explain; the boundary is roughly straight in the features.</p><p><b>The catch</b> straight boundaries; needs regularisation when classes separate perfectly.</p></div>
-<div class="lm-option"><h4>Gaussian naive Bayes </h4><p>Model each class as bell curves, then apply Bayes’ rule.</p><p><b>Choose it when</b> very little data, or many features; priors known from outside the data.</p><p><b>The catch</b> probabilities overconfident when features are related.</p><p class="lm-option__link"><a href="{{ base }}naive-bayes/">Naive Bayes →</a></p></div>
-<div class="lm-option"><h4>k-NN vote shares </h4><p>The fraction of the k neighbours in each class.</p><p><b>Choose it when</b> the boundary is irregular and data is plentiful.</p><p><b>The catch</b> coarse (only k + 1 possible values) and noisy for small k.</p><p class="lm-option__link"><a href="{{ base }}k-nearest-neighbors/">k-NN →</a></p></div>
+<div class="lm-option is-here"><h3>Logistic regression <span class="lm-option__here">This machine</span></h3><p>Fit the boundary directly: a weighted sum, squashed.</p><p><b>Choose it when</b> you need well-behaved probabilities and weights to explain; the boundary is roughly straight in the features.</p><p><b>The catch</b> straight boundaries; needs regularisation when classes separate perfectly.</p></div>
+<div class="lm-option"><h3>Gaussian naive Bayes </h3><p>Model each class as bell curves, then apply Bayes’ rule.</p><p><b>Choose it when</b> very little data, or many features; priors known from outside the data.</p><p><b>The catch</b> probabilities overconfident when features are related.</p><p class="lm-option__link"><a href="{{ base }}naive-bayes/">Naive Bayes →</a></p></div>
+<div class="lm-option"><h3>k-NN vote shares </h3><p>The fraction of the k neighbours in each class.</p><p><b>Choose it when</b> the boundary is irregular and data is plentiful.</p><p><b>The catch</b> coarse (only k + 1 possible values) and noisy for small k.</p><p class="lm-option__link"><a href="{{ base }}k-nearest-neighbors/">k-NN →</a></p></div>
 </div></div>
 
 ## In scikit-learn

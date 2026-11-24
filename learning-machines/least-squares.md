@@ -78,9 +78,9 @@ A flat rod through the pivot predicts the mean mass, 4,463 g, for everyone: RMSE
 
 <div class="lm-decide"><p class="lm-decide__by">Decided by how straight the relationship is · how many features there are · whether the model must be explained or extrapolated</p>
 <div class="lm-options">
-<div class="lm-option is-here"><h4>Least squares <span class="lm-option__here">This machine</span></h4><p>One straight line (or flat surface), fitted exactly.</p><p><b>Choose it when</b> the relationship is close to straight; you want slopes you can read.</p><p><b>The catch</b> outliers pull it; it cannot bend.</p></div>
-<div class="lm-option"><h4>Ridge, lasso, elastic net </h4><p>Least squares with a penalty on large slopes.</p><p><b>Choose it when</b> there are many features, some related; you want to avoid overfitting or (lasso) drop useless features.</p><p><b>The catch</b> features must be scaled; the penalty strength is one more setting to choose.</p></div>
-<div class="lm-option"><h4>k-NN regression </h4><p>Average the k nearest points.</p><p><b>Choose it when</b> the relationship bends in ways you cannot write down.</p><p><b>The catch</b> flattens at the edges; cannot extrapolate.</p><p class="lm-option__link"><a href="{{ base }}knn-regression/">k-NN regression →</a></p></div>
+<div class="lm-option is-here"><h3>Least squares <span class="lm-option__here">This machine</span></h3><p>One straight line (or flat surface), fitted exactly.</p><p><b>Choose it when</b> the relationship is close to straight; you want slopes you can read.</p><p><b>The catch</b> outliers pull it; it cannot bend.</p></div>
+<div class="lm-option"><h3>Ridge, lasso, elastic net </h3><p>Least squares with a penalty on large slopes.</p><p><b>Choose it when</b> there are many features, some related; you want to avoid overfitting or (lasso) drop useless features.</p><p><b>The catch</b> features must be scaled; the penalty strength is one more setting to choose.</p></div>
+<div class="lm-option"><h3>k-NN regression </h3><p>Average the k nearest points.</p><p><b>Choose it when</b> the relationship bends in ways you cannot write down.</p><p><b>The catch</b> flattens at the edges; cannot extrapolate.</p><p class="lm-option__link"><a href="{{ base }}knn-regression/">k-NN regression →</a></p></div>
 </div></div>
 
 ## In scikit-learn

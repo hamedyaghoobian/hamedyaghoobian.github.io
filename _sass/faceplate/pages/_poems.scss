@@ -183,10 +183,10 @@
 .pm-row__head:hover .pm-row__t [lang="fa"],
 .pm-row.fp-at > .pm-row__head .pm-row__t [lang="fa"],
 .pm-row.is-lit > .pm-row__head .pm-row__t [lang="fa"] { color: inherit; }
-// the current poem: a thin ink line at the head's edge
-.pm-row.is-cur > .pm-row__head { box-shadow: inset 2px 0 0 var(--ink); }
+// the current poem: its head held in a full ink frame, like the held key
+.pm-row.is-cur > .pm-row__head { box-shadow: inset 0 0 0 var(--stroke) var(--ink); }
 .pm-row.is-cur.fp-at > .pm-row__head,
-.pm-row.is-cur.is-lit > .pm-row__head { box-shadow: inset 2px 0 0 var(--on-hand); }
+.pm-row.is-cur.is-lit > .pm-row__head { box-shadow: inset 0 0 0 var(--stroke) var(--on-hand); }
 .pm-row > .pm-row__head { scroll-margin-top: 16px; }
 .pm-row { scroll-margin-top: 16px; }
 

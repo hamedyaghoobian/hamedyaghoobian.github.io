@@ -96,9 +96,9 @@ Only 50 mm flips. Adelie bills average 38.8 mm with a spread of 2.7 mm, so 50 mm
 
 <div class="lm-decide"><p class="lm-decide__by">Decided by how much data there is · whether the features are related · whether outside knowledge of the class mix exists</p>
 <div class="lm-options">
-<div class="lm-option is-here"><h4>Gaussian naive Bayes <span class="lm-option__here">This machine</span></h4><p>Model each class as independent bell curves; apply Bayes’ rule.</p><p><b>Choose it when</b> data is small, features are many, or the priors come from outside the data.</p><p><b>The catch</b> related features make its probabilities overconfident.</p></div>
-<div class="lm-option"><h4>Linear discriminant analysis </h4><p>Model each class as one bell surface over all features at once, sharing one covariance.</p><p><b>Choose it when</b> features are related and roughly normal; you want the generative view without the naive assumption.</p><p><b>The catch</b> more parameters to estimate; straight boundaries only.</p></div>
-<div class="lm-option"><h4>Logistic regression </h4><p>Skip the class models and fit the boundary directly.</p><p><b>Choose it when</b> you have enough data and care most about calibrated probabilities.</p><p><b>The catch</b> no priors to set by hand; straight boundaries.</p><p class="lm-option__link"><a href="{{ base }}logistic-regression/">Logistic regression →</a></p></div>
+<div class="lm-option is-here"><h3>Gaussian naive Bayes <span class="lm-option__here">This machine</span></h3><p>Model each class as independent bell curves; apply Bayes’ rule.</p><p><b>Choose it when</b> data is small, features are many, or the priors come from outside the data.</p><p><b>The catch</b> related features make its probabilities overconfident.</p></div>
+<div class="lm-option"><h3>Linear discriminant analysis </h3><p>Model each class as one bell surface over all features at once, sharing one covariance.</p><p><b>Choose it when</b> features are related and roughly normal; you want the generative view without the naive assumption.</p><p><b>The catch</b> more parameters to estimate; straight boundaries only.</p></div>
+<div class="lm-option"><h3>Logistic regression </h3><p>Skip the class models and fit the boundary directly.</p><p><b>Choose it when</b> you have enough data and care most about calibrated probabilities.</p><p><b>The catch</b> no priors to set by hand; straight boundaries.</p><p class="lm-option__link"><a href="{{ base }}logistic-regression/">Logistic regression →</a></p></div>
 </div></div>
 
 ## In scikit-learn

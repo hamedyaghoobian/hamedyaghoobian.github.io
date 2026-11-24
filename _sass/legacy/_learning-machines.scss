@@ -529,7 +529,7 @@
   padding: .8rem .9rem;
   font-size: .88rem;
 
-  h4 { margin: 0 0 .4rem; font-size: .98rem; }
+  h3, h4 { margin: 0 0 .4rem; font-size: .98rem; letter-spacing: 0; }   // h3: each option sits under the section h2
   p { margin: .35rem 0; color: var(--ink-soft); }
   b { color: var(--ink); font-weight: 600; }
 
