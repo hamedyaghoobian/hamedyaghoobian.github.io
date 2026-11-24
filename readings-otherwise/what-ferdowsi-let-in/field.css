@@ -24,7 +24,7 @@ body.exploded #words { cursor: default; }
 .ro-panel .gloss { display: inline-flex; align-items: baseline; gap: .5em; font: italic 400 .98rem/1.3 var(--serif); color: var(--ro-mark); }
 .ro-panel .gloss:empty { display: none; }
 .ro-panel .gloss [lang="fa"] { font: normal 400 1.15rem/1 "Hand", serif; }
-.ro-panel .gloss small { font: normal 400 .62rem/1 var(--mono); color: var(--ro-mark-soft); }
+.ro-panel .gloss small { font: normal 400 .7rem/1 var(--mono); color: var(--ro-mark-soft); }
 
 /* the word j / k is on: your hand, a yellow rule under it */
 .sel-rule {

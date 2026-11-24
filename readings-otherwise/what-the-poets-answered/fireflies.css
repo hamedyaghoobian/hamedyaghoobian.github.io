@@ -9,7 +9,7 @@
 
 .ro-poets .clock {
   position: absolute; left: 10px; top: 37px; margin: 0; pointer-events: none;
-  font: 500 .66rem/1.2 var(--mono); color: var(--ro-mark-soft); font-variant-numeric: tabular-nums;
+  font: 500 .7rem/1.2 var(--mono); color: var(--ro-mark-soft); font-variant-numeric: tabular-nums;
 }
 .ro-poets .ro-owner { top: 10px; bottom: auto; }
 .ro-poets .ro-caps { bottom: 76px; }
@@ -25,7 +25,7 @@
 .ro-poets .ro-panel .line { font: 400 clamp(1.05rem, 1.9vw, 1.25rem)/1.7 "Amiri", var(--fa-serif); color: var(--ro-mark); }
 .ro-poets .links { margin-top: .4rem; }
 .ro-poets .link { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 14px; margin: .25rem 0 0; }
-.ro-poets .link .how { font: 400 .64rem/1.5 var(--mono); color: var(--ro-mark-soft); }
+.ro-poets .link .how { font: 400 .7rem/1.5 var(--mono); color: var(--ro-mark-soft); }
 .ro-poets .link .how [lang="fa"] { font: 400 .85rem/1 var(--fa); color: var(--ro-mark); }
 .ro-poets .link .h { font: 400 1rem/1.5 "Amiri", var(--fa-serif); color: var(--ro-mark-soft); }
 
@@ -51,4 +51,4 @@ html[data-lang="fa"] .ro-poets :is(.clock, .ro-panel .where, .link .how) { font-
 .ro-poets .ro-stage:fullscreen { background: var(--ro-sky); }
 .ro-poets .ro-frame.max { position: fixed; inset: 0; z-index: 1000; width: 100vw; height: 100vh; height: 100dvh; min-width: 0; aspect-ratio: auto; margin: 0; border-radius: 0; box-shadow: none; }
 html.ro-maxed, html.ro-maxed body { overflow: hidden; }
-.ro-poets .ro-cap#speed span { font: 500 .66rem/1 var(--mono); }
+.ro-poets .ro-cap#speed span { font: 500 .7rem/1 var(--mono); }

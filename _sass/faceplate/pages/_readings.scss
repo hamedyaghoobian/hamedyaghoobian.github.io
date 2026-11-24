@@ -192,7 +192,7 @@
   .line { display: flex; align-items: baseline; gap: 14px; margin: 0; padding: 0 4px; }
   .line + .line { padding-inline-start: 2.2em; }
   .line .t { flex: 1; min-width: 0; }
-  .line .n { flex: none; direction: ltr; font: 400 .6rem/1 var(--mono); color: var(--ro-mark-soft); }
+  .line .n { flex: none; direction: ltr; font: 400 .7rem/1 var(--mono); color: var(--ro-mark-soft); }
   .line b { font-weight: 400; color: var(--ro-mark); }
   .line b.this { box-shadow: inset 0 -2px 0 var(--yellow); }     // your hand: a rule under the word
   .foot { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 14px; flex-wrap: wrap; margin-top: .55rem; }
@@ -269,7 +269,7 @@
   .ro-piece { padding-bottom: 64px; }          // the thumb bar
   .ro-plate .fp-key { justify-content: center; padding: 0; }
   .ro-stage { --ro-w: 100%; }
-  .ro-hint { width: 92%; white-space: normal; text-align: center; font-size: .6rem; }
+  .ro-hint { width: 92%; white-space: normal; text-align: center; font-size: .7rem; }
   .ro-owner { display: none; }
   .ro-key { flex-basis: 100%; border-left: 0; border-top: var(--hair) solid var(--rule); }
   .ro-controls > .ro-controls__lbl { width: 100%; }

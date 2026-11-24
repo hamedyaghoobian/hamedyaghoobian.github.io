@@ -38,7 +38,7 @@ body.exploded #sea { cursor: default; }
   position: absolute; left: 0; right: 0; top: 0; z-index: 1;
   margin: 0;
   padding: 44px 1rem 1.4rem;
-  font: 400 .68rem/1.4 var(--mono);
+  font: 400 .7rem/1.4 var(--mono);
   color: var(--red-lit);        /* what the red light has just read */
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   direction: rtl;               /* keep the newest words in view */
