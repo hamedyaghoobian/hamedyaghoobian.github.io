@@ -1,0 +1,72 @@
+/* What Rumi Recited: only what this piece draws. The plate, the frame, the keycaps,
+   the key strip and the wall label are the site's (/assets/main.css, _readings.scss).
+   The field is cobalt; the threads and the ayahs are cream; what you are reading is your
+   hand, yellow. */
+
+.ro-rumi { --ro-hand: "Amiri"; }
+.ro-rumi .ro-stage { --aspect: 1.7; }
+#field { position: absolute; inset: 0; display: block; width: 100%; height: 100%; touch-action: none; }
+
+.ro-rumi .clock {
+  position: absolute; left: 10px; top: 37px; margin: 0; pointer-events: none;
+  font: 500 .66rem/1.2 var(--mono); color: var(--ro-mark-soft); font-variant-numeric: tabular-nums;
+}
+.ro-rumi .ro-owner { top: 10px; bottom: auto; }
+.ro-rumi .ro-cap span { font-size: .7rem; }
+.ro-rumi .ro-cap#speed span { font: 500 .66rem/1 var(--mono); }
+.ro-rumi .ro-hint { bottom: 64px; }
+/* boxed like the keys label above them: the same left edge, padding and corners */
+.ro-rumi :is(.clock, .ro-hint) { background: var(--ro-veil); padding: 3px 7px; border: 1px solid transparent; border-radius: 4px; }
+.ro-rumi .reading .ro-hint { opacity: 0; }
+
+/* the couplet, its ayah and the gloss; long ayahs scroll inside the panel, never cut */
+.ro-rumi .ro-panel { bottom: 0; max-height: 72%; overflow-y: auto; overscroll-behavior: contain; padding-top: 1.8rem; }
+.ro-rumi .ro-panel.show { pointer-events: auto; }
+.ro-rumi .ro-panel .where { font: 400 .7rem/1.5 var(--mono); }
+.ro-rumi .ro-panel .where a, .ro-rumi .ro-panel a { color: var(--ro-mark); }
+.ro-rumi .ro-panel .lines:empty, .ro-rumi .ro-panel .ayah:empty { display: none; }
+.ro-rumi .ro-panel .ayah { margin-top: .6rem; }
+.ro-rumi .ro-panel .ar {
+  margin: 0; font: 400 clamp(1.05rem, 1.9vw, 1.25rem)/2 "Amiri Quran", "Amiri", var(--fa-serif);
+  color: var(--ro-mark); text-align: start;
+}
+.ro-rumi .ro-panel .ref { margin: .2rem 0 0; font: 400 .68rem/1.5 var(--mono); color: var(--ro-mark-soft); }
+.ro-rumi .ro-panel .tr { margin: .3rem 0 0; font: 400 .9rem/1.7 var(--fa); color: var(--ro-mark-soft); }
+.ro-rumi .ro-panel .tr .by { font-size: .78em; opacity: .8; }
+.ro-rumi .ro-panel .gloss { margin: .5rem 0 0; font: 400 .9rem/1.5 var(--serif); color: var(--ro-mark-soft); }
+.ro-rumi .ro-panel .doubt { margin: .3rem 0 0; font: 400 .68rem/1.5 var(--mono); color: rgb(255, 160, 145); }
+.ro-rumi .ro-panel .ai {
+  display: inline-block; padding: 0 4px; margin-inline-end: 2px; border: 1px solid var(--ro-mark-rule); border-radius: 3px;
+  font: 500 .6rem/1.4 var(--mono); color: var(--ro-mark-soft); vertical-align: 1px;
+}
+.ro-rumi .links { margin-top: .4rem; }
+.ro-rumi .link { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 14px; margin: .25rem 0 0; }
+.ro-rumi .link .how { font: 400 .64rem/1.5 var(--mono); color: var(--ro-mark-soft); }
+.ro-rumi .link .h { font: 400 1rem/1.5 "Amiri", var(--fa-serif); color: var(--ro-mark-soft); }
+.ro-rumi .more { margin: .25rem 0 0; font: 400 .64rem/1.5 var(--mono); color: var(--ro-mark-soft); }
+
+.ro-rumi .ro-key { flex: 0 1 340px; }
+.ro-rumi .ro-key .sw { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin: 0 2px 0 6px; vertical-align: 0; }
+.ro-rumi .ro-key .sw:first-child { margin-left: 0; }
+.ro-rumi .sw.s0 { background: rgb(110, 170, 235); }
+.ro-rumi .sw.s1 { background: rgb(225, 120, 155); }
+.ro-rumi .sw.s2 { background: rgb(90, 190, 130); }
+.ro-label [lang="fa"], .ro-label [lang="ar"] { font-family: "Amiri", var(--fa-serif); font-size: 1.12em; unicode-bidi: isolate; }
+
+.fallback { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 400 .8rem/1.5 var(--mono); color: var(--ro-mark); }
+main > .fallback, body > .fallback { position: static; }
+
+/* in Persian (../lang.js): what the piece writes is set in the site's Persian face */
+html[data-lang="fa"] .ro-rumi :is(.clock, .ro-panel .where, .link .how, .more, .ref) { font-family: var(--fa); letter-spacing: 0; }
+html[data-lang="fa"] .ro-rumi .ro-panel .gloss { font-family: var(--fa); }
+
+@media (max-width: 640px) {
+  .ro-rumi .ro-stage { --aspect: .95; }
+  .ro-rumi .ro-hint { bottom: 50px; }
+  .ro-rumi .ro-panel { max-height: 80%; }
+}
+
+/* the whole screen (f): the frame over the window, the browser's full screen where it has one */
+.ro-rumi .ro-stage:fullscreen { background: var(--ro-sky); }
+.ro-rumi .ro-frame.max { position: fixed; inset: 0; z-index: 1000; width: 100vw; height: 100vh; height: 100dvh; min-width: 0; aspect-ratio: auto; margin: 0; border-radius: 0; box-shadow: none; }
+html.ro-maxed, html.ro-maxed body { overflow: hidden; }

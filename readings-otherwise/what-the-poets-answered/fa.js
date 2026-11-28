@@ -6,7 +6,9 @@ RO.add({
     "crumb-here": '<span class="fp-crumb__n">07</span> آنچه شاعران پاسخ دادند',
     "crumb-prev": '<span class="fp-k">[</span>شمارهٔ ۶ آنچه دست بازمی‌گرداند',
     "prev-title": "شمارهٔ ۶ · آنچه دست بازمی‌گرداند",
-    "head-n": '۰۶.۷ · شمارهٔ ۷ · <time datetime="2026-11-18">۲۷ آبان ۱۴۰۵</time> <span class="fp-live" aria-label="تازه‌ترین"></span>',
+    "crumb-next": '<span class="fp-k">]</span>شمارهٔ ۸ آنچه مولانا خواند',
+    "next-title": "شمارهٔ ۸ · آنچه مولانا خواند",
+    "head-n": '۰۶.۷ · شمارهٔ ۷ · <time datetime="2026-11-18">۲۷ آبان ۱۴۰۵</time>',
     "h1": "آنچه شاعران پاسخ دادند",
     "head-lines": '<p class="meta">همهٔ غزل‌های گنجور، از رودکی تا قرن گذشته / ۱۴۰۵</p>' +
       '<p class="meta">غزل‌ها چون کرم‌های شب‌تاب: ۶۲٬۷۴۴ غزل از ۱۶۱ شاعر و ۱٬۹۸۹ پاسخ</p>',

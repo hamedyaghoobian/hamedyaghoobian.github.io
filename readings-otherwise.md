@@ -15,16 +15,35 @@ permalink: /readings-otherwise/
 <p class="ro-intro" data-t="intro">Old texts, read with new machines. Not quite close reading, not quite distant reading. Something sideways. Each piece takes a book apart and keeps what usually gets thrown away. Speculative, unfinished, and mostly for looking at.</p>
 
 <div class="fp-toolbar">
-  <p class="fp-label" data-t="count">7 pieces · newest first</p>
+  <p class="fp-label" data-t="count">8 pieces · newest first</p>
   <p class="fp-label" data-t="toolbar-keys"><span class="fp-k">j</span><span class="fp-k">k</span>step · <span class="fp-k">enter</span>open</p>
 </div>
 
 <ol class="fp-index ro-index">
   <li class="fp-row ro-row" data-fp-part>
+    <a class="fp-row__head" href="{{ '/readings-otherwise/what-rumi-recited/' | relative_url }}">
+      <span class="fp-row__n">06.8</span>
+      <span class="fp-row__t" data-t="r8-t">What Rumi Recited</span>
+      <span class="fp-row__m" data-t="r8-m"><span class="fp-live" aria-label="newest"></span>No. 8 · <time datetime="2026-11-28">28 nov 2026</time></span>
+      <span class="fp-row__x" aria-hidden="true">→</span>
+    </a>
+    <div class="fp-row__body" data-t="r8-b">
+      <p class="ro-row__line">Ayahs as threads. 809 couplets in 609 poems, 286 ayahs from 94 surahs</p>
+      <dl class="fp-spec ro-spec">
+        <dt>taken out</dt><dd>every couplet of the Divan-e Shams that does not recall the Quran</dd>
+        <dt>left</dt><dd>809 couplets, each a thread from its ayah, in the Quran's order, to its poem, in the Divan's</dd>
+        <dt>loudest</dt><dd>the covenant before creation, 7:172, <bdi lang="ar">أَلَسْتُ بِرَبِّكُمْ</bdi>, heard 65 times</dd>
+      </dl>
+      <p class="ro-note">Rumi was a preacher before he was a poet, and the Quran runs all through the <em>Divan-e Shams</em>, <bdi lang="fa">دیوان شمس</bdi>. Here are the 809 couplets found to quote, paraphrase or allude to an ayah, each a thread from the Quran above to the Divan below. Most of the Quran is never heard: 286 ayahs are, 171 of them once. The ones heard again and again are the stories: the souls answering <em>yes</em> before creation, Moses asking to see God, the women who cut their hands at the sight of Joseph. The citations are Saber Soleymani's; a second, blind review confirmed 792 of them.</p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-rumi-recited/' | relative_url }}">See it</a> <a href="https://ganjoor.net/moulavi/shams">Read the Divan on Ganjoor</a> <a href="https://github.com/noghte/shams-quran-link">Code</a></p>
+    </div>
+  </li>
+
+  <li class="fp-row ro-row" data-fp-part>
     <a class="fp-row__head" href="{{ '/readings-otherwise/what-the-poets-answered/' | relative_url }}">
       <span class="fp-row__n">06.7</span>
       <span class="fp-row__t" data-t="r7-t">What the Poets Answered</span>
-      <span class="fp-row__m" data-t="r7-m"><span class="fp-live" aria-label="newest"></span>No. 7 · <time datetime="2026-11-18">18 nov 2026</time></span>
+      <span class="fp-row__m" data-t="r7-m">No. 7 · <time datetime="2026-11-18">18 nov 2026</time></span>
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
     <div class="fp-row__body" data-t="r7-b">
@@ -157,4 +176,4 @@ permalink: /readings-otherwise/
 
 <link rel="stylesheet" href="{{ '/readings-otherwise/lang.css' | relative_url }}?v=1">
 <script src="{{ '/readings-otherwise/lang.js' | relative_url }}?v=2"></script>
-<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=5"></script>
+<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=6"></script>
