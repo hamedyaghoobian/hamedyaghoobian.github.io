@@ -70,3 +70,5 @@ html[data-lang="fa"] .ro-rumi .ro-panel .gloss { font-family: var(--fa); }
 .ro-rumi .ro-stage:fullscreen { background: var(--ro-sky); }
 .ro-rumi .ro-frame.max { position: fixed; inset: 0; z-index: 1000; width: 100vw; height: 100vh; height: 100dvh; min-width: 0; aspect-ratio: auto; margin: 0; border-radius: 0; box-shadow: none; }
 html.ro-maxed, html.ro-maxed body { overflow: hidden; }
+.ro-rumi .ro-panel .recheck { margin: .45rem 0 0; font: 400 .68rem/1.5 var(--mono); color: var(--ro-mark); }
+html[data-lang="fa"] .ro-rumi .ro-panel .recheck { font-family: var(--fa); }

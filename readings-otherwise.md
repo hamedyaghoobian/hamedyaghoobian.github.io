@@ -28,14 +28,14 @@ permalink: /readings-otherwise/
       <span class="fp-row__x" aria-hidden="true">→</span>
     </a>
     <div class="fp-row__body" data-t="r8-b">
-      <p class="ro-row__line">Ayahs as threads. 809 couplets in 609 poems, 286 ayahs from 94 surahs</p>
+      <p class="ro-row__line">Ayahs as threads. 806 couplets in 608 poems, 284 ayahs from 94 surahs</p>
       <dl class="fp-spec ro-spec">
         <dt>taken out</dt><dd>every couplet of the Divan-e Shams that does not recall the Quran</dd>
-        <dt>left</dt><dd>809 couplets, each a thread from its ayah, in the Quran's order, to its poem, in the Divan's</dd>
+        <dt>left</dt><dd>806 couplets, each a thread from its ayah, in the Quran's order, to its poem, in the Divan's</dd>
         <dt>loudest</dt><dd>the covenant before creation, 7:172, <bdi lang="ar">أَلَسْتُ بِرَبِّكُمْ</bdi>, heard 65 times</dd>
       </dl>
-      <p class="ro-note">Rumi was a preacher before he was a poet, and the Quran runs all through the <em>Divan-e Shams</em>, <bdi lang="fa">دیوان شمس</bdi>. Here are the 809 couplets found to quote, paraphrase or allude to an ayah, each a thread from the Quran above to the Divan below. Most of the Quran is never heard: 286 ayahs are, 171 of them once. The ones heard again and again are the stories: the souls answering <em>yes</em> before creation, Moses asking to see God, the women who cut their hands at the sight of Joseph. The citations are Saber Soleymani's; a second, blind review confirmed 792 of them.</p>
-      <p class="ro-links"><a href="{{ '/readings-otherwise/what-rumi-recited/' | relative_url }}">See it</a> <a href="https://ganjoor.net/moulavi/shams">Read the Divan on Ganjoor</a> <a href="https://github.com/noghte/shams-quran-link">Code</a></p>
+      <p class="ro-note">Rumi was a preacher before he was a poet, and the Quran runs all through the <em>Divan-e Shams</em>, <bdi lang="fa">دیوان شمس</bdi>. Here are the 806 couplets found to quote, paraphrase or allude to an ayah, each a thread from the Quran above to the Divan below. Most of the Quran is never heard: 284 ayahs are, 168 of them once. The ones heard again and again are the stories: the souls answering <em>yes</em> before creation, Moses asking to see God, the women who cut their hands at the sight of Joseph. The citations are Saber Soleymani's; a blind review confirmed 792 of 809, and two models reading the other 17 again settled 11 of them.</p>
+      <p class="ro-links"><a href="{{ '/readings-otherwise/what-rumi-recited/' | relative_url }}">See it</a> <a href="{{ '/readings-otherwise/what-rumi-recited/atlas/' | relative_url }}">The atlas</a> <a href="https://ganjoor.net/moulavi/shams">Read the Divan on Ganjoor</a> <a href="https://github.com/noghte/shams-quran-link">Code</a></p>
     </div>
   </li>
 
@@ -176,4 +176,4 @@ permalink: /readings-otherwise/
 
 <link rel="stylesheet" href="{{ '/readings-otherwise/lang.css' | relative_url }}?v=1">
 <script src="{{ '/readings-otherwise/lang.js' | relative_url }}?v=2"></script>
-<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=6"></script>
+<script src="{{ '/readings-otherwise/index-fa.js' | relative_url }}?v=8"></script>
