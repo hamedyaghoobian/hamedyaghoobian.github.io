@@ -33,7 +33,7 @@ RO.add({
       <p>دکمهٔ پخش یا کلید space را بزنید؛ ← و → به شعر پیشین یا پسین می‌برند، 1 و 2 و 3 به غزل‌ها، ترجیع‌ها و رباعی‌ها، و 0 به پایان. نشانگر را روی رشته‌ای ببرید، یا با j و k بیت‌ها را به ترتیب دیوان ببینید. نشانگر را روی آیه‌ای ببرید تا آن را و هر چه به آن بازمی‌گردد بخوانید؛ آنگاه j و k تنها از میان همان‌ها می‌گذرند.</p>`,
     "colophon": 'ارجاع‌ها: صابر سلیمانی، <a href="https://github.com/noghte/shams-quran-link">shams-quran-link</a>، از متن دیوان و شرح‌هایش در <a href="https://ganjoor.net/moulavi/shams">گنجور</a>، با بازبینی و حاشیه‌نویسی حامد یعقوبیان. متن قرآن: متن عثمانی <a href="https://tanzil.net">تنزیل</a>، از راه <a href="https://alquran.cloud">alquran.cloud</a>؛ ترجمهٔ فارسی از محمدمهدی فولادوند. موضوع‌ها، چهره‌ها، نوع پیوندها و شرح‌ها را Claude Opus 5.5 نوشته و همان مدل در بازبینی دوم و کور سنجیده است. این اثر در ۱۴۰۵ با Claude، یک مدل زبانی، ساخته شد.',
     "colophon-code": 'کد و داده: <a href="https://github.com/noghte/shams-quran-link">github.com/noghte/shams-quran-link</a>',
-    "colophon-cite": 'ارجاع: یعقوبیان، حامد. ۱۴۰۵. «آنچه مولانا خواند». <em>خوانش‌های ماشینی</em>، شمارهٔ ۸. <a href="https://hamedyaghoobian.com/readings-otherwise/what-rumi-recited/" dir="ltr">https://hamedyaghoobian.com/readings-otherwise/what-rumi-recited/</a>. ارجاع‌ها از صابر سلیمانی.',
+    "colophon-cite": 'ارجاع: یعقوبیان، حامد و صابر سلیمانی. ۱۴۰۵. «آنچه مولانا خواند». <em>خوانش‌های ماشینی</em>، شمارهٔ ۸. <a href="https://hamedyaghoobian.com/readings-otherwise/what-rumi-recited/" dir="ltr">https://hamedyaghoobian.com/readings-otherwise/what-rumi-recited/</a>.',
   },
   w: {
     "play · pause": "پخش · مکث",
