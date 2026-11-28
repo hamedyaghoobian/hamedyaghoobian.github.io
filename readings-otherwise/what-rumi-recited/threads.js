@@ -42,7 +42,7 @@
   let sel = null, hover = null, scope = null, step = -1;   // {k: "l"|"a"|"p", i}; the couplets j k go through
   let samples = [];                                 // each thread as points, for the pointer
 
-  fetch("data/field.json?v=1").then(r => r.json()).then(d => { D = d; build(); resize(); requestAnimationFrame(loop); })
+  fetch("data/field.json?v=2").then(r => r.json()).then(d => { D = d; build(); resize(); requestAnimationFrame(loop); })
     .catch(() => frame.insertAdjacentHTML("beforeend", `<p class="fallback">${tr("The couplets could not be loaded.")}</p>`));
 
   function build() {
@@ -204,8 +204,9 @@
   }
 
   function clockText() {
-    let n = 0; const seen = new Set();
-    for (let i = 0; i < L.length; i++) if (reached(i)) { n++; seen.add(L[i].a); }
+    const cs = new Set(), seen = new Set();          // a couplet that recalls two ayahs is still one couplet
+    for (let i = 0; i < L.length; i++) if (reached(i)) { cs.add(L[i].p * 1000 + L[i].c); seen.add(L[i].a); }
+    const n = cs.size;
     const at = Math.min(NP - 1, Math.floor(T));
     const sec = D.sections.find(s => at >= s[3] && at < s[3] + s[4]) || D.sections[0];
     const k = at - sec[3] + 1;
@@ -225,11 +226,23 @@
   const ganjoor = (p, c) => `<a href="${esc(P[p].url)}${c != null ? "#bn" + (c + 1) : ""}" target="_blank" rel="noopener">${tr("on Ganjoor")}</a>`;
   const ai = s => s ? `<span class="ai" title="${esc(tr("written by a language model"))}">${tr("AI")}</span> ${esc(s)}` : "";
   const how = l => tr(l.rel) + (l.str ? (fa() ? "، " : ", ") + tr(l.str) : "");
+  // the blind review's doubt, and what the second reading made of it (agreed rulings are already applied)
   const doubtText = l => {
-    if (!l.rv) return "";
-    const alt = l.alt && l.alt.length ? (fa() ? ` بیشتر به ${l.alt.map(x => RO.num(x)).join("، ")} می‌خورد` : `; it would rather ${l.alt.join(", ")}`) : "";
-    const v = { confirmed_not_unique: "confirmed, but a neighbouring ayah fits as well", weak: "weak", unsupported: "not borne out" }[l.rv] || l.rv;
-    return `<p class="doubt">${tr("the blind review")}: ${tr(v)}${alt}</p>`;
+    let out = "";
+    if (l.rv) {
+      const alt = l.alt && l.alt.length ? (fa() ? ` بیشتر به ${l.alt.map(x => RO.num(x)).join("، ")} می‌خورد` : `; it would rather ${l.alt.join(", ")}`) : "";
+      const v = { confirmed_not_unique: "confirmed, but a neighbouring ayah fits as well", weak: "weak", unsupported: "not borne out" }[l.rv] || l.rv;
+      out += `<p class="doubt">${tr("the blind review")}: ${tr(v)}${alt}</p>`;
+    }
+    const r = l.rc;
+    if (!r) return out;
+    const say = (v, ref) => fa()
+      ? ({ keep: "بماند", replace: `به ${RO.num(ref)} برود`, keep_and_add: `بماند و ${RO.num(ref)} هم کنارش بیاید`, drop: "کنار برود" })[v]
+      : ({ keep: "kept", replace: `moved to ${ref}`, keep_and_add: `kept, with ${ref} beside it`, drop: "dropped" })[v];
+    const head = r.added ? tr("second reading: added beside the cited ayah; the couplet uses both")
+      : r.agree ? `${tr("second reading")}: ${say(r.v, r.ref)} · ${tr("Opus 5.5 and Sonnet 5.5 agree")}`
+      : `${tr("second reading")}: Opus 5.5 ${say(r.v, r.ref)}, Sonnet 5.5 ${say(r.sv, r.sref)} · ${tr("left for a human")}`;
+    return out + `<p class="recheck">${esc(head)}</p><p class="gloss">${ai(fa() ? r.fa : r.en)}</p>`;
   };
   function hemis(l) {
     return l.h.map(h => {
@@ -413,7 +426,7 @@
       ["0", tr("go to the end: every couplet, every ayah")],
       ["j k", tr("the next / previous couplet in the Divan's order; once an ayah or a poem is selected, only its couplets")],
       ["t", tr("colour the threads by what their ayahs are about")],
-      ["d", tr("mark the 17 links a second, blind review did not confirm")],
+      ["d", tr("mark the 6 links the two second readings disagree on")],
       ["- +", tr("slower or faster: half or a quarter the pace")],
       ["f", tr("fill the whole screen, and back (esc too)")],
     ],
